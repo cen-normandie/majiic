@@ -1,0 +1,2 @@
+# majiic
+ application interne
