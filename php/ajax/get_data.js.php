@@ -8,14 +8,9 @@ $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN pas
 or die ('Connexion impossible :'. pg_last_error());
 $dep=substr($_POST["id"], 0, 2);
 $com=substr($_POST["id"], 0, 5);
-//select array_to_json(array_agg(row_to_json(t)))
-//    from (
-//      select idpar, ddenom, adresse_bien, nom_usage, prenom_usage, date_naissance, 
-//       lieu_naissance, geom, idpk from d".$dep."_p_na
-//      where 
-//      idpar ='".$_POST["id"]."'
-//    ) t
-$sql = "
+
+
+$sql = pg_prepare($dbconn, "get_data", "
 select array_to_json(array_agg(row_to_json(t)))
     from (
 SELECT 
@@ -37,17 +32,16 @@ ff_prop_non_anonyme.d".$dep."_2017_proprietaire_droit_non_ano dna
 LEFT JOIN ff_d".$dep."_2017.d".$dep."_2017_pnb10_parcelle dp
 ON dp.idprocpte = dna.idprocpte
 WHERE 
-dna.idcom = '".$com."' AND
-dp.idpar = '".$_POST["id"]."'
+dna.idcom = $1 AND
+dp.idpar = $2
 AND dp.idprocpte IS NOT NULL
 AND dna.idprocpte IS NOT NULL
     ) t
-";
-//echo $sql;
-;
+");
 
-$query_result = pg_exec($dbconn,$sql) or die (pg_last_error());
-while($row = pg_fetch_row($query_result))
+
+$qout = pg_execute($dbconn,"get_data",array($com, $_POST["id"])) or die (pg_last_error());
+while($row = pg_fetch_row($qout))
 {
   echo trim($row[0]);
 }
