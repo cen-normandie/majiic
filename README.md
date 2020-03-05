@@ -1,2 +1,2 @@
 # majiic
- application interne
+ application interne de consultation des données MAJIIC
