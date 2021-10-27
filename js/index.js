@@ -91,13 +91,13 @@ $("#signin").click( function () {
                         url      : "php/ajax/logs.js.php",
                         type     : "POST",
                         data     : {email: $("#courriel").val()},
-                        async    : false,
+                        async    : true,
                         dataType : "text",
                         error    : function(request, error) { console.log("not ajax success ");},
                         success  : function(data) {}
                     });// End ajax
                     console.log("success");
-                    window.location.href = 'home.php';
+                    window.location.href = 'sites.php';
                 }
                 else /*(data == "Failed")*/
                 {
@@ -108,6 +108,37 @@ $("#signin").click( function () {
         });// End ajax
     }
 });
+
+$("#save_update_pwd_mail").on('click',function(e){
+    var mail = $("#update_pwd_mail").val();
+    var mailOk = check_mail(mail);
+    
+    
+    
+    if (mailOk) {
+        $.ajax({
+        type : 'POST',
+        crossDomain: true,
+        url: "http://cen-normandie.com/majiic/php/sent_mail_update_pwd.php",
+        async    : false,
+        data     : {courriel : mail},
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        dataType : "text",
+        success: function(data) {
+                    if (data=="send") {
+                        alert("Un mail vient d'être envoyé à "+mail+",\n Vous pouvez dès à présent vous connecter à l'application");
+                        $('#ModalDelete').modal('hide');
+                    } else {
+                        alert("Un compte existe déjà pour cette adresse");
+                    }
+                }
+        });
+    } else {
+        console.log("error");
+    }
+
+});
+
 
 
 $("#save_create_account").on('click',function(e){
@@ -141,6 +172,7 @@ $("#save_create_account").on('click',function(e){
                         if (c_c === true) {
                             $.ajax({
                             type : 'POST',
+                            crossDomain: true,
                             url: "http://cen-normandie.com/majiic/php/sent_mail.php",
                             async    : false,
                             data     : {courriel : mail, dwp : pwd, nom_ : nom, prenom_ : prenom, cgu_ : true, cgu_content},

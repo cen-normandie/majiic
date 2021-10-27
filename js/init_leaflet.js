@@ -96,7 +96,7 @@ var content = '\
                         method   : "POST",
                         dataType : "json",
                         async    : true,
-                        error    : function(request, error) { alert("L'identifiant de parcelle n'a pas de correspondance majiic DGFIP v.2017\nContactez votre géomaticien");},
+                        error    : function(request, error) { alert("L'identifiant de parcelle n'a pas de correspondance majiic DGFIP v.2018\nContactez votre géomaticien");},
                         success  : function(data) {
                             //dt4.clear().draw();
                             data.forEach(function(obj) {
