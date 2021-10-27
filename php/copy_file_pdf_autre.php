@@ -1,0 +1,63 @@
+<?php
+    include 'properties.php';
+
+function rrmdir($dir) {
+    if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+            if (filetype($dir."/".$object) == "dir") rmdir($dir."/".$object); else unlink($dir."/".$object);
+            }
+        }
+    reset($objects);
+    rmdir($dir);
+    }
+}
+
+define('ROOT_DIR', dirname(__FILE__).DIRECTORY_SEPARATOR);
+$path = ROOT_DIR;
+$path_doc_foncier_autre = $path.'docs\foncier\autres';
+$file_name_tmp = $_FILES['file']['name'];
+$file_name = $_POST["name_doc"];
+$id_site = $_POST["id_site"];
+echo $file_name;
+echo $path_doc_foncier_autre;
+
+if( isset($_FILES["file"]))
+{
+    //$file_name = $_FILES['file']['name'];
+    if(file_exists($path_doc_foncier_autre.'/'.$file_name) ) {
+        $file_name = 'a_'.$file_name;
+    }
+    
+    if ( move_uploaded_file($_FILES['file']['tmp_name'], $path_doc_foncier_autre.'/'.$file_name ) ) {
+            echo ' sur '.$path_doc_foncier_autre.'/'.$file_name;
+            } else {
+            }
+}
+
+
+echo "fichier PDF enregistré";
+
+
+//connexion a la BD
+$dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
+or die ('Connexion impossible :'. pg_last_error());
+$sql = "UPDATE $sites_data set autres_docs = coalesce( autres_docs ,'') || '".$file_name."' || '|' where id_site = '".$id_site."' ;";
+//echo $sql;
+//execute la requete dans le moteur de base de donnees  
+$query_result = pg_query($dbconn,$sql) or die ( pg_last_error());
+//ferme la connexion a la BD
+pg_close($dbconn);
+echo 'Le document est associé au site suivant : '.$id_site;
+
+
+
+
+
+?>
+
+
+
+
+

@@ -1,4 +1,6 @@
 /php/properties.php
+/php/sent_mail_update_pwd.php
+/php/sent_mail.php
 /php/docs/gestion/*
 /php/docs/foncier/autres/*
 /php/docs/foncier/*
