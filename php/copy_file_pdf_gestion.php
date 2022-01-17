@@ -30,9 +30,10 @@ if( isset($_FILES["file"]))
     }
     
     if ( move_uploaded_file($_FILES['file']['tmp_name'], $path_doc_gestion.DIRECTORY_SEPARATOR.basename($file_name).'.pdf' )) {
-            // echo ' sur '.$path_doc_gestion.'/'.$file_name.'.pdf';
-            } else {
-            }
+        //echo "Uploaded";
+    } else {
+        //echo "Error";
+    }
 }
 
 

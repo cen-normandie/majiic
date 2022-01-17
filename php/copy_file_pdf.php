@@ -34,9 +34,9 @@ if( isset($_FILES["file"]))
     //echo 'Path :'.$path_doc_foncier.DIRECTORY_SEPARATOR.$file_name.'.pdf';
     
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $path_doc_foncier.DIRECTORY_SEPARATOR.basename($file_name).'.pdf' )) {
-        echo "The file has been uploaded.";
+        //echo "Uploaded";
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        //echo "Error";
     }
 }
 echo $file_name;
