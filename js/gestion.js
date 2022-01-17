@@ -329,9 +329,10 @@ $('#save_new_doc_autre').click(
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
+                refresh_page();
                 }
         });
-        //refresh_page();
+        
     }
 );
 
@@ -529,7 +530,7 @@ function save_bdd_ddg(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                    refresh_page();
+                refresh_page();
                 }
         });
     };

@@ -6,7 +6,7 @@ function rrmdir($dir) {
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
-            if (filetype($dir."/".$object) == "dir") rmdir($dir."/".$object); else unlink($dir."/".$object);
+            if (filetype($dir.DIRECTORY_SEPARATOR.$object) == "dir") rmdir($dir.DIRECTORY_SEPARATOR.$object); else unlink($dir.DIRECTORY_SEPARATOR.$object);
             }
         }
     reset($objects);
@@ -16,22 +16,24 @@ function rrmdir($dir) {
 
 define('ROOT_DIR', dirname(__FILE__).DIRECTORY_SEPARATOR);
 $path = ROOT_DIR;
-$path_doc_foncier_autre = $path.'docs\foncier\autres';
+$path_doc_foncier_autre = $path.'docs'.DIRECTORY_SEPARATOR.'foncier'.DIRECTORY_SEPARATOR.'autres';
 $file_name_tmp = $_FILES['file']['name'];
 $file_name = $_POST["name_doc"];
 $id_site = $_POST["id_site"];
-echo $file_name;
-echo $path_doc_foncier_autre;
+
 
 if( isset($_FILES["file"]))
 {
     //$file_name = $_FILES['file']['name'];
-    if(file_exists($path_doc_foncier_autre.'/'.$file_name) ) {
-        $file_name = 'a_'.$file_name;
+    if(file_exists($path_doc_foncier_autre.DIRECTORY_SEPARATOR.$file_name) ) {
+        $file_name = $file_name.date("d-m-Y_h_i_s");
+        //TO DO UPDATE LIEN
+    } else {
+        $file_name = $_POST["name_doc"];
     }
     
-    if ( move_uploaded_file($_FILES['file']['tmp_name'], $path_doc_foncier_autre.'/'.$file_name ) ) {
-            echo ' sur '.$path_doc_foncier_autre.'/'.$file_name;
+    if ( move_uploaded_file($_FILES['file']['tmp_name'], $path_doc_foncier_autre.DIRECTORY_SEPARATOR.basename($file_name).'.pdf' ) ) {
+            //echo ' sur '.$path_doc_foncier_autre.DIRECTORY_SEPARATOR.$file_name;
             } else {
             }
 }
