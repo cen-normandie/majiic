@@ -302,8 +302,8 @@ $('#save_new_doc').click(
         method_prefix = 'save_bdd_';
         method_name = block_targeted_val;
         console.log(method_prefix + method_name);
-        //Call fonction de maniere dynamiquement
-        //window[method_prefix + method_name](id_doc, file_name_end);
+        //Call fonction de maniere dynamique
+        window[method_prefix + method_name](id_doc, file_name_end);
     }
 );
 
