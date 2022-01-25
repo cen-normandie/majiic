@@ -120,6 +120,7 @@ function apply_filters() {
     }
 };
 function update_map(json_, layers_) {
+    console.log("update_map");
     //ClearLayer
     //map.removeLayer( sites_geojson_feature );
     if (layers_ == "sites") {
@@ -202,6 +203,7 @@ function load_sites_ajax () {
         success  : function(data) {
             sites = data ;
             //Load autocomplete
+            console.log('sites_complete');
             init_sites_array();
             //INIT
             load_parcelles_ajax();
@@ -218,6 +220,7 @@ function load_parcelles_ajax () {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
             parcelles = data ;
+            console.log('parcelles_complete');
             // for (const parcelle in parcelles) {
             //     //DATATABLES
             //     let splitted = parcelles[parcelle].id_unique.split('|');

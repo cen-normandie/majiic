@@ -44,9 +44,9 @@ function initmap() {
     var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors / IGN © ORTHO 2006-2010 / IGN © PARCELLAIRE';
     var wmsLayer = L.tileLayer.wms('http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/r/wms?', {layers: 'CADASTRALPARCELS.PARCELS',attribution:osmAttrib});
 
-    var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib});
-    var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:osmAttrib});
-    var ignS = new L.TileLayer(ignSCAN25,{minZoom:4,maxZoom:22,attribution:osmAttrib});
+    var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var ignS = new L.TileLayer(ignSCAN25,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
 
 
     map.setView(new L.LatLng(49.3,0.52),8);

@@ -72,7 +72,8 @@ WITH t as (
                         g.nom_site
                         FROM $sites g
                         WHERE g.geom is not null
-						AND sites.id_site = g.id_site
+						            AND sites.id_site = g.id_site
+                        AND g.id_site  = '0014_014'
                         ) As lp 
             ON lg.id_site = lp.id_site  ) As f )  As fc
   )
