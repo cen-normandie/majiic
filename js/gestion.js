@@ -2,6 +2,34 @@ var tab = new Object();
 var form_function = {};
 
 
+function create_toast( success_ , text) {
+    
+    if (success_) {
+        $('#info_txt').val( text );
+        var element = document.getElementById("infos_toast");
+            element.classList.add("border-success");
+            element.classList.add("text-success");
+        var element = document.getElementById("iii");
+            element.classList.add("text-success");
+        var element = document.getElementById("info_txt").innerText='Document copié sur le serveur et enregistrer en BDD';
+    }
+    else {
+        $('#info_txt').val( text );
+        var element = document.getElementById("infos_toast");
+            element.classList.add("border-danger");
+            element.classList.add("text-danger");
+        var element = document.getElementById("iii");
+            element.classList.add("text-danger");
+        var element = document.getElementById("info_txt").innerText='Attention le document n\'a pas été enregistré vérifiez les champs';
+    }
+
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function(toastEl) {
+        return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
+}
+
 //LISTENERS 
 //Datepicker
 // $('#testpicker').datepicker({
@@ -363,8 +391,9 @@ function save_bdd_convention(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };
@@ -390,8 +419,9 @@ function save_bdd_acquisition(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };
@@ -419,8 +449,9 @@ function save_bdd_bail_e(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };
@@ -448,8 +479,9 @@ function save_bdd_bail_rural(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };
@@ -476,8 +508,9 @@ function save_bdd_pret_usage(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };
@@ -502,8 +535,9 @@ function save_bdd_ore(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };
@@ -529,8 +563,9 @@ function save_bdd_ddg(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
-                console.log(data);
-                refresh_page();
+                //refresh_page();
+                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
     };

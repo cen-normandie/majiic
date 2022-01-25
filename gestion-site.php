@@ -510,6 +510,28 @@ if (in_array($_SESSION['email'], $admins)) {
       </div>
 		</div>
 
+
+<!-- TOAST INFO #################################################### -->
+	<div class="position-fixed" style="z-index: 1111; bottom: 30px; right:10px;">
+		<div id="infos_toast" class="toast border"><!-- border-success text-success--><!-- border-danger text-danger-->
+			<div class="toast-header">
+				<!-- <img src="..." class="rounded me-2" alt="..."> -->
+                <i id="iii" class="fas fa-exclamation-circle p-1"></i><!--text-success--><!--text-danger-->
+				<strong class="me-auto">Notification</strong>
+				<small><?php echo date("d-m-Y à H:i"); ?></small>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+                <strong id="info_txt"></strong>
+			</div>
+		</div>
+	</div>
+<!-- TOAST INFO #################################################### -->
+
+        
+        
+
+
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
 			<kbd class="small">CEN Normandie © 2021</kbd>
 		</div>
