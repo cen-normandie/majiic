@@ -302,8 +302,8 @@ $('#save_new_doc').click(
         method_prefix = 'save_bdd_';
         method_name = block_targeted_val;
         console.log(method_prefix + method_name);
-        //Call fonction de maniere dynamiquement
-        //window[method_prefix + method_name](id_doc, file_name_end);
+        //Call fonction de maniere dynamique
+        window[method_prefix + method_name](id_doc, file_name_end);
     }
 );
 
@@ -329,7 +329,7 @@ $('#save_new_doc_autre').click(
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
         
@@ -364,7 +364,7 @@ function save_bdd_convention(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
@@ -391,7 +391,7 @@ function save_bdd_acquisition(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
@@ -420,7 +420,7 @@ function save_bdd_bail_e(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
@@ -449,7 +449,7 @@ function save_bdd_bail_rural(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
@@ -477,7 +477,7 @@ function save_bdd_pret_usage(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
@@ -503,7 +503,7 @@ function save_bdd_ore(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
@@ -530,7 +530,7 @@ function save_bdd_ddg(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
-                //refresh_page();
+                refresh_page();
                 }
         });
     };
