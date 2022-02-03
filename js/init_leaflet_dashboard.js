@@ -32,7 +32,17 @@ function initmap() {
     var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.5});
     var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.5});
     var ignS = new L.TileLayer(ignSCAN25,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.5});
-
+    
+    
+    var lyr = L.geoportalLayer.WMTS(
+        {
+            layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
+        },
+        {
+            opacity : 0.8
+        }
+    ) ;
+    lyr.addTo(map); // ou map.addLayer(lyr);
 
     map.setView(new L.LatLng(49.3,0.52),8);
     map.addLayer(osmbg);
@@ -55,8 +65,13 @@ function initmap() {
             }
     }).addTo(map);
     
+//Gp.Services.getConfig({
+//    apiKey : "7b2gdeangufdo4oyg6d42bp2",
+//    onSuccess : go
+//}) ;
+
     overlaysMaps={"Sites":sites_geojson_feature};
-    baseMaps={"Ortho (IGN)":ignO,"SCAN 25 (IGN)":ignS, "BD Parcellaire (IGN)":wmsLayer, "OSM (Noir & Blanc)":osmbg};
+    baseMaps={"Ortho (IGN)":lyr,"OSM (Noir & Blanc)":osmbg};
     ControlLayer=L.control.layers(baseMaps,overlaysMaps).addTo(map);
 
 };

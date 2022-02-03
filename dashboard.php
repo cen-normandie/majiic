@@ -12,8 +12,9 @@
     
     
     <!--LEAFLET-->
-    <link href="css/leaflet.css" rel="stylesheet" type="text/css">
-    <link href="js/leaflet/plugins/leaflet_label/css/leafleat_label.css" rel="stylesheet" type="text/css">
+    <!--<link href="css/leaflet.css" rel="stylesheet" type="text/css">-->
+    <link href="js/leaflet1.7/leaflet.css" rel="stylesheet" type="text/css">
+    <!--<link href="js/leaflet/plugins/leaflet_label/css/leafleat_label.css" rel="stylesheet" type="text/css">-->
     <!-- Bootstrap Core CSS -->
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 	<link href="bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -320,9 +321,19 @@ if (in_array($_SESSION['email'], $admins)) {
 <!-- FONT AWESOME -->
 <script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
 <!-- LEAFLET -->
-<script type="text/javascript" src="js/leaflet/leaflet.js"></script>
-<script type="text/javascript" src="js/leaflet/plugins/leaflet_label/js/leaflet_label.js" ></script>
+<script type="text/javascript" src="js/leaflet1.7/leaflet.js"></script>
+<script type="text/javascript" src="js/leaflet1.7/leaflet-src.js"></script>
+<script type="text/javascript" src="js/leaflet1.7/leaflet_label/js/leaflet_label.js" ></script>
+
+<!-- IGN LEAFLET -->
+<script type="text/javascript" src="js/plugins/ign_leaflet/GpPluginLeaflet.js"></script>
+<script type="text/javascript" src="js/plugins/ign_leaflet/GpPluginLeaflet-map.js"></script>
+<script type="text/javascript" src="js/plugins/ign_leaflet/GpPluginLeaflet-src.js"></script>
+
+<!-- LEAFLET CUSTOM -->
 <script type="text/javascript" src="js/init_leaflet_dashboard.js"></script>
+
+
 <!-- HIGHCHARTS -->
 <script type="text/javascript" src="js/plugins/highcharts/code/highcharts.js"></script>
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
