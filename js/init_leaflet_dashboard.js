@@ -21,31 +21,19 @@ function initmap() {
     // set up the map
     map = new L.Map('map');
     
-    var ignAttrib = ' IGN © ORTHO / IGN © PARCELLAIRE / IGN © SCAN25';
+    var ignAttrib = ' IGN / Géoportail';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     
     var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
-    var ignOrtho='http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
-    var ignSCAN25='http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=GEOGRAPHICALGRIDSYSTEMS.MAPS&format=image/jpeg&style=normal';
-    var wmsLayer = L.tileLayer.wms('http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/r/wms?', {layers: 'CADASTRALPARCELS.PARCELS',attribution:ignAttrib,opacity: 0.5});
+    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var ignOrtho='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
 
-    var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.5});
-    var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.5});
-    var ignS = new L.TileLayer(ignSCAN25,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.5});
-    
-    
-    var lyr = L.geoportalLayer.WMTS(
-        {
-            layer  : "ORTHOIMAGERY.ORTHOPHOTOS"
-        },
-        {
-            opacity : 0.8
-        }
-    ) ;
-    lyr.addTo(map); // ou map.addLayer(lyr);
+    var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.7});
 
     map.setView(new L.LatLng(49.3,0.52),8);
-    map.addLayer(osmbg);
+    map.addLayer(osm);
     
     // Créer une couche geojson vide pour les sites
     sites_geojson_feature = L.geoJson(false, {
@@ -65,13 +53,9 @@ function initmap() {
             }
     }).addTo(map);
     
-//Gp.Services.getConfig({
-//    apiKey : "7b2gdeangufdo4oyg6d42bp2",
-//    onSuccess : go
-//}) ;
 
     overlaysMaps={"Sites":sites_geojson_feature};
-    baseMaps={"Ortho (IGN)":lyr,"OSM (Noir & Blanc)":osmbg};
+    baseMaps={"Ortho (IGN)":ignO,"OSM":osm,"OSM (Noir & Blanc)":osmbg};
     ControlLayer=L.control.layers(baseMaps,overlaysMaps).addTo(map);
 
 };
