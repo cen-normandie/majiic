@@ -115,7 +115,10 @@ function apply_filters() {
     }
 
     update_chiffres_parcelles(parcelles_f);
+    console.log("OKAY");
     if ( !(Object.keys(sites_f).length === 0) ) {
+        console.log("KO");
+        console.log(sites_f);
         update_map(sites_f, "sites");
     }
 };
@@ -125,9 +128,17 @@ function update_map(json_, layers_) {
     //map.removeLayer( sites_geojson_feature );
     if (layers_ == "sites") {
         sites_geojson_feature.clearLayers();
-        console.log(json_);
         $(json_).each(function(key, data) {
+            console.log(data.geojson);
             //ajoute les geojson
+            if ( data.id_site == '27ACQ') {
+                console.log(data.id_site);
+                console.log(data.geojson);
+            }
+            if ( data.id_site == '0014_014') {
+                console.log(data.id_site);
+                console.log(data.geojson);
+            }
             sites_geojson_feature.addData(data.geojson);
             
         });

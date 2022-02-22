@@ -39,14 +39,16 @@ function initmap() {
     map = new L.Map('map'//,{drawControl: true}
                     );
     var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
-    var ignOrtho='http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
-    var ignSCAN25='http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=GEOGRAPHICALGRIDSYSTEMS.MAPS&format=image/jpeg&style=normal';
-    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors / IGN © ORTHO 2006-2010 / IGN © PARCELLAIRE';
-    var wmsLayer = L.tileLayer.wms('http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/r/wms?', {layers: 'CADASTRALPARCELS.PARCELS',attribution:osmAttrib});
+    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var StamenWaterColor='https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg';
+    var ignOrtho='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
+    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors / IGN / Géoportail';
+    var stamenAttrib = 'Map data © <a href="http://maps.stamen.com/#watercolor/12/37.7706/-122.3782">maps.stamen.com</a>  ';
 
     var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
     var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
-    var ignS = new L.TileLayer(ignSCAN25,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var swc = new L.TileLayer(StamenWaterColor,{minZoom:4,maxZoom:22,attribution:stamenAttrib,opacity: 0.7});
 
 
     map.setView(new L.LatLng(49.3,0.52),8);
@@ -83,7 +85,7 @@ function initmap() {
     
     
     overlaysMaps={"Parcelles":sites_parcelles_geojson_feature,"Sites":sites_geojson_feature };
-    baseMaps={"Ortho (IGN)":ignO,"SCAN 25 (IGN)":ignS, "BD Parcellaire (IGN)":wmsLayer, "OSM (Noir & Blanc)":osmbg};
+    baseMaps={"Ortho (IGN)":ignO,"OSM":osm,"OSM (Noir & Blanc)":osmbg,"Watercolor":swc};
     ControlLayer=L.control.layers(baseMaps,overlaysMaps).addTo(map);
     
 };
