@@ -323,12 +323,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <!-- LEAFLET -->
 <script type="text/javascript" src="js/leaflet1.7/leaflet.js"></script>
 <script type="text/javascript" src="js/leaflet1.7/leaflet-src.js"></script>
-<script type="text/javascript" src="js/leaflet1.7/leaflet_label/js/leaflet_label.js" ></script>
-
-<!-- IGN LEAFLET -->
-<script type="text/javascript" src="js/plugins/ign_leaflet/GpPluginLeaflet.js"></script>
-<script type="text/javascript" src="js/plugins/ign_leaflet/GpPluginLeaflet-map.js"></script>
-<script type="text/javascript" src="js/plugins/ign_leaflet/GpPluginLeaflet-src.js"></script>
+<!--<script type="text/javascript" src="js/leaflet1.7/leaflet_label/js/leaflet_label.js" ></script>-->
 
 <!-- LEAFLET CUSTOM -->
 <script type="text/javascript" src="js/init_leaflet_dashboard.js"></script>

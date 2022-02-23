@@ -37,7 +37,7 @@ function initmap() {
 
     map.setView(new L.LatLng(49.3,0.52),8);
     map.addLayer(osm);
-    
+
     // Créer une couche geojson vide pour les sites
     sites_geojson_feature = L.geoJson(false, {
         style:style_sites_rouge,
@@ -52,7 +52,7 @@ function initmap() {
                 layer.on("mouseout",function(e){
                     sites_geojson_feature.resetStyle(e.target);
                 });
-                layer.bindLabel(feature.properties.nom_site);
+                layer.bindTooltip(feature.properties.nom_site);
             }
     }).addTo(map);
     

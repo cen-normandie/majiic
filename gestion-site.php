@@ -551,7 +551,6 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
 <!-- LEAFLET -->
 <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
-<script type="text/javascript" src="js/leaflet/plugins/leaflet_label/js/leaflet_label.js" ></script>
 <!-- HIGHCHARTS -->
 <script type="text/javascript" src="js/plugins/highcharts/code/highcharts.js"></script>
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  

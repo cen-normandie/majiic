@@ -136,7 +136,7 @@ function initmap() {
                     sites_geojson_feature.resetStyle(e.target);
                 });
             layer_in_geojson[feature.properties.id_site] = layer;
-            //layer.bindLabel(feature.properties.nom_site);
+            layer.bindTooltip(feature.properties.nom_site);
             }
     }).addTo(map);
     
@@ -155,7 +155,7 @@ function initmap() {
                 });
             //console.log(feature.properties.id_site);
             layer_in_geojson[feature.properties.id_unique] = layer;
-            layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
+            layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
             }
     }).addTo(map);
     
@@ -211,15 +211,15 @@ initmap();
 
 //// SUIVI.JS //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //layers_array = new Array(); // array of events
-//apb             =L.geoJson(false, {style:style_apb         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){apb.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//n2cesic         =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2cesic.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//n2zps           =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2zps.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-////n2joue          =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2joue.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//pnr             =L.geoJson(false, {style:style_pnr         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){pnr.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//rnn             =L.geoJson(false, {style:style_rnn         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){rnn.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//rnr             =L.geoJson(false, {style:style_rnr         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){rnr.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//znieff1_g2      =L.geoJson(false, {style:style_znieff1_g2  , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){znieff1_g2.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//znieff2_g2      =L.geoJson(false, {style:style_znieff2_g2  , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){znieff2_g2.resetStyle(e.target);});layer.bindLabel('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//apb             =L.geoJson(false, {style:style_apb         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){apb.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//n2cesic         =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2cesic.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//n2zps           =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2zps.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+////n2joue          =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2joue.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//pnr             =L.geoJson(false, {style:style_pnr         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){pnr.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//rnn             =L.geoJson(false, {style:style_rnn         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){rnn.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//rnr             =L.geoJson(false, {style:style_rnr         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){rnr.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//znieff1_g2      =L.geoJson(false, {style:style_znieff1_g2  , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){znieff1_g2.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
+//znieff2_g2      =L.geoJson(false, {style:style_znieff2_g2  , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){znieff2_g2.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
 //
 //// SUIVI.JS //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //function Layer_ (name_,id_layer_,name_layer_,table_layer_,obj_json_layer_) {
