@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Cen Normandie</title>
-    <link rel="shortcut icon" href="img/cenno.ico" />
+    <link rel="shortcut icon" href="img/CenNormandie.ico" />
     <!-- Bootstrap Core CSS -->
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
     <link href="bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
