@@ -103,8 +103,7 @@ function load_personnes_ajax () {
             autocompleteArray_personnes(document.getElementById("input_personnes"), personnes_liste_array);
             load_sites_ajax();
             
-            apply_filters();
-            change_load();
+            
             }
     });
 }
@@ -121,6 +120,9 @@ function load_sites_ajax () {
             sites = data ;
             //Load autocomplete
             init_sites_array();
+
+            apply_filters();
+            change_load();
             }
     });
 }
