@@ -99,27 +99,21 @@ var style_znieff2_g2={
 
 function initmap() {
     // set up the map
-    map = new L.Map('map'//,{drawControl: true}
-                    );
-    // create the tile layer with correct attribution
-    //var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    //var osmUrlcolor='http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
-    var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
-    var ignOrtho='http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
-    var ignSCAN25='http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=GEOGRAPHICALGRIDSYSTEMS.MAPS&format=image/jpeg&style=normal';
-    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors / IGN © ORTHO 2006-2010 / IGN © PARCELLAIRE';
-    var wmsLayer = L.tileLayer.wms('http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/r/wms?', {layers: 'CADASTRALPARCELS.PARCELS',attribution:osmAttrib});
-    //var wmsLayer = L.tileLayer.wms('http://wxs.ign.fr/apgyusriiwvbm0osuwsff2dg/geoportail/r/wms?', {layers: 'CADASTRALPARCELS.PARCELS',attribution:osmAttrib});
+    map = new L.Map('map');
     
-    //var osm=new L.TileLayer(osmUrl,{minZoom:1,maxZoom:24,attribution:osmAttrib});
-    //var osmcolor=new L.TileLayer(osmUrlcolor,{minZoom:1,maxZoom:24,attribution:osmAttrib});
-    var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib});
-    var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:osmAttrib});
-    var ignS = new L.TileLayer(ignSCAN25,{minZoom:4,maxZoom:22,attribution:osmAttrib});
+    var ignAttrib = ' IGN / Géoportail';
+    var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    
+    //var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
+    //var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var ignOrtho='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
 
+    //var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    //var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.7});
 
     map.setView(new L.LatLng(49.3,0.52),8);
-    map.addLayer(osmbg);
+    map.addLayer(ignO);
     
     // Créer une couche geojson vide pour les sites
     sites_geojson_feature = L.geoJson(false, {
@@ -136,7 +130,7 @@ function initmap() {
                     sites_geojson_feature.resetStyle(e.target);
                 });
             layer_in_geojson[feature.properties.id_site] = layer;
-            layer.bindTooltip(feature.properties.nom_site);
+            //layer.bindLabel(feature.properties.nom_site);
             }
     }).addTo(map);
     
@@ -155,12 +149,12 @@ function initmap() {
                 });
             //console.log(feature.properties.id_site);
             layer_in_geojson[feature.properties.id_unique] = layer;
-            layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
+            layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
             }
     }).addTo(map);
     
     overlaysMaps={"Sites":sites_geojson_feature, "Parcelles":sites_parcelles_geojson_feature };
-    baseMaps={"Ortho (IGN)":ignO,"SCAN 25 (IGN)":ignS, "BD Parcellaire (IGN)":wmsLayer, "OSM (Noir & Blanc)":osmbg};
+    baseMaps={"Ortho (IGN)":ignO};
     ControlLayer=L.control.layers(baseMaps,overlaysMaps).addTo(map); 
 
     $.ajax({
@@ -206,40 +200,6 @@ function initmap() {
 
 
 initmap();
-
-
-
-//// SUIVI.JS //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//layers_array = new Array(); // array of events
-//apb             =L.geoJson(false, {style:style_apb         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){apb.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//n2cesic         =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2cesic.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//n2zps           =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2zps.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-////n2joue          =L.geoJson(false, {style:style_union_natura, onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){n2joue.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//pnr             =L.geoJson(false, {style:style_pnr         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){pnr.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//rnn             =L.geoJson(false, {style:style_rnn         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){rnn.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//rnr             =L.geoJson(false, {style:style_rnr         , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){rnr.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//znieff1_g2      =L.geoJson(false, {style:style_znieff1_g2  , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){znieff1_g2.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//znieff2_g2      =L.geoJson(false, {style:style_znieff2_g2  , onEachFeature: function(feature,layer){layer.on("mouseover",function(e){layer.setStyle(highlightStyle_Yellow);});layer.on("mouseout",function(e){znieff2_g2.resetStyle(e.target);});layer.bindTooltip('ID : '+feature.properties.id+', Nom : '+ feature.properties.nom);}});
-//
-//// SUIVI.JS //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//function Layer_ (name_,id_layer_,name_layer_,table_layer_,obj_json_layer_) {
-//    this.name                   = name_;
-//    this.id_layer               = id_layer_;
-//    this.name_layer             = name_layer_;
-//    this.table_layer            = table_layer_;
-//    this.obj_json_layer         = obj_json_layer_;
-//    layers_array[name_]         = this;
-//};
-//// SUIVI.JS //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//new Layer_(     "apb",                  "id_mnhn",              "nom_site",             " carto_inpn.apb "               , apb          );
-//new Layer_(     "n2cesic",              "sitecode",             "sitename",             " carto_inpn.natura_ce_sic "     , n2cesic );
-//new Layer_(     "n2zps",                "sitecode",             "sitename",             " carto_inpn.natura_zps "        , n2zps );
-////new Layer_(     "n2joue",               "sitecode",             "sitename",             " carto_inpn.natura_joue_sic_ue ", n2joue );
-//new Layer_(     "pnr",                  "id_mnhn",              "nom_site",             " carto_inpn.pnr "               , pnr          );
-//new Layer_(     "rnn",                  "id_local",             "nom_site",             " carto_inpn.rnn "               , rnn          );
-//new Layer_(     "rnr",                  "id_local",             "nom_site",             " carto_inpn.rnr "               , rnr          );
-//new Layer_(     "znieff1_g2",           "id_mnhn",              "nom",                  " carto_inpn.znieff1_g2 "        , znieff1_g2   );
-//new Layer_(     "znieff2_g2",           "id_mnhn",              "nom",                  " carto_inpn.znieff2_g2 "        , znieff2_g2   );
 
 
 

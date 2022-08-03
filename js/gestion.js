@@ -11,7 +11,7 @@ function create_toast( success_ , text) {
             element.classList.add("text-success");
         var element = document.getElementById("iii");
             element.classList.add("text-success");
-        var element = document.getElementById("info_txt").innerText='Document copié sur le serveur et enregistrer en BDD';
+        var element = document.getElementById("info_txt").innerText='Document copié sur le serveur et enregistré en BDD';
     }
     else {
         $('#info_txt').val( text );
@@ -29,6 +29,7 @@ function create_toast( success_ , text) {
     })
     toastList.forEach(toast => toast.show())
 }
+
 
 //LISTENERS 
 //Datepicker
@@ -418,6 +419,7 @@ function save_bdd_acquisition(id_doc_, lien) {
         contentType : false,
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        dataType : "text",
         success  : function(data) {
                 //refresh_page();
                 ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );

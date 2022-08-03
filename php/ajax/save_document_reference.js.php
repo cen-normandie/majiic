@@ -5,6 +5,7 @@
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
 $doc = $_POST["type_doc_"];
+$return_execute = false; 
 
 if ($doc == 'convention') {
     //$id_doc                     = $_POST["id_doc"];
@@ -42,7 +43,7 @@ if ($doc == 'convention') {
         VALUES 
         ($1,$2,'gestion',$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) "
     );
-    pg_execute($dbconn, "convention",array(
+    $return_execute = pg_execute($dbconn, "convention",array(
         $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_c_date_start"],
@@ -84,7 +85,7 @@ if ($doc == 'convention') {
         (
         $1,$2,$3,$4,$5,$6,$7,$8,$9) "
     );
-    pg_execute($dbconn, "acquisition",array(
+    $return_execute = pg_execute($dbconn, "acquisition",array(
         $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_a_date_sign"],
@@ -94,7 +95,7 @@ if ($doc == 'convention') {
         $_POST["n_a_surf_tot"],
         $_POST["n_a_commentaire"],
         $_POST["lien"]
-    )) or die ( pg_last_error());
+    ));
 } elseif ($doc == 'bail_e') {
     //$id_doc                     = $_POST["id_doc"];
     //$nom_doc                    = $_POST["nom_doc"];
@@ -122,7 +123,7 @@ if ($doc == 'convention') {
         VALUES 
         ($1,$2,$3,$4,$5,$6,$7,$8);"
     );
-    pg_execute($dbconn, "bail_e",array(
+    $return_execute = pg_execute($dbconn, "bail_e",array(
         $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_b_e_date_sign"],
@@ -131,7 +132,7 @@ if ($doc == 'convention') {
         $_POST["n_b_e_surf_tot"],
         $_POST["n_b_e_commentaire"],
         $_POST["lien"]
-    )) or die ( pg_last_error());
+    ));
     
 } elseif ($doc == 'bail_rural') {
     //$id_doc                     = $_POST["id_doc"];
@@ -159,7 +160,7 @@ if ($doc == 'convention') {
         (
         $1,$2,$3,$4,$5,$6,$7,$8,$9) "
     );
-    pg_execute($dbconn, "bail_rural",array(
+    $return_execute = pg_execute($dbconn, "bail_rural",array(
         $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_b_bailleur"],
@@ -169,7 +170,7 @@ if ($doc == 'convention') {
         $_POST["n_b_date_end"],
         $_POST["n_b_commentaire"],
         $_POST["lien"]
-    )) or die ( pg_last_error());
+    ));
 } elseif ($doc == 'pret_usage') {
     //$id_doc                     = $_POST["id_doc"];
     //$nom_doc                    = $_POST["nom_doc"];
@@ -194,7 +195,7 @@ if ($doc == 'convention') {
         VALUES 
         ($1,$2,$3,$4,$5,$6,$7,$8,$9) ;"
     );
-    pg_execute($dbconn, "pret",array(
+    $return_execute = pg_execute($dbconn, "pret",array(
         $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_p_preteur"],
@@ -204,7 +205,7 @@ if ($doc == 'convention') {
         $_POST["n_p_date_end"],
         $_POST["n_p_commentaire"],
         $_POST["lien"]
-    )) or die ( pg_last_error());
+    ));
 } elseif ($doc == 'ore') {
     //$id_ore                         = $_POST["id_doc"];
     //$nom_ore                        = $_POST["nom_doc"];
@@ -226,7 +227,7 @@ if ($doc == 'convention') {
         ($1,$2,$3,$4,$5,$6,$7) "
     );
     
-    pg_execute($dbconn, "ore",array(
+    $return_execute = pg_execute($dbconn, "ore",array(
         $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_ore_notaire"],
@@ -234,7 +235,7 @@ if ($doc == 'convention') {
         $_POST["n_ore_date_sign"],
         $_POST["n_ore_commentaire"],
         $_POST["lien"]
-    )) or die ( pg_last_error());
+    ));
 }  elseif ($doc == 'ddg') {
     //$id_gestion                             = $_POST["lien"];
     //$nom_gestion                            = $_POST["nom_doc"];
@@ -256,7 +257,7 @@ if ($doc == 'convention') {
         VALUES 
         ($1,$2,$3,$4,$5,$6,$7,$8) "
     );
-    pg_execute($dbconn, "ddg",array(
+    $return_execute = pg_execute($dbconn, "ddg",array(
         $_POST["lien"],
         $_POST["nom_doc"],
         $_POST["n_type_doc_gestion"],
@@ -265,13 +266,17 @@ if ($doc == 'convention') {
         $_POST["n_gestion_auteurs"],
         $_POST["n_gestion_commentaire"],
         $_POST["lien"]
-    )) or die ( pg_last_error());
+    ));
 }
 
 //ferme la connexion a la BD
 pg_close($dbconn);
 
-echo $doc.' enregistré(e)';
+if ($return_execute == false) {
+    echo 0;
+} else {
+    echo $doc.' enregistré(e)';
+};
 
 
 

@@ -44,7 +44,7 @@ function addResultsBS(config, results, term) {
     //If bold option is true in config
     if(config.bold) {
         //search with case insensitive
-        let re = new RegExp( term, "i");
+        let re = new RegExp( decodeURIComponent(term), "i");
         let boldname = "";
         let ename = result[config.fetchMap.name];
         let isub = ename.search(re);
@@ -116,6 +116,7 @@ function handleInputBS(e, config, obj) {
           let method = 'POST';
           let url = config.ajaxurl;
           xmlhttp.open(method, url , true);
+          xmlhttp.overrideMimeType('text/xml; charset=UTF-8');
           xmlhttp.onerror = function () {
               console.log("** An error occurred during the transaction");
           };

@@ -129,7 +129,7 @@ $("#save_update_pwd_mail").on('click',function(e){
                         alert("Un mail vient d'être envoyé à "+mail+",\n Vous pouvez dès à présent vous connecter à l'application");
                         $('#ModalDelete').modal('hide');
                     } else {
-                        alert("Un compte existe déjà pour cette adresse");
+                        alert("La réinitialisation du mot de passe à échouée :( \n l'utilisateur·rice n'existe pas.");
                     }
                 }
         });

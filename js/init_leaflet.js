@@ -24,30 +24,25 @@ var contour_green={
 
 function initmap() {
     // set up the map
-    map = new L.Map('map'//,{drawControl: true}
-    );
+
     
 
-    //TileLayer
+    map = new L.Map('map');
+    
     var ignAttrib = ' IGN / Géoportail';
     var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-    var stamenAttrib = 'Map data © <a href="http://maps.stamen.com/#watercolor/12/37.7706/-122.3782">maps.stamen.com</a>  ';
     
-    var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
-    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    //var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
+    //var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var ignOrtho='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
-    var StamenWaterColor='https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg';
-    //var ign_cadastre='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=CADASTRALPARCELS.PARCELS&format=image/jpeg&style=normal';
 
-    var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
-    var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    //var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
+    //var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
     var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.7});
-    //var ignC = new L.TileLayer(ign_cadastre,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.7});
-    var swc = new L.TileLayer(StamenWaterColor,{minZoom:4,maxZoom:22,attribution:stamenAttrib,opacity: 0.7});
+
+    map.setView(new L.LatLng(49.3,0.52),8);
+    map.addLayer(ignO);
     
-    
-    map.setView(new L.LatLng(48.900,-0.47),8);
-    map.addLayer(swc);
     
     
     // Créer une couche geojson vide pour les Contours Admin
@@ -103,7 +98,7 @@ var content = '\
                         data     : {id: feature.properties.id},
                         method   : "POST",
                         dataType : "json",
-                        async    : false,
+                        async    : true,
                         error    : function(request, error) { alert("L'identifiant de parcelle n'a pas de correspondance majiic DGFIP v.2018\nContactez votre géomaticien");},
                         success  : function(data) {
                             //dt4.clear().draw();
@@ -129,7 +124,7 @@ var content = '\
     }).addTo(map);
     
     overlaysMaps={"Parcelles":parcelles,"Contours Administratifs":admin_geojson_feature};
-    baseMaps={ "IGN Ortho":ignO,"OSM":osm,"OSM (Noir & Blanc)":osmbg,"Watercolor":swc }; //"IGN Parcellaire":ign_cadastre,
+    baseMaps={"Ortho (IGN)":ignO};//,"OSM":osm,"OSM (Noir & Blanc)":osmbg
     //baseMaps={"OSM N&B":osmbg,"OSM Watercolor":osmWatercolor};
     ControlLayer=L.control.layers(baseMaps,overlaysMaps).addTo(map); 
         

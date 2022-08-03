@@ -14,7 +14,6 @@ function delete_file(filepath_name) {
         });
 }
 
-
 //compare les valeurs des propriétés d'objet
 function isEquivalent(a, b) {
     // Create arrays of property names
@@ -35,18 +34,6 @@ function isEquivalent(a, b) {
     }
     return true;
 }
-//var jangoFett = {
-//    occupation: "Bounty Hunter",
-//    genetics: "superb",
-//    trucotro:"aa"
-//};
-//var bobaFett = {
-//    occupation: "Bounty Hunter",
-//    genetics: "superb",
-//    trucotro:"aa"
-//};
-//// Outputs: true
-//console.log(isEquivalent(bobaFett, jangoFett));
 
 
 

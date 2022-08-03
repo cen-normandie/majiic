@@ -236,12 +236,6 @@ $( "#site_autocomplete_todelete" ).autocomplete({
 
 
 
-
-
-
-
-
-
 function get_data_parcelle_for_update (id_site) {
     var id_site_ = id_site;
     //requete sur le parcellaire
@@ -448,11 +442,7 @@ $(document).ready(function(){
             $('#p_ddg'+i).val(p_ddg_);
         }
         
-        
-        
-        i++;
-        
-        
+        i++;  
         
     });
     $("#delete_row").click(function(){

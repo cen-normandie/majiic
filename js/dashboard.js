@@ -224,7 +224,7 @@ function update_graphs (sites_json) {
                 d76s += sites_json[site].surface;
                 break;
             default:
-              console.log(`Pas trouvé ${expr}.`);
+              console.log(`Département non-défini pour le site ${sites_json[site].id}.`);
           }
     }
     // graph_typologie_site("graph_typologie_site", 

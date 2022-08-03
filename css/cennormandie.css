@@ -13,7 +13,9 @@
     transform: rotate(359deg);
   }
 }
-
+.datepicker.dropdown-menu {
+    z-index: 9999 !important;
+}
 a.nav-link {
 color:rgba(206,212,218,0.6);
 }
@@ -100,3 +102,12 @@ $purple:        #8917cb;
   text-overflow: ellipsis;
 }
 
+/* Modal padding disable */
+body {
+  padding-right:0 !important;
+}
+
+.modal-open {
+  overflow:auto;
+  padding-right:0 !important;
+}
