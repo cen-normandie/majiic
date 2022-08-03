@@ -13,7 +13,6 @@
       
   
   <?php 
-  session_start();
   
     //WRITE ALL SESSIONS VARS
     //echo "<h3> PHP List All Session Variables</h3>";
