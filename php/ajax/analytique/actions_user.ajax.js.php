@@ -19,12 +19,12 @@ WITH t as (
   a.code_action, 
   a.financements, 
   a.site, 
-  a.personne, 
+  $1::text as personne, 
   a.nb_h, 
   a.id_bdd
   FROM $progecen_actions a
     LEFT JOIN $progecen_projets p on a.id_projet = p.id_projet 
-  WHERE personne = $1
+  WHERE personnes ~* $1
 )
 SELECT json_agg(t) FROM t
 "

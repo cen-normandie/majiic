@@ -161,42 +161,34 @@ if (in_array($_SESSION['email'], $admins)) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex flex-wrap w-75 m-2" id="actions_list">
+                            <div class="d-flex flex-column w-75 m-2" id="actions_list">
                                 <div id="list_actions">
-                                    <div class="w-100 p-2 border">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-auto">
-                                                <label for="id_action" class="col-form-label">0</label>
+                                    <div class="d-flex flex-column w-100 p-2">
+                                        <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
+                                            <div class="">
+                                                <label id="id_action_${current_actions}" class="col-form-label">${current_actions}</label>
                                             </div>
-                                            <div class="col-auto">
-                                                <input type="text" id="nom_action" value="ANIM_TRANSVERSALE" disabled></input>
+                                            <div class="">
+                                                <input type="text" id="nom_action_${current_actions}" value="${action}" disabled></input>
                                             </div>
-                                            <div class="col-auto">
-                                                <input type="text"  id="fianceurs_action" value="f1-50%|f2-40%" disabled></input>
+                                            <div class="">
+                                                <input type="text"  id="financeurs_action_${current_actions}" value="${str_f}" disabled></input>
                                             </div>
-                                            <div class="col-auto">
-                                                <input type="text"  id="heures_action" value="50" disabled></input>
+                                            <div class="">
+                                                <input type="text"  id="site_action_${current_actions}" value="${site}" disabled></input>
+                                            </div>
+                                            <div class="">
+                                                <input type="text"  id="heures_action_${current_actions}" value="${heures}" disabled></input>
+                                            </div>
+                                            <div class="">
+                                                <button class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
+                                            </div>
+                                            <div>
+                                                <button class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-wrap m-2 justify-content-end">
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
-                                            <h5 id="a0_p1"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
+                                        <div class="d-flex flex-wrap justify-content-end align-items-center">
+                                            <div id="a0_p0"><span class="badge mt-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></div>
                                         </div>
                                     </div>
                                 </div>

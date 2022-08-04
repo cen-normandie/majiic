@@ -1,7 +1,7 @@
 <?php
 include '../../properties.php';
 
-$term = $_POST["term"];
+/* $term = $_POST["term"]; */
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());

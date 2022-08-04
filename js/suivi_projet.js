@@ -5,6 +5,7 @@ let actions = '';//actions all (1er chargement)
 let actions_f = '';//actions filtrés
 let actions_liste = '';//actions liste (1er chargement)
 let sites = '';//sites all (1er chargement)
+let current_actions = 0; // liste actuelles des actions du projet en édition
 
 //EVENT ON SWITCH
 $('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
@@ -157,7 +158,7 @@ function update_view_projet(projets_json) {
 change_load("Chargement des données");
 
 //////////////////////////////////////////////////////
-//Gestion des dom et evenement pour ajouter une action
+//Gestion des dom et evenement pour ajouter pré-créer une action
 //////////////////////////////////////////////////////
     //FINANCEUR
     let nb_financeurs=0;
@@ -166,7 +167,7 @@ change_load("Chargement des données");
         let tmpf= document.getElementById("input_financeurs").value;
         let tmpfp= document.getElementById("input_p_financeurs").value;
         return `
-        <div  class="d-flex  justify-content-evenly my-2 w-75" id="f_${nb_financeurs}">
+        <div  class="d-flex justify-content-evenly my-2 w-75 e_financeurs" id="f_${nb_financeurs}">
             <div class="w-75" >
                 <div class="input-group input-group-sm">
                     <span for="input_financeurs" class="input-group-text">F_${nb_financeurs} : </span>
@@ -221,29 +222,57 @@ change_load("Chargement des données");
     });
 
 //////////////////////////////////////////////////////
-//Gestion des dom et evenement la liste des actions du projet
+//Gestion des dom et evenement pour la liste des actions du projet
 //////////////////////////////////////////////////////
 function get_action_content () {
-        let action = document.getElementById("input_personnes").value;
-        let site = document.getElementById("input_personnes").value;
-        let heures = document.getElementById("input_personnes").value;
+        let action = document.getElementById("input_actions").value;
+        let site = document.getElementById("input_site").value;
+        let heures = document.getElementById("input_heures").value;
         let financeurs = '';
-        return `
-        <div  class="d-flex  justify-content-evenly my-2 w-75" id="f_${nb_personnes}">
-            <div class="w-75" >
-                <div class="input-group input-group-sm">
-                    <span for="input_financeurs" class="input-group-text">P_${nb_personnes} : </span>
-                    <input type="text" class="form-control" id="input_personnes_${nb_personnes}" aria-describedby="basic-addon3" value="${tmpp}">
+        const e_financeurs_l = document.querySelectorAll(".e_financeurs");
+        let i=0;
+        let str_f='';
+        e_financeurs_l.forEach(fx => {
+            const fx_ = document.getElementById("input_financeurs_"+i).value;
+            const fx_p = document.getElementById("input_p_financeurs_"+i).value;
+            str_f +=(i>0 ? '|' : '');
+            str_f=str_f+fx_+"_"+fx_p;
+            i++;
+	    });
+        document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
+        `<div class="w-100 p-2 border">
+            <div class="row g-3 align-item-center">
+                <div class="col-auto">
+                    <label id="id_action_${current_actions}" class="col-form-label">${current_actions}</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="nom_action_${current_actions}" value="${action}" disabled></input>
+                </div>
+                <div class="col-auto">
+                    <input type="text"  id="financeurs_action_${current_actions}" value="${str_f}" disabled></input>
+                </div>
+                <div class="col-auto">
+                    <input type="text"  id="site_action_${current_actions}" value="${site}" disabled></input>
+                </div>
+                <div class="col-auto">
+                    <input type="text"  id="heures_action_${current_actions}" value="${heures}" disabled></input>
+                </div>
+                <div class="col-auto">
+                    <select>
+                        <option>A</option>
+                        <option>A</option>
+                        <option>A</option>
+                    </select>
                 </div>
             </div>
-            <div class="ml-2">
-                <div id="minus_p_${nb_personnes}" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-minus"></i></div>
+            <div class="d-flex flex-wrap m-2 justify-content-end align-item-center">
+                <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
             </div>
-        </div>
-        `;
+        </div>`);
     }
 document.getElementById("add_action").addEventListener("click", function() {
-    
+    get_action_content();
+
 });
 
 

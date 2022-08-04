@@ -29,10 +29,10 @@ WITH t as (
   p.date_butoir_dossier, 
   p.tags,
   p.color,
-  STRING_AGG(a.id_action||'_'||a.code_action||'_'||a.personne||'_'||a.nb_h , '|') as actions
+  STRING_AGG(a.id_action||'_'||a.code_action||'_'||$1||'_'||a.nb_h , '|') as actions
   FROM $progecen_projets p
     LEFT JOIN $progecen_actions a on a.id_projet = p.id_projet 
-  WHERE personne = $1
+  WHERE a.personnes ~* $1
   group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
 )
 SELECT json_agg(t) FROM t

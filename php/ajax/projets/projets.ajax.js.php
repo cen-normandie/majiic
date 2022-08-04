@@ -35,7 +35,7 @@ WITH t as (
 		a.code_action,
 		a.financements,
 		a.site,
-		a.personne as personne_action,
+		a.personnes as personne_action,
 		a.nb_h
 	  FROM $progecen_actions a 
 	  where a.id_projet = p.id_projet

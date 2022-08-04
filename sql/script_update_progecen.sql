@@ -215,16 +215,37 @@ BEGIN
         END;
 $BODY$;
 /* FONCTION trigger calculant e_nb_h */
-CREATE OR REPLACE FUNCTION progecen_copy.calcul_nb_h_temps()
+CREATE FUNCTION progecen_copy.calcul_nb_h_temps()
     RETURNS trigger
     LANGUAGE 'plpgsql'
     COST 100
     VOLATILE NOT LEAKPROOF
 AS $BODY$
-DECLARE
+declare
 BEGIN 
 	UPDATE progecen_copy.temps SET e_nb_h = EXTRACT(epoch FROM (NEW.e_end - NEW.e_start)::interval )/3600 
 	WHERE e_id = NEW.e_id;
+
+	--Update table ACTIONS heure projet total
+	with t as (
+		select sum(e_nb_h) as total  from progecen_copy.temps
+		where e_id_projet = new.e_id_projet
+		and e_id_action = new.e_id_action
+		and e_personne = new.e_personne
+	)
+	update progecen_copy.actions set nb_h = t.total
+	from t 
+	where actions.id_projet = new.e_id_projet::integer
+	and actions.id_action = new.e_id_action::integer
+	and actions.personnes ~* new.e_personne;
+	--Update table PROJETS
+	with t as (
+		select sum(nb_h) as total  from progecen_copy.actions 
+		where id_projet = new.e_id_projet::integer
+	)
+	update progecen_copy.projets set h_total = t.total
+	from t where projets.id_projet = new.e_id_projet::integer;
+
 RETURN NULL; 
 END;
 $BODY$;
@@ -252,21 +273,23 @@ with cf as (select count(*)+1 as nb from progecen_copy.financeurs)
 SELECT setval('progecen_copy.financeurs_id_financeur_seq', cf.nb , true) from cf;
 
 
+ALTER TABLE progecen_copy.actions
+  RENAME COLUMN personne TO personnes;
 
 
+select  	strpos('Benoit Perceval|Lydie Doisy', 'z') 
+where  	strpos('Benoit Perceval|Lydie Doisy', 'z') >0
+
+with personne as (
+	select regexp_matches( 'Benoit Perceval|Lydie Doisy', 'z') as z
+)
+select personne.z[1] from personne where personne.z[1] is not null
 
 
+select    regexp_matches( 'Benoit Perceval|Lydie Doisy', 'Lydie')::array[1]
+select array_to_string(regexp_split_to_array('Benoit Perceval|Lydie Doisy', 'Lydie'))
 
-
-
-
-
-
-
-
-
-
-
+select   'Lydie' ~* 'Benoit Perceval|Lydie Doisy'
 
 
 
