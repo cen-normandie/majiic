@@ -5,7 +5,9 @@ let actions = '';//actions all (1er chargement)
 let actions_f = '';//actions filtrés
 let actions_liste = '';//actions liste (1er chargement)
 let sites = '';//sites all (1er chargement)
-let current_actions = 0; // liste actuelles des actions du projet en édition
+let c_actions = 0; // liste actuelles des actions du projet en édition
+let c_action = ''; // id_action actuelle
+let c_projet = ''; // id_projet actuel
 
 //EVENT ON SWITCH
 $('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
@@ -31,6 +33,7 @@ function load_projets_ajax () {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
             projets = data ;
+            //console.log(`Projets ${projets}`);
             let projets_array = [];
             for (const projet in projets) {
                 projets_array.push(projets[projet].id+' - '+projets[projet].name);
@@ -95,7 +98,6 @@ function load_personnes_ajax () {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
             personnes_liste = data ;
-            console.log(data);
             let personnes_liste_array = [];
             for (const personne in personnes_liste) {
                 personnes_liste_array.push(personnes_liste[personne].id+' - '+personnes_liste[personne].name);
@@ -145,14 +147,58 @@ function apply_filters() {
             //console.log(`${property}: ${filters_active[property]}`);
             projets_f = filtre_obj(projets_f, property);
             actions_f = JSON.parse(projets_f[0].json_actions);
+            console.log(actions_f);
         }
     }
+    
     update_view_projet(projets_f);
 };
 
+//Charge les éléments d'un projet existant
 function update_view_projet(projets_json) {
     for (const actions in actions_f) {
+        //LOAD PROJET PROPERTIES
+
+        const personnes_actions = actions_f[actions].personne_action.split('|');
         
+
+        document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
+        `
+        <div class="d-flex flex-column w-100 p-2">
+            <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
+                <div class="">
+                    <label id="id_action_${actions}" class="col-form-label">${actions_f[actions].id_action}</label>
+                </div>
+                <div class="">
+                    <input type="text" id="nom_action_${actions}" value="${actions_f[actions].code_action}" disabled></input>
+                </div>
+                <div class="">
+                    <input type="text"  id="financeurs_action_${actions}" value="${actions_f[actions].financements}" disabled></input>
+                </div>
+                <div class="">
+                    <input type="text"  id="site_action_${actions}" value="${actions_f[actions].site}" disabled></input>
+                </div>
+                <div class="">
+                    <input type="text"  id="heures_action_${actions}" value="${actions_f[actions].nb_h}" disabled></input>
+                </div>
+                <div class="">
+                    <button id="add_p_action_${actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
+                </div>
+                <div>
+                    <button id="del_action_${actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-end align-items-center id="list_personnes_action_${actions}">
+            </div>
+        </div>`
+        );
+        for (const pe in personnes_actions) {
+            //document.getElementById("list_personnes_action_"+actions).insertAdjacentHTML("beforeend", `
+            //<div id=""><span class="badge mt-1 bg-success text-light">${personnes_actions[pe]}<i id="" class="ps-1 fas fa-window-close"></i></span></div>`);
+            console.log(personnes_actions[pe]);
+          }
+        
+
     }
 }
 change_load("Chargement des données");
@@ -192,6 +238,7 @@ change_load("Chargement des données");
         nb_financeurs++;
     });
     
+
     //PERSONNES
     let nb_personnes=0;
     
@@ -221,6 +268,13 @@ change_load("Chargement des données");
         nb_personnes++;
     });
 
+
+//EDITION DES ACTIONS
+let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPersonne'), {
+    keyboard: false
+  })
+
+
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour la liste des actions du projet
 //////////////////////////////////////////////////////
@@ -228,7 +282,6 @@ function get_action_content () {
         let action = document.getElementById("input_actions").value;
         let site = document.getElementById("input_site").value;
         let heures = document.getElementById("input_heures").value;
-        let financeurs = '';
         const e_financeurs_l = document.querySelectorAll(".e_financeurs");
         let i=0;
         let str_f='';
@@ -240,41 +293,52 @@ function get_action_content () {
             i++;
 	    });
         document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
-        `<div class="w-100 p-2 border">
-            <div class="row g-3 align-item-center">
-                <div class="col-auto">
-                    <label id="id_action_${current_actions}" class="col-form-label">${current_actions}</label>
+        `
+        <div class="d-flex flex-column w-100 p-2">
+            <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
+                <div class="">
+                    <label id="id_action_${c_actions}" class="col-form-label">${c_actions}</label>
                 </div>
-                <div class="col-auto">
-                    <input type="text" id="nom_action_${current_actions}" value="${action}" disabled></input>
+                <div class="">
+                    <input type="text" id="nom_action_${c_actions}" value="${action}" disabled></input>
                 </div>
-                <div class="col-auto">
-                    <input type="text"  id="financeurs_action_${current_actions}" value="${str_f}" disabled></input>
+                <div class="">
+                    <input type="text"  id="financeurs_action_${c_actions}" value="${str_f}" disabled></input>
                 </div>
-                <div class="col-auto">
-                    <input type="text"  id="site_action_${current_actions}" value="${site}" disabled></input>
+                <div class="">
+                    <input type="text"  id="site_action_${c_actions}" value="${site}" disabled></input>
                 </div>
-                <div class="col-auto">
-                    <input type="text"  id="heures_action_${current_actions}" value="${heures}" disabled></input>
+                <div class="">
+                    <input type="text"  id="heures_action_${c_actions}" value="${heures}" disabled></input>
                 </div>
-                <div class="col-auto">
-                    <select>
-                        <option>A</option>
-                        <option>A</option>
-                        <option>A</option>
-                    </select>
+                <div class="">
+                    <button id="add_p_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
+                </div>
+                <div>
+                    <button id="del_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
-            <div class="d-flex flex-wrap m-2 justify-content-end align-item-center">
-                <h5 id="a0_p0"><span class="badge m-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></h5>
+            <div class="d-flex flex-wrap justify-content-end align-items-center id="list_personnes_action_${c_actions}">
+                <div id="a0_p0"><span class="badge mt-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></div>
             </div>
         </div>`);
     }
 document.getElementById("add_action").addEventListener("click", function() {
     get_action_content();
-
+    add_events_actions (); //buttons add user, delete, modal..
+    c_actions++;
 });
 
+function add_events_actions () {
+    const elements1 = document.querySelectorAll(`[id^="add_p"]`);
+    elements1.forEach(element => {
+        element.addEventListener("click", function() {
+            //c_action = projets_f.id
+            ModalAddPersonne.show(element.getAttribute('id'));
+        });
+    });
+
+}
 
 
 

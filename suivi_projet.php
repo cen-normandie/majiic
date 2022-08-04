@@ -121,22 +121,6 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <div  id="list_f" class="d-flex flex-column align-items-end w-100">
                                 </div>
                                 <div class="d-flex  justify-content-between my-2">
-                                    <div class="autocompleteBS w-75" id="personnes">
-                                        <div class="input-group input-group-sm">
-                                            <span for="input_personnes" class="input-group-text">Personne : </span>
-                                            <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
-                                            <span class="input-group-text">% :</span>
-                                            <input type="number" class="form-control" id="input_p_financeurs" aria-describedby="basic-addon3" placeholder="100">
-                                            <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-2">
-                                        <div id="plus_p" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-plus"></i></div>
-                                    </div>
-                                </div>
-                                <div  id="list_p" class="d-flex flex-column align-items-end w-100">
-                                </div>
-                                <div class="d-flex  justify-content-between my-2">
                                     <div class="autocompleteBS w-75" id="sites">
                                         <div class="input-group input-group-sm">
                                             <span for="input_site" class="input-group-text">Site : </span>
@@ -163,36 +147,36 @@ if (in_array($_SESSION['email'], $admins)) {
                             </div>
                             <div class="d-flex flex-column w-75 m-2" id="actions_list">
                                 <div id="list_actions">
-                                    <div class="d-flex flex-column w-100 p-2">
-                                        <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
-                                            <div class="">
-                                                <label id="id_action_${current_actions}" class="col-form-label">${current_actions}</label>
-                                            </div>
-                                            <div class="">
-                                                <input type="text" id="nom_action_${current_actions}" value="${action}" disabled></input>
-                                            </div>
-                                            <div class="">
-                                                <input type="text"  id="financeurs_action_${current_actions}" value="${str_f}" disabled></input>
-                                            </div>
-                                            <div class="">
-                                                <input type="text"  id="site_action_${current_actions}" value="${site}" disabled></input>
-                                            </div>
-                                            <div class="">
-                                                <input type="text"  id="heures_action_${current_actions}" value="${heures}" disabled></input>
-                                            </div>
-                                            <div class="">
-                                                <button class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
-                                            </div>
-                                            <div>
-                                                <button class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-wrap justify-content-end align-items-center">
-                                            <div id="a0_p0"><span class="badge mt-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
+                            <!--<div class="d-flex flex-column w-100 p-2">
+                                <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
+                                    <div class="">
+                                        <label id="id_action_${c_actions}" class="col-form-label">${c_actions}</label>
+                                    </div>
+                                    <div class="">
+                                        <input type="text" id="nom_action_${c_actions}" value="${action}" disabled></input>
+                                    </div>
+                                    <div class="">
+                                        <input type="text"  id="financeurs_action_${c_actions}" value="${str_f}" disabled></input>
+                                    </div>
+                                    <div class="">
+                                        <input type="text"  id="site_action_${c_actions}" value="${site}" disabled></input>
+                                    </div>
+                                    <div class="">
+                                        <input type="text"  id="heures_action_${c_actions}" value="${heures}" disabled></input>
+                                    </div>
+                                    <div class="">
+                                        <button id="add_p_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
+                                    </div>
+                                    <div>
+                                        <button id="del_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-end align-items-center id="list_personnes_action_${c_actions}">
+                                    <div id="a0_p0"><span class="badge mt-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></div>
+                                </div>
+                            </div>-->
                         </div>
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
@@ -281,6 +265,57 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
 	</div>
 
+</div>
+
+
+<!-- The Modal -->
+<div class="modal p-0" id="ModalAddPersonne">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex justify-content-between w-100">
+                <h5 class="modal-title">Ajouter une personne sur l'action : </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+        <div class="d-flex flex-column px-2">
+                <div class="d-flex  justify-content-between my-2">
+                    <div class="autocompleteBS w-75" id="personnes">
+                        <div class="input-group input-group-sm">
+                            <span for="input_personnes" class="input-group-text">Personne : </span>
+                            <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
+                            <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="ml-2">
+                        <div id="plus_p" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-plus"></i></div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center" id="help">
+                    
+                </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
+        <div class="col-4 d-flex justify-content-between w-100">
+            <button type="button" class="btn btn-outline-success" id="update_action_personne">Ajouter</button>
+            <button type="button" class="btn btn-outline-danger" id="delete_action_personne">Supprimer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 
