@@ -156,49 +156,47 @@ function apply_filters() {
 
 //Charge les éléments d'un projet existant
 function update_view_projet(projets_json) {
+    c_actions =0;
     for (const actions in actions_f) {
         //LOAD PROJET PROPERTIES
 
         const personnes_actions = actions_f[actions].personne_action.split('|');
-        
+        let badges_ = '';
+        //Liste des badges personnes
+        for (const pe in personnes_actions) {
+            badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-success text-light">'+personnes_actions[pe]+'<i id="" class="ps-1 fas fa-window-close"></i></span></div>';
+        }
 
         document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
         `
-        <div class="d-flex flex-column w-100 p-2">
-            <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
-                <div class="">
-                    <label id="id_action_${actions}" class="col-form-label">${actions_f[actions].id_action}</label>
+        <div class="d-flex flex-column w-100 p-2 m-2 border border-success rounded">
+            <div class="d-flex w-100 gx-1 align-items-center justify-content-between ">
+                <div class="col-xs-1 text-truncate">
+                    <label id="id_action_${actions}" class="p-1 col-form-label text-secondary">${actions_f[actions].id_action}</label>
                 </div>
-                <div class="">
-                    <input type="text" id="nom_action_${actions}" value="${actions_f[actions].code_action}" disabled></input>
+                <div class="col-xs-3 text-truncate">
+                    <span type="text" id="nom_action_${actions}" value="">${actions_f[actions].code_action}</span>
                 </div>
-                <div class="">
-                    <input type="text"  id="financeurs_action_${actions}" value="${actions_f[actions].financements}" disabled></input>
+                <div class="col-xs-3">
+                    <span type="text"  id="financeurs_action_${actions}" value="" >${actions_f[actions].financements}</span>
                 </div>
-                <div class="">
-                    <input type="text"  id="site_action_${actions}" value="${actions_f[actions].site}" disabled></input>
+                <div class="col-xs-2">
+                    <span type="text"  id="site_action_${actions}" value="" >${actions_f[actions].site}</span>
                 </div>
-                <div class="">
-                    <input type="text"  id="heures_action_${actions}" value="${actions_f[actions].nb_h}" disabled></input>
+                <div class="col-xs-1">
+                    <span type="text"  id="heures_action_${actions}" value="" disabled>${actions_f[actions].nb_h}</span>
                 </div>
-                <div class="">
-                    <button id="add_p_action_${actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
-                </div>
-                <div>
-                    <button id="del_action_${actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
+                <div class="col-xs-1">
+                    <button id="add_p_action_${actions}" class=" bg-light border-0 text-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
+                    <button id="del_action_${actions}" class=" bg-light border-0 text-danger fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
             <div class="d-flex flex-wrap justify-content-end align-items-center id="list_personnes_action_${actions}">
+                ${badges_}
             </div>
         </div>`
         );
-        for (const pe in personnes_actions) {
-            //document.getElementById("list_personnes_action_"+actions).insertAdjacentHTML("beforeend", `
-            //<div id=""><span class="badge mt-1 bg-success text-light">${personnes_actions[pe]}<i id="" class="ps-1 fas fa-window-close"></i></span></div>`);
-            console.log(personnes_actions[pe]);
-          }
-        
-
+        c_actions++;
     }
 }
 change_load("Chargement des données");
@@ -242,31 +240,31 @@ change_load("Chargement des données");
     //PERSONNES
     let nb_personnes=0;
     
-    function get_personne_content () {
-        let tmpp= document.getElementById("input_personnes").value;
-        return `
-        <div  class="d-flex  justify-content-evenly my-2 w-75" id="f_${nb_personnes}">
-            <div class="w-75" >
-                <div class="input-group input-group-sm">
-                    <span for="input_financeurs" class="input-group-text">P_${nb_personnes} : </span>
-                    <input type="text" class="form-control" id="input_personnes_${nb_personnes}" aria-describedby="basic-addon3" value="${tmpp}">
-                </div>
-            </div>
-            <div class="ml-2">
-                <div id="minus_p_${nb_personnes}" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-minus"></i></div>
-            </div>
-        </div>
-        `;
-    }
+    //function get_personne_content () {
+    //    let tmpp= document.getElementById("input_personnes").value;
+    //    return `
+    //    <div  class="d-flex  justify-content-evenly my-2 w-75" id="f_${nb_personnes}">
+    //        <div class="w-75" >
+    //            <div class="input-group input-group-sm">
+    //                <span for="input_financeurs" class="input-group-text">P_${nb_personnes} : </span>
+    //                <input type="text" class="form-control" id="input_personnes_${nb_personnes}" aria-describedby="basic-addon3" value="${tmpp}">
+    //            </div>
+    //        </div>
+    //        <div class="ml-2">
+    //            <div id="minus_p_${nb_personnes}" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-minus"></i></div>
+    //        </div>
+    //    </div>
+    //    `;
+    //}
     
-    document.getElementById("plus_p").addEventListener("click", function() {
-        document.getElementById('list_p').insertAdjacentHTML("beforeend", get_personne_content() );
-        document.getElementById("minus_p_"+nb_personnes).addEventListener("click", function() {
-            this.parentNode.parentNode.remove();
-            nb_personnes--;
-        }); 
-        nb_personnes++;
-    });
+    //document.getElementById("plus_p").addEventListener("click", function() {
+    //    document.getElementById('list_p').insertAdjacentHTML("beforeend", get_personne_content() );
+    //    document.getElementById("minus_p_"+nb_personnes).addEventListener("click", function() {
+    //        this.parentNode.parentNode.remove();
+    //        nb_personnes--;
+    //    }); 
+    //    nb_personnes++;
+    //});
 
 
 //EDITION DES ACTIONS
@@ -294,32 +292,29 @@ function get_action_content () {
 	    });
         document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
         `
-        <div class="d-flex flex-column w-100 p-2">
-            <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
-                <div class="">
-                    <label id="id_action_${c_actions}" class="col-form-label">${c_actions}</label>
+        <div class="d-flex flex-column w-100 p-2 m-2 border border-success rounded">
+            <div class="d-flex w-100 gx-1 align-items-center justify-content-between ">
+                <div class="col-xs-1 text-truncate">
+                    <label id="id_action_${c_actions}" class="p-1 col-form-label text-secondary">${c_actions}</label>
                 </div>
-                <div class="">
-                    <input type="text" id="nom_action_${c_actions}" value="${action}" disabled></input>
+                <div class="col-xs-3 text-truncate">
+                    <span type="text" id="nom_action_${c_actions}" value="">${action}</span>
                 </div>
-                <div class="">
-                    <input type="text"  id="financeurs_action_${c_actions}" value="${str_f}" disabled></input>
+                <div class="col-xs-3">
+                    <span type="text"  id="financeurs_action_${c_actions}" value="" >${str_f}</span>
                 </div>
-                <div class="">
-                    <input type="text"  id="site_action_${c_actions}" value="${site}" disabled></input>
+                <div class="col-xs-2">
+                    <span type="text"  id="site_action_${c_actions}" value="" >${site}</span>
                 </div>
-                <div class="">
-                    <input type="text"  id="heures_action_${c_actions}" value="${heures}" disabled></input>
+                <div class="col-xs-1">
+                    <span type="text"  id="heures_action_${c_actions}" value="" disabled>${heures}</span>
                 </div>
-                <div class="">
-                    <button id="add_p_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
-                </div>
-                <div>
-                    <button id="del_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
+                <div class="col-xs-1">
+                    <button id="add_p_action_${c_actions}" class=" bg-light border-0 text-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
+                    <button id="del_action_${c_actions}" class=" bg-light border-0 text-danger fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
             <div class="d-flex flex-wrap justify-content-end align-items-center id="list_personnes_action_${c_actions}">
-                <div id="a0_p0"><span class="badge mt-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></div>
             </div>
         </div>`);
     }
@@ -332,8 +327,10 @@ document.getElementById("add_action").addEventListener("click", function() {
 function add_events_actions () {
     const elements1 = document.querySelectorAll(`[id^="add_p"]`);
     elements1.forEach(element => {
+        console.log(element);
         element.addEventListener("click", function() {
             //c_action = projets_f.id
+            document.getElementById("id_action_update").insertAdjacentHTML("beforeend", element.getAttribute('id').replace('add_p_action_', '') );
             ModalAddPersonne.show(element.getAttribute('id'));
         });
     });

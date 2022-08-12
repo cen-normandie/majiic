@@ -178,6 +178,9 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                             </div>-->
                         </div>
+                        <div class="d-flex justify-content-end">
+                            <button id="update_actions_projet" type="button" class="btn btn-outline-success"><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
+                        </div>
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
                     <div class="d-flex flex-column w-100 border border-secondary rounded-2 p-2">
@@ -280,6 +283,9 @@ if (in_array($_SESSION['email'], $admins)) {
                 <h5 class="modal-title">Ajouter une personne sur l'action : </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+            <div class="d-flex justify-content-between w-100">
+                <span id="id_action_update"></span>
+            </div>
         </div>
       </div>
 
@@ -288,19 +294,15 @@ if (in_array($_SESSION['email'], $admins)) {
 
         <div class="d-flex flex-column px-2">
                 <div class="d-flex  justify-content-between my-2">
-                    <div class="autocompleteBS w-75" id="personnes">
+                    <div class="autocompleteBS w-100" id="personnes">
                         <div class="input-group input-group-sm">
                             <span for="input_personnes" class="input-group-text">Personne : </span>
                             <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
                             <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
                         </div>
                     </div>
-                    <div class="ml-2">
-                        <div id="plus_p" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-plus"></i></div>
-                    </div>
                 </div>
                 <div class="d-flex justify-content-center" id="help">
-                    
                 </div>
         </div>
       </div>
@@ -310,7 +312,7 @@ if (in_array($_SESSION['email'], $admins)) {
         <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
         <div class="col-4 d-flex justify-content-between w-100">
             <button type="button" class="btn btn-outline-success" id="update_action_personne">Ajouter</button>
-            <button type="button" class="btn btn-outline-danger" id="delete_action_personne">Supprimer</button>
+            <button type="button" class="btn btn-outline-danger" id="delete_action_personne">Annuler</button>
         </div>
       </div>
 
