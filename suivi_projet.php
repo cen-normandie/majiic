@@ -87,65 +87,16 @@ if (in_array($_SESSION['email'], $admins)) {
                             <div class="my-2">
                                 <button class="ml-4 btn input-group-text justify-content-center" id="add"><i class="mx-2 fas fa-plus-square text-success"></i>Créer un projet</button>
                             </div>
+                            <div class="my-2">
+                                <button id="add_an_action" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#ModalAddAction"><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
+                            </div>
                         </div>
                     </div>
                     <!-- PANEL 100% ACTIONS -->
-                    <div class="d-flex flex-column w-100 border border-secondary rounded-2 p-2 mt-2 mb-2">
+                    <div class="d-flex flex-column w-100 border border-secondary rounded-2 my-2">
                         <div class="d-flex w-100 justify-content-center"><h4>Actions du projet</h4></div>
                         <div class="d-flex flex w-100">
-                            <div class="d-flex flex-column w-25 m-2 p-2 shadow-sm border">
-                                <h6>Nouvelle action :</h6>
-                                <div class="d-flex  justify-content-between my-2">
-                                    <div class="autocompleteBS w-75">
-                                        <div class="input-group input-group-sm">
-                                            <span for="input_actions" class="input-group-text">Action : </span>
-                                            <input type="text" class="form-control" id="input_actions" aria-describedby="basic-addon3" placeholder="fauche, ANIM_...">
-                                            <span class="input-group-text justify-content-center" id="del_action"><i class="far fa-trash-alt"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex  justify-content-between my-2">
-                                    <div class="autocompleteBS w-75" id="financeurs">
-                                        <div class="input-group input-group-sm">
-                                            <span for="input_financeurs" class="input-group-text">Financeur : </span>
-                                            <input type="text" class="form-control" id="input_financeurs" aria-describedby="basic-addon3" placeholder="AESN, Lehman Brothers...">
-                                            <span class="input-group-text">% :</span>
-                                            <input type="number" class="form-control" id="input_p_financeurs" aria-describedby="basic-addon3" placeholder="100">
-                                            <span class="input-group-text justify-content-center" id="del_financeur"><i class="far fa-trash-alt"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-2">
-                                        <div id="plus_f" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-plus"></i></div>
-                                    </div>
-                                </div>
-                                <div  id="list_f" class="d-flex flex-column align-items-end w-100">
-                                </div>
-                                <div class="d-flex  justify-content-between my-2">
-                                    <div class="autocompleteBS w-75" id="sites">
-                                        <div class="input-group input-group-sm">
-                                            <span for="input_site" class="input-group-text">Site : </span>
-                                            <input type="text" class="form-control" id="input_site" aria-describedby="basic-addon3" placeholder="...">
-                                            <span class="input-group-text justify-content-center" id="del_site"><i class="far fa-trash-alt"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex  justify-content-between my-2">
-                                    <div class="w-75">
-                                        <div class="input-group input-group-sm w-100">
-                                            <span for="input_heures" class="input-group-text">Heures : </span>
-                                            <input type="number" class="form-control" id="input_heures" aria-describedby="basic-addon3" placeholder="5">
-                                        </div>
-                                    </div>
-                                    <div class="ml-2">
-                                    </div>
-                                </div>
-                                <div class="d-flex  justify-content-end my-2">
-                                    <div class="">
-                                        <button id="add_action" type="button" class="btn btn-outline-success btn-sm"><i class="fas fa-plus pr-2"></i> Ajouter l'action</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column w-75 m-2" id="actions_list">
+                            <div class="d-flex flex-column col-md-6 col-lg-8" id="actions_list">
                                 <div id="list_actions">
                                 </div>
                             </div>
@@ -255,6 +206,7 @@ if (in_array($_SESSION['email'], $admins)) {
                             <div class="d-flex flex-wrap w-75 m-2" id="graphss">
                                 <div class="col-6" id="graph1" ></div>
                             </div>
+                            <div id="container"></div>
                         </div>
                     </div>
                 </div>
@@ -271,7 +223,7 @@ if (in_array($_SESSION['email'], $admins)) {
 </div>
 
 
-<!-- The Modal -->
+<!-- The Modal Personne-->
 <div class="modal p-0" id="ModalAddPersonne">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -319,6 +271,89 @@ if (in_array($_SESSION['email'], $admins)) {
     </div>
   </div>
 </div>
+
+<!-- The Modal Action-->
+<div class="modal p-0" id="ModalAddAction">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex justify-content-between w-100">
+                <h5 class="modal-title">Ajouter une action : </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="d-flex flex-inline w-100">
+                <small></small>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="d-flex flex-column w-100 px-2">
+            <h6>Nouvelle action :</h6>
+            <div class="d-flex  justify-content-between my-2">
+                <div class="autocompleteBS w-75">
+                    <div class="input-group input-group-sm">
+                        <span for="input_actions" class="input-group-text">Action : </span>
+                        <input type="text" class="form-control" id="input_actions" aria-describedby="basic-addon3" placeholder="fauche, ANIM_...">
+                        <span class="input-group-text justify-content-center" id="del_action"><i class="far fa-trash-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between my-2">
+                <div class="autocompleteBS w-75" id="financeurs">
+                    <div class="input-group input-group-sm">
+                        <span for="input_financeurs" class="input-group-text">Financeur : </span>
+                        <input type="text" class="form-control grow-1" id="input_financeurs" aria-describedby="basic-addon3" placeholder="Lehman Brothers...">
+                        <span class="input-group-text">% :</span>
+                        <input type="number" class="form-control" id="input_p_financeurs" aria-describedby="basic-addon3" placeholder="100">
+                        <span class="input-group-text justify-content-center" id="del_financeur"><i class="far fa-trash-alt"></i></span>
+                    </div>
+                </div>
+                <div class="ml-1">
+                    <div id="plus_f" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-plus"></i></div>
+                </div>
+            </div>
+            <div  id="list_f" class="d-flex flex-column align-items-end w-100">
+            </div>
+            <div class="d-flex  justify-content-between my-2">
+                <div class="autocompleteBS w-75" id="sites">
+                    <div class="input-group input-group-sm">
+                        <span for="input_site" class="input-group-text">Site : </span>
+                        <input type="text" class="form-control" id="input_site" aria-describedby="basic-addon3" placeholder="...">
+                        <span class="input-group-text justify-content-center" id="del_site"><i class="far fa-trash-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex  justify-content-between my-2">
+                <div class="w-75">
+                    <div class="input-group input-group-sm w-100">
+                        <span for="input_heures" class="input-group-text">Heures : </span>
+                        <input type="number" class="form-control" id="input_heures" aria-describedby="basic-addon3" placeholder="5">
+                    </div>
+                </div>
+                <div class="ml-2">
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
+        <div class="col-4 d-flex justify-content-between w-100">
+            <button type="button" class="btn btn-outline-success" id="add_action">Ajouter</button>
+            <button type="button" class="btn btn-outline-danger" id="cancel_action_modal">Annuler</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 
 <script src="js/jquery.js" ></script>

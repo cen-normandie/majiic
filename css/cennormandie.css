@@ -111,3 +111,9 @@ body {
   overflow:auto;
   padding-right:0 !important;
 }
+
+
+#list_actions {
+  max-height: 400px;
+  overflow-y: scroll;
+}
