@@ -36,8 +36,10 @@ WITH t as (
 		a.financements,
 		a.site,
 		a.personnes as personne_action,
-		a.nb_h
-	  FROM $progecen_actions a 
+		a.nb_h as previ,
+		coalesce(t.realise, 0) as realise,
+	 	p.color
+	  FROM $progecen_actions a left join $progecen_vue_tps_a t on t.e_id_action = a.id_action::text
 	  where a.id_projet = p.id_projet
 	 order by 3
 	) acts

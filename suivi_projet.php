@@ -84,12 +84,6 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <input class="form-check-input" type="checkbox" id="edit_projet">
                                 <label class="form-check-label" for="edit_projet">Editer le projet</label>
                             </div>
-                            <div class="my-2">
-                                <button class="ml-4 btn input-group-text justify-content-center" id="add"><i class="mx-2 fas fa-plus-square text-success"></i>Créer un projet</button>
-                            </div>
-                            <div class="my-2">
-                                <button id="add_an_action" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#ModalAddAction"><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
-                            </div>
                         </div>
                     </div>
                     <!-- PANEL 100% ACTIONS -->
@@ -130,7 +124,11 @@ if (in_array($_SESSION['email'], $admins)) {
                             </div>-->
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button id="update_actions_projet" type="button" class="btn btn-outline-success"><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
+                            <div class="d-flex flex-column my-2">
+                                <div class="py-1"><button id="add_an_action" type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#ModalAddAction" disabled><i class="fas fa-plus pr-2"></i> Ajouter une action</button></div>
+                                <button id="update_actions_projet" type="button" class="btn btn-outline-success" disabled><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
+                            </div>
+                            
                         </div>
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
@@ -203,11 +201,9 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                                 
                             </div>
-                            <div class="d-flex flex-wrap w-75 m-2" id="graphss">
-                                <div class="col-6" id="graph1" ></div>
+                            <div id="d-flex flex-wrap col-md-6 col-lg-8"></div>
+                                <div id="container"></div>
                             </div>
-                            <div id="container"></div>
-                        </div>
                     </div>
                 </div>
 
