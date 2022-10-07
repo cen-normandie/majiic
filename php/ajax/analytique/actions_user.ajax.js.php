@@ -20,7 +20,7 @@ WITH t as (
   a.financements, 
   a.site, 
   $1::text as personne, 
-  a.nb_h, 
+  a.nb_h_real, 
   a.id_bdd
   FROM $progecen_actions a
     LEFT JOIN $progecen_projets p on a.id_projet = p.id_projet 

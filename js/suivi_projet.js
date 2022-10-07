@@ -154,51 +154,42 @@ function apply_filters() {
     update_view_projet(projets_f);
 };
 
+//Initialisation du tableau datatable
+const dtActions =$('#actionsDT').DataTable({
+    "language": {
+        "paginate": {
+            "previous": "Préc.",
+            "next": "Suiv."
+        },
+        "search": "Filtrer :",
+        "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+        "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+        "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+        "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+        "sInfoPostFix":    "",
+        "sLoadingRecords": "Chargement en cours...",
+        "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+        "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau"
+    },
+    dom: '<"top"<"d-flex justify-content-end align-items-center"fB>>t',
+    buttons: [
+    { 
+        extend: 'excel', 
+        text:'Excel',
+        className: 'btn btn-sm btn-dark m-2',
+        init: function(api, node, config) {
+            //$(node).removeClass('dt-button')
+        }
+    }
+    ],
+    scrollY: '200px',
+    scrollCollapse: true,
+    paging: false
+});
+
 //Charge les éléments d'un projet existant
 function update_view_projet(projets_json) {
-    c_actions =0;
-    for (const actions in actions_f) {
-        //LOAD PROJET PROPERTIES
-
-        const personnes_actions = actions_f[actions].personne_action.split('|');
-        let badges_ = '';
-        //Liste des badges personnes
-        for (const pe in personnes_actions) {
-            badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-dark text-light">'+personnes_actions[pe]+'<i id="" class="ps-1 fas fa-window-close"></i></span></div>';
-        }
-
-        document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
-        `
-        <div class="d-flex flex-column flex-grow-1 m-2 border border-dark rounded">
-            <div class="d-flex gx-1 align-items-center justify-content-between d-flex flex-grow-1">
-                <div class="col-xs-1 text-truncate">
-                    <label id="id_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="p-1 col-form-label text-secondary">${actions_f[actions].id_action}</label>
-                </div>
-                <div class="col-xs-3 text-truncate">
-                    <span type="text" id="nom_action_${actions_f[actions].id_action}" value="">${actions_f[actions].code_action}</span>
-                </div>
-                <div class="col-xs-3">
-                    <span type="text"  id="financeurs_action_${actions_f[actions].id_action}" value="" >${actions_f[actions].financements}</span>
-                </div>
-                <div class="col-xs-2">
-                    <span type="text"  id="site_action_${actions_f[actions].id_action}" value="" >${actions_f[actions].site}</span>
-                </div>
-                <div class="col-xs-1">
-                    <span type="text"  id="heures_action_${actions_f[actions].id_action}" value="" disabled>${actions_f[actions].nb_h}</span>
-                </div>
-                <div class="col-xs-1">
-                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class=" bg-light border-0 text-dark fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
-                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class=" bg-light border-0 text-danger fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-            <div class="d-flex flex-wrap justify-content-end align-items-center id="ist_personnes_action_${actions_f[actions].id_action}">
-                ${badges_}
-            </div>
-        </div>`
-        );
-        add_events_actions ();
-        c_actions++;
-    }
+    update_dtActions();
 }
 change_load("Chargement des données");
 
@@ -279,6 +270,32 @@ change_load("Chargement des données");
     //    nb_personnes++;
     //});
 
+    //DATATABLE pur la liste des actions
+    //const dtActions = $('#actions_dt').DataTable({});
+    
+    function update_dtActions () {
+        dtActions.clear();
+        for (const actions in actions_f) {
+            const personnes_actions = actions_f[actions].personne_action.split('|');
+            var badges_ = '';
+            var x = `
+            <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-dark text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
+            <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-dark text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+            //Liste des badges personnes
+            for (const pe in personnes_actions) {
+                badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
+            }
+            let rowNode = dtActions.row.add( [
+                actions_f[actions].id_action, //id_action
+                actions_f[actions].code_action, //code_action
+                actions_f[actions].financements ?? '', //financeurs
+                actions_f[actions].site.replace("NaN", '') ?? '', //site
+                actions_f[actions].previ ?? 0, //nb_h
+                badges_, //personnes
+                x //test badges
+            ] ).draw();
+        }            
+    }
 
 //EDITION DES ACTIONS
 let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPersonne'), {

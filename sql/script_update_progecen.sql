@@ -202,9 +202,22 @@ ALTER COLUMN e_id_projet TYPE text USING e_id_projet::text;
 ALTER TABLE progecen_copy.temps
 ADD COLUMN e_color_selected text;
 
+/* Ajout champ real previ sur table actions et projets */
+/* AJOUT DES CHAMPS */
+ALTER TABLE progecen_copy.actions ADD COLUMN nb_h_previ numeric;
+ALTER TABLE progecen_copy.actions ADD COLUMN nb_h_real numeric;
+ALTER TABLE progecen_copy.actions ALTER COLUMN nb_h_real TYPE numeric USING nb_h::numeric;
+ALTER TABLE progecen_copy.actions DROP COLUMN nb_h;
+
+ALTER TABLE progecen_copy.projets ADD COLUMN nb_h_previ numeric;
+ALTER TABLE progecen_copy.projets ADD COLUMN nb_h_real numeric;
+ALTER TABLE progecen_copy.projets ALTER COLUMN nb_h_real TYPE numeric USING h_total::numeric;
+ALTER TABLE progecen_copy.projets DROP COLUMN h_total;
+
+
+
 /* FONCTION generant un uuid */
-CREATE OR REPLACE FUNCTION public.uuid_calendar(
-	)
+CREATE OR REPLACE FUNCTION public.uuid_calendar()
 RETURNS text
     LANGUAGE 'plpgsql'
     COST 100
@@ -214,7 +227,11 @@ BEGIN
                 RETURN md5(random()::text || clock_timestamp()::text)::uuid;
         END;
 $BODY$;
+
 /* FONCTION trigger calculant e_nb_h */
+DROP TRIGGER IF EXISTS trigger_calcul_nb_h_temps ON progecen_copy.temps;
+DROP FUNCTION IF EXISTS progecen_copy.calcul_nb_h_temps();
+
 CREATE FUNCTION progecen_copy.calcul_nb_h_temps()
     RETURNS trigger
     LANGUAGE 'plpgsql'
@@ -233,22 +250,23 @@ BEGIN
 		and e_id_action = new.e_id_action
 		and e_personne = new.e_personne
 	)
-	update progecen_copy.actions set nb_h = t.total
+	update progecen_copy.actions set nb_h_real = t.total
 	from t 
 	where actions.id_projet = new.e_id_projet::integer
 	and actions.id_action = new.e_id_action::integer
 	and actions.personnes ~* new.e_personne;
 	--Update table PROJETS
 	with t as (
-		select sum(nb_h) as total  from progecen_copy.actions 
+		select sum(nb_h_real) as total  from progecen_copy.actions 
 		where id_projet = new.e_id_projet::integer
 	)
-	update progecen_copy.projets set h_total = t.total
+	update progecen_copy.projets set nb_h_real = t.total
 	from t where projets.id_projet = new.e_id_projet::integer;
 
 RETURN NULL; 
 END;
 $BODY$;
+
 /* trigger */
 CREATE TRIGGER trigger_calcul_nb_h_temps
     AFTER INSERT OR UPDATE
@@ -275,6 +293,10 @@ SELECT setval('progecen_copy.financeurs_id_financeur_seq', cf.nb , true) from cf
 
 ALTER TABLE progecen_copy.actions
   RENAME COLUMN personne TO personnes;
+
+
+/* CREATION TABLE actions_gp ?? */
+/* pour gestion des actions communes --> test_ge_caen */
 
 
 select  	strpos('Benoit Perceval|Lydie Doisy', 'z') 

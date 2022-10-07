@@ -65,7 +65,7 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <h2 class="">Suivi Projet</h2>
+                <h2 class="bebas">Suivi Projet</h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
             </div>
             
@@ -84,51 +84,6 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <input class="form-check-input" type="checkbox" id="edit_projet">
                                 <label class="form-check-label" for="edit_projet">Editer le projet</label>
                             </div>
-                        </div>
-                    </div>
-                    <!-- PANEL 100% ACTIONS -->
-                    <div class="d-flex flex-column w-100 border border-secondary rounded-2 my-2">
-                        <div class="d-flex w-100 justify-content-center"><h4>Actions du projet</h4></div>
-                        <div class="d-flex flex w-100">
-                            <div class="d-flex flex-column col-md-6 col-lg-8" id="actions_list">
-                                <div id="list_actions">
-                                </div>
-                            </div>
-                            <!--<div class="d-flex flex-column w-100 p-2">
-                                <div class="d-flex w-100 gx-1 align-items-center justify-content-between bg-success">
-                                    <div class="">
-                                        <label id="id_action_${c_actions}" class="col-form-label">${c_actions}</label>
-                                    </div>
-                                    <div class="">
-                                        <input type="text" id="nom_action_${c_actions}" value="${action}" disabled></input>
-                                    </div>
-                                    <div class="">
-                                        <input type="text"  id="financeurs_action_${c_actions}" value="${str_f}" disabled></input>
-                                    </div>
-                                    <div class="">
-                                        <input type="text"  id="site_action_${c_actions}" value="${site}" disabled></input>
-                                    </div>
-                                    <div class="">
-                                        <input type="text"  id="heures_action_${c_actions}" value="${heures}" disabled></input>
-                                    </div>
-                                    <div class="">
-                                        <button id="add_p_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-user-plus"></i></button>
-                                    </div>
-                                    <div>
-                                        <button id="del_action_${c_actions}" class="text-light border-0 bg-success fs-6 m-1 px-1" ><i class="fas fa-trash-alt"></i></button>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-wrap justify-content-end align-items-center id="list_personnes_action_${c_actions}">
-                                    <div id="a0_p0"><span class="badge mt-1 bg-success text-light">Light<i id="" class="ps-1 fas fa-window-close"></i></span></div>
-                                </div>
-                            </div>-->
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <div class="d-flex flex-column my-2">
-                                <div class="py-1"><button id="add_an_action" type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#ModalAddAction" disabled><i class="fas fa-plus pr-2"></i> Ajouter une action</button></div>
-                                <button id="update_actions_projet" type="button" class="btn btn-outline-success" disabled><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
-                            </div>
-                            
                         </div>
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
@@ -205,6 +160,46 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <div id="container"></div>
                             </div>
                     </div>
+                    <!-- PANEL 100% ACTIONS -->
+                    <div class="d-flex flex-column w-100 border border-secondary rounded-1 my-2">
+                        <div class="d-flex w-100 justify-content-center text-light bg-dark"><h4 class="bebas">Actions du projet</h4></div>
+                        <div class="d-flex">
+                            <div class="text-secondary bg-dark col-10">
+                                <table id="actionsDT" class="table table-dark table-hover table-sm" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Action</th>
+                                            <th>Action</th>
+                                            <th>Financeur</th>
+                                            <th>Site</th>
+                                            <th>Temps</th>
+                                            <th>Personnes</th>
+                                            <th>Select / Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>ID Action</th>
+                                            <th>Action</th>
+                                            <th>Financeur</th>
+                                            <th>Site</th>
+                                            <th>Temps</th>
+                                            <th>Personnes</th>
+                                            <th>Select / Edit</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-end col-2 bg-dark">
+                                <div class="d-flex flex-column justify-content-between p-2">
+                                    <div class=""><button id="add_an_action" type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button></div>
+                                    <div class=""><button id="update_actions_projet" type="button" class="btn btn-outline-success" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 
@@ -212,7 +207,7 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
 
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
-			<kbd class="small">CEN Normandie © 2021</kbd>
+			<kbd class="small">CEN Normandie © 2022</kbd>
 		</div>
 	</div>
 
@@ -421,7 +416,7 @@ let filters_active = {
     "id_action":false
 };
 
-//Fonction général de  filtre
+//Fonction général de filtre d'un json
 function filtre_obj(arr, requete) {
   var name_filter = requete;
   var field = keys[name_filter][1];
@@ -437,6 +432,20 @@ function filtre_obj(arr, requete) {
   })
 };
 graph_();
+
+$(document)
+    .on( 'hidden.bs.modal', '.modal', function() {
+        $(document.body).removeClass( 'modal-noscrollbar' );
+    })
+    .on( 'show.bs.modal', '.modal', function() {
+        //Bootstrap adds margin-right: 15px to the body to account for a
+        //scrollbar, but this causes a "shift" when the document isn't tall
+        //enough to need a scrollbar; therefore, we disable the margin-right
+        //when it isn't needed.
+        if ( $(window).height() >= $(document).height() ) {
+            $(document.body).addClass( 'modal-noscrollbar' );
+        }
+    }); 
 
 </script>
 

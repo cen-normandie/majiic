@@ -29,7 +29,7 @@ WITH t as (
   p.date_butoir_dossier, 
   p.tags,
   p.color,
-  STRING_AGG(a.id_action||'_'||a.code_action||'_'||$1||'_'||a.nb_h , '|') as actions
+  STRING_AGG(a.id_action||'_'||a.code_action||'_'||$1||'_'||a.nb_h_real , '|') as actions
   FROM $progecen_projets p
     LEFT JOIN $progecen_actions a on a.id_projet = p.id_projet 
   WHERE a.personnes ~* $1

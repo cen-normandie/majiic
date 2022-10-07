@@ -117,3 +117,19 @@ body {
   max-height: 400px;
   overflow-y: scroll;
 }
+
+@font-face {
+  font-family: Bebas;
+  src: url(../fonts/Bebas-Regular.ttf);
+}
+@font-face {
+  font-family: MoonFlower;
+  src: url(../fonts/Moon-Flower.ttf);
+}
+
+.bebas {
+  font-family: Bebas;
+}
+.moonflower {
+  font-family: MoonFlower;
+}
