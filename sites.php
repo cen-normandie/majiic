@@ -13,6 +13,7 @@
     
     <!--LEAFLET-->
     <link href="js/leaflet1.7/leaflet.css" rel="stylesheet" type="text/css">
+    <link href="js/leaflet/plugins/leaflet_label/css/leafleat_label.css" rel="stylesheet" type="text/css">
     <link href="css/custom_leaflet.css" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core CSS -->
     <link href="bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -146,6 +147,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="js/plugins/datatable/dataTables.bootstrap5.min.js"></script>
 <!--Leaflet-->
 <script src="js/leaflet1.7/leaflet.js" ></script>
+<script src="js/leaflet1.7/leaflet_label/js/leaflet_label.js" ></script>
 <script src="js/leaflet/leaflet_add_function.js" ></script>
 <script src="js/init_leaflet.sites.js" ></script>
 

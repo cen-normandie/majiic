@@ -66,7 +66,7 @@ function initmap() {
                     sites_parcelles_geojson_feature.resetStyle(e.target);
                 });
             //console.log(feature.properties.id_site);
-            layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
+            //layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
             }
     }).addTo(map);
     // Créer une couche geojson vide pour les sites
@@ -77,8 +77,8 @@ function initmap() {
                 layer.on("click",function(e){
                     map.fitBounds(layer.getBounds());
                     });
-            layer.bindLabel(feature.properties.nom_site);
-            console.log(feature.properties.id_site);
+            //layer.bindLabel(feature.properties.nom_site);
+            //console.log(feature.properties.id_site);
             }
     }).addTo(map);
     

@@ -49,7 +49,7 @@ function initmap() {
                 layer.on("mouseout",function(e){
                     sites_geojson_feature.resetStyle(e.target);
                 });
-                layer.bindLabel(feature.properties.nom_site);
+                //layer.bindLabel(feature.properties.nom_site);
             }
     }).addTo(map);
     

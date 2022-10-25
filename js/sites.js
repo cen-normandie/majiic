@@ -113,14 +113,14 @@ function apply_filters() {
             parcelles_f = filtre_obj(parcelles_f, property);
         }
     }
-
+    update_chiffres_sites(sites_f);
     update_chiffres_parcelles(parcelles_f);
     if ( !(Object.keys(sites_f).length === 0) ) {
         update_map(sites_f, "sites");
+        
     }
 };
 function update_map(json_, layers_) {
-    console.log("update_map");
     //ClearLayer
     //map.removeLayer( sites_geojson_feature );
     if (layers_ == "sites") {
@@ -134,8 +134,11 @@ function update_map(json_, layers_) {
     } else if (layers_ == "parcelles") {
         sites_parcelles_geojson_feature.clearLayers();
         $(json_).each(function(key, data) {
-            //ajoute les geojson
-            sites_parcelles_geojson_feature.addData(data.geojson);
+            if (data.geojson.features !== null) {
+                //console.log(data.geojson);
+                //ajoute les geojson
+                sites_parcelles_geojson_feature.addData(data.geojson);
+            }
             
         });
     }
@@ -174,21 +177,27 @@ function update_dtParcelle () {
 
 function update_chiffres_parcelles (parcelles_json, updateTableauParcelle) {
     let nb_parcelles = 0;
-    let sum_surf = 0;
-    sites_f.surface;
+    //let sum_surf = 0;
+    //sites_f.surface;
     dtParcelles.clear();
     for (const parcelle in parcelles_json) {
                 nb_parcelles++;
-                sum_surf += parcelles_json[parcelle].surface;
+                //sum_surf += parcelles_json[parcelle].surface;
     }
     dtParcelles.columns.adjust();
     $("#nb_parcelles").text(nb_parcelles);
-    $("#sum_surface").text(Math.round(sum_surf));
+    //$("#sum_surface").text(Math.round(sum_surf));
     if ( !(Object.keys(parcelles_json).length === 0) ) {
         update_map(parcelles_json, "parcelles");
     }
 };
-
+function update_chiffres_sites (sites_json) {
+    let sum_surf = 0;
+    for (const site in sites_json) {
+        sum_surf += sites_json[site].surface;
+    }
+    $("#sum_surface").text(Math.round(sum_surf));
+}
 
 // LOAD DATA 
 function load_sites_ajax () {
@@ -202,7 +211,6 @@ function load_sites_ajax () {
         success  : function(data) {
             sites = data ;
             //Load autocomplete
-            console.log('sites_complete');
             init_sites_array();
             //INIT
             load_parcelles_ajax();
@@ -219,7 +227,6 @@ function load_parcelles_ajax () {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
             parcelles = data ;
-            console.log('parcelles_complete');
             // for (const parcelle in parcelles) {
             //     //DATATABLES
             //     let splitted = parcelles[parcelle].id_unique.split('|');
@@ -242,7 +249,7 @@ function load_parcelles_ajax () {
             dtParcelles.columns.adjust().draw();
             //INIT
             change_load ();
-            apply_filters();
+            //apply_filters();
             }
     });
 }
