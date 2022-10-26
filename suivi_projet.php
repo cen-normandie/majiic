@@ -172,7 +172,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                             <th>Action</th>
                                             <th>Financeur</th>
                                             <th>Site</th>
-                                            <th>Temps</th>
+                                            <th>Tps Prévi</th>
+                                            <th>Tps Réal</th>
                                             <th>Personnes</th>
                                             <th>Select / Edit</th>
                                         </tr>
@@ -185,7 +186,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                             <th>Action</th>
                                             <th>Financeur</th>
                                             <th>Site</th>
-                                            <th>Temps</th>
+                                            <th>Tps Prévi</th>
+                                            <th>Tps Réal</th>
                                             <th>Personnes</th>
                                             <th>Select / Edit</th>
                                         </tr>

@@ -29,19 +29,22 @@ WITH t as (
   p.tags,
   p.color,
   (select json_agg(acts) FROM 
-   	(select
-	  	a.id_action as id_action,
-	  	a.id_projet,
-		a.code_action,
-		a.financements,
-		a.site,
-		a.personnes as personne_action,
-		a.nb_h as previ,
-		coalesce(t.realise, 0) as realise,
-	 	p.color
-	  FROM $progecen_actions a left join $progecen_vue_tps_a t on t.e_id_action = a.id_action::text
-	  where a.id_projet = p.id_projet
-	 order by 3
+   	(SELECT
+          a.id_action as id_action,
+          a.id_projet,
+          a.code_action,
+          a.financements,
+          a.site,
+          a.personnes as personne_action,
+          sum(a.nb_h_previ) as previ,
+          coalesce(sum(t.realise), 0) as realise,
+          p.color
+	  FROM $progecen_projets p2 left join 
+          $progecen_actions a on p2.id_projet = a.id_projet left join 
+          $progecen_vue_tps_a t on t.e_id_action = a.id_action::text
+	  WHERE p.id_projet = p2.id_projet
+    GROUP BY 1,2,3,4,5,6,9
+	  ORDER BY 3
 	) acts
   )::text as json_actions
   FROM $progecen_projets p

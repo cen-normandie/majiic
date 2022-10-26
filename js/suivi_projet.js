@@ -290,11 +290,13 @@ change_load("Chargement des données");
                 actions_f[actions].code_action, //code_action
                 actions_f[actions].financements ?? '', //financeurs
                 actions_f[actions].site.replace("NaN", '') ?? '', //site
-                actions_f[actions].previ ?? 0, //nb_h
+                actions_f[actions].previ ?? 0, //nb_h_previ
+                actions_f[actions].realise ?? 0, //nb_h_real
                 badges_, //personnes
                 x //test badges
             ] ).draw();
-        }            
+        }   
+        add_events_actions();         
     }
 
 //EDITION DES ACTIONS
@@ -307,6 +309,7 @@ let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPers
 //Gestion des dom et evenement pour la liste des actions du projet
 //////////////////////////////////////////////////////
 function get_action_content () {
+        const myAction = new Object();
         let action = document.getElementById("input_actions").value;
         let site = document.getElementById("input_site").value;
         let heures = document.getElementById("input_heures").value;
@@ -320,10 +323,16 @@ function get_action_content () {
             str_f=str_f+fx_+"_"+fx_p;
             i++;
 	    });
+        myAction.action_name = document.getElementById("input_actions").value;
+        myAction.site = document.getElementById("input_site").value;
+        myAction.heures = document.getElementById("input_heures").value;
+        myAction.financeurs = str_f;
+
+        console.log(myAction);
 
         //add Ajax function to have valid id_action
 
-        document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
+        /* document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
         `
         <div class="d-flex flex-column flex-grow-1 m-2 border border-dark rounded">
             <div class="d-flex gx-1 align-items-center justify-content-between ">
@@ -349,7 +358,7 @@ function get_action_content () {
             </div>
             <div class="d-flex flex-wrap justify-content-end align-items-center" id="list_personnes_action_${c_actions}">
             </div>
-        </div>`);
+        </div>`); */
     }
 document.getElementById("add_action").addEventListener("click", function() {
     get_action_content();
