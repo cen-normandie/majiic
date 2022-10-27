@@ -256,8 +256,8 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-footer">
         <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
         <div class="col-4 d-flex justify-content-between w-100">
-            <button type="button" class="btn btn-outline-success" id="update_action_personne">Ajouter</button>
-            <button type="button" class="btn btn-outline-danger" id="delete_action_personne">Annuler</button>
+            <button type="button" class="btn btn-outline-success" id="add_action_personne">Ajouter</button>
+            <button type="button" class="btn btn-outline-danger" id="cancel_action_personne">Annuler</button>
         </div>
       </div>
 
@@ -339,7 +339,7 @@ if (in_array($_SESSION['email'], $admins)) {
         <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
         <div class="col-4 d-flex justify-content-between w-100">
             <button type="button" class="btn btn-outline-success" id="add_action">Ajouter</button>
-            <button type="button" class="btn btn-outline-danger" id="cancel_action_modal">Annuler</button>
+            <button type="button" class="btn btn-outline-danger" id="cancel_action_modal" data-dismiss="ModalAddAction">Annuler</button>
         </div>
       </div>
 

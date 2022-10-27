@@ -276,7 +276,8 @@ change_load("Chargement des données");
     function update_dtActions () {
         dtActions.clear();
         for (const actions in actions_f) {
-            const personnes_actions = actions_f[actions].personne_action.split('|');
+            const p_ = actions_f[actions].personne_action ?? '';
+            const personnes_actions = p_.split('|');
             var badges_ = '';
             var x = `
             <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-dark text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
@@ -285,6 +286,7 @@ change_load("Chargement des données");
             for (const pe in personnes_actions) {
                 badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
             }
+            //Ajoute les actions dans le tableau
             let rowNode = dtActions.row.add( [
                 actions_f[actions].id_action, //id_action
                 actions_f[actions].code_action, //code_action
@@ -295,6 +297,28 @@ change_load("Chargement des données");
                 badges_, //personnes
                 x //test badges
             ] ).draw();
+            //formate un nouveau json des actions pour alimenter les graphiques
+            const data_AA = actions_f;
+            const data_AB = actions_f;
+            data_AA.name_action = data_AA.name;
+            delete data_AA.name;
+            data_AA.name = data_AA.personne_action;
+            data_AA.y = data_AA.previ;
+
+            data_AB.name_action = data_AB.name;
+            delete data_AB.name;
+            data_AB.name = data_AB.personne_action;
+            data_AB.y = data_AB.realise;
+
+
+
+/*             {"name":"South Korea","y":10,"color":"rgba(201,36,39,1)"},
+            {"name":"Japan","y":10,"color":"rgba(201,36,39,1)"},
+            {"name":"Australia","y":10,"color":"rgba(0,82,180,1)"},
+            {"name":"Germany","y":10,"color":"rgba(0,0,0,1)"} */
+
+
+
         }   
         add_events_actions();         
     }
@@ -302,7 +326,13 @@ change_load("Chargement des données");
 //EDITION DES ACTIONS
 let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPersonne'), {
     keyboard: false
-  })
+  });
+document.getElementById("add_action_personne").addEventListener("click", function() {
+    ModalAddPersonne.hide();
+});
+document.getElementById("cancel_action_personne").addEventListener("click", function() {
+    ModalAddPersonne.hide();
+});
 
 
 //////////////////////////////////////////////////////
@@ -310,9 +340,9 @@ let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPers
 //////////////////////////////////////////////////////
 function get_action_content () {
         const myAction = new Object();
-        let action = document.getElementById("input_actions").value;
+/*         let action = document.getElementById("input_actions").value;
         let site = document.getElementById("input_site").value;
-        let heures = document.getElementById("input_heures").value;
+        let heures = document.getElementById("input_heures").value; */
         const e_financeurs_l = document.querySelectorAll(".e_financeurs");
         let i=0;
         let str_f='';
@@ -327,10 +357,29 @@ function get_action_content () {
         myAction.site = document.getElementById("input_site").value;
         myAction.heures = document.getElementById("input_heures").value;
         myAction.financeurs = str_f;
+        //myAction.id_projet = projets_f[0].id_projet;
+        myAction.id_projet = projets_f[0].id;
 
         console.log(myAction);
 
         //add Ajax function to have valid id_action
+        let  ActionJsonString= JSON.stringify(myAction);
+        $.ajax({
+            url: "php/ajax/projets/edit_projet/add_action_in_projet.js.php",
+            type: "POST",
+            dataType: "json",
+            async    : true,
+            data: {
+                'action': ActionJsonString
+            },
+            error    : function(request, error) { 
+                alert("Erreur : responseText: "+request.responseText);
+                },
+            success  : function(data) {
+                console.log(data)
+                }
+        });
+
 
         /* document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
         `
@@ -501,10 +550,10 @@ function graph_( nom_projet_, color_, real_, previ_, initiales_) {
             color: 'rgba(0,0,0,.2)',
             pointPlacement: 0,
             data: [
-                ['South Korea', 9],
-                ['Japan', 12],
-                ['Australia', 8],
-                ['Germany', 17]
+                {"name":"South Korea","y":20},
+                {"name":"Japan","y":30},
+                {"name":"Australia","y":80},
+                {"name":"Germany","y":10}
             ],
             name: 'Previsionnel'
         }, {
