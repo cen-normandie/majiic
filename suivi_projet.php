@@ -27,6 +27,7 @@
     <link href="css/plugins/dataTables.bootstrap5.min.css" rel="stylesheet">
     <!--custom autocomplete-->
     <link href="css/autocomplete.dashboard.css" rel="stylesheet">
+    
   </head>
   <body>
 
@@ -87,17 +88,17 @@ if (in_array($_SESSION['email'], $admins)) {
                         </div>
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
-                    <div class="d-flex flex-column w-100 border border-secondary rounded-2 p-2">
-                        <div class="d-flex w-100 justify-content-center"><h4>Synthèse du projet</h4></div>
-                        <div class="d-flex flex w-100">
-                            <div class="d-flex flex-column w-25 m-2">
-                                <div class="input-group input-group-sm p-2">
+                    <div class="d-flex flex-column w-100  p-0"> <!--border border-secondary rounded-2 -->
+                        <div class="d-flex w-100 justify-content-center bg-light text-secondary"><h3 class="bebas">Synthese du projet</h3></div>
+                        <div class="d-flex flex-wrap w-100">
+                            <div class="d-flex flex-column col-md-4 col-lg-3">
+                                <div class="input-group input-group-sm p-2 pt-0">
                                     <span class="input-group-text" id="basic-addon1">Nom du projet : </span>
-                                    <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="Ola">
+                                    <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="Ola">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="basic-addon1">Responsable : </span>
-                                    <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="Ola">
+                                    <input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="Ola">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <label class="input-group-text" for="l_type_projet">Type de projet : </label>
@@ -152,53 +153,62 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <div class="input-group input-group-sm p-2">
                                     <label for="p_color" class="input-group-text">Couleur</label>
                                     <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" disabled>
-                                    <span id="helpColor" class="form-text pl-1">couleur utilisée pour le calendrier</span>
+                                    <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
+                                </div>
+                                <div>
+                                    <button id="add_an_action" type="button" class="btn btn-warning btn-sm my-2 shadow" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
+                                    <div class=""><button id="save_projet" type="button" class="btn btn-success my-2 shadow" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button></div>
                                 </div>
                                 
                             </div>
-                            <div id="d-flex flex-wrap col-md-6 col-lg-8"></div>
-                                <div id="container"></div>
+                            <div class="d-flex flex-column text-secondary col-md-8 col-lg-9"> <!--bg-dark-->
+                                <div class="d-flex w-100 justify-content-start bg-light text-secondary"><h5 class="bebas">Actions du projet :</h5></div>
+                                <div class="d-flex flex-column w-100 bg-light mb-2">
+                                    <table id="actionsDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
+                                        <thead>
+                                            <tr>
+                                                <th>ID Action</th>
+                                                <th>Action</th>
+                                                <th>Financeur</th>
+                                                <th>Site</th>
+                                                <th>Tps Prévi</th>
+                                                <th>Tps Réal</th>
+                                                <th>Personnes</th>
+                                                <th>Select / Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID Action</th>
+                                                <th>Action</th>
+                                                <th>Financeur</th>
+                                                <th>Site</th>
+                                                <th>Tps Prévi</th>
+                                                <th>Tps Réal</th>
+                                                <th>Personnes</th>
+                                                <th>Select / Edit</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="d-flex w-100 justify-content-start bg-light text-secondary"><h5 class="bebas">Realise / Previsionnel :</h5></div>
+                                <div class="d-flex w-100">
+                                    <div id="container" class="d-flex w-100"></div>
+                                </div>
                             </div>
+                            <div id="d-flex flex-wrap col-md-6 col-lg-3">
+                            
+                            </div>
+                        </div>
                     </div>
                     <!-- PANEL 100% ACTIONS -->
-                    <div class="d-flex flex-column w-100 border border-secondary rounded-1 my-2">
-                        <div class="d-flex w-100 justify-content-center text-light bg-dark"><h4 class="bebas">Actions du projet</h4></div>
+                    <div class="d-flex flex-column w-100 my-4">
+                        <div class="d-flex w-100 justify-content-center text-secondary"><h4 class="bebas">Somme du realise / Somme du prEvisionnel</h4></div>
                         <div class="d-flex">
-                            <div class="text-secondary bg-dark col-10">
-                                <table id="actionsDT" class="table table-dark table-hover table-sm" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>ID Action</th>
-                                            <th>Action</th>
-                                            <th>Financeur</th>
-                                            <th>Site</th>
-                                            <th>Tps Prévi</th>
-                                            <th>Tps Réal</th>
-                                            <th>Personnes</th>
-                                            <th>Select / Edit</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>ID Action</th>
-                                            <th>Action</th>
-                                            <th>Financeur</th>
-                                            <th>Site</th>
-                                            <th>Tps Prévi</th>
-                                            <th>Tps Réal</th>
-                                            <th>Personnes</th>
-                                            <th>Select / Edit</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div class="d-flex justify-content-end col-2 bg-dark">
-                                <div class="d-flex flex-column justify-content-between p-2">
-                                    <div class=""><button id="add_an_action" type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button></div>
-                                    <div class=""><button id="update_actions_projet" type="button" class="btn btn-outline-success" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button></div>
-                                </div>
+                            <div class="d-flex justify-content-start col-md-6 col-lg-4">
+                                <div id="container_" class="d-flex w-100"></div>
                             </div>
                         </div>
                     </div>
@@ -208,7 +218,7 @@ if (in_array($_SESSION['email'], $admins)) {
             </div>	
 		</div>
 
-		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
+		<div class="d-flex flex-column mt-auto justify-content-end align-items-end text-muted fixed-bottom">
 			<kbd class="small">CEN Normandie © 2022</kbd>
 		</div>
 	</div>
@@ -433,7 +443,6 @@ function filtre_obj(arr, requete) {
     }
   })
 };
-graph_();
 
 $(document)
     .on( 'hidden.bs.modal', '.modal', function() {
@@ -448,7 +457,6 @@ $(document)
             $(document.body).addClass( 'modal-noscrollbar' );
         }
     }); 
-
 </script>
 
   </body>

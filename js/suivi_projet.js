@@ -8,6 +8,7 @@ let sites = '';//sites all (1er chargement)
 let c_actions = 0; // liste actuelles des actions du projet en édition
 let c_action = ''; // id_action actuelle
 let c_projet = ''; // id_projet actuel
+let edit = false;
 
 //EVENT ON SWITCH
 $('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
@@ -123,8 +124,7 @@ function load_sites_ajax () {
             sites = data ;
             //Load autocomplete
             init_sites_array();
-
-            apply_filters();
+            //apply_filters();
             change_load();
             }
     });
@@ -150,9 +150,24 @@ function apply_filters() {
             console.log(actions_f);
         }
     }
-    
-    update_view_projet(projets_f);
+    //mets à jour le tableau des actions
+    update_dtActions();
 };
+
+//Datepickers
+$("#p_date_start").datepicker({
+    format : 'dd-mm-yyyy',
+    locale: 'fr',
+    language: 'fr',
+    autoclose: true
+});
+$("#p_date_end").datepicker({
+    format : 'dd-mm-yyyy',
+    locale: 'fr',
+    language: 'fr',
+    autoclose: true
+});
+
 
 //Initialisation du tableau datatable
 const dtActions =$('#actionsDT').DataTable({
@@ -186,12 +201,36 @@ const dtActions =$('#actionsDT').DataTable({
     scrollCollapse: true,
     paging: false
 });
+//////////////////////////////////////////////////////
+//Gestion des dom et evenement si responsable projet --> edition possible
+//////////////////////////////////////////////////////
+document.getElementById("edit_projet").addEventListener("click", function() {
+    edit = document.getElementById("edit_projet").checked;
+    console.log(edit);
+    document.getElementById("nom_projet").disabled = !edit;
+    document.getElementById("responsable_projet").disabled = !edit;
+    document.getElementById("type_projet").disabled = !edit;
+    document.getElementById("etat_projet").disabled = !edit;
+    document.getElementById("echelle_projet").disabled = !edit;
+    document.getElementById("p_date_start").disabled = !edit;
+    document.getElementById("p_date_end").disabled = !edit;
+    document.getElementById("p_commentaire").disabled = !edit;
+    document.getElementById("p_color").disabled = !edit;
 
-//Charge les éléments d'un projet existant
-function update_view_projet(projets_json) {
-    update_dtActions();
-}
+    if(edit) {
+        document.getElementById("add_an_action").classList.remove("d-none");
+        document.getElementById("save_projet").classList.remove("d-none");
+    } else {
+        document.getElementById("add_an_action").classList.add("d-none");
+        document.getElementById("save_projet").classList.add("d-none");
+    }
+    dtActions.column( 7 ).visible(edit);
+});
+//masque la colonne pour le 1er chargement
+dtActions.column( 7 ).visible(edit);
 change_load("Chargement des données");
+
+
 
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour ajouter pré-créer une action
@@ -243,37 +282,25 @@ change_load("Chargement des données");
 
     //PERSONNES
     let nb_personnes=0;
-    
-    //function get_personne_content () {
-    //    let tmpp= document.getElementById("input_personnes").value;
-    //    return `
-    //    <div  class="d-flex  justify-content-evenly my-2 w-75" id="f_${nb_personnes}">
-    //        <div class="w-75" >
-    //            <div class="input-group input-group-sm">
-    //                <span for="input_financeurs" class="input-group-text">P_${nb_personnes} : </span>
-    //                <input type="text" class="form-control" id="input_personnes_${nb_personnes}" aria-describedby="basic-addon3" value="${tmpp}">
-    //            </div>
-    //        </div>
-    //        <div class="ml-2">
-    //            <div id="minus_p_${nb_personnes}" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-minus"></i></div>
-    //        </div>
-    //    </div>
-    //    `;
-    //}
-    
-    //document.getElementById("plus_p").addEventListener("click", function() {
-    //    document.getElementById('list_p').insertAdjacentHTML("beforeend", get_personne_content() );
-    //    document.getElementById("minus_p_"+nb_personnes).addEventListener("click", function() {
-    //        this.parentNode.parentNode.remove();
-    //        nb_personnes--;
-    //    }); 
-    //    nb_personnes++;
-    //});
+
+    //Fonction de tri des objets du JSON par propriété   
+    function GetSortOrder(prop) {    
+        return function(a, b) {    
+            if (a[prop] > b[prop]) {    
+                return 1;    
+            } else if (a[prop] < b[prop]) {    
+                return -1;    
+            }    
+            return 0;    
+        }    
+    }    
+
 
     //DATATABLE pur la liste des actions
-    //const dtActions = $('#actions_dt').DataTable({});
-    
     function update_dtActions () {
+        const project = projets_f;
+        const json_previ = [];
+        const json_real = [];
         dtActions.clear();
         for (const actions in actions_f) {
             const p_ = actions_f[actions].personne_action ?? '';
@@ -297,29 +324,31 @@ change_load("Chargement des données");
                 badges_, //personnes
                 x //test badges
             ] ).draw();
+
             //formate un nouveau json des actions pour alimenter les graphiques
-            const data_AA = actions_f;
-            const data_AB = actions_f;
-            data_AA.name_action = data_AA.name;
-            delete data_AA.name;
-            data_AA.name = data_AA.personne_action;
-            data_AA.y = data_AA.previ;
+            const data_previ = new Object();
+            const data_real = new Object();
+            if (!!actions_f[actions].personne_action) { 
+                data_previ.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
+                data_previ.y = actions_f[actions].previ ?? 0;
+                data_real.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
+                data_real.y = actions_f[actions].realise ?? 0;
+                data_real.color = project[0].color;
+                json_previ.push(data_previ);
+                json_real.push(data_real);
+            }
+        }
+        json_previ.sort(GetSortOrder("name"));
+        json_real.sort(GetSortOrder("name"));
 
-            data_AB.name_action = data_AB.name;
-            delete data_AB.name;
-            data_AB.name = data_AB.personne_action;
-            data_AB.y = data_AB.realise;
+        console.log('json_previ');
+        console.log(json_previ);
+        console.log('json_real');
+        console.log(json_real);
 
-
-
-/*             {"name":"South Korea","y":10,"color":"rgba(201,36,39,1)"},
-            {"name":"Japan","y":10,"color":"rgba(201,36,39,1)"},
-            {"name":"Australia","y":10,"color":"rgba(0,82,180,1)"},
-            {"name":"Germany","y":10,"color":"rgba(0,0,0,1)"} */
-
-
-
-        }   
+        //Chargement du graphique des actions nom_projet_, color_, real_, previ_
+        graph_(projets_f[0].name, json_real, json_previ);
+        //Ajoute les évènements pour les cellules du tableau
         add_events_actions();         
     }
 
@@ -427,7 +456,7 @@ function add_events_actions () {
 
 }
 
-document.getElementById("update_action_personne").addEventListener("click", function() {
+document.getElementById("add_action_personne").addEventListener("click", function() {
     if (!!document.getElementById("input_personnes").value) {
         console.log("list_personnes_action_"+document.getElementById("id_action_update").textContent);
         let s = '<div id=""><span class="badge mt-1 bg-success text-light">'+document.getElementById("input_personnes").value+'<i id="" class="ps-1 fas fa-window-close"></i></span></div>';
@@ -439,78 +468,17 @@ document.getElementById("update_action_personne").addEventListener("click", func
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour le graphique
 //////////////////////////////////////////////////////
-/* function graph_( nom_projet_, color_, real_, previ_, initiales_) {
-    let nom_projet = 'Projets';
-    let color = '#000';
-    let real = 30;
-    let previ = 55;
-    let initiales = 'BP';
-    let graphzz = new Highcharts.chart("graph1", {
-            chart: {
-                type: 'bar',
-                height:250,
-                events: {
-                    addSeries: function () {
-                        setTimeout(function () {}, 1000);
-                    }
-                },
-                backgroundColor:'#f8f9fa'
-            },
-            title: {
-                text: nom_projet
-            },
-            xAxis: {
-                categories: ['Projets A','Projet B','Projet C']//,
-                //max: 20
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'nb jours',
-                    align: 'high'
-                },
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            tooltip: {
-                valueSuffix: '',
-                shared: true
-            },
-            plotOptions: {
-                bar: {
-                    grouping: false,
-                    groupPadding:0
-                }
-            },
-            legend: {
-                enabled:false
-            },
-            credits: {
-                enabled: false
-            },
-            colors:['#212529'],
-            series: [{
-                name: 'Réalisé',
-                data: [5,10,30],
-                pointPlacement: 0
-            }, {
-                name: 'Prévisionnel',
-                color:'rgba(0,0,0,.2)',
-                data: [10,20,60],
-                pointPlacement: 0
-            }]
-            });
-} */
+function graph_( nom_projet_, real_, previ_) {
 
-function graph_( nom_projet_, color_, real_, previ_, initiales_) {
+
+
     const chart = Highcharts.chart('container', {
         chart: {
             type: 'bar',
             backgroundColor:'#f8f9fa'
         },
         title: {
-            text: 'Synthèse des actions',
+            text: nom_projet_,
             align: 'center'
         },
         subtitle: {
@@ -549,12 +517,7 @@ function graph_( nom_projet_, color_, real_, previ_, initiales_) {
         series: [{
             color: 'rgba(0,0,0,.2)',
             pointPlacement: 0,
-            data: [
-                {"name":"South Korea","y":20},
-                {"name":"Japan","y":30},
-                {"name":"Australia","y":80},
-                {"name":"Germany","y":10}
-            ],
+            data: previ_,
             name: 'Previsionnel'
         }, {
             name: 'Réalisé',
@@ -566,12 +529,9 @@ function graph_( nom_projet_, color_, real_, previ_, initiales_) {
                     fontSize: '10px'
                 }
             }],
-            data:[
-                {"name":"South Korea","y":10,"color":"rgba(201,36,39,1)"},
-                {"name":"Japan","y":10,"color":"rgba(201,36,39,1)"},
-                {"name":"Australia","y":10,"color":"rgba(0,82,180,1)"},
-                {"name":"Germany","y":10,"color":"rgba(0,0,0,1)"}
-            ] 
+            data:real_
+                //[{"name":"aa","y":22,"color":color_},
+                //{"name":"bb","y":33,"color":color_}]
             
         }],
         exporting: {
@@ -579,11 +539,4 @@ function graph_( nom_projet_, color_, real_, previ_, initiales_) {
         }
     });
 }
-/* getData([
-['South Korea', 6],
-['Japan', 27],
-['Australia', 17]
-])
- */
 
-graph_();

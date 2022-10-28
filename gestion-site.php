@@ -17,9 +17,9 @@
     <!-- Bootstrap Core CSS -->
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
     <link href="js/plugins/bs5-datepicker/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
-	<link href="bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
+	  <link href="bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
     <!--Datatable-->
-	<!--<link href="js/plugins/datatable/datatables.min.css" rel="stylesheet">-->
+	  <!--<link href="js/plugins/datatable/datatables.min.css" rel="stylesheet">-->
     <!-- Custom CSS -->
     <link href="css/cennormandie.css" rel="stylesheet">
     <!--FONT AWESOME-->
