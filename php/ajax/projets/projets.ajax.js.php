@@ -28,6 +28,7 @@ WITH t as (
   p.date_butoir_dossier, 
   p.tags,
   p.color,
+  p.sites,
   (select json_agg(acts) FROM 
    	(SELECT
           a.id_action as id_action,

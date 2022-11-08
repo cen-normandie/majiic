@@ -102,6 +102,11 @@ $purple:        #8917cb;
   text-overflow: ellipsis;
 }
 
+.background_image {
+  background-image: url('../img/pissenlit_up.png');
+  background-repeat:no-repeat;
+}
+
 /* Modal padding disable */
 body {
   padding-right:0 !important;

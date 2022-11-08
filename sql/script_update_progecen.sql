@@ -294,6 +294,36 @@ SELECT setval('progecen_copy.financeurs_id_financeur_seq', cf.nb , true) from cf
 ALTER TABLE progecen_copy.actions
   RENAME COLUMN personne TO personnes;
 
+ALTER TABLE progecen_copy.projets
+    ADD COLUMN sites text default '';
+
+
+/* TRIGGER LISTE SITE */
+drop function if exists progecen_copy.update_sites_liste_projets();
+CREATE FUNCTION progecen_copy.update_sites_liste_projets()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+declare
+BEGIN 
+	WITH a as 
+	(select string_agg(site,', ') as sites_ , id_projet from progecen_copy.actions where id_projet = NEW.id_projet  and site <> '' group by 2 order by 1)
+	UPDATE progecen_copy.projets p SET sites = a.sites_
+	FROM a
+	WHERE p.id_projet = a.id_projet;
+RETURN NULL; 
+END;
+$BODY$;
+CREATE TRIGGER trigger_update_sites_liste_projets
+    AFTER INSERT OR UPDATE 
+    ON progecen_copy.actions
+    FOR EACH ROW
+    WHEN ((pg_trigger_depth() < 1))
+    EXECUTE PROCEDURE progecen_copy.update_sites_liste_projets();
+
+
 
 /* CREATION TABLE actions_gp ?? */
 /* pour gestion des actions communes --> test_ge_caen */

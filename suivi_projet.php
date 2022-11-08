@@ -94,11 +94,23 @@ if (in_array($_SESSION['email'], $admins)) {
                             <div class="d-flex flex-column col-md-4 col-lg-3">
                                 <div class="input-group input-group-sm p-2 pt-0">
                                     <span class="input-group-text" id="basic-addon1">Nom du projet : </span>
-                                    <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="Ola">
+                                    <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="basic-addon1">Responsable : </span>
-                                    <input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="Ola">
+                                    <input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">
+                                    <select class="form-select" id="responsable_projet" disabled>
+                                        <option value="Commune" >Commune</option>
+                                        <option value="Département" >Département</option>
+                                        <option value="EPCI" >EPCI</option>
+                                        <option value="Régionale" >Régionale</option>
+                                        <option value="Site" >Site</option>
+                                        <option value="Multi-site" >Multi-site</option>
+                                        <option value="ENS" >ENS</option>
+                                    </select>
+
+									
+
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <label class="input-group-text" for="l_type_projet">Type de projet : </label>
@@ -132,11 +144,15 @@ if (in_array($_SESSION['email'], $admins)) {
                                         <option value="Commune" >Commune</option>
                                         <option value="Département" >Département</option>
                                         <option value="EPCI" >EPCI</option>
-                                        <option value="Région" >Région</option>
+                                        <option value="Régionale" >Régionale</option>
                                         <option value="Site" >Site</option>
                                         <option value="Multi-site" >Multi-site</option>
                                         <option value="ENS" >ENS</option>
                                     </select>
+                                </div>
+                                <div class="input-group input-group-sm p-2">
+                                    <label class="input-group-text" for="sites_string">Sites : </label>
+                                    <input id="sites_string" type="text" class="form-control" placeholder="" aria-label="Sites" aria-describedby="" disabled value="chiche">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="l_p_date_start">Date Début<i class="fas fa-calendar-alt mx-2"></i> : </span>
@@ -162,7 +178,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 
                             </div>
                             <div class="d-flex flex-column text-secondary col-md-8 col-lg-9"> <!--bg-dark-->
-                                <div class="d-flex w-100 justify-content-start bg-light text-secondary"><h5 class="bebas">Actions du projet :</h5></div>
+                                <div class="d-flex w-100 justify-content-start bg-light text-secondary background_image"><h5 class="bebas">Actions du projet :</h5></div>
                                 <div class="d-flex flex-column w-100 bg-light mb-2">
                                     <table id="actionsDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
                                         <thead>
@@ -193,7 +209,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                         </tfoot>
                                     </table>
                                 </div>
-                                <div class="d-flex w-100 justify-content-start bg-light text-secondary"><h5 class="bebas">Realise / Previsionnel :</h5></div>
+                                <div class="d-flex w-100 justify-content-start bg-light text-secondary background_image"><h5 class="bebas">Realise / Previsionnel :</h5></div>
                                 <div class="d-flex w-100">
                                     <div id="container" class="d-flex w-100"></div>
                                 </div>
@@ -205,7 +221,7 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <!-- PANEL 100% ACTIONS -->
                     <div class="d-flex flex-column w-100 my-4">
-                        <div class="d-flex w-100 justify-content-center text-secondary"><h4 class="bebas">Somme du realise / Somme du prEvisionnel</h4></div>
+                        <div class="d-flex w-100 justify-content-center text-secondary"><h5 class="bebas">Somme du realise / Somme du prEvisionnel</h5></div>
                         <div class="d-flex">
                             <div class="d-flex justify-content-start col-md-6 col-lg-4">
                                 <div id="container_" class="d-flex w-100"></div>

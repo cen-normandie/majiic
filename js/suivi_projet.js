@@ -152,6 +152,11 @@ function apply_filters() {
     }
     //mets à jour le tableau des actions
     update_dtActions();
+    //update projet infos
+    update_projetInfos();
+    //Ajoute les évènements pour les cellules du tableau
+    add_events_actions();
+    dtActions.column( 7 ).visible(edit);
 };
 
 //Datepickers
@@ -227,7 +232,6 @@ document.getElementById("edit_projet").addEventListener("click", function() {
     dtActions.column( 7 ).visible(edit);
 });
 //masque la colonne pour le 1er chargement
-dtActions.column( 7 ).visible(edit);
 change_load("Chargement des données");
 
 
@@ -296,7 +300,7 @@ change_load("Chargement des données");
     }    
 
 
-    //DATATABLE pur la liste des actions
+    //DATATABLE pour la liste des actions
     function update_dtActions () {
         const project = projets_f;
         const json_previ = [];
@@ -341,16 +345,36 @@ change_load("Chargement des données");
         json_previ.sort(GetSortOrder("name"));
         json_real.sort(GetSortOrder("name"));
 
-        console.log('json_previ');
+/*      console.log('json_previ');
         console.log(json_previ);
         console.log('json_real');
-        console.log(json_real);
+        console.log(json_real); */
 
         //Chargement du graphique des actions nom_projet_, color_, real_, previ_
-        graph_(projets_f[0].name, json_real, json_previ);
-        //Ajoute les évènements pour les cellules du tableau
-        add_events_actions();         
+        graph_(projets_f[0].name, json_real, json_previ);         
     }
+
+    //fonction de mise à jour des données du projet
+    function update_projetInfos() {
+        const project = projets_f;
+        console.log(project[0]);
+        document.getElementById("nom_projet").value=project[0].name;
+        document.getElementById("responsable_projet").value=project[0].responsable_projet;
+        document.getElementById("type_projet").value=project[0].type_projet;
+        document.getElementById("etat_projet").value=project[0].etat;
+        document.getElementById("echelle_projet").value=project[0].territoire;
+        document.getElementById("l_p_date_start").value=project[0].date_debut;
+        document.getElementById("l_p_date_end").value=project[0].date_fin;
+        document.getElementById("p_commentaire").value=project[0].commentaire_projet;
+        document.getElementById("p_color").value=project[0].color;
+        document.getElementById("sites_string").value=project[0].sites;
+    }
+
+    //fonction d'enregistrement du projet en cours
+    function save_projet () {
+        
+    }
+
 
 //EDITION DES ACTIONS
 let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPersonne'), {
@@ -440,8 +464,8 @@ function get_action_content () {
     }
 document.getElementById("add_action").addEventListener("click", function() {
     get_action_content();
-    add_events_actions(); //buttons add user, delete, modal..
-    c_actions++;
+    //add_events_actions(); //buttons add user, delete, modal..
+    //c_actions++;
 });
 
 function add_events_actions () {
