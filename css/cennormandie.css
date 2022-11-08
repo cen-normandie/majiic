@@ -106,6 +106,10 @@ $purple:        #8917cb;
   background-image: url('../img/pissenlit_up.png');
   background-repeat:no-repeat;
 }
+.h_background_image {
+  background-image: url('../img/h.png');
+  /* background-repeat:no-repeat; */
+}
 
 /* Modal padding disable */
 body {

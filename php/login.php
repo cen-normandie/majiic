@@ -47,7 +47,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             //$_SESSION['u_nomuser_progecen']     = $row[5];
             $_SESSION['id_personne_progecen']   = $row[6];
             $_SESSION['u_nom_user_progecen']    = $row[5];
-            $_SESSION['u_responsable']    = $row[7];
+            $_SESSION['u_responsable']          = $row[7];
             echo "Success";
         }
         //ferme la connexion a la BD

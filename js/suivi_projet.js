@@ -150,6 +150,14 @@ function apply_filters() {
             console.log(actions_f);
         }
     }
+    //si responsable alors edition possible
+    const c_ = document.getElementById("c_resp").value;
+    if (c_ == projets_f[0].responsable_projet) {
+        console.log("yop");
+    } else {
+        console.log("nope");
+        console.log(c_);
+    }
     //mets à jour le tableau des actions
     update_dtActions();
     //update projet infos

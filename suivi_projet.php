@@ -48,6 +48,7 @@ if (!isset($_SESSION['session'])) {
     header('Location: index.php');
     exit();
 };
+
 $_SESSION['is_admin'] = false;
 $admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
 
@@ -89,7 +90,7 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
                     <div class="d-flex flex-column w-100  p-0"> <!--border border-secondary rounded-2 -->
-                        <div class="d-flex w-100 justify-content-center bg-light text-secondary"><h3 class="bebas">Synthese du projet</h3></div>
+                        <div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image"><h3 class="bebas">Synthese du projet</h3></div>
                         <div class="d-flex flex-wrap w-100">
                             <div class="d-flex flex-column col-md-4 col-lg-3">
                                 <div class="input-group input-group-sm p-2 pt-0">
@@ -373,7 +374,8 @@ if (in_array($_SESSION['email'], $admins)) {
   </div>
 </div>
 
-
+<span id="c_resp" class="" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"></span>
+<?php echo $_SESSION['u_nom_user_progecen']  ; ?>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->
@@ -409,7 +411,6 @@ if (in_array($_SESSION['email'], $admins)) {
 
 <script type="text/javascript" src="js/suivi_projet.js" ></script>
 <script type="text/javascript">
-
 
 $(document).ready(function() {
     load_projets_ajax();
@@ -473,6 +474,7 @@ $(document)
             $(document.body).addClass( 'modal-noscrollbar' );
         }
     }); 
+
 </script>
 
   </body>
