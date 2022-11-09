@@ -82,7 +82,7 @@ if (in_array($_SESSION['email'], $admins)) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-start align-items-center col-12">
-                            <div class="form-check form-switch my-2">
+                            <div id="edition" class="form-check form-switch my-2 d-none">
                                 <input class="form-check-input" type="checkbox" id="edit_projet">
                                 <label class="form-check-label" for="edit_projet">Editer le projet</label>
                             </div>
@@ -90,7 +90,7 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
                     <div class="d-flex flex-column w-100  p-0"> <!--border border-secondary rounded-2 -->
-                        <div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image"><h3 class="bebas">Synthese du projet</h3></div>
+                        <div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image m-2"><h3 class="bebas">Synthese du projet</h3></div>
                         <div class="d-flex flex-wrap w-100">
                             <div class="d-flex flex-column col-md-4 col-lg-3">
                                 <div class="input-group input-group-sm p-2 pt-0">
@@ -374,8 +374,7 @@ if (in_array($_SESSION['email'], $admins)) {
   </div>
 </div>
 
-<span id="c_resp" class="" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"></span>
-<?php echo $_SESSION['u_nom_user_progecen']  ; ?>
+<span id="c_resp" class="" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->

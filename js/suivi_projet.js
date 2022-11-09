@@ -11,15 +11,15 @@ let c_projet = ''; // id_projet actuel
 let edit = false;
 
 //EVENT ON SWITCH
-$('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
-$('#2022').change(function() {filters_active["2022"] = ( $(this).prop('checked') );apply_filters();});
-$('#2023').change(function() {filters_active["2023"] = ( $(this).prop('checked') );apply_filters();});
-$('#2024').change(function() {filters_active["2024"] = ( $(this).prop('checked') );apply_filters();});
-$('#2025').change(function() {filters_active["2025"] = ( $(this).prop('checked') );apply_filters();});
-$('#2026').change(function() {filters_active["2026"] = ( $(this).prop('checked') );apply_filters();});
-$('#2027').change(function() {filters_active["2027"] = ( $(this).prop('checked') );apply_filters();});
-$('#2028').change(function() {filters_active["2028"] = ( $(this).prop('checked') );apply_filters();});
-$('#all').change(function() {clear_dep_filter ();apply_filters();});
+//$('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2022').change(function() {filters_active["2022"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2023').change(function() {filters_active["2023"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2024').change(function() {filters_active["2024"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2025').change(function() {filters_active["2025"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2026').change(function() {filters_active["2026"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2027').change(function() {filters_active["2027"] = ( $(this).prop('checked') );apply_filters();});
+//$('#2028').change(function() {filters_active["2028"] = ( $(this).prop('checked') );apply_filters();});
+//$('#all').change(function() {clear_dep_filter ();apply_filters();});
 
 //CALL DATA PROJETS
 //Le json de l'ensemble des projets sera contenu dans la variable "projets"
@@ -38,7 +38,6 @@ function load_projets_ajax () {
             let projets_array = [];
             for (const projet in projets) {
                 projets_array.push(projets[projet].id+' - '+projets[projet].name);
-                
             }
             projets_array.sort();
             autocompleteArray(document.getElementById("input_projet"), projets_array);
@@ -144,27 +143,26 @@ function apply_filters() {
     projets_f = projets;
     for (const property in filters_active) {
         if(filters_active[property]) {
-            //console.log(`${property}: ${filters_active[property]}`);
+            console.log(`${property}: ${filters_active[property]}`);
             projets_f = filtre_obj(projets_f, property);
             actions_f = JSON.parse(projets_f[0].json_actions);
-            console.log(actions_f);
+            //console.log(actions_f);
+            //mets à jour le tableau des actions
+            update_dtActions();
+            //update projet infos
+            update_projetInfos();
+            //Ajoute les évènements pour les cellules du tableau
+            add_events_actions();
+            dtActions.column( 7 ).visible(edit);
+            //si responsable alors edition possible
+            const c_ = document.getElementById("c_resp").innerText;
+            if (c_ == projets_f[0].responsable_projet) {
+                document.getElementById("edition").classList.remove("d-none");
+            } else {
+                document.getElementById("edition").classList.add("d-none");
+            }
         }
     }
-    //si responsable alors edition possible
-    const c_ = document.getElementById("c_resp").value;
-    if (c_ == projets_f[0].responsable_projet) {
-        console.log("yop");
-    } else {
-        console.log("nope");
-        console.log(c_);
-    }
-    //mets à jour le tableau des actions
-    update_dtActions();
-    //update projet infos
-    update_projetInfos();
-    //Ajoute les évènements pour les cellules du tableau
-    add_events_actions();
-    dtActions.column( 7 ).visible(edit);
 };
 
 //Datepickers
@@ -217,6 +215,10 @@ const dtActions =$('#actionsDT').DataTable({
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement si responsable projet --> edition possible
 //////////////////////////////////////////////////////
+document.getElementById("save_projet").addEventListener("click", function() {
+    save_projet();
+});
+
 document.getElementById("edit_projet").addEventListener("click", function() {
     edit = document.getElementById("edit_projet").checked;
     console.log(edit);
@@ -380,6 +382,34 @@ change_load("Chargement des données");
 
     //fonction d'enregistrement du projet en cours
     function save_projet () {
+        const projet_ = new Object();
+        console.log(projets_f[0].id);
+        projet_.id = projets_f[0].id;
+        projet_.name = document.getElementById("nom_projet").value;
+        projet_.responsable_projet = document.getElementById("responsable_projet").value;
+        projet_.type_projet = document.getElementById("type_projet").value;
+        projet_.etat_projet = document.getElementById("etat_projet").value;
+        projet_.echelle_projet = document.getElementById("echelle_projet").value;
+        projet_.l_p_date_start = document.getElementById("l_p_date_start").value;
+        projet_.l_p_date_end = document.getElementById("l_p_date_end").value;
+        projet_.p_commentaire = document.getElementById("p_commentaire").value;
+        projet_.p_color = document.getElementById("p_color").value;
+        const ProjetJsonString= JSON.stringify(projet_);
+        $.ajax({
+            url: "php/ajax/projets/edit_projet/update_projet.js.php",
+            type: "POST",
+            dataType: "json",
+            async    : true,
+            data: {
+                'projet':ProjetJsonString
+            },
+            error    : function(request, error) { 
+                alert("Erreur : responseText: "+request.responseText);
+                },
+            success  : function(data) {
+                console.log(data)
+                }
+        });
         
     }
 
