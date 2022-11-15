@@ -9,6 +9,7 @@ let c_actions = 0; // liste actuelles des actions du projet en édition
 let c_action = ''; // id_action actuelle
 let c_projet = ''; // id_projet actuel
 let edit = false;
+let chart = null;
 
 //EVENT ON SWITCH
 //$('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
@@ -162,6 +163,34 @@ function apply_filters() {
                 document.getElementById("edition").classList.add("d-none");
             }
         }
+    }
+    //si pas de filtre sur les projets clear all data
+    if (!filters_active["id_projet"]) {
+        console.log('destroy');
+        // set actions_f null;
+        actions_f = null;
+        //destroy graph
+        chart.destroy();
+        //clear datatable;
+        dtActions.clear().draw();
+        // clear projet data
+        document.getElementById("nom_projet").value="...";
+        document.getElementById("responsable_projet").value="...";
+        document.getElementById("type_projet").value="...";
+        document.getElementById("etat_projet").value="...";
+        document.getElementById("echelle_projet").value="...";
+        document.getElementById("l_p_date_start").value="01-01-2020";
+        document.getElementById("l_p_date_end").value="01-01-2020";
+        document.getElementById("p_commentaire").value="...";
+        document.getElementById("p_color").value="#ffffff";
+        document.getElementById("sites_string").value="...";
+        //off edit visibility
+        edit = false;
+        document.getElementById("edition").classList.add("d-none");
+        document.getElementById("add_an_action").classList.add("d-none");
+        document.getElementById("save_projet").classList.add("d-none");
+        document.getElementById("export_excel_temps").classList.add("d-none");
+
     }
 };
 
@@ -534,7 +563,7 @@ function graph_( nom_projet_, real_, previ_) {
 
 
 
-    const chart = Highcharts.chart('container', {
+    chart = new Highcharts.chart('container', {
         chart: {
             type: 'bar',
             backgroundColor:'#f8f9fa'

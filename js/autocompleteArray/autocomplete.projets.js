@@ -146,5 +146,4 @@ function autocompleteArray(inp, arr) {
     //disable filter id with value selected
     filters_active["id_projet"] = false;
     apply_filters();
-    projets_f = null;
   }
