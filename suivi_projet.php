@@ -176,6 +176,9 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <button id="add_an_action" type="button" class="btn btn-warning btn-sm my-2 shadow" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
                                     <div class=""><button id="save_projet" type="button" class="btn btn-success my-2 shadow" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button></div>
                                 </div>
+                                <div>
+                                    <div class=""><button id="export_excel_temps" type="button" class="btn btn-primary my-2 shadow" ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button></div>
+                                </div>
                                 
                             </div>
                             <div class="d-flex flex-column text-secondary col-md-8 col-lg-9"> <!--bg-dark-->

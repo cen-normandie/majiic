@@ -242,7 +242,7 @@ class Html2Pdf
         return array(
             'major'     => 5,
             'minor'     => 2,
-            'revision'  => 1
+            'revision'  => 4
         );
     }
 
@@ -1181,8 +1181,8 @@ class Html2Pdf
      */
     protected function _listeArab2Rom($nbArabic)
     {
-        $nbBaseTen  = array('I','X','C','M');
-        $nbBaseFive = array('V','L','D');
+        $nbBaseTen  = array('i','x','c','m');
+        $nbBaseFive = array('v','l','d');
         $nbRoman    = '';
 
         if ($nbArabic<1) {
@@ -1505,7 +1505,15 @@ class Html2Pdf
     {
         // get the size of the image
         // WARNING : if URL, "allow_url_fopen" must turned to "on" in php.ini
-        $infos=@getimagesize($src);
+
+        if (strpos($src,'data:') === 0) {
+            $src = base64_decode( preg_replace('#^data:image/[^;]+;base64,#', '', $src) );
+            $infos = @getimagesizefromstring($src);
+            $src = "@{$src}";
+        } else {
+            $this->parsingCss->checkValidPath($src);
+            $infos = @getimagesize($src);
+        }
 
         // if the image does not exist, or can not be loaded
         if (!is_array($infos) || count($infos)<2) {
@@ -1753,16 +1761,16 @@ class Html2Pdf
             $inBL[1]-= $border['b']['width'];
         }
 
-        if ($inTL[0]<=0 || $inTL[1]<=0) {
+        if (!is_array($inTL) || $inTL[0]<=0 || $inTL[1]<=0) {
             $inTL = null;
         }
-        if ($inTR[0]<=0 || $inTR[1]<=0) {
+        if (!is_array($inTR) || $inTR[0]<=0 || $inTR[1]<=0) {
             $inTR = null;
         }
-        if ($inBR[0]<=0 || $inBR[1]<=0) {
+        if (!is_array($inBR) || $inBR[0]<=0 || $inBR[1]<=0) {
             $inBR = null;
         }
-        if ($inBL[0]<=0 || $inBL[1]<=0) {
+        if (!is_array($inBL) || $inBL[0]<=0 || $inBL[1]<=0) {
             $inBL = null;
         }
 
@@ -2665,7 +2673,13 @@ class Html2Pdf
                 if ($background['img']) {
                     // get the size of the image
                     // WARNING : if URL, "allow_url_fopen" must turned to "on" in php.ini
-                    $infos=@getimagesize($background['img']);
+                    if( strpos($background['img'],'data:') === 0 ) {
+                        $src = base64_decode( preg_replace('#^data:image/[^;]+;base64,#', '', $background['img']) );
+                        $infos = @getimagesizefromstring($src);
+                        $background['img'] = "@{$src}";
+                    }else{
+                        $infos = @getimagesize($background['img']);
+                    }
                     if (is_array($infos) && count($infos)>1) {
                         $background['img'] = [
                             'file'   => $background['img'],
