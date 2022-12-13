@@ -173,7 +173,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                                 </div>
                                 <div>
-                                    <button id="add_an_action" type="button" class="btn btn-warning btn-sm my-2 shadow" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
+                                    <button id="add_an_action" type="button" class="btn btn-danger my-2 shadow" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
                                     <div class=""><button id="save_projet" type="button" class="btn btn-success my-2 shadow" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button></div>
                                 </div>
                                 <div>
