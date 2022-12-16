@@ -65,16 +65,21 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <h2 class="">Empty</h2>
+                <h2 class="">Import temps Excel</h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
             </div>
             
-            <div class="d-flex bg-light ">
-                
-                
-
-                
-            </div>	
+            <div class="d-flex flex-column bg-light p-2 w-100">
+                <div class="alert alert-info" role="alert">
+                    Cette section permets de charger un excel pour une optimisation des temps.
+                    Vos temps saisis existants seront supprimés. Seules les données du fichier Excel seront importées.
+                    Attention toutefois cette opération n'est <span class="fw-bold">pas réversible</span> !
+                </div>
+                <div class="input-group">
+                    <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
+                    <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
+                </div>
+            </div>
 		</div>
 
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
@@ -111,7 +116,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <!-- general.js -->
 <script type="text/javascript" src="js/general/general.js" ></script>
 <!-- Empty.js -->
-<script type="text/javascript" src="js/template.js" ></script>
+<script type="text/javascript" src="js/import_excel.js" ></script>
 <script type="text/javascript">
 
 

@@ -445,25 +445,20 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         document.getElementById("p_commentaire").value=project[0].commentaire_projet;
         document.getElementById("p_color").value=project[0].color;
         document.getElementById("sites_string").value=project[0].sites;
-        console.log(project[0].files);
-        let d = project[0].files.split(', ').length;
-        console.log(d);
-        if (typeof variable !== 'undefined') {
-            if (project[0].files !== null) {
+        if (typeof project[0].files !== 'undefined') {
+            if ((project[0].files !== null) && (project[0].files !=='')) {
+                let str_ = '<div  class="d-flex flex-column flex-wrap w-100 align-items-center p-2 border">';
+                let d = project[0].files.split(', ').length;
                 let str__ = '';
                 if (d > 1) {
                     let nbd = project[0].files.split(', ');
-                    nbd.forEach(element => str__ = str__+ '<a class="fs-6" href="./php/files/'+element+'" target="blank_" >'+element+'</a>' );
+                    nbd.forEach(element => str__ = str__+ `<a class="fs-6" href="./php/files/${element}" target="blank_" >${element}</a>` );
                 } else if (project[0].files.split(', ').length = 1) {
-                    str__ = '<a class="fs-6" href="./php/files/'+project[0].files+'" target="blank_" >'+project[0].files+'</a>';
+                    str__ = `<a class="fs-6" href="./php/files/${project[0].files}" target="blank_" >${project[0].files}</a>`;
                 }
+                str_ +='</div>';
                 document.getElementById("docs").innerHTML=str__;
-            } else {
-                console.log('00000');
-                document.getElementById("docs").innerHTML= `<div class="d-flex w-100 justify-content-center text-secondary fs-6">Aucun document lié</div></div>`;
             };
-        } else {
-            document.getElementById("docs").innerHTML= `<div class="d-flex w-100 justify-content-center text-secondary fs-6"><div class="d-flex w-100>Aucun document lié</div></div>`;
         };
         
     }

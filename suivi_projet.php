@@ -172,9 +172,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" disabled>
                                     <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                                 </div>
-                                <div class= "input-group input-group-sm p-2">
-                                    <div id="docs" class="d-flex flex-wrap p-2 border">
-                                    </div>
+                                <div id="docs" class= "input-group input-group-sm p-2">
                                 </div>
 
 
