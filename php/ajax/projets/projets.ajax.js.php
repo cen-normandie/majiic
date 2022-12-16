@@ -29,6 +29,7 @@ WITH t as (
   p.tags,
   p.color,
   p.sites,
+  p.files,
   (select json_agg(acts) FROM 
    	(SELECT
           a.id_action as id_action,

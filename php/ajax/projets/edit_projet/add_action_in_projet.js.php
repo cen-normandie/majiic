@@ -23,5 +23,5 @@ $result = pg_prepare($dbconn, "sql",
 $result = pg_execute($dbconn, "sql", array($code_action,$financeurs,$site,$id_projet,$heures)) or die ( pg_last_error());
 pg_close($dbconn);
 
-echo json_encode("output");
+echo json_encode("Action ajoutée au projet : recharger la page");
 ?>

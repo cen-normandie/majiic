@@ -63,9 +63,9 @@
                 <span data-feather=""></span>
                 <i class="fas fa-tasks"></i> Suivi Projet
             </a>
-            <a class="nav-link"  href="create_projet.php">
+            <a class="nav-link"  href="import_temps_excel.php">
                 <span data-feather=""></span>
-                <i class="fas fa-plus-square"></i> Créer un Projet
+                <i class="fas fa-file-excel"></i> Import temps Excel
             </a>
         </div>
         <hr class="bg-secondary mx-2 my-1">

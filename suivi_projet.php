@@ -172,16 +172,24 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" disabled>
                                     <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                                 </div>
-                                <div>
-                                    <button id="add_an_action" type="button" class="btn btn-danger my-2 shadow" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
-                                    <div class=""><button id="save_projet" type="button" class="btn btn-success my-2 shadow" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button></div>
+                                <div class= "input-group input-group-sm p-2">
+                                    <div id="docs" class="d-flex flex-wrap p-2 border">
+                                    </div>
                                 </div>
-                                <div>
-                                    <div class=""><button id="export_excel_temps" type="button" class="btn btn-primary my-2 shadow" ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button></div>
+
+
+                                <div class="list-group">
+                                    <button id="add_an_action" type="button" class="btn btn-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
+                                    <button id="save_projet" type="button" class="btn btn-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
+                                    <button id="export_excel_temps" type="button" class="btn btn-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>
+                                    <div class="input-group input-group-sm pt-2">
+                                        <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">
+                                        <button id="save_file" type="button" class="btn btn-warning" ><i class="fas fa-file "></i> </button>
+                                    </div>
                                 </div>
                                 
                             </div>
-                            <div class="d-flex flex-column text-secondary col-md-8 col-lg-9"> <!--bg-dark-->
+                            <div class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4"> <!--bg-dark-->
                                 <div class="d-flex w-100 justify-content-start bg-light text-secondary background_image"><h5 class="bebas">Actions du projet :</h5></div>
                                 <div class="d-flex flex-column w-100 bg-light mb-2">
                                     <table id="actionsDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
@@ -377,7 +385,7 @@ if (in_array($_SESSION['email'], $admins)) {
   </div>
 </div>
 
-<span id="c_resp" class="" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
+<span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->
@@ -477,7 +485,7 @@ $(document)
         }
     }); 
 
-</script>
 
+</script>
   </body>
 </html>

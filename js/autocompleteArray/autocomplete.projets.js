@@ -119,6 +119,9 @@ function autocompleteArray(inp, arr) {
       //enable filter id with value selected
       keys["id_projet"][0] = id;
       filters_active["id_projet"] = true;
+      //session filter
+      sessionStorage.setItem("filter_projet",id);
+      sessionStorage.setItem("filter_name_projet",str_id);
       //filtre le json
       apply_filters();
       
@@ -145,5 +148,7 @@ function autocompleteArray(inp, arr) {
     keys["id_projet"][0] = 'null';
     //disable filter id with value selected
     filters_active["id_projet"] = false;
+    //DESTROY Sessions
+    sessionStorage.clear();
     apply_filters();
   }

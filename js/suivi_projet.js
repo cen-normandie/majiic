@@ -11,6 +11,8 @@ let c_projet = ''; // id_projet actuel
 let edit = false;
 let chart = null;
 
+
+
 //EVENT ON SWITCH
 //$('#2021').change(function() {filters_active["2021"] = ( $(this).prop('checked') );apply_filters();});
 //$('#2022').change(function() {filters_active["2022"] = ( $(this).prop('checked') );apply_filters();});
@@ -126,6 +128,18 @@ function load_sites_ajax () {
             init_sites_array();
             //apply_filters();
             change_load();
+            //Reload projet if exists
+            if (JSON.parse(sessionStorage.getItem('filter_projet')) !== null) {
+                console.log(sessionStorage);
+                keys["id_projet"][0] = sessionStorage.getItem('filter_projet');
+                filters_active["id_projet"] = true;
+                document.getElementById("input_projet").value= sessionStorage.getItem('filter_name_projet');;
+                document.getElementById("input_projet").setAttribute("disabled",true);
+                document.getElementById("del").classList.add("text-danger");
+
+                apply_filters();
+            };
+            sessionStorage.clear();
             }
     });
 }
@@ -147,6 +161,7 @@ function apply_filters() {
             console.log(`${property}: ${filters_active[property]}`);
             projets_f = filtre_obj(projets_f, property);
             actions_f = JSON.parse(projets_f[0].json_actions);
+            //sessionStorage.setItem("filter_projet", keys["id_projet"][0]);
             //console.log(actions_f);
             //mets à jour le tableau des actions
             update_dtActions();
@@ -162,6 +177,7 @@ function apply_filters() {
             } else {
                 document.getElementById("edition").classList.add("d-none");
             }
+            
         }
     }
     //si pas de filtre sur les projets clear all data
@@ -184,12 +200,14 @@ function apply_filters() {
         document.getElementById("p_commentaire").value="...";
         document.getElementById("p_color").value="#ffffff";
         document.getElementById("sites_string").value="...";
+        document.getElementById("docs").innerHTML= "";
         //off edit visibility
         edit = false;
         document.getElementById("edition").classList.add("d-none");
         document.getElementById("add_an_action").classList.add("d-none");
         document.getElementById("save_projet").classList.add("d-none");
-        document.getElementById("export_excel_temps").classList.add("d-none");
+        //document.getElementById("export_excel_temps").classList.add("d-none");
+
 
     }
 };
@@ -264,16 +282,36 @@ document.getElementById("edit_projet").addEventListener("click", function() {
     if(edit) {
         document.getElementById("add_an_action").classList.remove("d-none");
         document.getElementById("save_projet").classList.remove("d-none");
+        //document.getElementById("export_excel_temps").classList.remove("d-none");
     } else {
         document.getElementById("add_an_action").classList.add("d-none");
         document.getElementById("save_projet").classList.add("d-none");
+        //document.getElementById("export_excel_temps").classList.add("d-none");
     }
     dtActions.column( 7 ).visible(edit);
 });
 //masque la colonne pour le 1er chargement
 change_load("Chargement des données");
 
-
+//export excel temps des projets
+document.getElementById("export_excel_temps").addEventListener("click", function() {
+    $.ajax({
+        url: "php/export_excel_temps_du_projet.php",
+        type: "POST",
+        dataType: "text",
+        async    : true,
+        data: {
+            'id_projet':projets_f[0].id
+        },
+        error    : function(request, error) { 
+            alert("Erreur : responseText: "+request.responseText);
+            },
+        success  : function(data) {
+            console.log(data);
+            window.location = 'php/'+data;
+            }
+    });
+});
 
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour ajouter pré-créer une action
@@ -407,6 +445,27 @@ change_load("Chargement des données");
         document.getElementById("p_commentaire").value=project[0].commentaire_projet;
         document.getElementById("p_color").value=project[0].color;
         document.getElementById("sites_string").value=project[0].sites;
+        console.log(project[0].files);
+        let d = project[0].files.split(', ').length;
+        console.log(d);
+        if (typeof variable !== 'undefined') {
+            if (project[0].files !== null) {
+                let str__ = '';
+                if (d > 1) {
+                    let nbd = project[0].files.split(', ');
+                    nbd.forEach(element => str__ = str__+ '<a class="fs-6" href="./php/files/'+element+'" target="blank_" >'+element+'</a>' );
+                } else if (project[0].files.split(', ').length = 1) {
+                    str__ = '<a class="fs-6" href="./php/files/'+project[0].files+'" target="blank_" >'+project[0].files+'</a>';
+                }
+                document.getElementById("docs").innerHTML=str__;
+            } else {
+                console.log('00000');
+                document.getElementById("docs").innerHTML= `<div class="d-flex w-100 justify-content-center text-secondary fs-6">Aucun document lié</div></div>`;
+            };
+        } else {
+            document.getElementById("docs").innerHTML= `<div class="d-flex w-100 justify-content-center text-secondary fs-6"><div class="d-flex w-100>Aucun document lié</div></div>`;
+        };
+        
     }
 
     //fonction d'enregistrement du projet en cours
@@ -448,11 +507,61 @@ let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPers
     keyboard: false
   });
 document.getElementById("add_action_personne").addEventListener("click", function() {
+    const myUAction = new Object();
+    myUAction.id_action = document.getElementById("id_action_update").innerText;
+    myUAction.personne = document.getElementById("input_personnes").value.split(' - ')[1];
+    //add Ajax function to have valid id_action
+    let  UActionJsonString= JSON.stringify(myUAction);
+    console.log(UActionJsonString);
+    //Sauvegarde de la personne en BDD
+    $.ajax({
+        url: "php/ajax/projets/edit_projet/update_action_with_personne.js.php",
+        type: "POST",
+        dataType: "json",
+        async    : true,
+        data: {
+            'action': UActionJsonString
+        },
+        error    : function(request, error) { 
+            alert("Erreur : responseText: "+request.responseText);
+            },
+        success  : function(data) {
+            console.log(data);
+            sessionStorage.clear();
+            sessionStorage.Projet("PRAM 2022");
+            }
+    });
     ModalAddPersonne.hide();
 });
 document.getElementById("cancel_action_personne").addEventListener("click", function() {
     ModalAddPersonne.hide();
 });
+
+//////////////////////////////////////////////////////
+//DOM FILES UPLOAD
+//////////////////////////////////////////////////////
+document.getElementById("save_file").addEventListener("click", function() {
+    if( document.getElementById("input_file").files.length == 0 ){
+        console.log("no files selected");
+    }
+    let active_file = $("#input_file").prop('files')[0];
+    let fd = new FormData();
+        fd.append('file', active_file);
+        fd.append('id_projet', projets_f[0].id);
+        $.ajax({
+        url      : "php/upload_doc.php",
+        type     : 'POST',
+        data     : fd ,
+        processData : false,
+        contentType : false,
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        success  : function(data) {
+                console.log(data);
+                }
+        });
+});
+
 
 
 //////////////////////////////////////////////////////
@@ -499,6 +608,8 @@ function get_action_content () {
                 console.log(data)
                 }
         });
+
+
 
 
         /* document.getElementById('list_actions').insertAdjacentHTML("beforeend", 
@@ -548,11 +659,11 @@ function add_events_actions () {
 }
 
 document.getElementById("add_action_personne").addEventListener("click", function() {
-    if (!!document.getElementById("input_personnes").value) {
+/*     if (!!document.getElementById("input_personnes").value) {
         console.log("list_personnes_action_"+document.getElementById("id_action_update").textContent);
         let s = '<div id=""><span class="badge mt-1 bg-success text-light">'+document.getElementById("input_personnes").value+'<i id="" class="ps-1 fas fa-window-close"></i></span></div>';
         document.getElementById("list_personnes_action_"+document.getElementById("id_action_update").textContent ).insertAdjacentElement("beforeend", s)
-    }
+    } */
     
 });
 

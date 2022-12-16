@@ -325,6 +325,93 @@ CREATE TRIGGER trigger_update_sites_liste_projets
 
 
 
+
+CREATE TABLE progecen_copy.files
+(
+    id integer NOT NULL DEFAULT nextval('progecen_copy.files_id_seq'::regclass),
+    id_projet integer NOT NULL,
+    file_name text COLLATE pg_catalog."default",
+    CONSTRAINT files_pkey PRIMARY KEY (id)
+);
+
+CREATE FUNCTION progecen_copy.update_projets_files()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+declare
+BEGIN 
+	WITH a as 
+	(select string_agg(file_name,', ') as files_ , id_projet from progecen_copy.files where id_projet = NEW.id_projet  group by 2 order by 1)
+	UPDATE progecen_copy.projets p SET files = a.files_
+	FROM a
+	WHERE p.id_projet = a.id_projet;
+RETURN NULL; 
+END;
+$BODY$;
+
+CREATE TRIGGER trigger_files
+    AFTER INSERT OR UPDATE OR DELETE
+    ON progecen_copy.files
+    FOR EACH ROW
+    WHEN ((pg_trigger_depth() < 1))
+    EXECUTE PROCEDURE progecen_copy.update_projets_files();
+
+
+/* SUIVI du TEMPS */
+CREATE TABLE progecen_copy.temps_suivi
+(
+	op text,
+	date_op timestamp with time zone,
+    e_id text COLLATE pg_catalog."default" NOT NULL,
+    e_id_projet text COLLATE pg_catalog."default" NOT NULL,
+    e_nom_projet text COLLATE pg_catalog."default",
+    e_id_action text COLLATE pg_catalog."default" NOT NULL,
+    e_nom_action text COLLATE pg_catalog."default",
+    e_id_site text COLLATE pg_catalog."default",
+    e_objet text COLLATE pg_catalog."default",
+    e_start timestamp with time zone,
+    e_end timestamp with time zone,
+    e_lieu text COLLATE pg_catalog."default",
+    e_commentaire text COLLATE pg_catalog."default",
+    e_personne text COLLATE pg_catalog."default",
+    e_nb_h double precision,
+    e_date_saisie timestamp without time zone DEFAULT (now())::timestamp without time zone,
+    e_salissure boolean DEFAULT false,
+    e_panier boolean DEFAULT false,
+    e_date_saisie_salissure timestamp without time zone DEFAULT (now())::timestamp without time zone,
+    e_date_valide_panier date,
+    e_date_valide_salissure date
+);
+CREATE FUNCTION progecen_copy.f_temps_suivi()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+IF (TG_OP = 'DELETE') THEN 
+INSERT INTO progecen_copy.temps_suivi SELECT 'DELETE', now(), OLD.*; 
+RETURN OLD; 
+ELSIF (TG_OP = 'UPDATE') THEN 
+INSERT INTO progecen_copy.temps_suivi SELECT 'UPDATE', now(), NEW.*; 
+RETURN NEW; 
+ELSIF (TG_OP = 'INSERT') THEN 
+INSERT INTO progecen_copy.temps_suivi SELECT 'INSERT', now(), NEW.*; 
+RETURN NEW; 
+END IF; 
+RETURN NULL; 
+END;
+$BODY$;
+
+CREATE TRIGGER suivi_temps
+    AFTER INSERT OR DELETE OR UPDATE 
+    ON progecen_copy.temps
+    FOR EACH ROW
+    EXECUTE PROCEDURE progecen_copy.f_temps_suivi();
+
+
 /* CREATION TABLE actions_gp ?? */
 /* pour gestion des actions communes --> test_ge_caen */
 
