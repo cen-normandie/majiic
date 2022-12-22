@@ -12,7 +12,25 @@ function validate_extension() {
 
 }
 
-
+//export excel temps de la personne
+document.getElementById("export_excel_temps").addEventListener("click", function() {
+    $.ajax({
+        url: "php/export_temps_personne.php",
+        type: "POST",
+        dataType: "text",
+        async    : true,
+        data: {
+            'nom_personne': document.getElementById("c_user").innerText
+        },
+        error    : function(request, error) { 
+            alert("Erreur : responseText: "+request.responseText);
+            },
+        success  : function(data) {
+            console.log(data);
+            window.location = 'php/'+data;
+            }
+    });
+});
 
 document.getElementById("load_file").addEventListener("click", function() {
     if( document.getElementById("input_file").files.length == 0 ){
@@ -23,6 +41,7 @@ document.getElementById("load_file").addEventListener("click", function() {
             let active_file = document.getElementById("input_file").files[0];
             let fd = new FormData();
                 fd.append('file', active_file);
+                fd.append('nom_personne', document.getElementById("c_user").innerText );
                 $.ajax({
                 url      : "php/upload_excel.php",
                 type     : 'POST',
@@ -36,10 +55,8 @@ document.getElementById("load_file").addEventListener("click", function() {
                 },
                 success  : function(data) {
                     change_load();
-                    console.log(data);
                     if (data !== 'impossible de copier le fichier') {
-                        console.log(data+" next ");
-                        read_excel_file_by_line();
+                        read_excel_file_by_line(data);
                     }
                 }
                 });
@@ -49,6 +66,44 @@ document.getElementById("load_file").addEventListener("click", function() {
     }
 });
 
-function read_excel_file_by_line() {
+function read_excel_file_by_line(data) {
     change_load("Lecture des lignes du fichier...");
+    let row_p1 = data.split('|')[0];
+    let file_name = data.split('|')[1].trim();
+    console.log(row_p1);
+    console.log(file_name);
+    for (let row = 2; row < parseInt(row_p1)+1; row++) {
+        let fd_ = new FormData();
+            fd_.append('file_name', file_name);
+            fd_.append('row',row);
+        $.ajax({
+            url      : "php/read_lines_excel.php",
+            type     : 'POST',
+            data     : fd_ ,
+            processData : false,
+            contentType : false,
+            async    : true,
+            error    : function(request, error) { 
+                alert("Erreur : responseText: "+request.responseText);
+                if(row = parseInt(row_p1)){
+                    change_load();
+                }
+            },
+            success  : function(data) {
+                if(data == 1) {
+                    document.getElementById("lines_import").innerHTML += `<div class="p-2 border text-success" style="font-size:10px;">Ligne : ${row}</div>`;
+                } else {
+                    document.getElementById("lines_import").innerHTML += `<div id="a_${row}" class="p-2 border text-danger " style="font-size:10px;"><b>Ligne : ${row}</b></div>`;
+                    //write html errors
+                    //document.getElementById("lines_import_error").innerHTML += data;
+
+                }
+                if(row = parseInt(row_p1)){
+                    change_load();
+                }
+
+            }
+        });
+      }
+     
 }

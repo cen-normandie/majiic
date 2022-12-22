@@ -5,11 +5,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
-/* $sheet->setCellValue('A1', 'Hello World !');
-$writer = new Xlsx($spreadsheet);
-$writer->save('hello world.xlsx'); */
 
-//$_POST["id_projet"] = 273;
+//$_POST["nom_personne"] = 'Benoit Perceval';
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
@@ -36,11 +33,11 @@ SELECT
     e.e_personne
 FROM $progecen_temps e 
 LEFT JOIN $progecen_projets p on e.e_id_projet = p.id_projet::text 
-WHERE e.e_id_projet = $1
+WHERE e.e_personne = $1
 ORDER by 3, 2
 "
 );
-$result = pg_execute($dbconn, "sql", array($_POST["id_projet"]));
+$result = pg_execute($dbconn, "sql", array($_POST["nom_personne"]));
 $row_ = 1;
 //write first line title
 $arr_columnname = ['id','objet','start','end','id_projet','id_action','nom_action','nom_projet','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
@@ -56,9 +53,6 @@ while($row = pg_fetch_array($result))
         //echo 'col = '.$column . 'row[x] = '.$row[$column_in_pg].'</br>';
         $sheet->setCellValueByColumnAndRow($column, $row_, $row[$column_in_pg]);
 
-            ///////////////////////////
-            // ajouter une quote avant les dates ?
-            ///////////////////////////
 
 
         if ($column_in_pg==15) {

@@ -384,6 +384,7 @@ if (in_array($_SESSION['email'], $admins)) {
 </div>
 
 <span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
+<span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->

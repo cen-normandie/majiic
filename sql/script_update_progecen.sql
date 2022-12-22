@@ -201,6 +201,8 @@ ALTER TABLE progecen_copy.temps
 ALTER COLUMN e_id_projet TYPE text USING e_id_projet::text;
 ALTER TABLE progecen_copy.temps
 ADD COLUMN e_color_selected text;
+--Defaut uuid on temps
+ALTER TABLE progecen_copy.temps ALTER COLUMN e_id SET DEFAULT uuid_generate_v4()::text;
 
 /* Ajout champ real previ sur table actions et projets */
 /* AJOUT DES CHAMPS */
@@ -412,8 +414,8 @@ CREATE TRIGGER suivi_temps
     EXECUTE PROCEDURE progecen_copy.f_temps_suivi();
 
 /*CREATE TABLE temps import tmp*/
-
-CREATE TABLE progecen_copy.temps_import
+--not used yet
+/* CREATE TABLE progecen_copy.temps_import
 (
     e_id_projet text --can be null not used,
     e_nom_projet text COLLATE pg_catalog."default",
@@ -433,7 +435,7 @@ CREATE TABLE progecen_copy.temps_import
     e_date_saisie_salissure timestamp without time zone DEFAULT (now())::timestamp without time zone,
     e_date_valide_panier date,
     e_date_valide_salissure date
-);
+); */
 
 
 /* CREATION TABLE actions_gp ?? */

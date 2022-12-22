@@ -74,10 +74,25 @@ if (in_array($_SESSION['email'], $admins)) {
                     Cette section permets de charger un excel pour une optimisation des temps.
                     Vos temps saisis existants seront supprimés. Seules les données du fichier Excel seront importées.
                     Attention toutefois cette opération n'est <span class="fw-bold">pas réversible</span> !
+                    <ul class="list-group my-2">
+                        <li class="list-group-item">A - Exportez vos temps existants :
+                            <div class="input-group my-2">
+                                <button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>
+                            </div>
+                        </li>
+                        <li class="list-group-item">B - Faites vos modifications sur le fichier excel</li>
+                        <li class="list-group-item">C - Importez vos temps optimisés :
+                            <div class="input-group my-2">
+                                <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
+                                <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="input-group">
-                    <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
-                    <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
+
+                <div id="lines_import" class="d-flex flex-wrap my-2" style="max-height:300px;overflow-y:scroll">
+                </div>
+                <div id="lines_import_error" class="d-flex flex-column my-2">
                 </div>
             </div>
 		</div>
@@ -89,6 +104,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 </div>
 
+<span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->

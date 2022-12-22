@@ -166,7 +166,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   headerToolbar: {
     left: 'prev,next today',
     center: 'title',
-    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    right: 'dayGridMonth,timeGridWeek'
   },
   editable: true,
   droppable: true, // this allows things to be dropped onto the calendar
