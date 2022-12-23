@@ -110,28 +110,28 @@ if (in_array($_SESSION['email'], $admins)) {
                         <div class="d-flex">
                             <div class="d-flex flex-column w-25">
                                 <div class="form-check form-check-inline form-control-sm py-0">
-                                    <input class="form-check-input form-check-input-sm" type="radio" name="Lieux" id="lieu_bureau" value="Bureau">
+                                    <input class="form-check-input form-check-input-sm" type="radio" name="Lieux" value="Bureau">
                                     <label class="form-check-label small" for="Lieu_Bureau">Bureau</label>
                                     </input>
                                 </div>
                                 <div class="form-check form-check-inline form-control-sm py-0">
-                                    <input class="form-check-input" type="radio" name="Lieux" id="lieu_reunion" value="Réunion">
+                                    <input class="form-check-input" type="radio" name="Lieux" value="Réunion">
                                     <label class="form-check-label small" for="lieu_reunion">Réunion</label>
                                 </div>
                                 <div class="form-check form-check-inline form-control-sm py-0">
-                                    <input class="form-check-input" type="radio" name="Lieux" id="lieu_terrain" value="Terrain">
+                                    <input class="form-check-input" type="radio" name="Lieux" value="Terrain">
                                     <label class="form-check-label small" for="lieu_terrain">Terrain</label>
                                 </div>
                                 <div class="form-check form-check-inline form-control-sm py-0">
-                                    <input class="form-check-input" type="radio" name="Lieux" id="lieu_teletravail" value="Télétravail">
+                                    <input class="form-check-input" type="radio" name="Lieux" value="Télétravail">
                                     <label class="form-check-label small" for="lieu_teletravail">Télétravail</label>
                                 </div>
                                 <div class="form-check form-check-inline form-control-sm py-0">
-                                    <input class="form-check-input" type="radio" name="Lieux" id="lieu_greve" value="Grève">
+                                    <input class="form-check-input" type="radio" name="Lieux" value="Grève">
                                     <label class="form-check-label small" for="lieu_greve">Grève</label>
                                 </div>
                                 <div class="form-check form-check-inline form-control-sm py-0">
-                                    <input class="form-check-input" type="radio" name="Lieux" id="lieu_modulation" value="Modulation">
+                                    <input class="form-check-input" type="radio" name="Lieux" value="Modulation">
                                     <label class="form-check-label small" for="lieu_modulation">Modulation</label>
                                 </div>
                             </div>

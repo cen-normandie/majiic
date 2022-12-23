@@ -208,19 +208,25 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     switch (arg.event._def.extendedProps.e_lieu) {
         case "Bureau":
             document.getElementById("update_lieu_bureau").checked = true;
+            break;
         case "Réunion":
             document.getElementById("update_lieu_reunion").checked = true;
+            break;
         case "Terrain":
             document.getElementById("update_lieu_terrain").checked = true;
+            break;
         case "Télétravail":
             document.getElementById("update_lieu_teletravail").checked = true;
+            break;
         case "Grève":
             document.getElementById("update_lieu_greve").checked = true;
             break;
         case "Modulation":
             document.getElementById("update_lieu_modulation").checked = true;
+            break;
         default:
             document.getElementById("update_lieu_bureau").checked = true;
+            break;
     };
     
     //calendar.render();
@@ -251,6 +257,17 @@ new FullCalendar.Draggable(containerEl, {
   }
 });
 
+var lieu_event_update = "Bureau";
+$(':radio[name="update_Lieux"]').change(function() {
+    lieu_event_update = $(this).filter(':checked').val();
+    console.log(lieu_event_update);
+});
+var lieu_event = "Bureau";
+$(':radio[name="Lieux"]').change(function() {
+    lieu_event = $(this).filter(':checked').val();
+    console.log(lieu_event);
+});
+
 function add_event_properties (event) {
     //uuid
     event.e_uuid = new_uuid;
@@ -272,8 +289,10 @@ function add_event_properties (event) {
     //end
     event.e_end = event._instance.range.end.toString().split(' GMT')[0];
     //lieu
-    const lieu = $("input[name='Lieux']:checked").val();
-    event.e_lieu = ( typeof lieu === 'undefined' ) ? 'null' : lieu;
+    ///////////////////////////
+    //const lieu = $("input[name='Lieux']:checked").val();
+    //event.e_lieu = ( typeof lieu === 'undefined' ) ? 'null' : lieu;
+    event.e_lieu = lieu_event;
     //commentaires
     event.e_commentaire = $("#input_commentaire").val() ;
     //personne
@@ -309,8 +328,10 @@ function add_update_event_properties (event,uuid_) {
     //end
     event.e_end = event._instance.range.end.toString().split(' GMT')[0];
     //lieu
-    const lieu = $("input[name='update_Lieux']:checked").val();
-    event.e_lieu = ( typeof lieu === 'undefined' ) ? 'null' : lieu;
+    /////////////////////////////
+    //const lieu = $("input[name='update_Lieux']:checked").val();
+    //event.e_lieu = ( typeof lieu === 'undefined' ) ? 'null' : lieu;
+    event.e_lieu = lieu_event_update;
     //commentaires
     event.e_commentaire = $("#update_input_commentaire").val() ;
     //personne
