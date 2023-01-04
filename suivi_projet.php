@@ -90,9 +90,10 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <!-- PANEL 100% Synthese du projet -->
                     <div class="d-flex flex-column w-100  p-0"> <!--border border-secondary rounded-2 -->
-                        <div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image m-2"><h3 class="bebas">Synthese du projet</h3></div>
+                        <!--<div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image m-2"><h3 class="bebas">Synthese du projet</h3></div>-->
                         <div class="d-flex flex-wrap w-100">
                             <div class="d-flex flex-column col-md-4 col-lg-3">
+                                <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Synthese du projet</h4></div>
                                 <div class="input-group input-group-sm p-2 pt-0">
                                     <span class="input-group-text" id="basic-addon1">Nom du projet : </span>
                                     <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">
@@ -153,15 +154,15 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <label class="input-group-text" for="sites_string">Sites : </label>
-                                    <input id="sites_string" type="text" class="form-control" placeholder="" aria-label="Sites" aria-describedby="" disabled value="chiche">
+                                    <input id="sites_string" type="text" class="form-control" placeholder="" aria-label="Sites" aria-describedby="" disabled value="...">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="l_p_date_start">Date Début<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                                    <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-2022" disabled>
+                                    <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-20.." disabled>
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="l_p_date_end">Date Fin<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                                    <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="01-01-2026" disabled>
+                                    <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="31-12-20.." disabled>
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span for="commentaire" class="input-group-text">Commentaire</span>
@@ -172,25 +173,15 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" disabled>
                                     <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                                 </div>
-
-
-                                <div class="list-group">
-                                    <button id="add_an_action" type="button" class="btn btn-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
-                                    <button id="save_projet" type="button" class="btn btn-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
-                                    <button id="export_excel_temps" type="button" class="btn btn-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>
-                                    <div class="input-group input-group-sm pt-2">
-                                        <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">
-                                        <button id="save_file" type="button" class="btn btn-warning" ><i class="fas fa-file "></i> </button>
-                                    </div>
-
-                                    <h6 class="mt-2">Documents liées :</h6>
-
-                                    <div id="docs"></div>
-                                </div>
-                                
+                                <h6 class="mt-2 px-2">Documents liées :</h6>
+                                <div class="px-2" id="docs"></div>
                             </div>
                             <div class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4"> <!--bg-dark-->
-                                <div class="d-flex w-100 justify-content-start bg-light text-secondary background_image"><h5 class="bebas">Actions du projet :</h5></div>
+                                <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Realise / Previsionnel :</h4></div>
+                                <div class="d-flex w-100">
+                                    <div id="container" class="d-flex w-100"></div>
+                                </div>
+                                <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Actions du projet :</h4></div>
                                 <div class="d-flex flex-column w-100 bg-light mb-2">
                                     <table id="actionsDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
                                         <thead>
@@ -207,7 +198,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                         </thead>
                                         <tbody>
                                         </tbody>
-                                        <tfoot>
+<!--                                         <tfoot>
                                             <tr>
                                                 <th>ID Action</th>
                                                 <th>Action</th>
@@ -218,12 +209,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                                 <th>Personnes</th>
                                                 <th>Select / Edit</th>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> -->
                                     </table>
-                                </div>
-                                <div class="d-flex w-100 justify-content-start bg-light text-secondary background_image"><h5 class="bebas">Realise / Previsionnel :</h5></div>
-                                <div class="d-flex w-100">
-                                    <div id="container" class="d-flex w-100"></div>
                                 </div>
                             </div>
                             <div id="d-flex flex-wrap col-md-6 col-lg-3">
@@ -232,11 +219,15 @@ if (in_array($_SESSION['email'], $admins)) {
                         </div>
                     </div>
                     <!-- PANEL 100% ACTIONS -->
-                    <div class="d-flex flex-column w-100 my-4">
-                        <div class="d-flex w-100 justify-content-center text-secondary"><h5 class="bebas">Somme du realise / Somme du prEvisionnel</h5></div>
-                        <div class="d-flex">
-                            <div class="d-flex justify-content-start col-md-6 col-lg-4">
-                                <div id="container_" class="d-flex w-100"></div>
+                    <div class="d-flex align-items-end flex-column w-100 my-5">
+                        <div class="d-flex flex-column col-md-3 col-lg-2">
+                            <button id="add_an_action" type="button" class="btn btn-outline-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
+                            <button id="save_projet" type="button" class="btn btn-outline-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
+                            <button id="export_excel_temps" type="button" class="btn btn-outline-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>
+                            <div>Lier des fichiers au projet :</div>
+                            <div class="input-group input-group-sm pt-2">
+                                <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">
+                                <button id="save_file" type="button" class="btn btn-warning" ><i class="fas fa-file "></i> </button>
                             </div>
                         </div>
                     </div>
@@ -244,10 +235,6 @@ if (in_array($_SESSION['email'], $admins)) {
 
                 
             </div>	
-		</div>
-
-		<div class="d-flex flex-column mt-auto justify-content-end align-items-end text-muted fixed-bottom">
-			<kbd class="small">CEN Normandie © 2022</kbd>
 		</div>
 	</div>
 
@@ -378,6 +365,51 @@ if (in_array($_SESSION['email'], $admins)) {
         <div class="col-4 d-flex justify-content-between w-100">
             <button type="button" class="btn btn-outline-success" id="add_action">Ajouter</button>
             <button type="button" class="btn btn-outline-danger" id="cancel_action_modal" data-dismiss="ModalAddAction">Annuler</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal Delete Action-->
+<div class="modal p-0" id="ModalDelAction">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex justify-content-between w-100">
+                <h5 class="modal-title">Supprimer une action : </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="d-flex justify-content-between w-100">
+                <span id="id_action_delete"></span>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+        <div class="d-flex flex-column px-2">
+                <div class="d-flex  justify-content-between my-2">
+                    <span>
+                        Attention ceci supprimera l'action mais également les temps saisis correspondant à cette action.
+                    </span>
+                </div>
+                <div class="d-flex justify-content-center" id="help">
+                </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
+        <div class="col-4 d-flex justify-content-between w-100">
+            <button type="button" class="btn btn-outline-success" id="del_action_complete">Supprimer</button>
+            <button type="button" class="btn btn-outline-danger" id="cancel_del_action">Annuler</button>
         </div>
       </div>
 

@@ -244,7 +244,7 @@ const dtActions =$('#actionsDT').DataTable({
         "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
         "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau"
     },
-    dom: '<"top"<"d-flex justify-content-end align-items-center"fB>>t',
+    dom: '<"top"<"d-flex justify-content-end align-items-center"f>>t', // export excel -->B :<"top"<"d-flex justify-content-end align-items-center"fB>>t
     buttons: [
     { 
         extend: 'excel', 
@@ -388,8 +388,8 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             const personnes_actions = p_.split('|');
             var badges_ = '';
             var x = `
-            <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-dark text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
-            <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-dark text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+            <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
+            <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
             //Liste des badges personnes
             for (const pe in personnes_actions) {
                 badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
@@ -448,7 +448,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         if (typeof project[0].files !== 'undefined') {
             console.log(typeof project[0].files);
             if ((project[0].files !== null) && (project[0].files !=='')) {
-                let str_ = '<div  class="d-flex w-100"><ul class="list-group list-group my-2">';
+                let str_ = '<ul class="list-group list-group">';
                 let d = project[0].files.split(', ').length;
                 let str__ = '';
                 if (d > 1) {
@@ -457,10 +457,10 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                 } else if (project[0].files.split(', ').length = 1) {
                     str__ = `<a class="list-group-item" href="./php/files/${project[0].files}" target="blank_" ><span style="font-size:12px;">${project[0].files}</span></a>`;
                 }
-                str_ +='</ul></div>';
+                str_ +='</ul>';
                 document.getElementById("docs").innerHTML=str__;
             } else {
-                document.getElementById("docs").innerHTML='<div  class="d-flex w-100"><ul class="list-group list-group my-2"><li class="list-group-item">ø</li></ul></div>';
+                document.getElementById("docs").innerHTML='<ul class="list-group list-group w-100"><li class="list-group-item">ø</li></ul>';
             };
         };
         
@@ -504,13 +504,15 @@ document.getElementById("export_excel_temps").addEventListener("click", function
 let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPersonne'), {
     keyboard: false
   });
+let ModalDelAction = new bootstrap.Modal(document.getElementById('ModalDelAction'), {
+    keyboard: false
+  });
 document.getElementById("add_action_personne").addEventListener("click", function() {
     const myUAction = new Object();
     myUAction.id_action = document.getElementById("id_action_update").innerText;
     myUAction.personne = document.getElementById("input_personnes").value.split(' - ')[1];
     //add Ajax function to have valid id_action
     let  UActionJsonString= JSON.stringify(myUAction);
-    console.log(UActionJsonString);
     //Sauvegarde de la personne en BDD
     $.ajax({
         url: "php/ajax/projets/edit_projet/update_action_with_personne.js.php",
@@ -524,15 +526,44 @@ document.getElementById("add_action_personne").addEventListener("click", functio
             alert("Erreur : responseText: "+request.responseText);
             },
         success  : function(data) {
-            console.log(data);
+            //console.log(data);
             sessionStorage.clear();
-            sessionStorage.Projet("PRAM 2022");
             }
     });
     ModalAddPersonne.hide();
 });
 document.getElementById("cancel_action_personne").addEventListener("click", function() {
     ModalAddPersonne.hide();
+});
+
+document.getElementById("del_action_complete").addEventListener("click", function() {
+    const myUActionDel = new Object();
+    myUActionDel.id_action = document.getElementById("id_action_delete").innerText;
+    myUActionDel.id_projet = projets_f[0].id;
+    //add Ajax function to have valid id_action
+    let  UActionJsonString= JSON.stringify(myUActionDel);
+    console.log(UActionJsonString);
+    //Sauvegarde de la personne en BDD
+    $.ajax({
+        url: "php/ajax/projets/edit_projet/del_action.js.php",
+        type: "POST",
+        dataType: "text",
+        async    : true,
+        data: {
+            'action': UActionJsonString
+        },
+        error    : function(request, error) { 
+            alert("Erreur : responseText: "+request.responseText);
+            ModalDelAction.hide();
+            },
+        success  : function(data) {
+            console.log(data);
+            ModalDelAction.hide();
+            }
+    });
+});
+document.getElementById("cancel_del_action").addEventListener("click", function() {
+    ModalDelAction.hide();
 });
 
 //////////////////////////////////////////////////////
@@ -646,6 +677,7 @@ document.getElementById("add_action").addEventListener("click", function() {
 
 function add_events_actions () {
     const elements1 = document.querySelectorAll(`[id^="add_p"]`);
+    const elements2 = document.querySelectorAll(`[id^="del_action_"]`);
     elements1.forEach(element => {
         element.addEventListener("click", function() {
             //c_action = projets_f.id
@@ -653,8 +685,16 @@ function add_events_actions () {
             ModalAddPersonne.show(element.getAttribute('id'));
         });
     });
-
+    elements2.forEach(element => {
+        element.addEventListener("click", function() {
+            //c_action = projets_f.id
+            document.getElementById("id_action_delete").textContent=element.getAttribute('id').replace('del_action_', '');
+            ModalDelAction.show(element.getAttribute('id'));
+        });
+    });
 }
+
+
 
 document.getElementById("add_action_personne").addEventListener("click", function() {
 /*     if (!!document.getElementById("input_personnes").value) {
@@ -678,7 +718,7 @@ function graph_( nom_projet_, real_, previ_) {
             backgroundColor:'#f8f9fa'
         },
         title: {
-            text: nom_projet_,
+            text: ``,//Réal / Prévi  ${nom_projet_}
             align: 'center'
         },
         subtitle: {

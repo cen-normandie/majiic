@@ -60,13 +60,13 @@ while($row = pg_fetch_array($result))
             // ajouter une quote avant les dates ?
             ///////////////////////////
 
-
-        if ($column_in_pg==15) {
+        //COLOR
+        /* if ($column_in_pg==15) {
             $cell_ ='O'.strval($row_);
             //echo $cell_.'</br>';
             $color = strtoupper(ltrim($row[$column_in_pg], $row[$column_in_pg][0]));
             $spreadsheet->getActiveSheet()->getStyle('B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        }
+        } */
     };
     $row_ = $row_ + 1;
 }

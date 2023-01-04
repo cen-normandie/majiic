@@ -21,7 +21,16 @@
   
   
   $_SESSION['is_admin'] = false;
-  $admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr", "v.boucey@cen-normandie.fr");
+  $admins = array(
+    "n.moreira@cen-normandie.fr", 
+    "c.bouteiller@cen-normandie.fr", 
+    "f.buissart@cen-normandie.fr", 
+    "b.perceval@cen-normandie.fr", 
+    "v.boucey@cen-normandie.fr"
+  );
+  $responsables=array(
+    "3 - Benoit Perceval"=>"b.perceval@cen-normandie.fr"
+  );
   
   if (in_array($_SESSION['email'], $admins)) {
       $_SESSION['is_admin'] = true;
@@ -62,15 +71,24 @@
             <a class="nav-link"  href="suivi_projet.php">
                 <span data-feather=""></span>
                 <i class="fas fa-tasks"></i> Suivi Projet
-            </a>
-            <a class="nav-link"  href="import_temps_excel.php">
+            </a>';
+    if ( array_search($_SESSION['email'], $responsables) != false ) {
+      echo '<a class="nav-link"  href="create_projet.php">
+              <span data-feather=""></span>
+              <i class="fas fa-plus"></i> Création de projet
+            </a>';
+    } else {
+      echo '';
+    }
+
+    echo '  <a class="nav-link"  href="import_temps_excel.php">
                 <span data-feather=""></span>
                 <i class="fas fa-file-excel"></i> Import temps Excel
             </a>
         </div>
         <hr class="bg-secondary mx-2 my-1">
 ';
-  }
+  };
 
 
 ?>

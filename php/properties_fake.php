@@ -34,4 +34,18 @@ $proprietaire_cad = " zzz.zzz ";
 
 $doc_annee = " zzz.zzz ";
 
+//PROGECEN
+$progecen_personnes = " zzz.zzz ";
+$progecen_actions = " zzz.zzz ";
+$progecen_liste_actions = " zzz.zzz ";
+$progecen_financeurs = " zzz.zzz ";
+$progecen_projets = " zzz.zzz ";
+$progecen_temps = " zzz.zzz ";
+$progecen_vue_tps_a = " zzz.zzz ";
+$files = " zzz.zzz ";
+
+$responsables=array(
+    "zzz.zzz"=>"zzz.zzz"
+);
+
 ?>
