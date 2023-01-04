@@ -446,18 +446,21 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         document.getElementById("p_color").value=project[0].color;
         document.getElementById("sites_string").value=project[0].sites;
         if (typeof project[0].files !== 'undefined') {
+            console.log(typeof project[0].files);
             if ((project[0].files !== null) && (project[0].files !=='')) {
-                let str_ = '<div  class="d-flex flex-column flex-wrap w-100 align-items-center p-2 border">';
+                let str_ = '<div  class="d-flex w-100"><ul class="list-group list-group my-2">';
                 let d = project[0].files.split(', ').length;
                 let str__ = '';
                 if (d > 1) {
                     let nbd = project[0].files.split(', ');
-                    nbd.forEach(element => str__ = str__+ `<a class="fs-6" href="./php/files/${element}" target="blank_" >${element}</a>` );
+                    nbd.forEach(element => str__ = str__+ `<a class="list-group-item" href="./php/files/${element}" target="blank_" ><span style="font-size:12px;">${element}</span></a>` );
                 } else if (project[0].files.split(', ').length = 1) {
-                    str__ = `<a class="fs-6" href="./php/files/${project[0].files}" target="blank_" >${project[0].files}</a>`;
+                    str__ = `<a class="list-group-item" href="./php/files/${project[0].files}" target="blank_" ><span style="font-size:12px;">${project[0].files}</span></a>`;
                 }
-                str_ +='</div>';
+                str_ +='</ul></div>';
                 document.getElementById("docs").innerHTML=str__;
+            } else {
+                document.getElementById("docs").innerHTML='<div  class="d-flex w-100"><ul class="list-group list-group my-2"><li class="list-group-item">ø</li></ul></div>';
             };
         };
         

@@ -172,8 +172,6 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" disabled>
                                     <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                                 </div>
-                                <div id="docs" class= "input-group input-group-sm p-2">
-                                </div>
 
 
                                 <div class="list-group">
@@ -184,6 +182,10 @@ if (in_array($_SESSION['email'], $admins)) {
                                         <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">
                                         <button id="save_file" type="button" class="btn btn-warning" ><i class="fas fa-file "></i> </button>
                                     </div>
+
+                                    <h6 class="mt-2">Documents liées :</h6>
+
+                                    <div id="docs"></div>
                                 </div>
                                 
                             </div>
