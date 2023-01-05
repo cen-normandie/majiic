@@ -72,18 +72,19 @@
                 <span data-feather=""></span>
                 <i class="fas fa-tasks"></i> Suivi Projet
             </a>';
-    if ( array_search($_SESSION['email'], $responsables) != false ) {
+    //if ( $_SESSION['u_responsable']!== false ) {
       echo '<a class="nav-link"  href="create_projet.php">
               <span data-feather=""></span>
               <i class="fas fa-plus"></i> Création de projet
             </a>';
-    } else {
-      echo '';
-    }
-
+    //}
     echo '  <a class="nav-link"  href="import_temps_excel.php">
                 <span data-feather=""></span>
                 <i class="fas fa-file-excel"></i> Import temps Excel
+            </a>
+            <a class="nav-link"  href="export.php">
+                <span data-feather=""></span>
+                <i class="fas fa-file-excel"></i> Export des feuilles de temps
             </a>
         </div>
         <hr class="bg-secondary mx-2 my-1">

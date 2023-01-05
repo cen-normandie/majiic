@@ -15,7 +15,7 @@ function validate_extension() {
 //export excel temps de la personne
 document.getElementById("export_excel_temps").addEventListener("click", function() {
     $.ajax({
-        url: "php/export_temps_personne.php",
+        url: "php/export_excel/export_temps_personne.php",
         type: "POST",
         dataType: "text",
         async    : true,
@@ -27,7 +27,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             },
         success  : function(data) {
             console.log(data);
-            window.location = 'php/'+data;
+            window.location = 'php/files/'+data;
             }
     });
 });

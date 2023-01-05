@@ -65,39 +65,35 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <h2 class="">Import temps Excel</h2>
+                <h2 class="bebas">Export des feuilles de temps</h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
             </div>
             
-            <div class="d-flex flex-column bg-light p-2 w-100">
-                <div class="alert alert-info" role="alert">
-                    Cette section permets de charger un excel pour une optimisation des temps.
-                    Vos temps saisis existants seront supprimés. Seules les données du fichier Excel seront importées.
-                    Attention toutefois cette opération n'est <span class="fw-bold">pas réversible</span> !
-                    <ul class="list-group my-2">
-                        <li class="list-group-item">A - Exportez vos temps existants :
-                            
-                                <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
-                                <button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
-                                <button id="export_2022" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
-                                <button id="export_2023" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
-                            
-                        </li>
-                        <li class="list-group-item">B - Faites vos modifications sur le fichier excel</li>
-                        <li class="list-group-item">C - Importez vos temps optimisés :
-                            <div class="input-group my-2">
-                                <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
-                                <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
+            <div class="d-flex bg-light ">
+                <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded">
+                    <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export par annee</h4>
+                    <div class="d-flex flex-column w-100">
+                        <button id="export_2021" type="button" class="btn btn-outline-success shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
+                        <button id="export_2022" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
+                        <button id="export_2023" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
+                    </div>
+                </div>
+                <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded">
+                    <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export par personne</h4>
+                    <div class="d-flex flex-column w-100">
+                        <div class="autocompleteBS w-100" id="personnes">
+                            <div class="input-group input-group-sm">
+                                <span for="input_personnes" class="input-group-text">Personne : </span>
+                                <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
+                                <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <button id="export_p_2021" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2021</button>
+                        <button id="export_p_2022" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
+                        <button id="export_p_2023" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
+                    </div>
                 </div>
-
-                <div id="lines_import" class="d-flex flex-wrap my-2" style="max-height:300px;overflow-y:scroll">
-                </div>
-                <div id="lines_import_error" class="d-flex flex-column my-2">
-                </div>
-            </div>
+            </div>	
 		</div>
 
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
@@ -106,7 +102,7 @@ if (in_array($_SESSION['email'], $admins)) {
 	</div>
 
 </div>
-
+<span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 <span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
 <script src="js/jquery.js" ></script>
@@ -134,13 +130,14 @@ if (in_array($_SESSION['email'], $admins)) {
 
 <!-- general.js -->
 <script type="text/javascript" src="js/general/general.js" ></script>
-<!-- Empty.js -->
-<script type="text/javascript" src="js/import_excel.js" ></script>
+<!-- autocomplete -->
+<script type="text/javascript" src="js/autocompleteArray/autocomplete.personnes.js" ></script>
+<!-- Export.js -->
+<script type="text/javascript" src="js/export.js" ></script>
 <script type="text/javascript">
 
-
 $(document).ready(function() {
-
+    load_personnes_ajax ();
 });
 
 

@@ -22,6 +22,7 @@
 	<!--<link href="js/plugins/datatable/datatables.min.css" rel="stylesheet">-->
     <!-- Custom CSS -->
     <link href="css/cennormandie.css" rel="stylesheet">
+    <link href="css/autocomplete.sites.css" rel="stylesheet">
     <!--FONT AWESOME-->
     <link href="fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet" type="text/css">
     <!--Datatable bs5-->
@@ -70,37 +71,21 @@ if (in_array($_SESSION['email'], $admins)) {
             </div>
             
             <div class="d-flex bg-light ">
-                <div class="d-flex flex-column col-md-4 col-lg-3">
-                    <div class="input-group input-group-sm p-2 pt-0">
+                <div class="d-flex flex-column col-md-4 col-lg-3 m-2">
+                    <div class="input-group input-group-sm py-2">
                         <span class="input-group-text" id="basic-addon1">Nom du projet : </span>
-                        <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" value="...">
+                        <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" value="">
                     </div>
-                    <div class="input-group input-group-sm p-2">
-                    <div class="autocompleteBS w-100" id="personnes">
-                        <div class="input-group input-group-sm">
-                            <span for="input_personnes" class="input-group-text">Responsable : </span>
-                            <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
-                            <span class="input-group-text justify-content-center" id="del_responsable"><i class="far fa-trash-alt"></i></span>
-                        </div>
-                    </div>
-                    <div class="input-group input-group-sm p-2">
-                        <label class="input-group-text" for="l_type_projet">Type de projet : </label>
+                    <div class="input-group input-group-sm py-2">
+                        <label class="input-group-text" for="l_type_projet">Responsable : </label>
                         <select class="form-select" id="responsable_projet" >
-                            <?php
-                            ?>
-                            <option value="Commune" >Commune</option>
-                            <option value="Département" >Département</option>
-                            <option value="EPCI" >EPCI</option>
-                            <option value="Régionale" >Régionale</option>
-                            <option value="Site" >Site</option>
-                            <option value="Multi-site" >Multi-site</option>
-                            <option value="ENS" >ENS</option>
+                            <?php echo $responsables_html ?>
                         </select>
 
                         
 
                     </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <label class="input-group-text" for="l_type_projet">Type de projet : </label>
                         <select class="form-select" id="type_projet" >
                             <option value="Programme Régional" >Programme Régional</option>
@@ -118,14 +103,14 @@ if (in_array($_SESSION['email'], $admins)) {
                             <option value="Autre" >Autre</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <label class="input-group-text" for="l_etat_projet">État du projet : </label>
                         <select class="form-select" id="etat_projet" >
                             <option value="Prévisionnel" >Prévisionnel</option>
                             <option value="Validé" >Validé</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <label class="input-group-text" for="l_echelle_projet">Échelle : </label>
                         <select class="form-select" id="echelle_projet" >
                             <option value="Commune" >Commune</option>
@@ -137,28 +122,26 @@ if (in_array($_SESSION['email'], $admins)) {
                             <option value="ENS" >ENS</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm p-2">
-                        <label class="input-group-text" for="sites_string">Sites : </label>
-                        <input id="sites_string" type="text" class="form-control" placeholder="" aria-label="Sites" aria-describedby="" value="...">
-                    </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <span class="input-group-text" id="l_p_date_start">Date Début<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                        <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-20.." >
+                        <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-2023" >
                     </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <span class="input-group-text" id="l_p_date_end">Date Fin<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                        <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="31-12-20.." >
+                        <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="31-12-2023" >
                     </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <span for="commentaire" class="input-group-text">Commentaire</span>
                         <textarea class="form-control" id="p_commentaire" rows="2" ></textarea>
                     </div>
-                    <div class="input-group input-group-sm p-2">
+                    <div class="input-group input-group-sm py-2">
                         <label for="p_color" class="input-group-text">Couleur</label>
                         <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" >
                         <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                     </div>
-                    <h6 class="mt-2 px-2">Documents liées :</h6>
+                    <div>
+                        <button id="save_projet" type="button" class="btn btn-outline-success shadow my-1 "><i class=""></i> Enregistrer</button>
+                    </div>
                 </div>
                 
 

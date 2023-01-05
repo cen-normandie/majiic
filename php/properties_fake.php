@@ -47,5 +47,6 @@ $files = " zzz.zzz ";
 $responsables=array(
     "zzz.zzz"=>"zzz.zzz"
 );
+$responsables_html = '<option value="zzz">zzz</option>';
 
 ?>

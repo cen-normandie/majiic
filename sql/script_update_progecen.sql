@@ -438,6 +438,26 @@ CREATE TRIGGER suivi_temps
 ); */
 
 
+/* LISTE DES responsables depuis la table users.users
+select '<option value = "'||u_id||' - '||u_prenom||' '||u_nom ||'">'||u_id||' - '||u_prenom||' '||u_nom ||'</option>', u_id,
+'"'||u_prenom||' '||u_nom||'"=>"'||u_id||' - '||u_prenom||' '||u_nom||'",'
+	FROM users.users
+where u_responsable is true 
+order by 2;
+*/
+
+/*/////////////////////////////////////////////////////////
+Modifier les table actions et projets pour definir la valeur par defaut des clefs primaires avec nextval(); 
+Projets 
+    --> nb_h_previ nb_h_real mettre les valeurs par defaut à  0
+    --> multisite mettre non par defaut ?
+
+
+
+
+*/
+
+
 /* CREATION TABLE actions_gp ?? */
 /* pour gestion des actions communes --> test_ge_caen */
 

@@ -296,7 +296,7 @@ change_load("Chargement des données");
 //export excel temps des projets
 document.getElementById("export_excel_temps").addEventListener("click", function() {
     $.ajax({
-        url: "php/export_excel_temps_du_projet.php",
+        url: "php/export_excel/export_excel_temps_du_projet.php",
         type: "POST",
         dataType: "text",
         async    : true,
@@ -308,7 +308,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             },
         success  : function(data) {
             console.log(data);
-            window.location = 'php/'+data;
+            window.location = 'php/files/'+data;
             }
     });
 });

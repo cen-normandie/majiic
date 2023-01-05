@@ -81,12 +81,12 @@ if (in_array($_SESSION['email'], $admins)) {
                 </div>
                 <div id="panel" class="d-flex flex-column bg-light w-50">
                         <!--<div class="mb-3 autocompleteBS">
-                        <!--    <label for="input_projet" class="form-label">Projet : </label>
-                        <!--    <div class="input-group" disabled>
-                        <!--        <input class="form-control" id="input_projet" type="text" size="60" placeholder="ex: PRAM 2021">
-                        <!--        <span class="input-group-text justify-content-center col-2" id="del"><i class="far fa-trash-alt"></i></span>
-                        <!--    </div>
-                        <!--</div>-->
+                            <label for="input_projet" class="form-label">Projet : </label>
+                            <div class="input-group" disabled>
+                                <input class="form-control" id="input_projet" type="text" size="60" placeholder="ex: PRAM 2021">
+                                <span class="input-group-text justify-content-center col-2" id="del"><i class="far fa-trash-alt"></i></span>
+                            </div>
+                        </div>-->
                     <div class="d-flex flex-column px-2">
                         <h4>Ajouter un évènement :</h4>
                         <div class="input-group input-group-sm mb-3">

@@ -1,6 +1,6 @@
 <?php
-include 'properties.php';
-require '../vendor/autoload.php';
+include '../properties.php';
+require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
@@ -65,7 +65,7 @@ while($row = pg_fetch_array($result))
     $row_ = $row_ + 1;
 }
 $writer = new Xlsx($spreadsheet);
-$writer->save('export_temps.xlsx');
+$writer->save('../files/export_temps.xlsx');
 
 //ferme la connexion a la BD
 pg_close($dbconn);
