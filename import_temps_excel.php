@@ -84,7 +84,7 @@ if (in_array($_SESSION['email'], $admins)) {
                             
                         </li>
                         <li class="list-group-item">B - Faites vos modifications sur le fichier excel</li>
-                        <li class="list-group-item">C - Importez vos temps optimisés :
+                        <li class="list-group-item">C - Importez vos temps optimisés :<span class="text-danger"> Attention à l'année !</span>
                             <div class="input-group my-2">
                                 <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
                                 <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
