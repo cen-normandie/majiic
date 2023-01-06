@@ -83,11 +83,21 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="export_2023" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
                             
                         </li>
-                        <li class="list-group-item">B - Faites vos modifications sur le fichier excel</li>
-                        <li class="list-group-item">C - Importez vos temps optimisés :<span class="text-danger"> Attention à l'année !</span>
-                            <div class="input-group my-2">
-                                <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
-                                <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
+                        <li class="list-group-item">B - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
+                        <li class="list-group-item">C - Importez vos temps optimisés :<p class="text-danger"> Attention à l'année !</p>
+                            <div class="d-flex flex-column col-sm-12 col-md-12 col-lg-8">
+                                <div class="input-group my-2">
+                                    <label class="input-group-text" for="year_replace">Année : </label>
+                                    <select class="form-select" id="year_replace" >
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023" selected>2023</option>
+                                    </select>
+                                </div>
+                                <div class="input-group my-2">
+                                    <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
+                                    <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
+                                </div>
                             </div>
                         </li>
                     </ul>

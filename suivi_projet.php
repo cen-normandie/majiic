@@ -92,7 +92,7 @@ if (in_array($_SESSION['email'], $admins)) {
                     <div class="d-flex flex-column w-100  p-0"> <!--border border-secondary rounded-2 -->
                         <!--<div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image m-2"><h3 class="bebas">Synthese du projet</h3></div>-->
                         <div class="d-flex flex-wrap w-100">
-                            <div class="d-flex flex-column col-md-4 col-lg-3">
+                            <div class="d-flex flex-column col-md-4 col-lg-3 border rounded p-2 mt-2">
                                 <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Synthese du projet</h4></div>
                                 <div class="input-group input-group-sm p-2 pt-0">
                                     <span class="input-group-text" id="basic-addon1">Nom du projet : </span>
@@ -100,15 +100,9 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="basic-addon1">Responsable : </span>
-                                    <input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">
+                                    <!--<input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">-->
                                     <select class="form-select" id="responsable_projet" disabled>
-                                        <option value="Commune" >Commune</option>
-                                        <option value="Département" >Département</option>
-                                        <option value="EPCI" >EPCI</option>
-                                        <option value="Régionale" >Régionale</option>
-                                        <option value="Site" >Site</option>
-                                        <option value="Multi-site" >Multi-site</option>
-                                        <option value="ENS" >ENS</option>
+                                        <?php echo $responsables_html_wo_id; ?>
                                     </select>
 
 									
@@ -220,7 +214,7 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <!-- PANEL 100% ACTIONS -->
                     <div class="d-flex align-items-end flex-column w-100 my-5">
-                        <div class="d-flex flex-column col-md-3 col-lg-2">
+                        <div class="d-flex flex-column col-md-3 col-lg-2 border border-dark rounded p-2">
                             <button id="add_an_action" type="button" class="btn btn-outline-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
                             <button id="save_projet" type="button" class="btn btn-outline-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
                             <button id="export_excel_temps" type="button" class="btn btn-outline-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>

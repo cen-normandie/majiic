@@ -11,16 +11,25 @@ function validate_extension() {
     }
 
 }
+document.getElementById("export_2021").addEventListener("click", function() {
+    export_temps(2021);
+});
+document.getElementById("export_2022").addEventListener("click", function() {
+    export_temps(2022);
+});
+document.getElementById("export_2023").addEventListener("click", function() {
+    export_temps(2023);
+});
 
-//export excel temps de la personne
-document.getElementById("export_excel_temps").addEventListener("click", function() {
+function export_temps(year_replace) {
     $.ajax({
-        url: "php/export_excel/export_temps_personne.php",
+        url: "php/export_excel/export_temps_personne_year.php",
         type: "POST",
         dataType: "text",
         async    : true,
         data: {
-            'nom_personne': document.getElementById("c_user").innerText
+            'nom_personne': document.getElementById("c_user").innerText,
+            'year':year_replace
         },
         error    : function(request, error) { 
             alert("Erreur : responseText: "+request.responseText);
@@ -30,7 +39,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             window.location = 'php/files/'+data;
             }
     });
-});
+};
 
 document.getElementById("load_file").addEventListener("click", function() {
     if( document.getElementById("input_file").files.length == 0 ){
@@ -42,6 +51,7 @@ document.getElementById("load_file").addEventListener("click", function() {
             let fd = new FormData();
                 fd.append('file', active_file);
                 fd.append('nom_personne', document.getElementById("c_user").innerText );
+                fd.append('year', document.getElementById("year_replace").value);
                 $.ajax({
                 url      : "php/upload_excel.php",
                 type     : 'POST',
@@ -56,7 +66,7 @@ document.getElementById("load_file").addEventListener("click", function() {
                 success  : function(data) {
                     change_load();
                     if (data !== 'impossible de copier le fichier') {
-                        read_excel_file_by_line(data);
+                        read_excel_file_by_line(data );
                     }
                 }
                 });

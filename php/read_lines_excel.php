@@ -44,7 +44,6 @@ if( isset($file_name))
         ($sheet->getActiveSheet()->getCellByColumnAndRow(2, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(3, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(4, $row)->getValue()??''),
-        ($sheet->getActiveSheet()->getCellByColumnAndRow(5, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(6, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(7, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(8, $row)->getValue()??''),
@@ -54,7 +53,8 @@ if( isset($file_name))
         ($sheet->getActiveSheet()->getCellByColumnAndRow(12, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(13, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(14, $row)->getValue()??''),
-        ($sheet->getActiveSheet()->getCellByColumnAndRow(16, $row)->getValue()??'')
+        ($sheet->getActiveSheet()->getCellByColumnAndRow(15, $row)->getValue()??''),
+        ($sheet->getActiveSheet()->getCellByColumnAndRow(17, $row)->getValue()??'')
     )) or die ( pg_last_error()));
 
     //ferme la connexion a la BD
@@ -94,10 +94,6 @@ if( isset($file_name))
     ($sheet->getActiveSheet()->getCellByColumnAndRow(15, $row)->getValue()??'').", ".
     ($sheet->getActiveSheet()->getCellByColumnAndRow(16, $row)->getValue()??'')
     .");"; */
-
-
-
-
 
 ?>
 

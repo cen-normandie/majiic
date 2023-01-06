@@ -9,6 +9,9 @@ $path_parts = pathinfo($_FILES['file']['name']);
 $extension = ".".$path_parts['extension'];
 $file_name_tmp = $path_parts['filename'];
 
+$_year_begin = strval($_POST["year"]);
+$_year_end = strval($_POST["year"] + 1);
+
 if( isset($_FILES["file"]))
 {
     $file_name = $file_name_tmp.'_'.date("d-m-Y_h_i_s");
@@ -28,11 +31,11 @@ if( isset($_FILES["file"]))
         $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
         or die ('Connexion impossible :'. pg_last_error());
         $result = pg_prepare($dbconn, "delete", "
-            DELETE FROM $progecen_temps WHERE e_personne = $1 
+            DELETE FROM $progecen_temps WHERE e_personne = $1 AND (e_start > TO_DATE( $2 ,'YYYY') AND e_end < TO_DATE( $3,'YYYY') )
             "
         );
         
-        $resultat = pg_execute($dbconn, "delete",array( $_POST["nom_personne"] ));
+        $resultat = pg_execute($dbconn, "delete",array( $_POST["nom_personne"],$_year_begin,$_year_end ));
 
         //ferme la connexion a la BD
         pg_close($dbconn);
