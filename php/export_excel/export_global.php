@@ -42,7 +42,7 @@ $row_ = 1;
 $arr_columnname = ['id','objet','start','end','id_projet','id_action','nom_action','nom_projet','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
 for ($column = 1; $column <= 16; $column++) {
     $column_in_pg = $column -1;
-    $sheet->setCellValueByColumnAndRow($column, $row_, $arr_columnname[$column_in_pg]);
+    $sheet->setCellValueByColumnAndRow($column, $row_, $arr_columnname[$column_in_pg]  );
 }
 $row_ = 2;
 while($row = pg_fetch_array($result))
@@ -50,16 +50,7 @@ while($row = pg_fetch_array($result))
     for ($column = 1; $column <= 16; $column++) {
         $column_in_pg = $column -1;
         //echo 'col = '.$column . 'row[x] = '.$row[$column_in_pg].'</br>';
-        $sheet->setCellValueByColumnAndRow($column, $row_, $row[$column_in_pg]);
-
-
-
-        if ($column_in_pg==15) {
-            $cell_ ='O'.strval($row_);
-            //echo $cell_.'</br>';
-            $color = strtoupper(ltrim($row[$column_in_pg], $row[$column_in_pg][0]));
-            $spreadsheet->getActiveSheet()->getStyle('B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        }
+        $sheet->setCellValueByColumnAndRow($column, $row_, is_null($row[$column_in_pg]) ? '' : $row[$column_in_pg] );
     };
     $row_ = $row_ + 1;
 }

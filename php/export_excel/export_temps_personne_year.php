@@ -51,16 +51,7 @@ while($row = pg_fetch_array($result))
     for ($column = 1; $column <= 16; $column++) {
         $column_in_pg = $column -1;
         //echo 'col = '.$column . 'row[x] = '.$row[$column_in_pg].'</br>';
-        $sheet->setCellValueByColumnAndRow($column, $row_, $row[$column_in_pg]);
-
-
-
-        if ($column_in_pg==15) {
-            $cell_ ='O'.strval($row_);
-            //echo $cell_.'</br>';
-            $color = strtoupper(ltrim($row[$column_in_pg], $row[$column_in_pg][0]));
-            $spreadsheet->getActiveSheet()->getStyle('B1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($color);
-        }
+        $sheet->setCellValueByColumnAndRow($column, $row_, is_null($row[$column_in_pg]) ? '' : $row[$column_in_pg]);
     };
     $row_ = $row_ + 1;
 }

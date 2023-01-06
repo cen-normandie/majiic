@@ -54,7 +54,7 @@ while($row = pg_fetch_array($result))
     for ($column = 1; $column <= 16; $column++) {
         $column_in_pg = $column -1;
         //echo 'col = '.$column . 'row[x] = '.$row[$column_in_pg].'</br>';
-        $sheet->setCellValueByColumnAndRow($column, $row_, $row[$column_in_pg]);
+        $sheet->setCellValueByColumnAndRow($column, $row_, is_null($row[$column_in_pg]) ? '' : $row[$column_in_pg]);
 
             ///////////////////////////
             // ajouter une quote avant les dates ?
