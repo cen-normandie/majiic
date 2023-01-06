@@ -148,15 +148,15 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <label class="input-group-text" for="sites_string">Sites : </label>
-                                    <input id="sites_string" type="text" class="form-control" placeholder="" aria-label="Sites" aria-describedby="" disabled value="...">
+                                    <input id="sites_string" type="text" class="form-control" placeholder="" aria-label="Sites" aria-describedby="" disabled value="">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="l_p_date_start">Date Début<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                                    <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-20.." disabled>
+                                    <input class="form-control" id="p_date_start" placeholder="01-01-2023" aria-label="" aria-describedby="l_p_date_start" value="" disabled>
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span class="input-group-text" id="l_p_date_end">Date Fin<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                                    <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="31-12-20.." disabled>
+                                    <input class="form-control" id="p_date_end" placeholder="01-10-2023" aria-label="" aria-describedby="l_p_date_end" value="" disabled>
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <span for="commentaire" class="input-group-text">Commentaire</span>

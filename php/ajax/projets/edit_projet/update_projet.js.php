@@ -12,8 +12,8 @@ $responsable_projet  = $arr_param->{'responsable_projet'};
 $type_projet  = $arr_param->{'type_projet'};
 $etat_projet  = $arr_param->{'etat_projet'};
 $echelle_projet  = $arr_param->{'echelle_projet'};
-$l_p_date_start  = $arr_param->{'l_p_date_start'};
-$l_p_date_end  = $arr_param->{'l_p_date_end'};
+$p_date_start  = $arr_param->{'p_date_start'};
+$p_date_end  = $arr_param->{'p_date_end'};
 $p_commentaire  = $arr_param->{'p_commentaire'};
 $p_color  = $arr_param->{'p_color'};
 
@@ -38,8 +38,8 @@ $result = pg_execute($dbconn, "sql", array(
     $nom_projet,
     $echelle_projet,
     $type_projet,
-    $l_p_date_start,
-    $l_p_date_end,
+    $p_date_start,
+    $p_date_end,
     $etat_projet,
     $responsable_projet,
     $p_commentaire,

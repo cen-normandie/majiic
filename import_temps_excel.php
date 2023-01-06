@@ -85,7 +85,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         </li>
                         <li class="list-group-item">B - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
                         <li class="list-group-item">C - Importez vos temps optimisés :<p class="text-danger"> Attention à l'année !</p>
-                            <div class="d-flex flex-column col-sm-12 col-md-12 col-lg-8">
+                            <div class="d-flex flex-column col-sm-12 col-md-12 col-lg-6">
                                 <div class="input-group my-2">
                                     <label class="input-group-text" for="year_replace">Année : </label>
                                     <select class="form-select" id="year_replace" >

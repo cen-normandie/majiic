@@ -399,7 +399,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                 actions_f[actions].id_action, //id_action
                 actions_f[actions].code_action, //code_action
                 actions_f[actions].financements ?? '', //financeurs
-                actions_f[actions].site.replace("NaN", '') ?? '', //site
+                actions_f[actions].site ?? '', //site
                 actions_f[actions].previ ?? 0, //nb_h_previ
                 actions_f[actions].realise ?? 0, //nb_h_real
                 badges_, //personnes
@@ -440,8 +440,8 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         document.getElementById("type_projet").value=project[0].type_projet;
         document.getElementById("etat_projet").value=project[0].etat;
         document.getElementById("echelle_projet").value=project[0].territoire;
-        document.getElementById("l_p_date_start").value=project[0].date_debut;
-        document.getElementById("l_p_date_end").value=project[0].date_fin;
+        document.getElementById("p_date_start").value=project[0].date_debut;
+        document.getElementById("p_date_end").value=project[0].date_fin;
         document.getElementById("p_commentaire").value=project[0].commentaire_projet;
         document.getElementById("p_color").value=project[0].color;
         document.getElementById("sites_string").value=project[0].sites;
@@ -476,8 +476,8 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         projet_.type_projet = document.getElementById("type_projet").value;
         projet_.etat_projet = document.getElementById("etat_projet").value;
         projet_.echelle_projet = document.getElementById("echelle_projet").value;
-        projet_.l_p_date_start = document.getElementById("l_p_date_start").value;
-        projet_.l_p_date_end = document.getElementById("l_p_date_end").value;
+        projet_.p_date_start = document.getElementById("p_date_start").value;
+        projet_.p_date_end = document.getElementById("p_date_end").value;
         projet_.p_commentaire = document.getElementById("p_commentaire").value;
         projet_.p_color = document.getElementById("p_color").value;
         const ProjetJsonString= JSON.stringify(projet_);

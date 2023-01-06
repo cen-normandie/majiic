@@ -70,7 +70,7 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <h2 class="">Saisie Analytique</h2>
+                <h2 class="">Saisie Analytique <button id="ola">OLA</button></h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 " style="margin-bottom: .5rem">
                 </div>
             </div>
@@ -273,8 +273,17 @@ if (in_array($_SESSION['email'], $admins)) {
   </div>
 </div>
 
+<span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
+<span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
-
+<?php 
+    if (isset($_GET['datedebut'])) {
+        echo '<span id="get_start" class="" >'.str_pad(str_replace(" ","T",gmdate("Y-m-d H:i:s", $_GET['datedebut'])),20,'Z').'</span>';
+        echo '<span id="get_end" class="" >'.str_pad(str_replace(" ","T",gmdate("Y-m-d H:i:s", $_GET['datefin'])),20,'Z').'</span>';
+        echo '<span id="get_objet" class="" value="'.$_GET['objet'].'">'.$_GET['objet'].'</span>';
+        echo '<span id="get_remarque" class="" value="'.$_GET['remarque'].'">'.$_GET['remarque'].'</span>';
+    };
+?>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->
@@ -315,6 +324,37 @@ if (in_array($_SESSION['email'], $admins)) {
 $(document).ready(function() {
     //charge les projets (fonction qui appelle ensuite le chargement des actions
     load_projets_ajax();
+
+    var get_vars = document.getElementById("get_start");
+    //Test si les variable get sont rensiegnées pour un event depuis outlook 
+    if(get_vars){
+            get_uuid();
+            console.log(new_uuid);
+            calendar.addEvent({
+            id:new_uuid,
+            title: document.getElementById("get_objet").innerHTML,//document.getElementById("get_objet").innerHTML,
+            start: document.getElementById("get_start").innerHTML,
+            end: document.getElementById("get_end").innerHTML
+            });
+            console.log(typeof new_uuid);
+            let e_event = calendar.getEventById(new_uuid);
+            
+            e_event.e_uuid = new_uuid;
+            e_event.e_start = document.getElementById("get_start").innerHTML;
+            e_event.e_end = document.getElementById("get_end").innerHTML;
+            e_event.e_id_projet = 0;
+            e_event.e_nom_projet = '';
+            e_event.e_id_action = 0;
+            e_event.e_nom_action = '';
+            e_event.e_objet = document.getElementById("get_objet").innerHTML;
+            e_event.e_lieu = 'Bureau';
+            e_event.e_panier = false;
+            e_event.e_salissure = false;
+            e_event.e_commentaire = document.getElementById("get_remarque").innerHTML;
+            save_event(e_event);
+            calendar.getEventById(new_uuid).remove();
+            calendar.refetchEvents();
+    }
 });
 
 

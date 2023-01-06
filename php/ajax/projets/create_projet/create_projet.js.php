@@ -20,7 +20,6 @@ $result = pg_prepare($dbconn, "sql",
     "
     INSERT INTO $progecen_projets
 	(
-        id_projet,
         nom_projet, 
         territoire, 
         type_projet, 
@@ -30,9 +29,7 @@ $result = pg_prepare($dbconn, "sql",
         responsable_projet, 
         commentaire_projet, 
         color)
-        VALUES (
-            select SELECT nextval('progecen_copy.id_projet')
-            $1,$2,$3,$4,$5,$6,$7,$8,$9);"
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9);"
     );
 
 $result = pg_execute($dbconn, "sql", array(
