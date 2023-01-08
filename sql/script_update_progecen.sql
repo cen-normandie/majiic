@@ -413,6 +413,14 @@ CREATE TRIGGER suivi_temps
     FOR EACH ROW
     EXECUTE PROCEDURE progecen_copy.f_temps_suivi();
 
+/* CREATE TABLE GROUP for GE_CAEN GE_ROUEN */
+create table progecen_copy.group (
+id_group text primary key,
+personnes text
+);
+insert into progecen_copy.group (id_group, personnes) values ('GE_CAEN', 'Simon Deliquaire Benoit Perceval');
+insert into progecen_copy.group (id_group, personnes) values ('GE_ROUEN', 'Fabien Deblangy Benoit Perceval');
+
 /*CREATE TABLE temps import tmp*/
 --not used yet
 /* CREATE TABLE progecen_copy.temps_import

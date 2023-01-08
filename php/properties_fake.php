@@ -42,6 +42,7 @@ $progecen_financeurs = " zzz.zzz ";
 $progecen_projets = " zzz.zzz ";
 $progecen_temps = " zzz.zzz ";
 $progecen_vue_tps_a = " zzz.zzz ";
+$progecen_group = " zzz.zzz ";
 $files = " zzz.zzz ";
 
 $responsables=array(

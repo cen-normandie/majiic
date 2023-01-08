@@ -105,6 +105,10 @@ function load_personnes_ajax () {
             for (const personne in personnes_liste) {
                 personnes_liste_array.push(personnes_liste[personne].id+' - '+personnes_liste[personne].name);
             }
+            //Add GROUP GE_CAEN / GE_ROUEN / ZOO
+            personnes_liste_array.push('999 - GE_CAEN');
+            personnes_liste_array.push('888 - GE_ROUEN');
+            personnes_liste_array.push('777 - ZOO');
             personnes_liste_array.sort();
             autocompleteArray_personnes(document.getElementById("input_personnes"), personnes_liste_array);
             load_sites_ajax();
@@ -493,7 +497,8 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                 alert("Erreur : responseText: "+request.responseText);
                 },
             success  : function(data) {
-                console.log(data)
+                console.log(data);
+                location.reload();
                 }
         });
         

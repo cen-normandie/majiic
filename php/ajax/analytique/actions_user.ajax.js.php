@@ -24,7 +24,8 @@ WITH t as (
   a.id_bdd
   FROM $progecen_actions a
     LEFT JOIN $progecen_projets p on a.id_projet = p.id_projet 
-  WHERE personnes ~* $1
+    LEFT JOIN $progecen_group g on g.id_group = a.personnes
+  WHERE a.personnes ~* $1 or g.personnes  ~* $1
 )
 SELECT json_agg(t) FROM t
 "

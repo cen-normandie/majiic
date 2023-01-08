@@ -28,6 +28,11 @@
     "b.perceval@cen-normandie.fr", 
     "v.boucey@cen-normandie.fr"
   );
+  $rh = array(
+    "b.perceval@cen-normandie.fr", 
+    "v.yver@cen-normandie.fr",
+    "h.bliard@cen-normandie.fr"
+  ); 
   $responsables=array(
     "3 - Benoit Perceval"=>"b.perceval@cen-normandie.fr"
   );
@@ -80,7 +85,7 @@
     //}
     echo '  <a class="nav-link"  href="import_temps_excel.php">
                 <span data-feather=""></span>
-                <i class="fas fa-file-excel"></i> Import temps Excel
+                <i class="fas fa-edit"></i> Optimisation des temps
             </a>
             <a class="nav-link"  href="export.php">
                 <span data-feather=""></span>
@@ -90,6 +95,15 @@
         <hr class="bg-secondary mx-2 my-1">
 ';
   };
+  if (in_array($_SESSION['email'], $rh)) {
+    echo '<div class="ml-2">
+    <span class="nav-link text-secondary">RH :</span>
+        <a class="nav-link"  href="rh.php">
+                <span data-feather=""></span>
+                <i class="fas fa-utensils"></i> Panier Repas / <i class="fas fa-socks"></i> Prime Salissure
+            </a>
+    </div>';
+  }
 
 
 ?>

@@ -142,3 +142,8 @@ body {
 .moonflower {
   font-family: MoonFlower;
 }
+table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
+  background-color: #0074e8;
+  color:#fff;
+  font-weight: 700;
+}

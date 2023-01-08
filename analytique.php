@@ -70,7 +70,7 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <h2 class="">Saisie Analytique <button id="ola">OLA</button></h2>
+                <h2 class="">Saisie Analytique</h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 " style="margin-bottom: .5rem">
                 </div>
             </div>

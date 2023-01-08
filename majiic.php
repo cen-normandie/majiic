@@ -132,7 +132,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 </div>
         </div>
         <div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-right" style="">
-            <kbd class="small">CEN Normandie © 2021</kbd>
+            <kbd class="small">CEN Normandie © 2023</kbd>
         </div>
     </div>
 
