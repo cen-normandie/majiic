@@ -91,7 +91,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> <!--bg-dark-->
                     <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Primes Salissure :</h4></div>
                     <div class="d-flex flex-column w-100 bg-light mb-2">
-                        <table id="primesDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
+                        <table id="primeDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
                             <thead>
                                 <tr>
                                     <th>ID</th>

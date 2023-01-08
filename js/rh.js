@@ -1,4 +1,5 @@
 let paniers_to_delete =[];
+let primes_to_delete =[];
 //Initialisation du tableau datatable
 const dtPaniers =$('#panierDT').DataTable({
     "language": {
@@ -40,24 +41,8 @@ const dtPaniers =$('#panierDT').DataTable({
     scrollCollapse: true,
     paging: false
 });
-
-$('#panierDT tbody').on('click', 'tr', function () {
-    $(this).toggleClass('selected');
-    let id_ = $(this).attr("id");
-    if (paniers_to_delete.includes( $(this).attr("id")  ) ) {
-        paniers_to_delete = paniers_to_delete.filter(function( item ) {
-            return item !== id_
-        });
-    } else {
-        paniers_to_delete.push(id_);
-    };
-    console.log(paniers_to_delete);
-});
-dtPaniers.column( 0 ).visible(false);
-
-
 //Initialisation du tableau datatable
-const dtPrimes =$('#primesDT').DataTable({
+const dtPrimes =$('#primeDT').DataTable({
     "language": {
         "paginate": {
             "previous": "Préc.",
@@ -73,24 +58,56 @@ const dtPrimes =$('#primesDT').DataTable({
         "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
         "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau"
     },
-    dom: '<"top"<"d-flex justify-content-end align-items-center"fB>>t', // export excel -->B :<"top"<"d-flex justify-content-end align-items-center"fB>>t
+    dom: '<"top"<"d-flex justify-content-between align-items-center"Bf>>t', 
     buttons: [
-    { 
-        extend: 'excel', 
-        text:'Excel',
-        className: 'btn btn-sm btn-success m-2',
-        init: function(api, node, config) {
-            //$(node).removeClass('dt-button')
+        {
+            text: 'Valider la selection',
+            className: 'btn btn-sm btn-success m-2',
+            action: function ( e, dt, node, config ) {
+                    delete_ids_array_prime();
+            }
+        },
+        { 
+            extend: 'excel', 
+            text:'Excel',
+            className: 'btn btn-sm btn-outline-success m-2',
+            init: function(api, node, config) {
+            }
         }
-    }
-    ],
+        ],
     scrollY: '400px',
     scrollCollapse: true,
     paging: false
 });
-$('#primesDT tbody').on('click', 'tr', function () {
+
+
+$('#panierDT tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
+    let id_ = $(this).attr("id");
+    if (paniers_to_delete.includes( $(this).attr("id")  ) ) {
+        paniers_to_delete = paniers_to_delete.filter(function( item ) {
+            return item !== id_
+        });
+    } else {
+        paniers_to_delete.push(id_);
+    };
+    console.log(paniers_to_delete);
 });
+dtPaniers.column( 0 ).visible(false);
+$('#primeDT tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+    let id_ = $(this).attr("id");
+    if (primes_to_delete.includes( $(this).attr("id")  ) ) {
+        primes_to_delete = primes_to_delete.filter(function( item ) {
+            return item !== id_
+        });
+    } else {
+        primes_to_delete.push(id_);
+    };
+    console.log(primes_to_delete);
+});
+dtPrimes.column( 0 ).visible(false);
+
 
 function load_paniers_ajax () {
     change_load('Chargement');
@@ -119,6 +136,33 @@ function load_paniers_ajax () {
     });
 }
 load_paniers_ajax();
+function load_primes_ajax () {
+    change_load('Chargement');
+    $.ajax({
+        url      : "php/ajax/rh/primes.js.php",
+        data     : {},
+        method   : "POST",
+        dataType : "json",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);change_load();},
+        success  : function(data) {
+            primes_liste = data ;
+            console.log(data);
+            for (const prime in primes_liste) {
+                let rowNode_ = dtPrimes.row.add( [
+                    primes_liste[prime].e_id,
+                    primes_liste[prime].personne, 
+                    primes_liste[prime].eligibilite,
+                    primes_liste[prime].saisie,
+                    primes_liste[prime].validation
+                ] ).node().id = primes_liste[prime].e_id;
+            }
+            dtPrimes.draw();
+            change_load();
+            }
+    });
+}
+load_primes_ajax();
 
 function delete_ids_array_panier () {
     change_load('Validation des paniers');
@@ -144,16 +188,33 @@ function delete_ids_array_panier () {
 
                 change_load();
                 }
-        });
-
-        
-    }
-    
+        });       
+    }    
 }
+function delete_ids_array_prime () {
+    change_load('Validation des primes salissure');
+    let length_ = primes_to_delete.length;
+    let x_ = 0;
+    for(const id__ in primes_to_delete ) {
+        
+        $.ajax({
+            url      : "php/ajax/rh/valide_prime.js.php",
+            data     : {id_prime:primes_to_delete[id__]},
+            method   : "POST",
+            dataType : "text",
+            async    : true,
+            error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);change_load();},
+            success  : function(data) {
+                x_ ++;
+                primes_liste = data ;
+                //console.log(data);
+                if (x_ = length_ ) {
+                    dtPrimes.rows( '.selected' ).remove().draw();
+                    primes_to_delete=[];
+                }
 
-/* let rowNode = dtPaniers.row.add( [
-    'actions_f[actions].id_action', //id_action
-    'actions_f[actions].code_action', //code_action
-    'actions_f[actions].financements' ?? '', //financeurs
-    'actions_f[actions].site' 
-] ).draw(); */
+                change_load();
+                }
+        });       
+    }    
+}

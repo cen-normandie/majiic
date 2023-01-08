@@ -11,8 +11,8 @@ SELECT
     e_id,
 	e_personne as personne, 
 	'' as eligibilite,
-	e_date_saisie as saisie,
-	e_date_valide_salissure as validation
+    to_char(e_date_saisie::date, 'DD-MM-YYYY') as saisie,
+	to_char(e_date_valide_salissure::date, 'DD-MM-YYYY') as validation
 	FROM $progecen_temps
 	WHERE e_salissure  is true 
 	AND e_date_valide_salissure is null
