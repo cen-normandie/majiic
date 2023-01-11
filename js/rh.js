@@ -94,6 +94,7 @@ $('#panierDT tbody').on('click', 'tr', function () {
     console.log(paniers_to_delete);
 });
 dtPaniers.column( 0 ).visible(false);
+//dtPaniers.column( 2 ).visible(false);
 $('#primeDT tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
     let id_ = $(this).attr("id");
@@ -107,6 +108,7 @@ $('#primeDT tbody').on('click', 'tr', function () {
     console.log(primes_to_delete);
 });
 dtPrimes.column( 0 ).visible(false);
+//dtPrimes.column( 2 ).visible(false);
 
 
 function load_paniers_ajax () {
@@ -125,7 +127,7 @@ function load_paniers_ajax () {
                 let rowNode = dtPaniers.row.add( [
                     paniers_liste[panier].e_id,
                     paniers_liste[panier].personne, 
-                    paniers_liste[panier].eligibilite,
+                    paniers_liste[panier].date_panier,
                     paniers_liste[panier].saisie,
                     paniers_liste[panier].validation
                 ] ).node().id = paniers_liste[panier].e_id;
@@ -152,7 +154,7 @@ function load_primes_ajax () {
                 let rowNode_ = dtPrimes.row.add( [
                     primes_liste[prime].e_id,
                     primes_liste[prime].personne, 
-                    primes_liste[prime].eligibilite,
+                    primes_liste[prime].date_prime,
                     primes_liste[prime].saisie,
                     primes_liste[prime].validation
                 ] ).node().id = primes_liste[prime].e_id;
@@ -218,3 +220,32 @@ function delete_ids_array_prime () {
         });       
     }    
 }
+
+document.getElementById("export_paniers_m1").addEventListener("click", function() {
+    $.ajax({
+        url      : "php/export_excel/export_paniers_m1.php",
+        data     : {},
+        method   : "POST",
+        dataType : "text",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);change_load();},
+        success  : function(data) {
+            window.location = 'php/files/'+data;
+            }
+    });   
+});
+document.getElementById("export_primes_m1").addEventListener("click", function() {
+    $.ajax({
+        url      : "php/export_excel/export_primes_m1.php",
+        data     : {},
+        method   : "POST",
+        dataType : "text",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);change_load();},
+        success  : function(data) {
+            window.location = 'php/files/'+data;
+            }
+    });   
+});
+
+

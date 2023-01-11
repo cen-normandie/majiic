@@ -71,14 +71,14 @@ if (in_array($_SESSION['email'], $admins)) {
             
             <div class="d-flex bg-light ">
                 <div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> <!--bg-dark-->
-                    <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Paniers Repas :</h4></div>
+                    <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Paniers Repas A valider:</h4></div>
                     <div class="d-flex flex-column w-100 bg-light mb-2">
                         <table id="panierDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Personne</th>
-                                    <th>Eligibilité</th>
+                                    <th>Date du panier</th>
                                     <th>Saisie</th>
                                     <th>Validation</th>
                                 </tr>
@@ -87,16 +87,20 @@ if (in_array($_SESSION['email'], $admins)) {
                             </tbody>
                         </table>
                     </div>
+                    <div clas="d-flex col-md-6">
+                        <button id="export_paniers_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Paniers validés sur le mois</button>
+                    </div>
+                    
                 </div>
                 <div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> <!--bg-dark-->
-                    <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Primes Salissure :</h4></div>
+                    <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Primes Salissure A valider:</h4></div>
                     <div class="d-flex flex-column w-100 bg-light mb-2">
                         <table id="primeDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Personne</th>
-                                    <th>Eligibilité</th>
+                                    <th>Date de prime</th>
                                     <th>Saisie</th>
                                     <th>Validation</th>
                                 </tr>
@@ -105,6 +109,10 @@ if (in_array($_SESSION['email'], $admins)) {
                             </tbody>
                         </table>
                     </div>
+                    <div clas="d-flex col-md-6">
+                        <button id="export_primes_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Primes validées sur le mois</button>
+                    </div>
+                    
                 </div>
             </div>	
 		</div>

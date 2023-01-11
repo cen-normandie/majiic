@@ -203,6 +203,8 @@ ALTER TABLE progecen_copy.temps
 ADD COLUMN e_color_selected text;
 --Defaut uuid on temps
 ALTER TABLE progecen_copy.temps ALTER COLUMN e_id SET DEFAULT uuid_generate_v4()::text;
+--Ajout champ e_date_saisie_panier pour eviter les doublons
+ALTER TABLE progecen_copy.temps ADD COLUMN e_date_saisie_panier timestamp without time zone DEFAULT (now())::timestamp without time zone;
 
 /* Ajout champ real previ sur table actions et projets */
 /* AJOUT DES CHAMPS */
@@ -384,7 +386,8 @@ CREATE TABLE progecen_copy.temps_suivi
     e_panier boolean DEFAULT false,
     e_date_saisie_salissure timestamp without time zone DEFAULT (now())::timestamp without time zone,
     e_date_valide_panier date,
-    e_date_valide_salissure date
+    e_date_valide_salissure date,
+    e_date_saisie_panier timestamp without time zone DEFAULT (now())::timestamp without time zone
 );
 CREATE FUNCTION progecen_copy.f_temps_suivi()
     RETURNS trigger
@@ -420,6 +423,7 @@ personnes text
 );
 insert into progecen_copy.group (id_group, personnes) values ('GE_CAEN', 'Simon Deliquaire Benoit Perceval');
 insert into progecen_copy.group (id_group, personnes) values ('GE_ROUEN', 'Fabien Deblangy Benoit Perceval');
+
 
 /*CREATE TABLE temps import tmp*/
 --not used yet

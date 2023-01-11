@@ -8,14 +8,18 @@ $result = pg_prepare($dbconn, "sql",
 SELECT array_to_json(array_agg(row_to_json(t))) FROM 
 (
 SELECT 
-    e_id,
-	e_personne as personne, 
-	'' as eligibilite,
-	to_char(e_date_saisie::date, 'DD-MM-YYYY') as saisie,
-	to_char(e_date_valide_panier::date, 'DD-MM-YYYY') as validation
-	FROM $progecen_temps
-	WHERE e_panier  is true 
-	AND e_date_valide_panier is null
+    p.e_id,
+	p.e_personne as personne, 
+	to_char(p.e_start::date, 'DD-MM-YYYY') as date_panier,
+	to_char(p.e_date_saisie::date, 'DD-MM-YYYY') as saisie,
+	to_char(p.e_date_valide_panier::date, 'DD-MM-YYYY') as validation
+	FROM $progecen_temps p
+	WHERE p.e_panier  is true 
+	AND p.e_date_valide_panier is null
+	AND not exists (
+		select v.date_du_panier from progecen_copy.paniers_valide v
+		where v.e_personne = p.e_personne AND v.date_du_panier::date = p.e_start::date 
+		)
 	order by 3 Desc, 2 Desc, 1 Asc
 ) t
 "
