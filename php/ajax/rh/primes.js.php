@@ -17,7 +17,7 @@ SELECT
 	WHERE p.e_salissure  is true 
 	AND p.e_date_valide_salissure is null
 	AND not exists (
-		select v.date_du_prime from progecen_copy.primes_valide v
+		select v.date_du_prime from $primes_valide v
 		where v.e_personne = p.e_personne AND v.date_du_prime::date = p.e_start::date 
 		)
 	order by 3 Desc, 2 Desc, 1 Asc

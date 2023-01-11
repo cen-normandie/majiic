@@ -17,7 +17,7 @@ SELECT
 	WHERE p.e_panier  is true 
 	AND p.e_date_valide_panier is null
 	AND not exists (
-		select v.date_du_panier from progecen_copy.paniers_valide v
+		select v.date_du_panier from $paniers_valide v
 		where v.e_personne = p.e_personne AND v.date_du_panier::date = p.e_start::date 
 		)
 	order by 3 Desc, 2 Desc, 1 Asc

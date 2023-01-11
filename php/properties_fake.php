@@ -44,6 +44,8 @@ $progecen_temps = " zzz.zzz ";
 $progecen_vue_tps_a = " zzz.zzz ";
 $progecen_group = " zzz.zzz ";
 $files = " zzz.zzz ";
+$paniers_valide = " zzz.zzz ";
+$primes_valide = " zzz.zzz ";
 
 $responsables=array(
     "zzz.zzz"=>"zzz.zzz"
