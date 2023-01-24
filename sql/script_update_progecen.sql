@@ -423,6 +423,7 @@ personnes text
 );
 insert into progecen_copy.group (id_group, personnes) values ('GE_CAEN', 'Simon Deliquaire Benoit Perceval');
 insert into progecen_copy.group (id_group, personnes) values ('GE_ROUEN', 'Fabien Deblangy Benoit Perceval');
+insert into progecen_copy.group (id_group, personnes) values ('ZOO', 'Fabien Deblangy Benoit Perceval');
 
 
 /*CREATE TABLE temps import tmp*/
