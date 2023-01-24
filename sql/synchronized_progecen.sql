@@ -97,3 +97,50 @@ update progecen_copy.actions set financements = replace (financements,'|ø_ø', 
 update progecen_copy.actions set financements = replace (financements,'|ø_ø', '');
 
 --TEMPS
+-- FROM FDW
+INSERT INTO progecen_copy.temps(
+	e_id, 
+	e_id_projet, 
+	--e_nom_projet, 
+	e_id_action, 
+	e_nom_action, 
+	e_id_site, 
+	e_objet, 
+	e_start, 
+	e_end, 
+	e_lieu, 
+	e_commentaire, 
+	e_personne, 
+	e_nb_h, 
+	e_date_saisie, 
+	e_salissure, 
+	e_panier, 
+	e_date_valide_panier,
+	e_date_saisie_salissure, 
+	e_date_valide_salissure
+)
+
+SELECT 
+id, 
+id_projet, 
+coalesce((select a.id from fdw.action a  
+ 	left join fdw.projet p
+ 	on a.id_projet = p.id
+ 	where temps_personnes.id_action = a.code_action and temps_personnes.id_projet = p.id and temps_personnes.personne = a.personne 
+ limit 1),row_number() over() ),
+id_action, 
+id_site, 
+objet, 
+date_debut, 
+date_fin, 
+lieu, 
+remarque, 
+personne, 
+nb_heures, 
+date_saisie, 
+case when coalesce(salissure,0) = 1 THEN true else false end , 
+case when coalesce(panier,0) = 1 THEN true else false end, 
+date_valide_panier, 
+date_saisie_salissure, 
+date_valide_salissure
+	FROM fdw.temps_personnes;
