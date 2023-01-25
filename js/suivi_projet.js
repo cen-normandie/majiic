@@ -29,7 +29,7 @@ let chart = null;
 //
 function load_projets_ajax () {
     $.ajax({
-        url      : "php/ajax/projets/projets.ajax.js.php",
+        url      : "php/ajax/projets/projets_.ajax.js.php",
         data     : {},
         method   : "POST",
         dataType : "json",
