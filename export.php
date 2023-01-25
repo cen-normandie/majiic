@@ -120,9 +120,9 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
 
 <!--Datatable bs5-->
-<script src="js/plugins/datatable/dataTables.min.js"></script>
+<script src="js/plugins/datatable/datatables.min.js"></script>
 <script src="js/plugins/datatable/dataTables.bootstrap5.min.js"></script>
-<!-- <script src="js/plugins/datatable/jquery.dataTables.min.js"></script> -->
+<!-- <script src="js/plugins/datatable/jquery.datatables.min.js"></script> -->
 <script src="js/plugins/datatable/Buttons-1.7.0/js/dataTables.buttons.min.js"></script>
 <script src="js/plugins/datatable/Buttons-1.7.0/js/buttons.bootstrap5.min.js"></script>
 <script src="js/plugins/datatable/pdfmake-0.1.36/vfs_fonts.js"></script>

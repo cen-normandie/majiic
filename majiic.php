@@ -145,7 +145,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <!-- FONT AWESOME -->
 <script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
 <!-- DATATABLES -->
-<script src="js/plugins/datatable/dataTables.min.js"></script>
+<script src="js/plugins/datatable/datatables.min.js"></script>
 <script src="js/plugins/datatable/dataTables.bootstrap5.min.js"></script>
 <!--Leaflet-->
 <script src="js/leaflet1.7/leaflet.js" ></script>
