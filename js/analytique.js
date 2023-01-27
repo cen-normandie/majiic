@@ -87,6 +87,10 @@ function apply_filters() {
 function update_projet(projets_json) {
 
 }
+
+
+
+
 function update_action(actions_json) {
     let actions_array = [];
     for (const action in actions_json) {
@@ -201,6 +205,13 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     $("#update_id_e").html(arg.event._def.publicId);
     $('#update_input_objet').val(arg.event._def.extendedProps.e_objet);
     $('#update_input_projet').val(arg.event._def.extendedProps.e_nom_projet+' | '+arg.event._def.extendedProps.e_id_projet);
+        //Mets à jour les actions liées au projet
+        //Same like select input projet change
+        keys["id_projet"][0] = $('#update_input_projet').val().split(' | ')[1];
+        filters_active["id_projet"] = true;
+        //filtre les données
+        apply_filters();
+
     //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
     document.getElementById("update_input_panier").checked = (arg.event._def.extendedProps.e_panier == "t") ? true : false;
     document.getElementById("update_input_salissure").checked = (arg.event._def.extendedProps.e_salissure == "t") ? true : false;
@@ -260,12 +271,12 @@ new FullCalendar.Draggable(containerEl, {
 var lieu_event_update = "Bureau";
 $(':radio[name="update_Lieux"]').change(function() {
     lieu_event_update = $(this).filter(':checked').val();
-    console.log(lieu_event_update);
+    //console.log(lieu_event_update);
 });
 var lieu_event = "Bureau";
 $(':radio[name="Lieux"]').change(function() {
     lieu_event = $(this).filter(':checked').val();
-    console.log(lieu_event);
+    //console.log(lieu_event);
 });
 
 function add_event_properties (event) {

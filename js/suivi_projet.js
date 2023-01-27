@@ -167,13 +167,19 @@ function apply_filters() {
             actions_f = JSON.parse(projets_f[0].json_actions);
             //sessionStorage.setItem("filter_projet", keys["id_projet"][0]);
             //console.log(actions_f);
-            //mets à jour le tableau des actions
-            update_dtActions();
-            //update projet infos
-            update_projetInfos();
-            //Ajoute les évènements pour les cellules du tableau
-            add_events_actions();
-            dtActions.column( 7 ).visible(edit);
+
+            //Test s'il y a des actions ?
+            if ((actions_f[0] == null)) {
+                console.log("Pas d'actions...");
+            } else {
+                //mets à jour le tableau des actions
+                update_dtActions();
+                //update projet infos
+                update_projetInfos();
+                //Ajoute les évènements pour les cellules du tableau
+                add_events_actions();
+                dtActions.column( 7 ).visible(edit);
+            }
             //si responsable alors edition possible
             const c_ = document.getElementById("c_resp").innerText;
             if (c_ == projets_f[0].responsable_projet) {
@@ -181,7 +187,6 @@ function apply_filters() {
             } else {
                 document.getElementById("edition").classList.add("d-none");
             }
-            
         }
     }
     //si pas de filtre sur les projets clear all data
@@ -387,52 +392,56 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         const json_previ = [];
         const json_real = [];
         dtActions.clear();
-        for (const actions in actions_f) {
-            const p_ = actions_f[actions].personne_action ?? '';
-            const personnes_actions = p_.split('|');
-            var badges_ = '';
-            var x = `
-            <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
-            <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
-            //Liste des badges personnes
-            for (const pe in personnes_actions) {
-                badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
-            }
-            //Ajoute les actions dans le tableau
-            let rowNode = dtActions.row.add( [
-                actions_f[actions].id_action, //id_action
-                actions_f[actions].code_action, //code_action
-                actions_f[actions].financements ?? '', //financeurs
-                actions_f[actions].site ?? '', //site
-                actions_f[actions].previ ?? 0, //nb_h_previ
-                actions_f[actions].realise ?? 0, //nb_h_real
-                badges_, //personnes
-                x //test badges
-            ] ).draw();
-
-            //formate un nouveau json des actions pour alimenter les graphiques
-            const data_previ = new Object();
-            const data_real = new Object();
-            if (!!actions_f[actions].personne_action) { 
-                data_previ.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
-                data_previ.y = actions_f[actions].previ ?? 0;
-                data_real.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
-                data_real.y = actions_f[actions].realise ?? 0;
-                data_real.color = project[0].color;
-                json_previ.push(data_previ);
-                json_real.push(data_real);
-            }
-        }
-        json_previ.sort(GetSortOrder("name"));
-        json_real.sort(GetSortOrder("name"));
-
-/*      console.log('json_previ');
-        console.log(json_previ);
-        console.log('json_real');
-        console.log(json_real); */
-
-        //Chargement du graphique des actions nom_projet_, color_, real_, previ_
-        graph_(projets_f[0].name, json_real, json_previ);         
+            for (const actions in actions_f) {
+                console.log(actions_f);
+                
+                    const p_ = actions_f[actions].personne_action ?? '';
+                    const personnes_actions = p_.split('|');
+                    var badges_ = '';
+                    var x = `
+                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
+                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+                    //Liste des badges personnes
+                    for (const pe in personnes_actions) {
+                        badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
+                    }
+                    //Ajoute les actions dans le tableau
+                    let rowNode = dtActions.row.add( [
+                        actions_f[actions].id_action, //id_action
+                        actions_f[actions].code_action, //code_action
+                        actions_f[actions].financements ?? '', //financeurs
+                        actions_f[actions].site ?? '', //site
+                        actions_f[actions].previ ?? 0, //nb_h_previ
+                        actions_f[actions].realise ?? 0, //nb_h_real
+                        badges_, //personnes
+                        x //test badges
+                    ] ).draw();
+    
+                    //formate un nouveau json des actions pour alimenter les graphiques
+                    const data_previ = new Object();
+                    const data_real = new Object();
+                    if (!!actions_f[actions].personne_action) { 
+                        data_previ.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
+                        data_previ.y = actions_f[actions].previ ?? 0;
+                        data_real.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
+                        data_real.y = actions_f[actions].realise ?? 0;
+                        data_real.color = project[0].color;
+                        json_previ.push(data_previ);
+                        json_real.push(data_real);
+                    }
+                }
+                json_previ.sort(GetSortOrder("name"));
+                json_real.sort(GetSortOrder("name"));
+    
+        /*      console.log('json_previ');
+                console.log(json_previ);
+                console.log('json_real');
+                console.log(json_real); */
+    
+                //Chargement du graphique des actions nom_projet_, color_, real_, previ_
+                graph_(projets_f[0].name, json_real, json_previ);
+                
+                     
     }
 
     //fonction de mise à jour des données du projet
@@ -755,7 +764,7 @@ function graph_( nom_projet_, real_, previ_) {
         },
         yAxis: [{
             title: {
-                text: 'nb jours'
+                text: 'nb heures'
             },
             showFirstLabel: false
         }],
