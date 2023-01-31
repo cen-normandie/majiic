@@ -75,17 +75,17 @@ SELECT
 id, 
 code_action, 
 (
-	(select CASE WHEN financeur1 is not null THEN financeur1||'_'||pourcent_f1::int::text ELSE null END FROM bd_progecen.action  where id=a.id )
+	(select CASE WHEN financeur1 is not null THEN financeur1||'_'||pourcent_f1::int::text||'|' ELSE null END FROM bd_progecen.action  where id=a.id )
 	||
-	(select CASE WHEN financeur2 is not null THEN financeur2||'_'||pourcent_f2::int::text ELSE 'ø_ø|' END FROM bd_progecen.action  where id=a.id )
+	(select CASE WHEN financeur2 is not null THEN '|'||financeur2||'_'||pourcent_f2::int::text ELSE '|ø_ø' END FROM bd_progecen.action  where id=a.id )
 	||
-	(select CASE WHEN financeur3 is not null THEN financeur3||'_'||pourcent_f3::int::text ELSE 'ø_ø|' END FROM bd_progecen.action  where id=a.id )
+	(select CASE WHEN financeur3 is not null THEN '|'||financeur3||'_'||pourcent_f3::int::text ELSE '|ø_ø' END FROM bd_progecen.action  where id=a.id )
 	||
-	(select CASE WHEN financeur4 is not null THEN financeur4||'_'||pourcent_f4::int::text ELSE 'ø_ø|' END FROM bd_progecen.action  where id=a.id )
+	(select CASE WHEN financeur4 is not null THEN '|'||financeur4||'_'||pourcent_f4::int::text ELSE '|ø_ø' END FROM bd_progecen.action  where id=a.id )
 	||
-	(select CASE WHEN financeur5 is not null THEN financeur5||'_'||pourcent_f5::int::text ELSE 'ø_ø' END FROM bd_progecen.action  where id=a.id )
+	(select CASE WHEN financeur5 is not null THEN '|'||financeur5||'_'||pourcent_f5::int::text ELSE '|ø_ø' END FROM bd_progecen.action  where id=a.id )
 ),
-site, 
+replace(site, 'NaN', ''), 
 personne, 
 id_projet, 
 nb_heure
@@ -98,6 +98,7 @@ update progecen_copy.actions set financements = replace (financements,'|ø_ø', 
 
 --TEMPS
 -- FROM FDW
+-- DELETE FROM progecen_copy.temps
 INSERT INTO progecen_copy.temps(
 	e_id, 
 	e_id_projet, 
