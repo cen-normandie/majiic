@@ -14,6 +14,7 @@ e_id,
 e_id_projet, 
 e_nom_projet, 
 e_id_action, 
+e_nom_action,
 e_objet, 
 e_start, 
 e_end, 
@@ -35,7 +36,8 @@ $8,
 $9,
 $10,
 $11,
-$12
+$12,
+$13
 "
 );
 
@@ -44,6 +46,7 @@ $_POST['e_uuid'],
 $_POST['e_id_projet'],
 $_POST['e_nom_projet'],
 $_POST['e_id_action'],
+$_POST['e_nom_action'],
 //$_POST['e_id_site'],
 $_POST['e_objet'],
 $_POST['e_start'],

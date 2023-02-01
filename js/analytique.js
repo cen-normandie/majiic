@@ -205,12 +205,17 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     $("#update_id_e").html(arg.event._def.publicId);
     $('#update_input_objet').val(arg.event._def.extendedProps.e_objet);
     $('#update_input_projet').val(arg.event._def.extendedProps.e_nom_projet+' | '+arg.event._def.extendedProps.e_id_projet);
+    console.log(arg.event._def.extendedProps);
+    $('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
+
         //Mets à jour les actions liées au projet
         //Same like select input projet change
         keys["id_projet"][0] = $('#update_input_projet').val().split(' | ')[1];
         filters_active["id_projet"] = true;
         //filtre les données
         apply_filters();
+        //console.log(arg.event._def.extendedProps);
+        $('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
 
     //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
     document.getElementById("update_input_panier").checked = (arg.event._def.extendedProps.e_panier == "t") ? true : false;
@@ -329,6 +334,8 @@ function add_update_event_properties (event,uuid_) {
     //action
     event.e_id_action = $('#update_input_action option:selected').text().split(' | ')[1];
     //nom action
+    console.log("update nom action :");
+    console.log($('#update_input_action option:selected').text().split(' | ')[0]);
     event.e_nom_action = $('#update_input_action option:selected').text().split(' | ')[0];
     //id_site
     //event.e_id_site = 'null';
@@ -367,6 +374,7 @@ function save_event (event) {
             e_uuid:event.e_uuid,
             e_nom_projet:event.e_nom_projet,
             e_id_action:event.e_id_action,
+            e_nom_action:event.e_nom_action,
             //e_id_site:event.e_id_site,
             e_objet:event.e_objet,
             e_start:event.e_start,
