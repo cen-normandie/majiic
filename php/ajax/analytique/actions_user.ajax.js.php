@@ -20,7 +20,9 @@ WITH t as (
   a.financements, 
   a.site, 
   $1::text as personne, 
-  a.nb_h_real, 
+  a.nb_h_real,
+  coalesce(a.nb_h_previ, 0) as nb_h_previ,
+  coalesce(a.nb_h_previ,0) - coalesce(a.nb_h_real ,0) as diff,
   a.id_bdd
   FROM $progecen_actions a
     LEFT JOIN $progecen_projets p on a.id_projet = p.id_projet 

@@ -182,7 +182,7 @@ function delete_ids_array_panier () {
             success  : function(data) {
                 x_ ++;
                 paniers_liste = data ;
-                //console.log(data);
+                console.log(data);
                 if (x_ = length_ ) {
                     dtPaniers.rows( '.selected' ).remove().draw();
                     paniers_to_delete=[];

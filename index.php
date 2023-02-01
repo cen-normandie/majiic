@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
-			<kbd class="small">CEN Normandie © 2023</kbd>
+			<kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd>
 		</div>
 	</div>
 </div>

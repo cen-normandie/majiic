@@ -43,12 +43,13 @@ function export_(year) {
     if (document.getElementById("input_personnes").value !== '') {
         change_load('chargement des données veuillez patienter...');
         $.ajax({
-            url: "php/export_excel/export_global.php",
+            url: "php/export_excel/export_temps_personne_year.php",
             type: "POST",
             dataType: "text",
             async    : true,
             data: {
-                'year': year
+                'year': year,
+                'nom_personne': document.getElementById("input_personnes").value.split(' - ')[1]
             },
             error    : function(request, error) { 
                 alert("Erreur : responseText: "+request.responseText);

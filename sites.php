@@ -125,7 +125,7 @@ if (in_array($_SESSION['email'], $admins)) {
         <!--</div>-->
         </div>
         <div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-right">
-            <kbd class="small">CEN Normandie © 2023</kbd>
+            <kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd>
         </div>
     </div>
 

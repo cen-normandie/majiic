@@ -10,6 +10,7 @@ $writer = new Xlsx($spreadsheet);
 $writer->save('hello world.xlsx'); */
 
 //$_POST["id_projet"] = 273;
+$quote = "'";
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
@@ -20,8 +21,8 @@ $result = pg_prepare($dbconn, "sql",
 SELECT 
     e.e_id, 
     e.e_objet, 
-    to_char(e.e_start AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as start, 
-    to_char(e.e_end AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as end, 
+    $2||to_char(e.e_start AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as start, 
+    $2||to_char(e.e_end AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as end, 
     EXTRACT(epoch FROM e.e_end - e.e_start)/3600 as nb_heures,
     e.e_id_projet,
     e.e_id_action,
@@ -31,8 +32,8 @@ SELECT
     e.e_commentaire,
     e.e_salissure,
     e.e_panier,
-    to_char(e.e_date_saisie AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie,
-    to_char(e.e_date_saisie_salissure AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie_salissure,
+    $2||to_char(e.e_date_saisie AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie,
+    $2||to_char(e.e_date_saisie_salissure AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie_salissure,
     p.color,
     e.e_personne
 FROM $progecen_temps e 
@@ -42,7 +43,7 @@ WHERE e.e_id_projet = $1
 ORDER by 3, 2
 "
 );
-$result = pg_execute($dbconn, "sql", array($_POST["id_projet"]));
+$result = pg_execute($dbconn, "sql", array($_POST["id_projet"],$quote));
 $row_ = 1;
 //write first line title
 $arr_columnname = ['id','objet','start','end','nb_heures','id_projet','id_action','nom_action','nom_projet','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];

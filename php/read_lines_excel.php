@@ -37,7 +37,10 @@ if( isset($file_name))
                 e_date_saisie_salissure,
                 e_personne
             ) 
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);"
+        VALUES ($1,
+            $2::timestamp AT TIME ZONE 'UTC',
+            $3::timestamp AT TIME ZONE 'UTC',
+            $4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);"
     );
     
     echo (pg_execute($dbconn, "insert_",array(

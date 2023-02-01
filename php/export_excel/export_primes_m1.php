@@ -5,6 +5,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
+$quote = "'";
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
@@ -13,18 +14,18 @@ $result = pg_prepare($dbconn, "sql",
 SELECT 
     e_id,
 	e_personne as personne, 
-	to_char(e_start::date, 'DD-MM-YYYY') as date_salissure,
-	to_char(e_date_saisie_salissure::date, 'DD-MM-YYYY') as saisie,
-	to_char(e_date_valide_salissure::date, 'DD-MM-YYYY') as validation
+	$1||to_char(e_start::date, 'DD-MM-YYYY') as date_salissure,
+	$1||to_char(e_date_saisie_salissure::date, 'DD-MM-YYYY') as saisie,
+	$1||to_char(e_date_valide_salissure::date, 'DD-MM-YYYY') as validation
 	FROM $progecen_temps
 	WHERE e_salissure  is true 
 	AND e_date_valide_salissure is not null
-    AND e_date_valide_salissure > date_trunc('MONTH',now())::DATE::timestamp
+    AND e_date_valide_salissure >= date_trunc('MONTH',now())::DATE::timestamp
 	order by 3 Desc, 2 Desc, 1 Asc
 ;
 "
 );
-$result = pg_execute($dbconn, "sql", array());
+$result = pg_execute($dbconn, "sql", array($quote));
 $row_ = 1;
 //write first line title
 $arr_columnname = ['id','personne','date_salissure','date_saisie','date_validation'];
