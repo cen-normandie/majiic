@@ -58,7 +58,7 @@ function load_actions_ajax () {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
             actions_liste = data ;
-            console.log(data);
+            //console.log(data);
             let actions_liste_array = [];
             for (const action in actions_liste) {
                 actions_liste_array.push(actions_liste[action].id+' - '+actions_liste[action].name);
@@ -80,7 +80,7 @@ function load_financeurs_ajax () {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
             financeurs_liste = data ;
-            console.log(data);
+            //console.log(data);
             
             for (const financeur in financeurs_liste) {
                 financeurs_liste_array.push(financeurs_liste[financeur].id+' - '+financeurs_liste[financeur].name);
@@ -134,7 +134,7 @@ function load_sites_ajax () {
             change_load();
             //Reload projet if exists
             if (JSON.parse(sessionStorage.getItem('filter_projet')) !== null) {
-                console.log(sessionStorage);
+                //console.log(sessionStorage);
                 keys["id_projet"][0] = sessionStorage.getItem('filter_projet');
                 filters_active["id_projet"] = true;
                 document.getElementById("input_projet").value= sessionStorage.getItem('filter_name_projet');;
@@ -162,7 +162,7 @@ function apply_filters() {
     projets_f = projets;
     for (const property in filters_active) {
         if(filters_active[property]) {
-            console.log(`${property}: ${filters_active[property]}`);
+            //console.log(`${property}: ${filters_active[property]}`);
             projets_f = filtre_obj(projets_f, property);
             actions_f = JSON.parse(projets_f[0].json_actions);
             //sessionStorage.setItem("filter_projet", keys["id_projet"][0]);
@@ -189,6 +189,8 @@ function apply_filters() {
             }
         }
     }
+    //affiche les graphiques et le tableau des actions
+    document.getElementById("panel_all").classList.remove("d-none");
     //si pas de filtre sur les projets clear all data
     if (!filters_active["id_projet"]) {
         console.log('destroy');
@@ -196,6 +198,7 @@ function apply_filters() {
         actions_f = null;
         //destroy graph
         chart.destroy();
+        chart_global.destroy();
         //clear datatable;
         dtActions.clear().draw();
         // clear projet data
@@ -210,11 +213,14 @@ function apply_filters() {
         document.getElementById("p_color").value="#ffffff";
         document.getElementById("sites_string").value="...";
         document.getElementById("docs").innerHTML= "";
+        document.getElementById("project_prct").innerHTML= "";
+        document.getElementById("project_prct").removeAttribute('color');
         //off edit visibility
         edit = false;
         document.getElementById("edition").classList.add("d-none");
         document.getElementById("add_an_action").classList.add("d-none");
         document.getElementById("save_projet").classList.add("d-none");
+        document.getElementById("panel_all").classList.add("d-none");
         //document.getElementById("export_excel_temps").classList.add("d-none");
 
 
@@ -277,7 +283,7 @@ document.getElementById("save_projet").addEventListener("click", function() {
 
 document.getElementById("edit_projet").addEventListener("click", function() {
     edit = document.getElementById("edit_projet").checked;
-    console.log(edit);
+    //console.log(edit);
     document.getElementById("nom_projet").disabled = !edit;
     document.getElementById("responsable_projet").disabled = !edit;
     document.getElementById("type_projet").disabled = !edit;
@@ -316,7 +322,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             alert("Erreur : responseText: "+request.responseText);
             },
         success  : function(data) {
-            console.log(data);
+            //console.log(data);
             window.location = 'php/files/'+data;
             }
     });
@@ -391,9 +397,18 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         const project = projets_f;
         const json_previ = [];
         const json_real = [];
+        const json_previ_sum = [];
+        const json_real_sum = [];
         dtActions.clear();
+            const data_previ_sum  = new Object();
+            const data_real_sum = new Object();
+            data_previ_sum.y = 0;
+            data_previ_sum.name = '';
+            data_real_sum.y = 0;
+            data_real_sum.name = '';
+            data_real_sum.color = project[0].color;
             for (const actions in actions_f) {
-                console.log(actions_f);
+                //console.log(actions_f);
                 
                     const p_ = actions_f[actions].personne_action ?? '';
                     const personnes_actions = p_.split('|');
@@ -423,8 +438,10 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                     if (!!actions_f[actions].personne_action) { 
                         data_previ.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
                         data_previ.y = actions_f[actions].previ ?? 0;
+                        data_previ_sum.y = data_previ_sum.y + (actions_f[actions].previ ?? 0);
                         data_real.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
                         data_real.y = actions_f[actions].realise ?? 0;
+                        data_real_sum.y = data_real_sum.y + (actions_f[actions].realise ?? 0);
                         data_real.color = project[0].color;
                         json_previ.push(data_previ);
                         json_real.push(data_real);
@@ -432,6 +449,11 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                 }
                 json_previ.sort(GetSortOrder("name"));
                 json_real.sort(GetSortOrder("name"));
+                json_previ_sum.push(data_previ_sum);
+                json_real_sum.push(data_real_sum);
+                document.getElementById("project_prct").innerHTML = Math.round((data_real_sum.y*100 / data_previ_sum.y)) + '%' ?? 0;
+                document.getElementById("project_prct").setAttribute('style', 'color:'+project[0].color);
+
     
         /*      console.log('json_previ');
                 console.log(json_previ);
@@ -440,6 +462,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
     
                 //Chargement du graphique des actions nom_projet_, color_, real_, previ_
                 graph_(projets_f[0].name, json_real, json_previ);
+                graph_sum(projets_f[0].name, json_real_sum, json_previ_sum);
                 
                      
     }
@@ -720,12 +743,9 @@ document.getElementById("add_action_personne").addEventListener("click", functio
 });
 
 //////////////////////////////////////////////////////
-//Gestion des dom et evenement pour le graphique
+//Gestion des dom et evenement pour le graphique par action
 //////////////////////////////////////////////////////
 function graph_( nom_projet_, real_, previ_) {
-
-
-
     chart = new Highcharts.chart('container', {
         chart: {
             type: 'bar',
@@ -794,3 +814,73 @@ function graph_( nom_projet_, real_, previ_) {
     });
 }
 
+
+//////////////////////////////////////////////////////
+//Gestion des dom et evenement pour le graphique general
+//////////////////////////////////////////////////////
+function graph_sum( nom_projet_, real_, previ_) {
+    chart_global = new Highcharts.chart('container_sum', {
+        chart: {
+            type: 'bar',
+            height: 100,
+            backgroundColor:'#f8f9fa'
+        },
+        title: {
+            text: ``,//Réal / Prévi  ${nom_projet_}
+            align: 'center'
+        },
+        subtitle: {
+            text: '',
+            align: 'center'
+        },
+        plotOptions: {
+            series: {
+                grouping: false,
+                borderWidth: 0
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            shared: true,
+            headerFormat: '<span style="font-size: 15px">{point.point.name}</span><br/>',
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: {point.y}<br/>'
+        },
+        xAxis: {
+            type: 'category',
+            accessibility: {
+                description: 'Countries'
+            }
+        },
+        yAxis: [{
+            title: {
+                text: 'nb heures'
+            },
+            showFirstLabel: false
+        }],
+        series: [{
+            color: 'rgba(0,0,0,.2)',
+            pointPlacement: 0,
+            data: previ_,
+            name: 'Previsionnel'
+        }, {
+            name: 'Réalisé',
+            id: 'main',
+            dataLabels: [{
+                enabled: true,
+                inside: true,
+                style: {
+                    fontSize: '10px'
+                }
+            }],
+            data:real_
+        }],
+        exporting: {
+            allowHTML: true
+        }
+    });
+}

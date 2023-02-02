@@ -104,9 +104,6 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <select class="form-select" id="responsable_projet" disabled>
                                         <?php echo $responsables_html_wo_id; ?>
                                     </select>
-
-									
-
                                 </div>
                                 <div class="input-group input-group-sm p-2">
                                     <label class="input-group-text" for="l_type_projet">Type de projet : </label>
@@ -169,9 +166,26 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                                 <h6 class="mt-2 px-2">Documents liées :</h6>
                                 <div class="px-2" id="docs"></div>
+                                <div class="my-4" >
+                                    <div class="d-flex flex-column border border-dark rounded p-2">
+                                        <button id="add_an_action" type="button" class="btn btn-outline-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
+                                        <button id="save_projet" type="button" class="btn btn-outline-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
+                                        <button id="export_excel_temps" type="button" class="btn btn-outline-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>
+                                        <div>Lier des fichiers au projet :</div>
+                                        <div class="input-group input-group-sm pt-2">
+                                            <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">
+                                            <button id="save_file" type="button" class="btn btn-warning" ><i class="fas fa-file "></i> </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4"> <!--bg-dark-->
+                            <div id="panel_all" class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4 d-none"> <!--bg-dark-->
                                 <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Realise / Previsionnel :</h4></div>
+                                <div class="d-flex w-100 align-items-center justify-content-center">
+                                    <div id="container_sum" class="d-flex w-100"></div>
+                                    <div class="d-flex col-md-1 align-items-center justify-content-center bebas"><h4 id="project_prct" ></h4></div>
+                                </div>
+                                <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Realise / Previsionnel par action:</h4></div>
                                 <div class="d-flex w-100">
                                     <div id="container" class="d-flex w-100"></div>
                                 </div>
@@ -214,16 +228,6 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <!-- PANEL 100% ACTIONS -->
                     <div class="d-flex align-items-end flex-column w-100 my-5">
-                        <div class="d-flex flex-column col-md-3 col-lg-2 border border-dark rounded p-2">
-                            <button id="add_an_action" type="button" class="btn btn-outline-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
-                            <button id="save_projet" type="button" class="btn btn-outline-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
-                            <button id="export_excel_temps" type="button" class="btn btn-outline-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>
-                            <div>Lier des fichiers au projet :</div>
-                            <div class="input-group input-group-sm pt-2">
-                                <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">
-                                <button id="save_file" type="button" class="btn btn-warning" ><i class="fas fa-file "></i> </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -244,7 +248,7 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-header">
         <div class="d-flex flex-column w-100">
             <div class="d-flex justify-content-between w-100">
-                <h5 class="modal-title">Ajouter une personne sur l'action : </h5>
+                <h5 class="modal-title">Ajouter / Modifier une personne sur l'action : </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="d-flex justify-content-between w-100">
@@ -275,7 +279,7 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-footer">
         <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
         <div class="col-4 d-flex justify-content-between w-100">
-            <button type="button" class="btn btn-outline-success" id="add_action_personne">Ajouter</button>
+            <button type="button" class="btn btn-outline-success" id="add_action_personne">Ajouter / Modifier</button>
             <button type="button" class="btn btn-outline-danger" id="cancel_action_personne">Annuler</button>
         </div>
       </div>
