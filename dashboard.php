@@ -161,6 +161,13 @@ if (in_array($_SESSION['email'], $admins)) {
                             Parcelles en acquisition
                             <span id="parcelles_acquisition"  class="badge bg-info">...</span>
                         </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                            <div class="d-flex w-100">
+                                <div id="export_geopackage" type="button" class="link-secondary"><i class="fas fa-map pr-2"></i> Export Geopackage des sites</div>
+                            </div>
+                        </li>
+
+                        
                     </ul>
                     <div class="mt-2 mb-2">
                         <!--<input id="testpicker" type="text" class="form-control">-->
@@ -173,12 +180,13 @@ if (in_array($_SESSION['email'], $admins)) {
                             
                         </div>
                     </div>
-                    <ul class="list-group">
+                    <ul class="list-group my-2">
                         <li id="list_docs" class="list-group-item d-none">
                             <div id="doc_refs" class="d-flex flex-wrap align-items-start">
                             </div>
                         </li>
                     </ul>
+                    
 
                     
                 </div>

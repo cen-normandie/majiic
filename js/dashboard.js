@@ -64,7 +64,44 @@ function update_map(sites_json) {
         sites_geojson_feature.addData(data.geojson);
     });
     map.fitBounds(sites_geojson_feature.getBounds());
+    
 }
+
+
+document.getElementById("export_geopackage").addEventListener("click", function() {
+    //console.log(JSON.stringify(sites_geojson_feature.toGeoJSON()));
+    $.ajax({
+        url: "php/export_geo_sites.php",
+        type: "POST",
+        dataType: "text",
+        async    : true,
+        data: {
+            'json':JSON.stringify(sites_geojson_feature.toGeoJSON())
+        },
+        error    : function(request, error) { 
+            alert("Erreur : responseText: "+request.responseText);
+            },
+        success  : function(data) {
+            console.log('Done');
+            console.log(data);
+            //console.log(data);
+            //window.location = 'php/files/'+data;
+            /* fetch('php/files/'+data)
+                .then(resp => resp.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    // the filename you want
+                    a.download = 'export.gpkg';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }); */
+            }
+    });
+})
 
 
 
