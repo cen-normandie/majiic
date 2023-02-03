@@ -8,7 +8,7 @@ $file = dirname(__FILE__).DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'expor
 file_put_contents($file, $content);
 exec('ogr2ogr -f GPKG '.dirname(__FILE__).DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'export_sites.gpkg '.dirname(__FILE__).DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'export_sites.geojson');
 //echo 'ogr2ogr -f GPKG '.dirname(__FILE__).DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'export_sites.gpkg '.dirname(__FILE__).DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'export_sites.geojson';
-//echo 'export_sites.gpkg';
+echo 'export_sites.gpkg';
 
 /* header('Content-Type: application/octet-stream');
 header("Content-Transfer-Encoding: Binary"); 

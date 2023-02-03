@@ -82,11 +82,11 @@ document.getElementById("export_geopackage").addEventListener("click", function(
             alert("Erreur : responseText: "+request.responseText);
             },
         success  : function(data) {
-            console.log('Done');
-            console.log(data);
+            //console.log('Done');
+            //console.log(data);
             //console.log(data);
             //window.location = 'php/files/'+data;
-            /* fetch('php/files/'+data)
+            fetch('php/files/'+data)
                 .then(resp => resp.blob())
                 .then(blob => {
                     const url = window.URL.createObjectURL(blob);
@@ -98,7 +98,7 @@ document.getElementById("export_geopackage").addEventListener("click", function(
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
-                }); */
+                });
             }
     });
 })
