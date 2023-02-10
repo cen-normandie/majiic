@@ -400,7 +400,7 @@ paging: true
 //CALL DATA SITES
 function load_sites_ajax () {
     $.ajax({
-        url      : "php/ajax/dashboard/sites_.ajax.js.php",
+        url      : "php/ajax/dashboard/sites.ajax.js.php",
         data     : {},
         method   : "POST",
         dataType : "json",

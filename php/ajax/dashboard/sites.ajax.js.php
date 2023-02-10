@@ -47,7 +47,10 @@ WITH t as (
                 INNER JOIN (
                     SELECT 
                         g.id_site, 
-                        g.nom_site
+                        g.nom_site,
+                        g.doc_reference,
+                        g.nb_parc,
+                        round( (st_area( coalesce(g.geom_pp, g.geom) )/10000)::numeric,2) as surface
                         FROM $sites g
                         WHERE g.geom is not null
 						            AND sites.id_site = g.id_site
@@ -67,38 +70,25 @@ SELECT json_agg(t) FROM t
 //        , ST_AsGeoJSON( st_transform( coalesce(lg.geom_pp, lg.geom) ,4326) )::json As geometry
 //        , row_to_json(lp) As properties
 //		, lp.id_site
-//        FROM mfu.sites As lg 
+//        FROM $sites As lg 
 //                INNER JOIN (
 //                    SELECT 
 //                        g.id_site, 
 //                        g.nom_site,
-//					'site' as tablename,
 //					g.doc_reference,
-//					g.lien_doc,
 //					g.nb_parc,
-//					g.ens,
 //					g.code_milieu_princ,
 //					g.date_crea_site,
 //					g.gestionnaire_site,
 //					g.doc_gestion_presence,
-//					g.doc_justif_admin,
-//					CASE WHEN g.zh THEN 1 ELSE 0 END as is_zh,
 //					g.is_aesn,
 //					g.is_ddg,
 //					g.ens as is_ens,
 //					g.is_acquisition,
 //					g.is_convention,
 //					g.mc as is_mc,
-//					g.is_bail_e,
-//					g.is_bail_r,
-//					g.is_pau,
-//					g.is_ore,
-//					g.dep as dep,
-//					g.statuts_protection,
-//					g.bassin,
-//					g.ucg,
 //					round( (st_area( coalesce(g.geom_pp, g.geom) )/10000)::numeric,2) as surface
-//                        FROM mfu.sites g
+//                        FROM $sites g
 //                        WHERE g.geom is not null
 //                        ) As lp 
 //            ON lg.id_site = lp.id_site  
@@ -139,7 +129,7 @@ SELECT json_agg(t) FROM t
 //        FROM ( select type,geometry,properties  from f_ where f_.id_site = sites.id_site
 //			) As f )  As fc
 //  )
-//	FROM mfu.sites order by 1
+//	FROM $sites order by 1
 //)
 //SELECT json_agg(t) FROM t
 
