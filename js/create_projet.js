@@ -37,7 +37,9 @@ function save_projet () {
             alert("Erreur : responseText: "+request.responseText);
             },
         success  : function(data) {
-            console.log(data)
+            console.log(data);
+            document.getElementById("t_content").innerHTML= 'Projet créé !';
+            $('#toast_info').toast('show');
             }
     });   
 }

@@ -154,6 +154,21 @@ if (in_array($_SESSION['email'], $admins)) {
 		</div>
 	</div>
 
+    <div class="position-fixed" style="z-index: 1111; bottom: 30px; right:10px;">
+		<div id="toast_info" class="toast border border-success text-success">
+			<div class="toast-header">
+				<!-- <img src="..." class="rounded me-2" alt="..."> -->
+                <i class="fas fa-exclamation-circle text-success p-1"></i>
+				<strong class="me-auto">Notification</strong>
+				<small><?php echo date("d-m-Y à H:i"); ?></small>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+                <strong><span id="t_content" clas=" fs-4">OLA</span></strong>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 
@@ -188,7 +203,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 
 $(document).ready(function() {
-
+    
 });
 
 

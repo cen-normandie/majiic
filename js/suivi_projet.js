@@ -530,7 +530,9 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                 },
             success  : function(data) {
                 console.log(data);
-                location.reload();
+                document.getElementById("t_content").innerHTML= 'Projet enregistré la page peut être rechargée !';
+                $('#toast_info').toast('show');
+                //location.reload();
                 }
         });
         
@@ -564,6 +566,8 @@ document.getElementById("add_action_personne").addEventListener("click", functio
             },
         success  : function(data) {
             //console.log(data);
+            document.getElementById("t_content").innerHTML= 'Action modifiée avec succès la page peut être rechargée !';
+            $('#toast_info').toast('show');
             sessionStorage.clear();
             }
     });
@@ -596,6 +600,8 @@ document.getElementById("del_action_complete").addEventListener("click", functio
         success  : function(data) {
             console.log(data);
             ModalDelAction.hide();
+            document.getElementById("t_content").innerHTML= 'Action supprimée avec succès !';
+            $('#toast_info').toast('show');
             }
     });
 });
@@ -624,6 +630,8 @@ document.getElementById("save_file").addEventListener("click", function() {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 console.log(data);
+                document.getElementById("t_content").innerHTML= 'Fichier enregistré la page peut être rechargée !';
+                $('#toast_info').toast('show');
                 }
         });
 });
@@ -671,7 +679,9 @@ function get_action_content () {
                 alert("Erreur : responseText: "+request.responseText);
                 },
             success  : function(data) {
-                console.log(data)
+                console.log(data);
+                document.getElementById("t_content").innerHTML= 'Action enregistrée avec succès la page peut être rechargée!';
+                $('#toast_info').toast('show');
                 }
         });
 
