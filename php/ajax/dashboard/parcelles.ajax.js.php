@@ -5,12 +5,29 @@ $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN pas
 or die ('Connexion impossible :'. pg_last_error());
 $result = pg_prepare($dbconn, "sql", 
 "
-WITH t as (
+WITH 
+f_ as (
+      SELECT 'Feature' As type
+          , ST_AsGeoJSON( st_transform( coalesce(lg.geom_pp, lg.geom) ,4326) )::json As geometry
+          , row_to_json(lp) As properties
+  		, lp.id_unique
+          FROM $parcelles As lg 
+                  INNER JOIN (
+                      SELECT 
+                          g.id_unique, 
+                          g.nom_group,
+  					round( (st_area( coalesce(g.geom_pp, g.geom) )/10000)::numeric,2) as surface
+                          FROM $parcelles g
+                          WHERE g.geom is not null
+                          ) As lp 
+              ON lg.id_unique = lp.id_unique  
+  ),
+t as (
   SELECT 
   p.id_unique,
   s.id_site as id,
   s.nom_site,
-  round( (st_area(p.geom)/10000)::numeric,2) as surface,
+  round( (st_area(coalesce(p.geom_pp, p.geom))/10000)::numeric,2) as surface,
   s.zh as is_zh,
   s.is_aesn,
   s.is_ddg,
@@ -26,15 +43,22 @@ WITH t as (
   s.statuts_protection,
   s.bassin,
   s.ucg,
-  y.date_,
-  p.doc_reference
+  p.doc_reference,
+  (
+    	    SELECT row_to_json(fc) as geojson
+            FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+            FROM ( select type,geometry,properties  from f_ where f_.id_unique = p.id_unique
+    			) As f )  As fc
+      )
   FROM $parcelles p LEFT JOIN  $sites s ON p.id_group = s.id_site 
-  LEFT JOIN $doc_annee y ON y.doc_reference = p.doc_reference
   order by 1
 )
 SELECT json_agg(t) FROM t
 "
 );
+//y.date_,
+//LEFT JOIN $doc_annee y ON y.doc_reference = p.doc_reference
+
 
 $result = pg_execute($dbconn, "sql", array());
 while($row = pg_fetch_row($result))

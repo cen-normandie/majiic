@@ -43,7 +43,7 @@ WITH t as (
         FROM (SELECT 'Feature' As type
         , ST_AsGeoJSON( st_transform( coalesce(lg.geom_pp, lg.geom) ,4326) )::json As geometry
         , row_to_json(lp) As properties
-        FROM mfu.sites As lg 
+        FROM $sites As lg 
                 INNER JOIN (
                     SELECT 
                         g.id_site, 

@@ -42,8 +42,10 @@ function apply_filters() {
     update_chiffres_parcelles(parcelles_f);
     //map.removeLayer( sites_geojson_feature );
     sites_geojson_feature.clearLayers();
+    parcelles_geojson_feature.clearLayers();
     if ( !(Object.keys(sites_f).length === 0) ) {
         update_map(sites_f);
+        update_map_p(parcelles_f);
     }
 };
 
@@ -64,19 +66,26 @@ function update_map(sites_json) {
         sites_geojson_feature.addData(data.geojson);
     });
     map.fitBounds(sites_geojson_feature.getBounds());
-    
+}
+function update_map_p(parcelles_json) {
+    //ClearLayer
+    //map.removeLayer( sites_geojson_feature );
+    $(parcelles_json).each(function(key, data) {
+        //ajoute les geojson
+        parcelles_geojson_feature.addData(data.geojson);
+    });
 }
 
-
 document.getElementById("export_geopackage").addEventListener("click", function() {
-    //console.log(JSON.stringify(sites_geojson_feature.toGeoJSON()));
+    //console.log(JSON.stringify(parcelles_geojson_feature.toGeoJSON()));
     $.ajax({
         url: "php/export_geo_sites.php",
         type: "POST",
         dataType: "text",
         async    : true,
         data: {
-            'json':JSON.stringify(sites_geojson_feature.toGeoJSON())
+            'json':JSON.stringify(sites_geojson_feature.toGeoJSON()),
+            'json_parcelle':JSON.stringify(parcelles_geojson_feature.toGeoJSON())
         },
         error    : function(request, error) { 
             alert("Erreur : responseText: "+request.responseText);

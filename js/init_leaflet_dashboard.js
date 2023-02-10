@@ -52,6 +52,9 @@ function initmap() {
                 //layer.bindLabel(feature.properties.nom_site);
             }
     }).addTo(map);
+    parcelles_geojson_feature = L.geoJson(false, {
+        style:style_sites_rouge
+    }).addTo(map);
     
     overlaysMaps={"Sites":sites_geojson_feature};
     baseMaps={"Ortho (IGN)":ignO};//,"OSM":osm,"OSM (Noir & Blanc)":osmbg
