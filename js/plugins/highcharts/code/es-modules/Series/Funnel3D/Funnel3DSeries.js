@@ -16,10 +16,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -29,7 +31,7 @@ import Funnel3DComposition from './Funnel3DComposition.js';
 import Funnel3DPoint from './Funnel3DPoint.js';
 import H from '../../Core/Globals.js';
 var noop = H.noop;
-import Math3D from '../../Extensions/Math3D.js';
+import Math3D from '../../Core/Math3D.js';
 var perspective = Math3D.perspective;
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 var Series = SeriesRegistry.series, ColumnSeries = SeriesRegistry.seriesTypes.column;
@@ -43,7 +45,8 @@ var extend = U.extend, merge = U.merge, pick = U.pick, relativeLength = U.relati
 /**
  * The funnel3d series type.
  *
- * @constructor seriesTypes.funnel3d
+ * @class
+ * @name Highcharts.seriesTypes.funnel3d
  * @augments seriesTypes.column
  * @requires highcharts-3d
  * @requires modules/cylinder
@@ -380,7 +383,7 @@ export default Funnel3DSeries;
  *         Funnel3d demo
  *
  * @since     7.1.0
- * @extends   series.funnel,plotOptions.funnel3d
+ * @extends   series,plotOptions.funnel3d
  * @excluding allAreas,boostThreshold,colorAxis,compare,compareBase
  * @product   highcharts
  * @requires  highcharts-3d

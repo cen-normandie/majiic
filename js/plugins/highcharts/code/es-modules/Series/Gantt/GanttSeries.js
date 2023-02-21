@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -31,7 +33,7 @@ var Series = SeriesRegistry.series, XRangeSeries = SeriesRegistry.seriesTypes.xr
 import Tick from '../../Core/Axis/Tick.js';
 import U from '../../Core/Utilities.js';
 var extend = U.extend, isNumber = U.isNumber, merge = U.merge, splat = U.splat;
-import TreeGridAxis from '../../Core/Axis/TreeGridAxis.js';
+import TreeGridAxis from '../../Core/Axis/TreeGrid/TreeGridAxis.js';
 TreeGridAxis.compose(Axis, Chart, Series, Tick);
 import '../../Extensions/CurrentDateIndication.js';
 import '../../Extensions/StaticScale.js';
@@ -89,7 +91,9 @@ var GanttSeries = /** @class */ (function (_super) {
     GanttSeries.prototype.drawPoint = function (point, verb) {
         var series = this, seriesOpts = series.options, renderer = series.chart.renderer, shapeArgs = point.shapeArgs, plotY = point.plotY, graphic = point.graphic, state = point.selected && 'select', cutOff = seriesOpts.stacking && !seriesOpts.borderRadius, diamondShape;
         if (point.options.milestone) {
-            if (isNumber(plotY) && point.y !== null && point.visible !== false) {
+            if (isNumber(plotY) &&
+                point.y !== null &&
+                point.visible !== false) {
                 diamondShape = renderer.symbols.diamond(shapeArgs.x || 0, shapeArgs.y || 0, shapeArgs.width || 0, shapeArgs.height || 0);
                 if (graphic) {
                     graphic[verb]({
@@ -197,8 +201,6 @@ var GanttSeries = /** @class */ (function (_super) {
     return GanttSeries;
 }(XRangeSeries));
 extend(GanttSeries.prototype, {
-    // Keyboard navigation, don't use nearest vertical mode
-    keyboardMoveVertical: false,
     pointArrayMap: ['start', 'end', 'y'],
     pointClass: GanttPoint,
     setData: Series.prototype.setData

@@ -12,16 +12,17 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import Palette from '../../Core/Color/Palette.js';
 import Series from '../../Core/Series/Series.js';
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 import U from '../../Core/Utilities.js';
@@ -79,7 +80,7 @@ var LineSeries = /** @class */ (function (_super) {
         if (!styledMode) {
             props[0].push((options.lineColor ||
                 this.color ||
-                Palette.neutralColor20 // when colorByPoint = true
+                "#cccccc" /* Palette.neutralColor20 */ // when colorByPoint = true
             ), options.dashStyle);
         }
         props = series.getZonesGraphs(props);
@@ -124,12 +125,16 @@ var LineSeries = /** @class */ (function (_super) {
             if (graph && !styledMode) {
                 attribs = {
                     'stroke': prop[2],
-                    'stroke-width': options.lineWidth,
+                    'stroke-width': options.lineWidth || 0,
                     // Polygon series use filled graph
                     'fill': (series.fillGraph && series.color) || 'none'
                 };
+                // Apply dash style
                 if (prop[3]) {
                     attribs.dashstyle = prop[3];
+                    // The reason for the `else if` is that linecaps don't mix well
+                    // with dashstyle. The gaps get partially filled by the
+                    // linecap.
                 }
                 else if (options.linecap !== 'square') {
                     attribs['stroke-linecap'] =
@@ -280,12 +285,13 @@ var LineSeries = /** @class */ (function (_super) {
         }, this);
         return props;
     };
+    LineSeries.defaultOptions = merge(Series.defaultOptions, 
     /**
      * General options for all series types.
      *
      * @optionparent plotOptions.series
      */
-    LineSeries.defaultOptions = merge(Series.defaultOptions, {
+    {
     // nothing here yet
     });
     return LineSeries;
@@ -404,7 +410,10 @@ export default LineSeries;
  */
 /**
  * An additional, individual class name for the data point's graphic
- * representation.
+ * representation. Changes to a point's color will also be reflected in a
+ * chart's legend and tooltip.
+ *
+ * @sample {highcharts} highcharts/css/point-series-classname
  *
  * @type      {string}
  * @since     5.0.0
@@ -428,9 +437,12 @@ export default LineSeries;
 /**
  * A specific color index to use for the point, so its graphic representations
  * are given the class name `highcharts-color-{n}`. In styled mode this will
- * change the color of the graphic. In non-styled mode, the color by is set by
- * the `fill` attribute, so the change in class name won't have a visual effect
- * by default.
+ * change the color of the graphic. In non-styled mode, the color is set by the
+ * `fill` attribute, so the change in class name won't have a visual effect by
+ * default.
+ *
+ * @sample    {highcharts} highcharts/css/colorindex/
+ *            Series and point color index
  *
  * @type      {number}
  * @since     5.0.0

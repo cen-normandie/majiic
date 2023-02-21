@@ -10,21 +10,28 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import MultipleLinesMixin from '../../../Mixins/MultipleLines.js';
-import ReduceArrayMixin from '../../../Mixins/ReduceArray.js';
+import AU from '../ArrayUtilities.js';
+import MultipleLinesComposition from '../MultipleLinesComposition.js';
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
 var SMAIndicator = SeriesRegistry.seriesTypes.sma;
 import U from '../../../Core/Utilities.js';
 var extend = U.extend, isArray = U.isArray, merge = U.merge;
+/* *
+ *
+ *  Class
+ *
+ * */
 /**
  * The Stochastic series type.
  *
@@ -37,12 +44,27 @@ var extend = U.extend, isArray = U.isArray, merge = U.merge;
 var StochasticIndicator = /** @class */ (function (_super) {
     __extends(StochasticIndicator, _super);
     function StochasticIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        /* *
+         *
+         *  Properties
+         *
+         * */
         _this.data = void 0;
         _this.options = void 0;
         _this.points = void 0;
         return _this;
     }
+    /* *
+     *
+     *  Functions
+     *
+     * */
     StochasticIndicator.prototype.init = function () {
         SeriesRegistry.seriesTypes.sma.prototype.init.apply(this, arguments);
         // Set default color for lines:
@@ -70,7 +92,7 @@ var StochasticIndicator = /** @class */ (function (_super) {
         for (i = periodK - 1; i < yValLen; i++) {
             slicedY = yVal.slice(i - periodK + 1, i + 1);
             // Calculate %K
-            extremes = ReduceArrayMixin.getArrayExtremes(slicedY, low, high);
+            extremes = AU.getArrayExtremes(slicedY, low, high);
             LL = extremes[0]; // Lowest low in %K periods
             CL = yVal[i][close] - LL;
             HL = extremes[1] - LL;
@@ -79,7 +101,8 @@ var StochasticIndicator = /** @class */ (function (_super) {
             yData.push([K, null]);
             // Calculate smoothed %D, which is SMA of %K
             if (i >= (periodK - 1) + (periodD - 1)) {
-                points = SeriesRegistry.seriesTypes.sma.prototype.getValues.call(this, {
+                points = SeriesRegistry.seriesTypes.sma.prototype.getValues
+                    .call(this, {
                     xData: xData.slice(-periodD),
                     yData: yData.slice(-periodD)
                 }, {
@@ -164,17 +187,15 @@ var StochasticIndicator = /** @class */ (function (_super) {
     return StochasticIndicator;
 }(SMAIndicator));
 extend(StochasticIndicator.prototype, {
+    areaLinesNames: [],
     nameComponents: ['periods'],
     nameBase: 'Stochastic',
     pointArrayMap: ['y', 'smoothed'],
     parallelArrays: ['x', 'y', 'smoothed'],
     pointValKey: 'y',
-    linesApiNames: ['smoothedLine'],
-    drawGraph: MultipleLinesMixin.drawGraph,
-    getTranslatedLinesNames: MultipleLinesMixin.getTranslatedLinesNames,
-    translate: MultipleLinesMixin.translate,
-    toYData: MultipleLinesMixin.toYData
+    linesApiNames: ['smoothedLine']
 });
+MultipleLinesComposition.compose(StochasticIndicator);
 SeriesRegistry.registerSeriesType('stochastic', StochasticIndicator);
 /* *
  *
@@ -182,6 +203,11 @@ SeriesRegistry.registerSeriesType('stochastic', StochasticIndicator);
  *
  * */
 export default StochasticIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A Stochastic indicator. If the [type](#series.stochastic.type) option is not
  * specified, it is inherited from [chart.type](#chart.type).

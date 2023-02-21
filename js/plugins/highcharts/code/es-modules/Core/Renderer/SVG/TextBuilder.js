@@ -10,9 +10,9 @@
 'use strict';
 import AST from '../HTML/AST.js';
 import H from '../../Globals.js';
-var doc = H.doc, SVG_NS = H.SVG_NS;
+var doc = H.doc, SVG_NS = H.SVG_NS, win = H.win;
 import U from '../../Utilities.js';
-var attr = U.attr, isString = U.isString, objectEach = U.objectEach, pick = U.pick;
+var attr = U.attr, extend = U.extend, fireEvent = U.fireEvent, isString = U.isString, objectEach = U.objectEach, pick = U.pick;
 /* *
  *
  *  Class
@@ -70,6 +70,7 @@ var TextBuilder = /** @class */ (function () {
         if (!hasMarkup &&
             !this.ellipsis &&
             !this.width &&
+            !wrapper.textPath &&
             (textStr.indexOf(' ') === -1 ||
                 (this.noWrap && !regexMatchBreaks.test(textStr)))) {
             textNode.appendChild(doc.createTextNode(this.unescapeEntities(textStr)));
@@ -86,7 +87,7 @@ var TextBuilder = /** @class */ (function () {
             // Step 2. Do as many as we can of the modifications to the tree
             // structure before it is added to the DOM
             this.modifyTree(ast.nodes);
-            ast.addToDOM(wrapper.element);
+            ast.addToDOM(textNode);
             // Step 3. Some modifications can't be done until the structure is
             // in the DOM, because we need to read computed metrics.
             this.modifyDOM();
@@ -112,7 +113,6 @@ var TextBuilder = /** @class */ (function () {
      *
      * @private
      *
-     * @return {void}
      */
     TextBuilder.prototype.modifyDOM = function () {
         var _this = this;
@@ -229,7 +229,7 @@ var TextBuilder = /** @class */ (function () {
         var modifyChildren = (function (node) {
             var childNodes = [].slice.call(node.childNodes);
             childNodes.forEach(function (childNode) {
-                if (childNode.nodeType === Node.TEXT_NODE) {
+                if (childNode.nodeType === win.Node.TEXT_NODE) {
                     modifyTextNode(childNode, node);
                 }
                 else {
@@ -255,7 +255,7 @@ var TextBuilder = /** @class */ (function () {
     TextBuilder.prototype.getLineHeight = function (node) {
         var fontSizeStyle;
         // If the node is a text node, use its parent
-        var element = node.nodeType === Node.TEXT_NODE ?
+        var element = (node.nodeType === win.Node.TEXT_NODE) ?
             node.parentElement :
             node;
         if (!this.renderer.styledMode) {
@@ -277,35 +277,35 @@ var TextBuilder = /** @class */ (function () {
      *
      * @param {ASTNode[]} nodes The AST nodes
      *
-     * @return {void}
      */
     TextBuilder.prototype.modifyTree = function (nodes) {
         var _this = this;
         var modifyChild = function (node, i) {
-            var tagName = node.tagName;
-            var styledMode = _this.renderer.styledMode;
-            var attributes = node.attributes || {};
+            var _a = node.attributes, attributes = _a === void 0 ? {} : _a, children = node.children, _b = node.style, style = _b === void 0 ? {} : _b, tagName = node.tagName, styledMode = _this.renderer.styledMode;
             // Apply styling to text tags
             if (tagName === 'b' || tagName === 'strong') {
                 if (styledMode) {
-                    attributes['class'] = 'highcharts-strong'; // eslint-disable-line dot-notation
+                    // eslint-disable-next-line dot-notation
+                    attributes['class'] = 'highcharts-strong';
                 }
                 else {
-                    attributes.style = 'font-weight:bold;' + (attributes.style || '');
+                    style.fontWeight = 'bold';
                 }
             }
             else if (tagName === 'i' || tagName === 'em') {
                 if (styledMode) {
-                    attributes['class'] = 'highcharts-emphasized'; // eslint-disable-line dot-notation
+                    // eslint-disable-next-line dot-notation
+                    attributes['class'] = 'highcharts-emphasized';
                 }
                 else {
-                    attributes.style = 'font-style:italic;' + (attributes.style || '');
+                    style.fontStyle = 'italic';
                 }
             }
-            // Modify attributes
-            if (isString(attributes.style)) {
-                attributes.style = attributes.style.replace(/(;| |^)color([ :])/, '$1fill$2');
+            // Modify styling
+            if (style && style.color) {
+                style.fill = style.color;
             }
+            // Handle breaks
             if (tagName === 'br') {
                 attributes['class'] = 'highcharts-br'; // eslint-disable-line dot-notation
                 node.textContent = '\u200B'; // zero-width space
@@ -315,19 +315,29 @@ var TextBuilder = /** @class */ (function () {
                     nextNode.textContent =
                         nextNode.textContent.replace(/^ +/gm, '');
                 }
+                // If an anchor has direct text node children, the text is unable to
+                // wrap because there is no `getSubStringLength` function on the
+                // element. Therefore we need to wrap the child text node or nodes
+                // in a tspan. #16173.
+            }
+            else if (tagName === 'a' &&
+                children &&
+                children.some(function (child) { return child.tagName === '#text'; })) {
+                node.children = [{ children: children, tagName: 'tspan' }];
             }
             if (tagName !== '#text' && tagName !== 'a') {
                 node.tagName = 'tspan';
             }
-            node.attributes = attributes;
+            extend(node, { attributes: attributes, style: style });
             // Recurse
-            if (node.children) {
-                node.children
+            if (children) {
+                children
                     .filter(function (c) { return c.tagName !== '#text'; })
                     .forEach(modifyChild);
             }
         };
         nodes.forEach(modifyChild);
+        fireEvent(this.svgElement, 'afterModifyTree', { nodes: nodes });
     };
     /*
      * Truncate the text node contents to a given length. Used when the css
@@ -340,7 +350,7 @@ var TextBuilder = /** @class */ (function () {
         var renderer = svgElement.renderer, rotation = svgElement.rotation;
         // Cache the lengths to avoid checking the same twice
         var lengths = [];
-        // Word wrap can not be truncated to shorter than one word, ellipsis
+        // Word wrap cannot be truncated to shorter than one word, ellipsis
         // text can be completely blank.
         var minIndex = words ? 1 : 0;
         var maxIndex = (text || words || '').length;

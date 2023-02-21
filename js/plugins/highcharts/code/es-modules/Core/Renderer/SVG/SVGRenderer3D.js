@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -29,7 +31,7 @@ import Color from '../../Color/Color.js';
 var color = Color.parse;
 import H from '../../Globals.js';
 var charts = H.charts, deg2rad = H.deg2rad;
-import Math3D from '../../../Extensions/Math3D.js';
+import Math3D from '../../Math3D.js';
 var perspective = Math3D.perspective, shapeArea = Math3D.shapeArea;
 import SVGElement from './SVGElement.js';
 import SVGElement3D from './SVGElement3D.js';
@@ -164,7 +166,8 @@ var SVGRenderer3D = /** @class */ (function (_super) {
                 delete hash.insidePlotArea;
                 var chart = charts[renderer.chartIndex], vertexes2d = perspective(this.vertexes, chart, this.insidePlotArea), path = renderer.toLinePath(vertexes2d, true), area = shapeArea(vertexes2d);
                 hash.d = path;
-                hash.visibility = (this.enabled && area > 0) ? 'visible' : 'hidden';
+                hash.visibility = (this.enabled && area > 0) ?
+                    'inherit' : 'hidden';
             }
             return SVGElement.prototype.attr.apply(this, arguments);
         };
@@ -179,7 +182,8 @@ var SVGRenderer3D = /** @class */ (function (_super) {
                 delete params.enabled;
                 delete params.vertexes;
                 delete params.insidePlotArea;
-                var chart = charts[renderer.chartIndex], vertexes2d = perspective(this.vertexes, chart, this.insidePlotArea), path = renderer.toLinePath(vertexes2d, true), area = shapeArea(vertexes2d), visibility = (this.enabled && area > 0) ? 'visible' : 'hidden';
+                var chart = charts[renderer.chartIndex], vertexes2d = perspective(this.vertexes, chart, this.insidePlotArea), path = renderer.toLinePath(vertexes2d, true), area = shapeArea(vertexes2d), visibility = (this.enabled && area > 0) ?
+                    'visible' : 'hidden';
                 params.d = path;
                 this.attr('visibility', visibility);
             }
@@ -584,7 +588,7 @@ var SVGRenderer3D = /** @class */ (function (_super) {
         // related to the shapes directly, and update the shapes from the
         // animation step.
         wrapper.animate = function (params, animation, complete) {
-            var paramArr, from = this.attribs, to, anim, randomProp = 'data-' + Math.random().toString(26).substring(2, 9);
+            var paramArr, from = this.attribs, to, anim, randomProp = ('data-' + Math.random().toString(26).substring(2, 9));
             // Attribute-line properties connected to 3D. These shouldn't have
             // been in the attribs collection in the first place.
             delete params.center;
@@ -763,7 +767,9 @@ var SVGRenderer3D = /** @class */ (function (_super) {
             out = out.concat(SVGRenderer3D.curveTo(cx, cy, rx, ry, end, end2, 0, 0));
         }
         out.push([
-            'L', cx + (rx * Math.cos(end2)) + dx, cy + (ry * Math.sin(end2)) + dy
+            'L',
+            cx + (rx * Math.cos(end2)) + dx,
+            cy + (ry * Math.sin(end2)) + dy
         ]);
         out = out.concat(SVGRenderer3D.curveTo(cx, cy, rx, ry, end2, start2, dx, dy));
         out.push(['Z']);
@@ -773,7 +779,9 @@ var SVGRenderer3D = /** @class */ (function (_super) {
         ];
         inn = inn.concat(SVGRenderer3D.curveTo(cx, cy, irx, iry, start, end, 0, 0));
         inn.push([
-            'L', cx + (irx * Math.cos(end)) + dx, cy + (iry * Math.sin(end)) + dy
+            'L',
+            cx + (irx * Math.cos(end)) + dx,
+            cy + (iry * Math.sin(end)) + dy
         ]);
         inn = inn.concat(SVGRenderer3D.curveTo(cx, cy, irx, iry, end, start, dx, dy));
         inn.push(['Z']);
@@ -820,6 +828,7 @@ var SVGRenderer3D = /** @class */ (function (_super) {
             inn: inn,
             zInn: Math.max(a1, a2, a3),
             side1: side1,
+            // to keep below zOut and zInn in case of same values
             zSide1: a3 * 0.99,
             side2: side2,
             zSide2: a2 * 0.99

@@ -8,37 +8,43 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import Annotation from '../Annotations.js';
+import Annotation from '../Annotation.js';
 import ControlPoint from '../ControlPoint.js';
 import CrookedLine from './CrookedLine.js';
 import MockPoint from '../MockPoint.js';
 import U from '../../../Core/Utilities.js';
 var merge = U.merge;
-/* eslint-disable no-invalid-this, valid-jsdoc */
+/* *
+ *
+ *  Functions
+ *
+ * */
 /**
  * @private
  */
 function getSecondCoordinate(p1, p2, x) {
     return (p2.y - p1.y) / (p2.x - p1.x) * (x - p1.x) + p1.y;
 }
+/* *
+ *
+ *  Class
+ *
+ * */
 var Tunnel = /** @class */ (function (_super) {
     __extends(Tunnel, _super);
-    /* *
-     *
-     * Constructors
-     *
-     * */
-    function Tunnel(chart, options) {
-        return _super.call(this, chart, options) || this;
+    function Tunnel() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /* *
      *
@@ -82,22 +88,25 @@ var Tunnel = /** @class */ (function (_super) {
                 },
                 this.points[3]
             ]
-        }), false);
+        }), 0);
         this.options.typeOptions.line = line.options;
     };
     Tunnel.prototype.addBackground = function () {
         var background = this.initShape(merge(this.options.typeOptions.background, {
             type: 'path',
             points: this.points.slice()
-        }));
+        }), 1);
         this.options.typeOptions.background = background.options;
     };
     /**
      * Translate start or end ("left" or "right") side of the tunnel.
      * @private
-     * @param {number} dx - the amount of x translation
-     * @param {number} dy - the amount of y translation
-     * @param {boolean} [end] - whether to translate start or end side
+     * @param {number} dx
+     * the amount of x translation
+     * @param {number} dy
+     * the amount of y translation
+     * @param {boolean} [end]
+     * whether to translate start or end side
      */
     Tunnel.prototype.translateSide = function (dx, dy, end) {
         var topIndex = Number(end), bottomIndex = topIndex === 0 ? 3 : 2;
@@ -107,12 +116,15 @@ var Tunnel = /** @class */ (function (_super) {
     /**
      * Translate height of the tunnel.
      * @private
-     * @param {number} dh - the amount of height translation
+     * @param {number} dh
+     * the amount of height translation
      */
     Tunnel.prototype.translateHeight = function (dh) {
         this.translatePoint(0, dh, 2);
         this.translatePoint(0, dh, 3);
-        this.options.typeOptions.height = this.points[3].y - this.points[0].y;
+        this.options.typeOptions.height = this.points[3].y -
+            this.points[0].y;
+        this.userOptions.typeOptions.height = this.options.typeOptions.height;
     };
     return Tunnel;
 }(CrookedLine));
@@ -128,8 +140,6 @@ Tunnel.prototype.defaultOptions = merge(CrookedLine.prototype.defaultOptions,
  */
 {
     typeOptions: {
-        xAxis: 0,
-        yAxis: 0,
         /**
          * Background options.
          *
@@ -187,18 +197,13 @@ Tunnel.prototype.defaultOptions = merge(CrookedLine.prototype.defaultOptions,
                     visiblePlotOnly: true
                 })) {
                     var translation = this.mouseMoveToTranslation(e);
-                    target.translateSide(translation.x, translation.y, this.index);
+                    target.translateSide(translation.x, translation.y, !!this.index);
                     target.redraw(false);
                 }
             }
         }
     }
 });
-/* *
- *
- *  Registry
- *
- * */
 Annotation.types.tunnel = Tunnel;
 /* *
  *

@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v9.2.2 (2021-08-24)
+ * @license Highcharts JS v10.3.3 (2023-01-20)
  * @module highcharts/modules/lollipop
  * @requires highcharts
  *

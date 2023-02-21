@@ -8,34 +8,35 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import Annotation from '../Annotations.js';
+import Annotation from '../Annotation.js';
 import InfinityLine from './InfinityLine.js';
 import MockPoint from '../MockPoint.js';
 import U from '../../../Core/Utilities.js';
 var merge = U.merge;
-/* eslint-disable no-invalid-this, valid-jsdoc */
+/* *
+ *
+ *  Class
+ *
+ * */
 var Pitchfork = /** @class */ (function (_super) {
     __extends(Pitchfork, _super);
-    /* *
-     *
-     * Constructors
-     *
-     * */
-    function Pitchfork(chart, options) {
-        return _super.call(this, chart, options) || this;
+    function Pitchfork() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /* *
      *
-     * Static Functions
+     *  Static Functions
      *
      * */
     Pitchfork.outerLineEdgePoint = function (firstPointIndex) {
@@ -45,7 +46,8 @@ var Pitchfork = /** @class */ (function (_super) {
         };
     };
     Pitchfork.findEdgePoint = function (point, firstAnglePoint, secondAnglePoint) {
-        var angle = Math.atan2(secondAnglePoint.plotY - firstAnglePoint.plotY, secondAnglePoint.plotX - firstAnglePoint.plotX), distance = 1e7;
+        var angle = Math.atan2((secondAnglePoint.plotY -
+            firstAnglePoint.plotY), secondAnglePoint.plotX - firstAnglePoint.plotX), distance = 1e7;
         return {
             x: point.plotX + distance * Math.cos(angle),
             y: point.plotY + distance * Math.sin(angle)
@@ -80,21 +82,21 @@ var Pitchfork = /** @class */ (function (_super) {
                 this.points[0],
                 Pitchfork.middleLineEdgePoint
             ]
-        }, false);
+        }, 0);
         this.initShape({
             type: 'path',
             points: [
                 this.points[1],
                 Pitchfork.topLineEdgePoint
             ]
-        }, false);
+        }, 1);
         this.initShape({
             type: 'path',
             points: [
                 this.points[2],
                 Pitchfork.bottomLineEdgePoint
             ]
-        }, false);
+        }, 2);
     };
     Pitchfork.prototype.addBackgrounds = function () {
         var shapes = this.shapes, typeOptions = this.options.typeOptions;
@@ -122,7 +124,7 @@ var Pitchfork = /** @class */ (function (_super) {
                     };
                 }
             ]
-        }));
+        }), 3);
         var outerBackground = this.initShape(merge(typeOptions.outerBackground, {
             type: 'path',
             points: [
@@ -131,15 +133,15 @@ var Pitchfork = /** @class */ (function (_super) {
                 shapes[2].points[1],
                 this.points[2]
             ]
-        }));
+        }), 4);
         typeOptions.innerBackground = innerBackground.options;
         typeOptions.outerBackground = outerBackground.options;
     };
-    /**
+    /* *
      *
-     * Static Properties
+     *  Static Properties
      *
-     */
+     * */
     Pitchfork.topLineEdgePoint = Pitchfork.outerLineEdgePoint(1);
     Pitchfork.bottomLineEdgePoint = Pitchfork.outerLineEdgePoint(0);
     return Pitchfork;
@@ -179,11 +181,6 @@ Pitchfork.prototype.defaultOptions = merge(InfinityLine.prototype.defaultOptions
         }
     }
 });
-/* *
- *
- *  Registry
- *
- * */
 Annotation.types.pitchfork = Pitchfork;
 /* *
  *

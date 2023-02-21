@@ -10,21 +10,27 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import ReduceArrayMixin from '../../../Mixins/ReduceArray.js';
-var getArrayExtremes = ReduceArrayMixin.getArrayExtremes;
+import AU from '../ArrayUtilities.js';
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
 var SMAIndicator = SeriesRegistry.seriesTypes.sma;
 import U from '../../../Core/Utilities.js';
 var extend = U.extend, isArray = U.isArray, merge = U.merge;
+/* *
+ *
+ *  Class
+ *
+ * */
 /**
  * The Williams %R series type.
  *
@@ -60,7 +66,7 @@ var WilliamsRIndicator = /** @class */ (function (_super) {
         // with (+1)
         for (i = period - 1; i < yValLen; i++) {
             slicedY = yVal.slice(i - period + 1, i + 1);
-            extremes = getArrayExtremes(slicedY, low, high);
+            extremes = AU.getArrayExtremes(slicedY, low, high);
             LL = extremes[0];
             HH = extremes[1];
             CC = yVal[i][close];
@@ -119,6 +125,11 @@ SeriesRegistry.registerSeriesType('williamsr', WilliamsRIndicator);
  *
  * */
 export default WilliamsRIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A `Williams %R Oscillator` series. If the [type](#series.williamsr.type)
  * option is not specified, it is inherited from [chart.type](#chart.type).

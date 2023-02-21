@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v9.2.2 (2021-08-24)
+ * @license Highcharts JS v10.3.3 (2023-01-20)
  *
  * Highcharts 3D funnel module
  *
@@ -7,7 +7,6 @@
  *
  * License: www.highcharts.com/license
  */
-'use strict';
 (function (factory) {
     if (typeof module === 'object' && module.exports) {
         factory['default'] = factory;
@@ -22,10 +21,20 @@
         factory(typeof Highcharts !== 'undefined' ? Highcharts : undefined);
     }
 }(function (Highcharts) {
+    'use strict';
     var _modules = Highcharts ? Highcharts._modules : {};
     function _registerModule(obj, path, args, fn) {
         if (!obj.hasOwnProperty(path)) {
             obj[path] = fn.apply(null, args);
+
+            if (typeof CustomEvent === 'function') {
+                window.dispatchEvent(
+                    new CustomEvent(
+                        'HighchartsModuleLoaded',
+                        { detail: { path: path, module: obj[path] }
+                    })
+                );
+            }
         }
     }
     _registerModule(_modules, 'Series/Pyramid3D/Pyramid3DSeries.js', [_modules['Core/Series/SeriesRegistry.js'], _modules['Core/Utilities.js']], function (SeriesRegistry, U) {
@@ -67,7 +76,8 @@
         /**
          * The pyramid3d series type.
          *
-         * @constructor seriesTypes.pyramid3d
+         * @class
+         * @name Highcharts.seriesTypes.pyramid3d
          * @augments seriesTypes.funnel3d
          * @requires highcharts-3d
          * @requires modules/cylinder
@@ -123,6 +133,9 @@
                 neckHeight: 0,
                 neckWidth: 0,
                 dataLabels: {
+                    /**
+                     * @default top
+                     */
                     verticalAlign: 'top'
                 }
             });
@@ -144,7 +157,7 @@
          * not specified, it is inherited from [chart.type](#chart.type).
          *
          * @since     7.1.0
-         * @extends   series.pyramid,plotOptions.pyramid3d
+         * @extends   series,plotOptions.pyramid3d
          * @excluding allAreas,boostThreshold,colorAxis,compare,compareBase,dataSorting
          * @product   highcharts
          * @sample    {highcharts} highcharts/demo/pyramid3d/ Pyramid3d

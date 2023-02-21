@@ -10,22 +10,27 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import palette from '../../../Core/Color/Palette.js';
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
 var _a = SeriesRegistry.seriesTypes, ATRIndicator = _a.atr, SMAIndicator = _a.sma;
 import U from '../../../Core/Utilities.js';
 import StockChart from '../../../Core/Chart/StockChart.js';
 var addEvent = U.addEvent, correctFloat = U.correctFloat, isArray = U.isArray, extend = U.extend, merge = U.merge, objectEach = U.objectEach;
-/* eslint-disable require-jsdoc */
+/* *
+ *
+ *  Functions
+ *
+ * */
 // Utils:
 function createPointObj(mainSeries, index, close) {
     return {
@@ -34,7 +39,6 @@ function createPointObj(mainSeries, index, close) {
         x: mainSeries.xData[index]
     };
 }
-/* eslint-enable require-jsdoc */
 /* *
  *
  *  Class
@@ -52,6 +56,11 @@ function createPointObj(mainSeries, index, close) {
 var SupertrendIndicator = /** @class */ (function (_super) {
     __extends(SupertrendIndicator, _super);
     function SupertrendIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
         /* *
          *
@@ -410,7 +419,7 @@ var SupertrendIndicator = /** @class */ (function (_super) {
          *
          * @type {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
          */
-        risingTrendColor: palette.positiveColor,
+        risingTrendColor: "#06b535" /* Palette.positiveColor */,
         /**
          * Color of the Supertrend series line that is above the main series.
          *
@@ -419,7 +428,7 @@ var SupertrendIndicator = /** @class */ (function (_super) {
          *
          * @type {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
          */
-        fallingTrendColor: palette.negativeColor,
+        fallingTrendColor: "#f21313" /* Palette.negativeColor */,
         /**
          * The styles for the Supertrend line that intersect main series.
          *
@@ -437,7 +446,7 @@ var SupertrendIndicator = /** @class */ (function (_super) {
                  *
                  * @type {Highcharts.ColorString}
                  */
-                lineColor: palette.neutralColor80,
+                lineColor: "#333333" /* Palette.neutralColor80 */,
                 /**
                  * The dash or dot style of the grid lines. For possible
                  * values, see
@@ -459,8 +468,7 @@ var SupertrendIndicator = /** @class */ (function (_super) {
 }(SMAIndicator));
 extend(SupertrendIndicator.prototype, {
     nameBase: 'Supertrend',
-    nameComponents: ['multiplier', 'period'],
-    requiredIndicators: ['atr']
+    nameComponents: ['multiplier', 'period']
 });
 SeriesRegistry.registerSeriesType('supertrend', SupertrendIndicator);
 /* *
@@ -469,6 +477,11 @@ SeriesRegistry.registerSeriesType('supertrend', SupertrendIndicator);
  *
  * */
 export default SupertrendIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A `Supertrend indicator` series. If the [type](#series.supertrend.type)
  * option is not specified, it is inherited from [chart.type](#chart.type).

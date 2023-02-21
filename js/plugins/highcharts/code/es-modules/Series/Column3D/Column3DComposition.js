@@ -13,10 +13,10 @@ var columnProto = ColumnSeries.prototype;
 import H from '../../Core/Globals.js';
 var svg = H.svg;
 import Series from '../../Core/Series/Series.js';
-import Math3D from '../../Extensions/Math3D.js';
+import Math3D from '../../Core/Math3D.js';
 var perspective = Math3D.perspective;
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
-import StackItem from '../../Extensions/Stacking.js';
+import StackItem from '../../Core/Axis/Stacking/StackItem.js';
 import U from '../../Core/Utilities.js';
 var addEvent = U.addEvent, pick = U.pick, wrap = U.wrap;
 /* *
@@ -31,7 +31,6 @@ var addEvent = U.addEvent, pick = U.pick, wrap = U.wrap;
  * Chart with stacks
  * @param {string} stacking
  * Stacking option
- * @return {Highcharts.Stack3DDictionary}
  */
 function retrieveStacks(chart, stacking) {
     var series = chart.series, stacks = { totalStacks: 0 };
@@ -67,7 +66,7 @@ columnProto.translate3dShapes = function () {
     var series = this, chart = series.chart, seriesOptions = series.options, depth = seriesOptions.depth, stack = seriesOptions.stacking ?
         (seriesOptions.stack || 0) :
         series.index, // #4743
-    z = stack * (depth + (seriesOptions.groupZPadding || 1)), borderCrisp = series.borderWidth % 2 ? 0.5 : 0, point2dPos; // Position of point in 2D, used for 3D position calculation.
+    z = stack * (depth + (seriesOptions.groupZPadding || 1)), borderCrisp = series.borderWidth % 2 ? 0.5 : 0, point2dPos; // Position of point in 2D, used for 3D position calculation
     if (chart.inverted && !series.yAxis.reversed) {
         borderCrisp *= -1;
     }
@@ -206,7 +205,7 @@ wrap(columnProto, 'animate', function (proceed) {
 // series group - if series is added to a group all columns will have the same
 // zIndex in comparison with different series.
 wrap(columnProto, 'plotGroup', function (proceed, prop, _name, _visibility, _zIndex, parent) {
-    if (prop !== 'dataLabelsGroup') {
+    if (prop !== 'dataLabelsGroup' && prop !== 'markerGroup') {
         if (this.chart.is3d()) {
             if (this[prop]) {
                 delete this[prop];
@@ -219,7 +218,7 @@ wrap(columnProto, 'plotGroup', function (proceed, prop, _name, _visibility, _zIn
                 this[prop] = this.chart.columnGroup;
                 this.chart.columnGroup.attr(this.getPlotBox());
                 this[prop].survive = true;
-                if (prop === 'group' || prop === 'markerGroup') {
+                if (prop === 'group') {
                     arguments[3] = 'visible';
                     // For 3D column group and markerGroup should be visible
                 }
@@ -366,9 +365,10 @@ wrap(Series.prototype, 'alignDataLabel', function (proceed, point, dataLabel, op
     proceed.apply(this, [].slice.call(arguments, 1));
 });
 // Added stackLabels position calculation for 3D charts.
-wrap(StackItem.prototype, 'getStackBox', function (proceed, chart, stackItem, x, y, xWidth, h, axis) {
+wrap(StackItem.prototype, 'getStackBox', function (proceed, stackBoxProps) {
     var stackBox = proceed.apply(this, [].slice.call(arguments, 1));
     // Only do this for 3D graph
+    var stackItem = this, chart = this.axis.chart, xWidth = stackBoxProps.width;
     if (chart.is3d() && stackItem.base) {
         // First element of stackItem.base is an index of base series.
         var baseSeriesInd = +(stackItem.base).split(',')[0];
@@ -380,7 +380,7 @@ wrap(StackItem.prototype, 'getStackBox', function (proceed, chart, stackItem, x,
         if (columnSeries &&
             columnSeries instanceof SeriesRegistry.seriesTypes.column) {
             var dLPosition = {
-                x: stackBox.x + (chart.inverted ? h : xWidth / 2),
+                x: stackBox.x + (chart.inverted ? stackBox.height : xWidth / 2),
                 y: stackBox.y,
                 z: columnSeries.options.depth / 2
             };

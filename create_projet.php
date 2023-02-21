@@ -183,7 +183,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="js/leaflet/plugins/leaflet_label/js/leaflet_label.js" ></script>
 <!-- HIGHCHARTS -->
-<script type="text/javascript" src="js/plugins/highcharts/code/highcharts.js"></script>
+<script type="text/javascript" src="js/plugins/highcharts/code/highstock.js"></script>
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
 
 <!--Datatable bs5-->

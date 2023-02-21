@@ -10,21 +10,27 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import MultipleLinesMixin from '../../../Mixins/MultipleLines.js';
+import MultipleLinesComposition from '../MultipleLinesComposition.js';
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
 var SMAIndicator = SeriesRegistry.seriesTypes.sma;
 import U from '../../../Core/Utilities.js';
 var extend = U.extend, isArray = U.isArray, merge = U.merge;
-/* eslint-disable valid-jsdoc */
+/* *
+ *
+ *  Functions
+ *
+ * */
 // Utils:
 /**
  * @private
@@ -39,7 +45,11 @@ function getStandardDeviation(arr, index, isOHLC, mean) {
     std = Math.sqrt(variance);
     return std;
 }
-/* eslint-enable valid-jsdoc */
+/* *
+ *
+ *  Class
+ *
+ * */
 /**
  * Bollinger Bands series type.
  *
@@ -52,17 +62,27 @@ function getStandardDeviation(arr, index, isOHLC, mean) {
 var BBIndicator = /** @class */ (function (_super) {
     __extends(BBIndicator, _super);
     function BBIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
         /* *
-        *
-        *  Prototype Properties
-        *
-        * */
+         *
+         *  Properties
+         *
+         * */
         _this.data = void 0;
         _this.options = void 0;
         _this.points = void 0;
         return _this;
     }
+    /* *
+     *
+     *  Functions
+     *
+     * */
     BBIndicator.prototype.init = function () {
         SeriesRegistry.seriesTypes.sma.prototype.init.apply(this, arguments);
         // Set default color for lines:
@@ -126,6 +146,19 @@ var BBIndicator = /** @class */ (function (_super) {
      * @optionparent plotOptions.bb
      */
     BBIndicator.defaultOptions = merge(SMAIndicator.defaultOptions, {
+        /**
+         * Option for fill color between lines in Bollinger Bands Indicator.
+         *
+         * @sample {highstock} stock/indicators/indicator-area-fill
+         *      Background fill between lines.
+         *
+         * @type      {Highcharts.ColorType}
+         * @since     9.3.2
+         * @apioption plotOptions.bb.fillColor
+         */
+        /**
+         * Parameters used in calculation of the regression points.
+         */
         params: {
             period: 20,
             /**
@@ -139,7 +172,7 @@ var BBIndicator = /** @class */ (function (_super) {
          */
         bottomLine: {
             /**
-             * Styles for a bottom line.
+             * Styles for the bottom line.
              */
             styles: {
                 /**
@@ -161,9 +194,18 @@ var BBIndicator = /** @class */ (function (_super) {
          * @extends plotOptions.bb.bottomLine
          */
         topLine: {
+            /**
+             * Styles for the top line.
+             */
             styles: {
+                /**
+                 * Pixel width of the line.
+                 */
                 lineWidth: 1,
                 /**
+                 * Color of the line. If not set, it's inherited from
+                 * [plotOptions.bb.color](#plotOptions.bb.color).
+                 *
                  * @type {Highcharts.ColorString}
                  */
                 lineColor: void 0
@@ -182,15 +224,13 @@ var BBIndicator = /** @class */ (function (_super) {
     return BBIndicator;
 }(SMAIndicator));
 extend(BBIndicator.prototype, {
-    pointArrayMap: ['top', 'middle', 'bottom'],
-    pointValKey: 'middle',
-    nameComponents: ['period', 'standardDeviation'],
+    areaLinesNames: ['top', 'bottom'],
     linesApiNames: ['topLine', 'bottomLine'],
-    drawGraph: MultipleLinesMixin.drawGraph,
-    getTranslatedLinesNames: MultipleLinesMixin.getTranslatedLinesNames,
-    translate: MultipleLinesMixin.translate,
-    toYData: MultipleLinesMixin.toYData
+    nameComponents: ['period', 'standardDeviation'],
+    pointArrayMap: ['top', 'middle', 'bottom'],
+    pointValKey: 'middle'
 });
+MultipleLinesComposition.compose(BBIndicator);
 SeriesRegistry.registerSeriesType('bb', BBIndicator);
 /* *
  *
@@ -198,6 +238,11 @@ SeriesRegistry.registerSeriesType('bb', BBIndicator);
  *
  * */
 export default BBIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A bollinger bands indicator. If the [type](#series.bb.type) option is not
  * specified, it is inherited from [chart.type](#chart.type).

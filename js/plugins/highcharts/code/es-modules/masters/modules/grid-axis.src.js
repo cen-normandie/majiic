@@ -1,5 +1,5 @@
 /**
- * @license Highcharts Gantt JS v9.2.2 (2021-08-24)
+ * @license Highcharts Gantt JS v10.3.3 (2023-01-20)
  * @module highcharts/modules/grid-axis
  * @requires highcharts
  *

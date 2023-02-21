@@ -21,9 +21,40 @@ document.getElementById("export_2023").addEventListener("click", function() {
     export_temps(2023);
 });
 
+document.getElementById("anal_2021").addEventListener("click", function() {
+    export_model(2021);
+});
+document.getElementById("anal_2022").addEventListener("click", function() {
+    export_model(2022);
+});
+document.getElementById("anal_2023").addEventListener("click", function() {
+    export_model(2023);
+});
+
+
 function export_temps(year_replace) {
     $.ajax({
         url: "php/export_excel/export_temps_personne_year.php",
+        type: "POST",
+        dataType: "text",
+        async    : true,
+        data: {
+            'nom_personne': document.getElementById("c_user").innerText,
+            'year':year_replace
+        },
+        error    : function(request, error) { 
+            alert("Erreur : responseText: "+request.responseText);
+            },
+        success  : function(data) {
+            console.log(data);
+            window.location = 'php/files/'+data;
+            }
+    });
+};
+
+function export_model(year_replace) {
+    $.ajax({
+        url: "php/export_excel/export_model_year.php",
         type: "POST",
         dataType: "text",
         async    : true,

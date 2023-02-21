@@ -242,7 +242,7 @@ if (seriesTypes.columnrange) {
             resize: true,
             resizeSide: 'bottom',
             handlePositioner: function (point) {
-                var bBox = point.shapeArgs || point.graphic.getBBox();
+                var bBox = (point.shapeArgs || point.graphic.getBBox());
                 return {
                     x: bBox.x || 0,
                     y: (bBox.y || 0) + (bBox.height || 0)
@@ -268,7 +268,7 @@ if (seriesTypes.columnrange) {
             resize: true,
             resizeSide: 'top',
             handlePositioner: function (point) {
-                var bBox = point.shapeArgs || point.graphic.getBBox();
+                var bBox = (point.shapeArgs || point.graphic.getBBox());
                 return {
                     x: bBox.x || 0,
                     y: bBox.y || 0
@@ -336,7 +336,7 @@ if (seriesTypes.boxplot) {
             }
         },
         median: {
-            // Median can not be dragged individually, just move the whole
+            // Median cannot be dragged individually, just move the whole
             // point for this.
             axis: 'y',
             move: true
@@ -534,7 +534,9 @@ if (seriesTypes.arearange) {
             resize: true,
             resizeSide: 'bottom',
             handlePositioner: function (point) {
-                var bBox = point.lowerGraphic && point.lowerGraphic.getBBox();
+                var bBox = (point.graphics &&
+                    point.graphics[0] &&
+                    point.graphics[0].getBBox());
                 return bBox ? {
                     x: bBox.x + bBox.width / 2,
                     y: bBox.y + bBox.height / 2
@@ -558,7 +560,9 @@ if (seriesTypes.arearange) {
             resize: true,
             resizeSide: 'top',
             handlePositioner: function (point) {
-                var bBox = point.upperGraphic && point.upperGraphic.getBBox();
+                var bBox = (point.graphics &&
+                    point.graphics[1] &&
+                    point.graphics[1].getBBox());
                 return bBox ? {
                     x: bBox.x + bBox.width / 2,
                     y: bBox.y + bBox.height / 2
@@ -710,7 +714,6 @@ if (seriesTypes.xrange) {
  * @private
  * @param {string} type
  *        Unsupported series type
- * @return {void}
  */
 function (type) {
     if (seriesTypes[type]) {
@@ -812,11 +815,11 @@ var defaultGuideBoxOptions = {
     }
 };
 /**
- * Options for the drag handles.
+ * Options for the drag handles available in column series.
  *
  * @declare      Highcharts.DragDropHandleOptionsObject
  * @since        6.2.0
- * @optionparent plotOptions.series.dragDrop.dragHandle
+ * @optionparent plotOptions.column.dragDrop.dragHandle
  *
  * @private
  */
@@ -828,7 +831,7 @@ var defaultDragHandleOptions = {
      *
      * @type      {Function}
      * @since     6.2.0
-     * @apioption plotOptions.series.dragDrop.dragHandle.pathFormatter
+     * @apioption plotOptions.column.dragDrop.dragHandle.pathFormatter
      */
     // pathFormatter: null,
     /**
@@ -838,7 +841,7 @@ var defaultDragHandleOptions = {
      *
      * @type      {string}
      * @since     6.2.0
-     * @apioption plotOptions.series.dragDrop.dragHandle.cursor
+     * @apioption plotOptions.column.dragDrop.dragHandle.cursor
      */
     // cursor: null,
     /**
@@ -990,6 +993,7 @@ var defaultDragHandleOptions = {
  * @type       {string}
  * @since      6.2.0
  * @validvalue ["alt", "ctrl", "meta", "shift"]
+ * @deprecated
  * @requires  modules/draggable-points
  * @apioption  chart.zoomKey
  */
@@ -1218,7 +1222,7 @@ function hasDraggedPastSensitivity(e, chart, sensitivity) {
  * @param {Highcharts.SVGElement} [guideBox]
  *        The guide box to take snapshot of.
  *
- * @return {object}
+ * @return {Object}
  *         Snapshot object. Point properties are placed in a hashmap with IDs as
  *         keys.
  */
@@ -1269,7 +1273,7 @@ function getPositionSnapshot(e, points, guideBox) {
  */
 function getGroupedPoints(point) {
     var series = point.series, points = [], groupKey = series.options.dragDrop.groupBy;
-    if (series.isSeriesBoosting) { // #11156
+    if (series.boosted) { // #11156
         series.options.data.forEach(function (pointOptions, i) {
             points.push((new series.pointClass()).init(// eslint-disable-line new-cap
             series, pointOptions));
@@ -1366,7 +1370,7 @@ function initDragDrop(e, point) {
  * @private
  * @function getNewPoints
  *
- * @param {object} dragDropData
+ * @param {Object} dragDropData
  *        A chart's dragDropData with drag/drop origin information, and info on
  *        which points are being dragged.
  *
@@ -1545,7 +1549,7 @@ Chart.prototype.setGuideBoxState = function (state, options) {
  * @private
  * @function Highcharts.Point#getDropValues
  *
- * @param {object} origin
+ * @param {Object} origin
  *        Mouse position (chartX/Y) and point props at current data values.
  *        Point props should be organized per point.id in a hashmap.
  *
@@ -1630,7 +1634,7 @@ Series.prototype.getGuideBox = function (points) {
     var chart = this.chart, minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, changed;
     // Find bounding box of all points
     points.forEach(function (point) {
-        var bBox = point.graphic && point.graphic.getBBox() || point.shapeArgs;
+        var bBox = (point.graphic && point.graphic.getBBox() || point.shapeArgs);
         if (bBox) {
             var plotX2 = void 0;
             var x2 = point.x2;
@@ -1724,7 +1728,7 @@ function onResizeHandleMouseDown(e, point, updateProp) {
  * @return {void}
  */
 Point.prototype.showDragHandles = function () {
-    var point = this, series = point.series, chart = series.chart, renderer = chart.renderer, options = merge(series.options.dragDrop, point.options.dragDrop);
+    var point = this, series = point.series, chart = series.chart, inverted = chart.inverted, renderer = chart.renderer, options = merge(series.options.dragDrop, point.options.dragDrop);
     // Go through each updateProp and see if we are supposed to create a handle
     // for it.
     objectEach(series.dragDropProps, function (val, key) {
@@ -1733,7 +1737,7 @@ Point.prototype.showDragHandles = function () {
             'stroke-width': handleOptions.lineWidth,
             fill: handleOptions.color,
             stroke: handleOptions.lineColor
-        }, pathFormatter = handleOptions.pathFormatter || val.handleFormatter, positioner = val.handlePositioner, pos, handle, path, 
+        }, pathFormatter = handleOptions.pathFormatter || val.handleFormatter, handlePositioner = val.handlePositioner, pos, handle, path, 
         // Run validation function on whether or not we allow individual
         // updating of this prop.
         validate = val.validateIndividualDrag ?
@@ -1756,15 +1760,17 @@ Point.prototype.showDragHandles = function () {
             // Store which point this is
             chart.dragHandles.point = point.id;
             // Find position and path of handle
-            pos = positioner(point);
+            pos = handlePositioner(point);
             handleAttrs.d = path = pathFormatter(point);
-            if (!path || pos.x < 0 || pos.y < 0) {
+            // Correct left edge value depending on the xAxis' type, #16596
+            var minEdge = point.series.xAxis.categories ? -0.5 : 0;
+            if (!path || pos.x < minEdge || pos.y < 0) {
                 return;
             }
             // If cursor is not set explicitly, use axis direction
             handleAttrs.cursor = handleOptions.cursor ||
-                (val.axis === 'x') !== !!chart.inverted ?
-                'ew-resize' : 'ns-resize';
+                ((val.axis === 'x') !== !!inverted ?
+                    'ew-resize' : 'ns-resize');
             // Create and add the handle element if it doesn't exist
             handle = chart.dragHandles[val.optionName];
             if (!handle) {
@@ -1773,7 +1779,16 @@ Point.prototype.showDragHandles = function () {
                     .add(chart.dragHandles.group);
             }
             // Move and update handle
-            handle.translate(pos.x, pos.y).attr(handleAttrs);
+            handleAttrs.translateX = inverted ?
+                series.yAxis.len - pos.y :
+                pos.x;
+            handleAttrs.translateY = inverted ?
+                series.xAxis.len - pos.x :
+                pos.y;
+            if (inverted) {
+                handleAttrs.rotation = -90;
+            }
+            handle.attr(handleAttrs);
             // Add events
             addEvents(handle.element, ['touchstart', 'mousedown'], function (e) {
                 onResizeHandleMouseDown(getNormalizedEvent(e, chart), point, key);
@@ -1815,7 +1830,7 @@ Chart.prototype.hideDragHandles = function () {
  * @private
  * @function countProps
  *
- * @param {object} obj
+ * @param {Object} obj
  *        The object to count.
  *
  * @return {number}
@@ -2051,7 +2066,7 @@ addEvent(Point, 'remove', function () {
  */
 Chart.prototype.zoomOrPanKeyPressed = function (e) {
     // Check whether the panKey and zoomKey are set in chart.userOptions
-    var chartOptions = this.userOptions.chart || {}, panKey = chartOptions.panKey && chartOptions.panKey + 'Key', zoomKey = chartOptions.zoomKey && chartOptions.zoomKey + 'Key';
+    var chartOptions = this.options.chart || {}, panKey = chartOptions.panKey && chartOptions.panKey + 'Key', zoomKey = chartOptions.zooming.key && chartOptions.zooming.key + 'Key';
     return (e[zoomKey] || e[panKey]);
 };
 /**

@@ -12,15 +12,15 @@
 'use strict';
 import AST from '../../Core/Renderer/HTML/AST.js';
 import Chart from '../../Core/Chart/Chart.js';
-import chartNavigationMixin from '../../Mixins/Navigation.js';
-import D from '../../Core/DefaultOptions.js';
-var defaultOptions = D.defaultOptions;
+import ChartNavigationComposition from '../../Core/Chart/ChartNavigationComposition.js';
+import D from '../../Core/Defaults.js';
+var defaultOptions = D.defaultOptions, setOptions = D.setOptions;
 import ExportingDefaults from './ExportingDefaults.js';
 import ExportingSymbols from './ExportingSymbols.js';
+import Fullscreen from './Fullscreen.js';
 import G from '../../Core/Globals.js';
-var doc = G.doc, win = G.win;
+var doc = G.doc, SVG_NS = G.SVG_NS, win = G.win;
 import HU from '../../Core/HttpUtilities.js';
-import Palette from '../../Core/Color/Palette.js';
 import U from '../../Core/Utilities.js';
 var addEvent = U.addEvent, css = U.css, createElement = U.createElement, discardElement = U.discardElement, extend = U.extend, find = U.find, fireEvent = U.fireEvent, isObject = U.isObject, merge = U.merge, objectEach = U.objectEach, pick = U.pick, removeEvent = U.removeEvent, uniqueKey = U.uniqueKey;
 /* *
@@ -42,16 +42,17 @@ var Exporting;
      * */
     var composedClasses = [];
     // These CSS properties are not inlined. Remember camelCase.
-    var inlineBlacklist = [
+    var inlineDenylist = [
         /-/,
         /^(clipPath|cssText|d|height|width)$/,
         /^font$/,
         /[lL]ogical(Width|Height)$/,
+        /^parentRule$/,
         /perspective/,
         /TapHighlightColor/,
         /^transition/,
-        /^length$/ // #7700
-        // /^text (border|color|cursor|height|webkitBorder)/
+        /^length$/,
+        /^[0-9]+$/ // #17538
     ];
     // These ones are translated to attributes rather than styles
     var inlineToAttributes = [
@@ -64,7 +65,7 @@ var Exporting;
         'x',
         'y'
     ];
-    Exporting.inlineWhitelist = [];
+    Exporting.inlineAllowlist = [];
     var unstyledElements = [
         'clipPath',
         'defs',
@@ -88,7 +89,6 @@ var Exporting;
      * @private
      * @function Highcharts.Chart#addButton
      * @param {Highcharts.NavigationButtonOptions} options
-     * @return {void}
      * @requires modules/exporting
      */
     function addButton(options) {
@@ -105,13 +105,12 @@ var Exporting;
         if (btnOptions.enabled === false || !btnOptions.theme) {
             return;
         }
-        var attr = btnOptions.theme, states = attr.states, hover = states && states.hover, select = states && states.select;
+        var attr = btnOptions.theme;
         var callback;
         if (!chart.styledMode) {
-            attr.fill = pick(attr.fill, Palette.backgroundColor);
+            attr.fill = pick(attr.fill, "#ffffff" /* Palette.backgroundColor */);
             attr.stroke = pick(attr.stroke, 'none');
         }
-        delete attr.states;
         if (onclick) {
             callback = function (e) {
                 if (e) {
@@ -142,11 +141,11 @@ var Exporting;
         }
         if (!chart.styledMode) {
             attr['stroke-linecap'] = 'round';
-            attr.fill = pick(attr.fill, Palette.backgroundColor);
+            attr.fill = pick(attr.fill, "#ffffff" /* Palette.backgroundColor */);
             attr.stroke = pick(attr.stroke, 'none');
         }
         var button = renderer
-            .button(btnOptions.text, 0, 0, callback, attr, hover, select)
+            .button(btnOptions.text, 0, 0, callback, attr, void 0, void 0, void 0, void 0, btnOptions.useHTML)
             .addClass(options.className)
             .attr({
             title: pick(chart.options.lang[btnOptions._titleKey || btnOptions.titleKey], '')
@@ -193,9 +192,8 @@ var Exporting;
      *
      * @param {Highcharts.Chart} chart
      *        Chart that was (or suppose to be) printed
-     * @return {void}
      *
-     * @fires Highcharts.Chart#event:afterPrint
+     * @emits Highcharts.Chart#event:afterPrint
      */
     function afterPrint() {
         var chart = this;
@@ -227,9 +225,8 @@ var Exporting;
      *
      * @private
      *
-     * @return {void}
      *
-     * @fires Highcharts.Chart#event:beforePrint
+     * @emits Highcharts.Chart#event:beforePrint
      */
     function beforePrint() {
         var chart = this, body = doc.body, printMaxWidth = chart.options.exporting.printMaxWidth, printReverseInfo = {
@@ -241,7 +238,8 @@ var Exporting;
         chart.pointer.reset(null, 0);
         fireEvent(chart, 'beforePrint');
         // Handle printMaxWidth
-        var handleMaxWidth = printMaxWidth && chart.chartWidth > printMaxWidth;
+        var handleMaxWidth = printMaxWidth &&
+            chart.chartWidth > printMaxWidth;
         if (handleMaxWidth) {
             printReverseInfo.resetParams = [
                 chart.options.chart.width,
@@ -311,6 +309,7 @@ var Exporting;
      */
     function compose(ChartClass, SVGRendererClass) {
         ExportingSymbols.compose(SVGRendererClass);
+        Fullscreen.compose(ChartClass);
         if (composedClasses.indexOf(ChartClass) === -1) {
             composedClasses.push(ChartClass);
             var chartProto = ChartClass.prototype;
@@ -345,6 +344,15 @@ var Exporting;
                 });
             }
         }
+        if (composedClasses.indexOf(setOptions) === -1) {
+            composedClasses.push(setOptions);
+            defaultOptions.exporting = merge(ExportingDefaults.exporting, defaultOptions.exporting);
+            defaultOptions.lang = merge(ExportingDefaults.lang, defaultOptions.lang);
+            // Buttons and menus are collected in a separate config option set
+            // called 'navigation'. This can be extended later to add control
+            // buttons like zoom and pan right click menus.
+            defaultOptions.navigation = merge(ExportingDefaults.navigation, defaultOptions.navigation);
+        }
     }
     Exporting.compose = compose;
     /**
@@ -364,7 +372,6 @@ var Exporting;
      *        The width of the opener button
      * @param {number} height
      *        The height of the opener button
-     * @return {void}
      * @requires modules/exporting
      */
     function contextMenu(className, items, x, y, width, height, button) {
@@ -437,9 +444,10 @@ var Exporting;
                         element = createElement('hr', void 0, void 0, innerMenu);
                     }
                     else {
-                        // When chart initialized with the table,
-                        // wrong button text displayed, #14352.
-                        if (item.textKey === 'viewData' && chart.isDataTableVisible) {
+                        // When chart initialized with the table, wrong button
+                        // text displayed, #14352.
+                        if (item.textKey === 'viewData' &&
+                            chart.isDataTableVisible) {
                             item.textKey = 'hideData';
                         }
                         element = createElement('li', {
@@ -466,7 +474,7 @@ var Exporting;
                             };
                             css(element, extend({
                                 cursor: 'pointer'
-                            }, navOptions.menuItemStyle));
+                            }, navOptions.menuItemStyle || {}));
                         }
                     }
                     // Keep references to menu divs to be able to destroy them
@@ -507,7 +515,6 @@ var Exporting;
      * @private
      * @function Highcharts.Chart#destroyExport
      * @param {global.Event} [e]
-     * @return {void}
      * @requires modules/exporting
      */
     function destroyExport(e) {
@@ -610,8 +617,8 @@ var Exporting;
      *
      * @function Highcharts.Chart#getChartHTML
      *
-     * @returns {string}
-     *          The unfiltered SVG of the chart.
+     * @return {string}
+     * The unfiltered SVG of the chart.
      *
      * @requires modules/exporting
      */
@@ -670,7 +677,7 @@ var Exporting;
      * @return {string}
      *         The SVG representation of the rendered chart.
      *
-     * @fires Highcharts.Chart#event:getSVG
+     * @emits Highcharts.Chart#event:getSVG
      *
      * @requires modules/exporting
      */
@@ -740,8 +747,8 @@ var Exporting;
                 }));
             }
         });
-        // generate the chart copy
-        var chartCopy = new Chart(options, chart.callback);
+        // Generate the chart copy
+        var chartCopy = new chart.constructor(options, chart.callback);
         // Axis options and series options  (#2022, #3900, #5982)
         if (chartOptions) {
             ['xAxis', 'yAxis', 'series'].forEach(function (coll) {
@@ -778,10 +785,6 @@ var Exporting;
     /**
      * @private
      * @function Highcharts.Chart#getSVGForExport
-     * @param {Highcharts.ExportingOptions} options
-     * @param {Highcharts.Options} chartOptions
-     * @return {string}
-     * @requires modules/exporting
      */
     function getSVGForExport(options, chartOptions) {
         var chartExportingOptions = this.options.exporting;
@@ -798,9 +801,9 @@ var Exporting;
      * Make hyphenated property names out of camelCase
      * @private
      * @param {string} prop
-     *        Property name in camelCase
+     * Property name in camelCase
      * @return {string}
-     *         Hyphenated property name
+     * Hyphenated property name
      */
     function hyphenate(prop) {
         return prop.replace(/([A-Z])/g, function (a, b) {
@@ -812,16 +815,16 @@ var Exporting;
      *
      * @private
      * @function Highcharts.Chart#inlineStyles
-     * @return {void}
      *
-     * @todo: What are the border styles for text about? In general, text has a
-     * lot of properties.
-     * @todo: Make it work with IE9 and IE10.
+     * @todo What are the border styles for text about? In general, text has a
+     *       lot of properties.
+     *
+     * @todo Make it work with IE9 and IE10.
      *
      * @requires modules/exporting
      */
     function inlineStyles() {
-        var blacklist = inlineBlacklist, whitelist = Exporting.inlineWhitelist, // For IE
+        var denylist = inlineDenylist, allowlist = Exporting.inlineAllowlist, // For IE
         defaultStyles = {};
         var dummySVG;
         // Create an iframe where we read default styles without pollution from
@@ -833,51 +836,50 @@ var Exporting;
             visibility: 'hidden'
         });
         doc.body.appendChild(iframe);
-        var iframeDoc = iframe.contentWindow.document;
-        iframeDoc.open();
-        iframeDoc.write('<svg xmlns="http://www.w3.org/2000/svg"></svg>');
-        iframeDoc.close();
+        var iframeDoc = (iframe.contentWindow && iframe.contentWindow.document);
+        if (iframeDoc) {
+            iframeDoc.body.appendChild(iframeDoc.createElementNS(SVG_NS, 'svg'));
+        }
         /**
          * Call this on all elements and recurse to children
          * @private
          * @param {Highcharts.HTMLDOMElement} node
          *        Element child
-         * @return {void}
-         */
+             */
         function recurse(node) {
-            var styles, parentStyles, cssText = '', dummy, styleAttr, blacklisted, whitelisted, i;
+            var filteredStyles = {};
+            var styles, parentStyles, dummy, denylisted, allowlisted, i;
             /**
-             * Check computed styles and whether they are in the white/blacklist
+             * Check computed styles and whether they are in the allow/denylist
              * for styles or atttributes.
              * @private
              * @param {string} val
              *        Style value
              * @param {string} prop
              *        Style property name
-             * @return {void}
-             */
+                     */
             function filterStyles(val, prop) {
-                // Check against whitelist & blacklist
-                blacklisted = whitelisted = false;
-                if (whitelist.length) {
-                    // Styled mode in IE has a whitelist instead.
-                    // Exclude all props not in this list.
-                    i = whitelist.length;
-                    while (i-- && !whitelisted) {
-                        whitelisted = whitelist[i].test(prop);
+                // Check against allowlist & denylist
+                denylisted = allowlisted = false;
+                if (allowlist.length) {
+                    // Styled mode in IE has a allowlist instead. Exclude all
+                    // props not in this list.
+                    i = allowlist.length;
+                    while (i-- && !allowlisted) {
+                        allowlisted = allowlist[i].test(prop);
                     }
-                    blacklisted = !whitelisted;
+                    denylisted = !allowlisted;
                 }
                 // Explicitly remove empty transforms
                 if (prop === 'transform' && val === 'none') {
-                    blacklisted = true;
+                    denylisted = true;
                 }
-                i = blacklist.length;
-                while (i-- && !blacklisted) {
-                    blacklisted = (blacklist[i].test(prop) ||
+                i = denylist.length;
+                while (i-- && !denylisted) {
+                    denylisted = (denylist[i].test(prop) ||
                         typeof val === 'function');
                 }
-                if (!blacklisted) {
+                if (!denylisted) {
                     // If parent node has the same style, it gets inherited, no
                     // need to inline it. Top-level props should be diffed
                     // against parent (#7687).
@@ -893,12 +895,13 @@ var Exporting;
                             // Styles
                         }
                         else {
-                            cssText += hyphenate(prop) + ':' + val + ';';
+                            filteredStyles[prop] = val;
                         }
                     }
                 }
             }
-            if (node.nodeType === 1 &&
+            if (iframeDoc &&
+                node.nodeType === 1 &&
                 unstyledElements.indexOf(node.nodeName) === -1) {
                 styles = win.getComputedStyle(node, null);
                 parentStyles = node.nodeName === 'svg' ?
@@ -917,8 +920,16 @@ var Exporting;
                     dummySVG = iframeDoc.getElementsByTagName('svg')[0];
                     dummy = iframeDoc.createElementNS(node.namespaceURI, node.nodeName);
                     dummySVG.appendChild(dummy);
-                    // Copy, so we can remove the node
-                    defaultStyles[node.nodeName] = merge(win.getComputedStyle(dummy, null));
+                    // Get the defaults into a standard object (simple merge
+                    // won't do)
+                    var s = win.getComputedStyle(dummy, null), defaults = {};
+                    for (var key in s) {
+                        if (typeof s[key] === 'string' &&
+                            !/^[0-9]+$/.test(key)) {
+                            defaults[key] = s[key];
+                        }
+                    }
+                    defaultStyles[node.nodeName] = defaults;
                     // Remove default fill, otherwise text disappears when
                     // exported
                     if (node.nodeName === 'text') {
@@ -927,20 +938,19 @@ var Exporting;
                     dummySVG.removeChild(dummy);
                 }
                 // Loop through all styles and add them inline if they are ok
-                if (G.isFirefox || G.isMS) {
-                    // Some browsers put lots of styles on the prototype
-                    for (var p in styles) { // eslint-disable-line guard-for-in
+                for (var p in styles) {
+                    if (
+                    // Some browsers put lots of styles on the prototype...
+                    G.isFirefox ||
+                        G.isMS ||
+                        G.isSafari || // #16902
+                        // ... Chrome puts them on the instance
+                        Object.hasOwnProperty.call(styles, p)) {
                         filterStyles(styles[p], p);
                     }
                 }
-                else {
-                    objectEach(styles, filterStyles);
-                }
                 // Apply styles
-                if (cssText) {
-                    styleAttr = node.getAttribute('style');
-                    node.setAttribute('style', (styleAttr ? styleAttr + ';' : '') + cssText);
-                }
+                css(node, filteredStyles);
                 // Set default stroke width (needed at least for IE)
                 if (node.nodeName === 'svg') {
                     node.setAttribute('stroke-width', '1px');
@@ -955,7 +965,6 @@ var Exporting;
         /**
          * Remove the dummy objects used to get defaults
          * @private
-         * @return {void}
          */
         function tearDown() {
             dummySVG.parentNode.removeChild(dummySVG);
@@ -974,7 +983,6 @@ var Exporting;
      *
      * @param {Highcharts.HTMLDOMElement} moveTo
      *        Move target
-     * @return {void}
      */
     function moveContainers(moveTo) {
         var chart = this;
@@ -1001,8 +1009,7 @@ var Exporting;
          *        Options to update
          * @param {boolean} [redraw=true]
          *        Whether to redraw
-         * @return {void}
-         */
+                 */
         update = function (prop, options, redraw) {
             chart.isDirtyExporting = true;
             merge(true, chart.options[prop], options);
@@ -1015,12 +1022,14 @@ var Exporting;
                 update('exporting', options, redraw);
             }
         };
-        // Register update() method for navigation. Can not be set the same way
+        // Register update() method for navigation. Cannot be set the same way
         // as for exporting, because navigation options are shared with bindings
         // which has separate update() logic.
-        chartNavigationMixin.addUpdate(function (options, redraw) {
+        ChartNavigationComposition
+            .compose(chart).navigation
+            .addUpdate(function (options, redraw) {
             update('navigation', options, redraw);
-        }, chart);
+        });
     }
     /**
      * Exporting module required. Clears away other elements in the page and
@@ -1033,10 +1042,9 @@ var Exporting;
      *
      * @function Highcharts.Chart#print
      *
-     * @return {void}
      *
-     * @fires Highcharts.Chart#event:beforePrint
-     * @fires Highcharts.Chart#event:afterPrint
+     * @emits Highcharts.Chart#event:beforePrint
+     * @emits Highcharts.Chart#event:afterPrint
      *
      * @requires modules/exporting
      */
@@ -1066,7 +1074,6 @@ var Exporting;
      * Add the buttons on chart load
      * @private
      * @function Highcharts.Chart#renderExporting
-     * @return {void}
      * @requires modules/exporting
      */
     function renderExporting() {
@@ -1145,24 +1152,6 @@ var Exporting;
 })(Exporting || (Exporting = {}));
 /* *
  *
- *  Registry
- *
- * */
-defaultOptions.exporting = merge(ExportingDefaults.exporting, defaultOptions.exporting);
-defaultOptions.lang = merge(ExportingDefaults.lang, defaultOptions.lang);
-// Buttons and menus are collected in a separate config option set called
-// 'navigation'. This can be extended later to add control buttons like
-// zoom and pan right click menus.
-/**
- * A collection of options for buttons and menus appearing in the exporting
- * module.
- *
- * @requires     modules/exporting
- * @optionparent navigation
- */
-defaultOptions.navigation = merge(ExportingDefaults.navigation, defaultOptions.navigation);
-/* *
- *
  *  Default Export
  *
  * */
@@ -1178,7 +1167,7 @@ export default Exporting;
  *
  * @callback Highcharts.ExportingAfterPrintCallbackFunction
  *
- * @param {Highcharts.Chart} chart
+ * @param {Highcharts.Chart} this
  *        The chart on which the event occured.
  *
  * @param {global.Event} event
@@ -1190,7 +1179,7 @@ export default Exporting;
  *
  * @callback Highcharts.ExportingBeforePrintCallbackFunction
  *
- * @param {Highcharts.Chart} chart
+ * @param {Highcharts.Chart} this
  *        The chart on which the event occured.
  *
  * @param {global.Event} event

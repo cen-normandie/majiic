@@ -12,10 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50,10 +52,12 @@ var HTMLElement = /** @class */ (function (_super) {
         if (HTMLElement.composedClasses.indexOf(SVGElementClass) === -1) {
             HTMLElement.composedClasses.push(SVGElementClass);
             var htmlElementProto = HTMLElement.prototype, svgElementProto = SVGElementClass.prototype;
-            svgElementProto.getSpanCorrection = htmlElementProto.getSpanCorrection;
+            svgElementProto.getSpanCorrection = htmlElementProto
+                .getSpanCorrection;
             svgElementProto.htmlCss = htmlElementProto.htmlCss;
             svgElementProto.htmlGetBBox = htmlElementProto.htmlGetBBox;
-            svgElementProto.htmlUpdateTransform = htmlElementProto.htmlUpdateTransform;
+            svgElementProto.htmlUpdateTransform = htmlElementProto
+                .htmlUpdateTransform;
             svgElementProto.setSpanRotation = htmlElementProto.setSpanRotation;
         }
         return SVGElementClass;
@@ -129,6 +133,9 @@ var HTMLElement = /** @class */ (function (_super) {
         }[align], styles = wrapper.styles, whiteSpace = styles && styles.whiteSpace;
         /** @private */
         function getTextPxLength() {
+            if (wrapper.textPxLength) {
+                return wrapper.textPxLength;
+            }
             // Reset multiline/ellipsis in order to read width (#4928,
             // #5417)
             css(elem, {
@@ -164,29 +171,31 @@ var HTMLElement = /** @class */ (function (_super) {
                 wrapper.textWidth,
                 wrapper.textAlign
             ].join(',');
-            var baseline = void 0;
+            var baseline = void 0, hasBoxWidthChanged = false;
             // Update textWidth. Use the memoized textPxLength if possible, to
             // avoid the getTextPxLength function using elem.offsetWidth.
             // Calling offsetWidth affects rendering time as it forces layout
             // (#7656).
-            if (textWidth !== wrapper.oldTextWidth &&
-                ((textWidth > wrapper.oldTextWidth) ||
-                    (wrapper.textPxLength || getTextPxLength()) > textWidth) && (
-            // Only set the width if the text is able to word-wrap, or
-            // text-overflow is ellipsis (#9537)
-            /[ \-]/.test(elem.textContent || elem.innerText) ||
-                elem.style.textOverflow === 'ellipsis')) { // #983, #1254
-                css(elem, {
-                    width: textWidth + 'px',
-                    display: 'block',
-                    whiteSpace: whiteSpace || 'normal' // #3331
-                });
-                wrapper.oldTextWidth = textWidth;
-                wrapper.hasBoxWidthChanged = true; // #8159
+            if (textWidth !== wrapper.oldTextWidth) { // #983, #1254
+                var textPxLength = getTextPxLength();
+                if (((textWidth > wrapper.oldTextWidth) ||
+                    textPxLength > textWidth) && (
+                // Only set the width if the text is able to word-wrap,
+                // or text-overflow is ellipsis (#9537)
+                /[ \-]/.test(elem.textContent || elem.innerText) ||
+                    elem.style.textOverflow === 'ellipsis')) {
+                    css(elem, {
+                        width: (textPxLength > textWidth) || rotation ?
+                            textWidth + 'px' :
+                            'auto',
+                        display: 'block',
+                        whiteSpace: whiteSpace || 'normal' // #3331
+                    });
+                    wrapper.oldTextWidth = textWidth;
+                    hasBoxWidthChanged = true; // #8159
+                }
             }
-            else {
-                wrapper.hasBoxWidthChanged = false; // #8159
-            }
+            wrapper.hasBoxWidthChanged = hasBoxWidthChanged; // #8159
             // Do the calculations and DOM access only if properties changed
             if (currentTextTransform !== wrapper.cTT) {
                 baseline = renderer.fontMetrics(elem.style.fontSize, elem).b;

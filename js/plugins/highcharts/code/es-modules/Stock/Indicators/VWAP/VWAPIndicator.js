@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -29,7 +31,7 @@ import U from '../../../Core/Utilities.js';
 var error = U.error, isArray = U.isArray, merge = U.merge;
 /* *
  *
- * Class
+ *  Class
  *
  * */
 /**
@@ -44,6 +46,11 @@ var error = U.error, isArray = U.isArray, merge = U.merge;
 var VWAPIndicator = /** @class */ (function (_super) {
     __extends(VWAPIndicator, _super);
     function VWAPIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
         /* *
          *
@@ -78,15 +85,27 @@ var VWAPIndicator = /** @class */ (function (_super) {
     /**
      * Main algorithm used to calculate Volume Weighted Average Price (VWAP)
      * values
+     *
      * @private
-     * @param {boolean} isOHLC - says if data has OHLC format
-     * @param {Array<number>} xValues - array of timestamps
-     * @param {Array<number|Array<number,number,number,number>>} yValues -
-     * array of yValues, can be an array of a four arrays (OHLC) or array of
+     *
+     * @param {boolean} isOHLC
+     * Says if data has OHLC format
+     *
+     * @param {Array<number>} xValues
+     * Array of timestamps
+     *
+     * @param {Array<number|Array<number,number,number,number>>} yValues
+     * Array of yValues, can be an array of a four arrays (OHLC) or array of
      * values (line)
-     * @param {Array<*>} volumeSeries - volume series
-     * @param {number} period - number of points to be calculated
-     * @return {object} - Object contains computed VWAP
+     *
+     * @param {Array<*>} volumeSeries
+     * Volume series
+     *
+     * @param {number} period
+     * Number of points to be calculated
+     *
+     * @return {Object}
+     * Object contains computed VWAP
      **/
     VWAPIndicator.prototype.calculateVWAPValues = function (isOHLC, xValues, yValues, volumeSeries, period) {
         var volumeValues = volumeSeries.yData, volumeLength = volumeSeries.xData.length, pointsLength = xValues.length, cumulativePrice = [], cumulativeVolume = [], xData = [], yData = [], VWAP = [], commonLength, typicalPrice, cPrice, cVolume, i, j;
@@ -165,6 +184,11 @@ SeriesRegistry.registerSeriesType('vwap', VWAPIndicator);
  *
  * */
 export default VWAPIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A `Volume Weighted Average Price (VWAP)` series. If the
  * [type](#series.vwap.type) option is not specified, it is inherited from

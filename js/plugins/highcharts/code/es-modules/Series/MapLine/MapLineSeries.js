@@ -12,10 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -66,12 +68,8 @@ var MapLineSeries = /** @class */ (function (_super) {
     /* eslint-disable valid-jsdoc */
     /**
      * Get presentational attributes
-     *
      * @private
      * @function Highcharts.seriesTypes.mapline#pointAttribs
-     * @param {Highcharts.Point} point
-     * @param {string} state
-     * @return {Highcharts.SVGAttributes}
      */
     MapLineSeries.prototype.pointAttribs = function (point, state) {
         var attr = MapSeries.prototype.pointAttribs.call(this, point, state);
@@ -87,6 +85,10 @@ var MapLineSeries = /** @class */ (function (_super) {
      *
      * @sample maps/demo/mapline-mappoint/
      *         Mapline and map-point chart
+     * @sample maps/demo/animated-mapline/
+     *         Mapline with CSS keyframe animation
+     * @sample maps/demo/flight-routes
+     *         Flight routes
      *
      * @extends      plotOptions.map
      * @product      highmaps
@@ -94,7 +96,13 @@ var MapLineSeries = /** @class */ (function (_super) {
      */
     MapLineSeries.defaultOptions = merge(MapSeries.defaultOptions, {
         /**
-         * The width of the map line.
+         * Pixel width of the mapline line.
+         *
+         * @type      {number}
+         * @since 10.3.3
+         * @product   highmaps
+         * @default   1
+         * @apioption plotOptions.mapline.lineWidth
          */
         lineWidth: 1,
         /**
@@ -177,7 +185,32 @@ export default MapLineSeries;
  *  ```
  *
  * @type      {Array<number|Array<string,(number|null)>|null|*>}
+ * @extends   series.map.data
+ * @excluding drilldown
  * @product   highmaps
  * @apioption series.mapline.data
+ */
+/**
+ * Pixel width of the mapline line.
+ *
+ * @type      {number}
+ * @since 10.2.0
+ * @product   highmaps
+ * @apioption plotOptions.mapline.states.hover.lineWidth
+ */
+/**
+ * Pixel width of the mapline line.
+ *
+ * @type      {number|undefined}
+ * @since 10.3.3
+ * @product   highmaps
+ * @apioption series.mapline.data.lineWidth
+ */
+/**
+ *
+ * @type      {number}
+ * @product   highmaps
+ * @excluding borderWidth
+ * @apioption plotOptions.mapline.states.hover
  */
 ''; // adds doclets above to transpiled file

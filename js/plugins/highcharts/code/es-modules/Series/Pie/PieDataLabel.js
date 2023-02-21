@@ -11,7 +11,6 @@
 import DataLabel from '../../Core/Series/DataLabel.js';
 import H from '../../Core/Globals.js';
 var noop = H.noop;
-import Palette from '../../Core/Color/Palette.js';
 import R from '../../Core/Renderer/RendererUtilities.js';
 var distribute = R.distribute;
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
@@ -332,7 +331,7 @@ var ColumnDataLabel;
                                     'stroke-width': connectorWidth,
                                     'stroke': (pointDataLabelsOptions.connectorColor ||
                                         point.color ||
-                                        Palette.neutralColor60)
+                                        "#666666" /* Palette.neutralColor60 */)
                                 });
                             }
                         }
@@ -425,7 +424,9 @@ var ColumnDataLabel;
             if (newSize < center[2]) {
                 center[2] = newSize;
                 center[3] = Math.min(// #3632
-                relativeLength(options.innerSize || 0, newSize), newSize);
+                options.thickness ?
+                    Math.max(0, newSize - options.thickness * 2) :
+                    Math.max(0, relativeLength(options.innerSize || 0, newSize)), newSize); // #6647
                 this.translate(center);
                 if (this.drawDataLabels) {
                     this.drawDataLabels();

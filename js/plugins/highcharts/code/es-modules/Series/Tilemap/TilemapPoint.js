@@ -15,17 +15,18 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import ColorSeriesModule from '../../Mixins/ColorSeries.js';
-var colorPointMixin = ColorSeriesModule.colorPointMixin;
+import ColorAxisComposition from '../../Core/Axis/Color/ColorAxisComposition.js';
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 var Point = SeriesRegistry.series.prototype.pointClass, HeatmapPoint = SeriesRegistry.seriesTypes.heatmap.prototype.pointClass;
 import U from '../../Core/Utilities.js';
@@ -60,8 +61,6 @@ var TilemapPoint = /** @class */ (function (_super) {
     /**
      * @private
      * @function Highcharts.Point#haloPath
-     *
-     * @return {Highcharts.SVGElement|Highcharts.SVGPathArray|Array<Highcharts.SVGElement>}
      */
     TilemapPoint.prototype.haloPath = function () {
         return this.series.tileShape.haloPath.apply(this, arguments);
@@ -70,7 +69,7 @@ var TilemapPoint = /** @class */ (function (_super) {
 }(HeatmapPoint));
 extend(TilemapPoint.prototype, {
     setState: Point.prototype.setState,
-    setVisible: colorPointMixin.setVisible
+    setVisible: ColorAxisComposition.pointSetVisible
 });
 /* *
  *

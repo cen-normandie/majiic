@@ -12,10 +12,10 @@
 'use strict';
 import Color from '../Color/Color.js';
 var color = Color.parse;
-import Math3D from '../../Extensions/Math3D.js';
-var perspective = Math3D.perspective, shapeArea3D = Math3D.shapeArea3D;
-import D from '../DefaultOptions.js';
+import D from '../Defaults.js';
 var genericDefaultOptions = D.defaultOptions;
+import Math3D from '../Math3D.js';
+var perspective = Math3D.perspective, shapeArea3D = Math3D.shapeArea3D;
 import U from '../Utilities.js';
 var addEvent = U.addEvent, isArray = U.isArray, merge = U.merge, pick = U.pick, wrap = U.wrap;
 var Chart3D;
@@ -320,12 +320,22 @@ var Chart3D;
             else {
                 ret.axes = {
                     y: {
-                        'left': { x: xm, z: zm, xDir: { x: 1, y: 0, z: 0 } },
-                        'right': { x: xp, z: zm, xDir: { x: 0, y: 0, z: 1 } }
+                        'left': {
+                            x: xm, z: zm, xDir: { x: 1, y: 0, z: 0 }
+                        },
+                        'right': {
+                            x: xp, z: zm, xDir: { x: 0, y: 0, z: 1 }
+                        }
                     },
                     x: {
-                        'top': { y: ym, z: zm, xDir: { x: 1, y: 0, z: 0 } },
-                        'bottom': { y: yp, z: zm, xDir: { x: 1, y: 0, z: 0 } }
+                        'top': {
+                            y: ym, z: zm, xDir: { x: 1, y: 0, z: 0 }
+                        },
+                        'bottom': {
+                            y: yp,
+                            z: zm,
+                            xDir: { x: 1, y: 0, z: 0 }
+                        }
                     },
                     z: {
                         'top': {
@@ -351,7 +361,7 @@ var Chart3D;
          * Calculate scale of the 3D view. That is required to fit chart's 3D
          * projection into the actual plotting area. Reported as #4933.
          *
-         * @notice
+         * **Note:**
          * This function should ideally take the plot values instead of a chart
          * object, but since the chart object is needed for perspective it is
          * not practical. Possible to make both getScale and perspective more
@@ -459,7 +469,7 @@ var Chart3D;
              */
             options3d: {
                 /**
-                 * Wether to render the chart using the 3D functionality.
+                 * Whether to render the chart using the 3D functionality.
                  *
                  * @since   4.0
                  * @product highcharts
@@ -640,7 +650,8 @@ var Chart3D;
             var interpolated;
             if (this.pos < 1 &&
                 (isArray(this.start) || isArray(this.end))) {
-                var start = this.start || [1, 0, 0, 1, 0, 0], end = this.end || [1, 0, 0, 1, 0, 0];
+                var start = (this.start ||
+                    [1, 0, 0, 1, 0, 0]), end = this.end || [1, 0, 0, 1, 0, 0];
                 interpolated = [];
                 for (var i = 0; i < 6; i++) {
                     interpolated.push(this.pos * end[i] + (1 - this.pos) * start[i]);
@@ -661,8 +672,8 @@ var Chart3D;
         addEvent(ChartClass, 'beforeRedraw', onBeforeRedraw);
         addEvent(ChartClass, 'beforeRender', onBeforeRender);
         wrap(chartProto, 'isInsidePlot', wrapIsInsidePlot);
-        wrap(ChartClass, 'renderSeries', wrapRenderSeries);
-        wrap(ChartClass, 'setClassName', wrapSetClassName);
+        wrap(chartProto, 'renderSeries', wrapRenderSeries);
+        wrap(chartProto, 'setClassName', wrapSetClassName);
     }
     Chart3D.compose = compose;
     /**
@@ -1483,17 +1494,7 @@ var Chart3D;
      */
     function onAfterGetContainer() {
         if (this.styledMode) {
-            this.renderer.definition({
-                tagName: 'style',
-                textContent: '.highcharts-3d-top{' +
-                    'filter: url(#highcharts-brighter)' +
-                    '}\n' +
-                    '.highcharts-3d-side{' +
-                    'filter: url(#highcharts-darker)' +
-                    '}\n'
-            });
-            // Add add definitions used by brighter and darker faces of the
-            // cuboids.
+            // Add definitions used by brighter and darker faces of the cuboids.
             [{
                     name: 'darker',
                     slope: 0.6
@@ -1559,14 +1560,16 @@ var Chart3D;
             chart.is3d()) {
             // Add a 0-360 normalisation for alfa and beta angles in 3d graph
             if (options3d) {
-                options3d.alpha = options3d.alpha % 360 + (options3d.alpha >= 0 ? 0 : 360);
-                options3d.beta = options3d.beta % 360 + (options3d.beta >= 0 ? 0 : 360);
+                options3d.alpha = options3d.alpha % 360 +
+                    (options3d.alpha >= 0 ? 0 : 360);
+                options3d.beta = options3d.beta % 360 +
+                    (options3d.beta >= 0 ? 0 : 360);
             }
             var inverted = chart.inverted, clipBox = chart.clipBox, margin = chart.margin, x = inverted ? 'y' : 'x', y = inverted ? 'x' : 'y', w = inverted ? 'height' : 'width', h = inverted ? 'width' : 'height';
             clipBox[x] = -(margin[3] || 0);
             clipBox[y] = -(margin[0] || 0);
-            clipBox[w] = chart.chartWidth + (margin[3] || 0) + (margin[1] || 0);
-            clipBox[h] = chart.chartHeight + (margin[0] || 0) + (margin[2] || 0);
+            clipBox[w] = (chart.chartWidth + (margin[3] || 0) + (margin[1] || 0));
+            clipBox[h] = (chart.chartHeight + (margin[0] || 0) + (margin[2] || 0));
             // Set scale, used later in perspective method():
             // getScale uses perspective, so scale3d has to be reset.
             chart.scale3d = 1;

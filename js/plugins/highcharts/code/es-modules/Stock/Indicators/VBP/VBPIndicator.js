@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -29,11 +31,15 @@ var animObject = A.animObject;
 import H from '../../../Core/Globals.js';
 var noop = H.noop;
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
-var SMAIndicator = SeriesRegistry.seriesTypes.sma;
+var _a = SeriesRegistry.seriesTypes, columnProto = _a.column.prototype, SMAIndicator = _a.sma;
 import U from '../../../Core/Utilities.js';
 import StockChart from '../../../Core/Chart/StockChart.js';
-var addEvent = U.addEvent, arrayMax = U.arrayMax, arrayMin = U.arrayMin, correctFloat = U.correctFloat, error = U.error, extend = U.extend, isArray = U.isArray, merge = U.merge;
-/* eslint-disable require-jsdoc */
+var addEvent = U.addEvent, arrayMax = U.arrayMax, arrayMin = U.arrayMin, correctFloat = U.correctFloat, defined = U.defined, error = U.error, extend = U.extend, isArray = U.isArray, merge = U.merge;
+/* *
+ *
+ *  Functions
+ *
+ * */
 // Utils
 function arrayExtremesOHLC(data) {
     var dataLength = data.length, min = data[0][3], max = min, i = 1, currentPoint;
@@ -51,8 +57,12 @@ function arrayExtremesOHLC(data) {
         max: max
     };
 }
-/* eslint-enable require-jsdoc */
-var abs = Math.abs, columnPrototype = SeriesRegistry.seriesTypes.column.prototype;
+var abs = Math.abs;
+/* *
+ *
+ *  Class
+ *
+ * */
 /**
  * The Volume By Price (VBP) series type.
  *
@@ -65,7 +75,17 @@ var abs = Math.abs, columnPrototype = SeriesRegistry.seriesTypes.column.prototyp
 var VBPIndicator = /** @class */ (function (_super) {
     __extends(VBPIndicator, _super);
     function VBPIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        /* *
+         *
+         *  Properties
+         *
+         * */
         _this.data = void 0;
         _this.negWidths = void 0;
         _this.options = void 0;
@@ -78,6 +98,11 @@ var VBPIndicator = /** @class */ (function (_super) {
         _this.zoneLinesSVG = void 0;
         return _this;
     }
+    /* *
+     *
+     *  Functions
+     *
+     * */
     VBPIndicator.prototype.init = function (chart) {
         var indicator = this, params, baseSeries, volumeSeries;
         H.seriesTypes.sma.prototype.init.apply(indicator, arguments);
@@ -150,10 +175,10 @@ var VBPIndicator = /** @class */ (function (_super) {
         var indicator = this;
         if (indicator.options.volumeDivision.enabled) {
             indicator.posNegVolume(true, true);
-            columnPrototype.drawPoints.apply(indicator, arguments);
+            columnProto.drawPoints.apply(indicator, arguments);
             indicator.posNegVolume(false, false);
         }
-        columnPrototype.drawPoints.apply(indicator, arguments);
+        columnProto.drawPoints.apply(indicator, arguments);
     };
     // Function responsible for dividing volume into positive and negative
     VBPIndicator.prototype.posNegVolume = function (initVol, pos) {
@@ -198,7 +223,7 @@ var VBPIndicator = /** @class */ (function (_super) {
     };
     VBPIndicator.prototype.translate = function () {
         var indicator = this, options = indicator.options, chart = indicator.chart, yAxis = indicator.yAxis, yAxisMin = yAxis.min, zoneLinesOptions = indicator.options.zoneLines, priceZones = (indicator.priceZones), yBarOffset = 0, indicatorPoints, volumeDataArray, maxVolume, primalBarWidth, barHeight, barHeightP, oldBarHeight, barWidth, pointPadding, chartPlotTop, barX, barY;
-        columnPrototype.translate.apply(indicator);
+        columnProto.translate.apply(indicator);
         indicatorPoints = indicator.points;
         // Do translate operation when points exist
         if (indicatorPoints.length) {
@@ -284,7 +309,15 @@ var VBPIndicator = /** @class */ (function (_super) {
             arrayMin(yValues), highRange = rangeExtremes ?
             rangeExtremes.max :
             arrayMax(yValues), zoneStarts = indicator.zoneStarts = [], priceZones = [], i = 0, j = 1, rangeStep, zoneStartsLength;
-        if (!lowRange || !highRange) {
+        // If the compare mode is set on the main series, change the VBP
+        // zones to fit new extremes, #16277.
+        var mainSeries = indicator.linkedParent;
+        if (!indicator.options.compareToMain &&
+            mainSeries.dataModify) {
+            lowRange = mainSeries.dataModify.modifyValue(lowRange);
+            highRange = mainSeries.dataModify.modifyValue(highRange);
+        }
+        if (!defined(lowRange) || !defined(highRange)) {
             if (this.points.length) {
                 this.setData([]);
                 this.zoneStarts = [];
@@ -344,6 +377,15 @@ var VBPIndicator = /** @class */ (function (_super) {
                         yValues[i - 1][3] :
                         yValues[i - 1]) :
                     value;
+                // If the compare mode is set on the main series,
+                // change the VBP zones to fit new extremes, #16277.
+                var mainSeries = indicator.linkedParent;
+                if (!indicator.options.compareToMain &&
+                    mainSeries.dataModify) {
+                    value = mainSeries.dataModify.modifyValue(value);
+                    previousValue = mainSeries.dataModify
+                        .modifyValue(previousValue);
+                }
                 // Checks if this is the point with the
                 // lowest close value and if so, adds it calculations
                 if (value <= zone.start && zone.index === 0) {
@@ -450,11 +492,11 @@ var VBPIndicator = /** @class */ (function (_super) {
              * @default {"color": "#0A9AC9", "dashStyle": "LongDash", "lineWidth": 1}
              */
             styles: {
-                /** @ignore-options */
+                /** @ignore-option */
                 color: '#0A9AC9',
-                /** @ignore-options */
+                /** @ignore-option */
                 dashStyle: 'LongDash',
-                /** @ignore-options */
+                /** @ignore-option */
                 lineWidth: 1
             }
         },
@@ -507,16 +549,15 @@ var VBPIndicator = /** @class */ (function (_super) {
 extend(VBPIndicator.prototype, {
     nameBase: 'Volume by Price',
     nameComponents: ['ranges'],
-    bindTo: {
-        series: false,
-        eventName: 'afterSetExtremes'
+    calculateOn: {
+        chart: 'render',
+        xAxis: 'afterSetExtremes'
     },
-    calculateOn: 'render',
     pointClass: VBPPoint,
     markerAttribs: noop,
     drawGraph: noop,
-    getColumnMetrics: columnPrototype.getColumnMetrics,
-    crispCol: columnPrototype.crispCol
+    getColumnMetrics: columnProto.getColumnMetrics,
+    crispCol: columnProto.crispCol
 });
 SeriesRegistry.registerSeriesType('vbp', VBPIndicator);
 /* *
@@ -525,6 +566,11 @@ SeriesRegistry.registerSeriesType('vbp', VBPIndicator);
  *
  * */
 export default VBPIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A `Volume By Price (VBP)` series. If the [type](#series.vbp.type) option is
  * not specified, it is inherited from [chart.type](#chart.type).
@@ -532,7 +578,7 @@ export default VBPIndicator;
  * @extends   series,plotOptions.vbp
  * @since     6.0.0
  * @product   highstock
- * @excluding dataParser, dataURL
+ * @excluding dataParser, dataURL, compare, compareBase, compareStart
  * @requires  stock/indicators/indicators
  * @requires  stock/indicators/volume-by-price
  * @apioption series.vbp

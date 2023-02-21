@@ -75,7 +75,7 @@ if (in_array($_SESSION['email'], $admins)) {
                     Vos temps saisis existants seront supprimés. Seules les données du fichier Excel seront importées.
                     Attention toutefois cette opération n'est <span class="fw-bold">pas réversible</span> !
                     <ul class="list-group my-2">
-                        <li class="list-group-item">A - Exportez vos temps existants :
+                        <li class="list-group-item"><strong class="fs-5">A</strong> - Exportez vos temps existants :
                             
                                 <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
                                 <button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
@@ -83,8 +83,16 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="export_2023" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
                             
                         </li>
-                        <li class="list-group-item">B - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
-                        <li class="list-group-item">C - Importez vos temps optimisés :<p class="text-danger"> Attention à l'année !</p>
+                        <li class="list-group-item"><strong class="fs-5">B</strong> - Téléchargez la liste des codes projets <--> codes actions <--> codes sites servant de référentiel :
+                            
+                                <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
+                                <button id="anal_2021" type="button" class="btn btn-outline-warning  shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
+                                <button id="anal_2022" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
+                                <button id="anal_2023" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
+                            
+                        </li>
+                        <li class="list-group-item"><strong class="fs-5">C</strong> - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
+                        <li class="list-group-item"><strong class="fs-5">D</strong> - Importez vos temps optimisés :<p class="text-danger"> Attention à l'année !</p>
                             <div class="d-flex flex-column col-sm-12 col-md-12 col-lg-6">
                                 <div class="input-group my-2">
                                     <label class="input-group-text" for="year_replace">Année : </label>
@@ -130,7 +138,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript" src="js/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="js/leaflet/plugins/leaflet_label/js/leaflet_label.js" ></script>
 <!-- HIGHCHARTS -->
-<script type="text/javascript" src="js/plugins/highcharts/code/highcharts.js"></script>
+<script type="text/javascript" src="js/plugins/highcharts/code/highstock.js"></script>
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
 
 <!--Datatable bs5-->

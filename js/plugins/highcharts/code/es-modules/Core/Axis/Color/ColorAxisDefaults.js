@@ -8,7 +8,6 @@
  *
  * */
 'use strict';
-import Palette from '../../Color/Palette.js';
 /* *
  *
  *  API Options
@@ -62,7 +61,8 @@ import Palette from '../../Color/Palette.js';
  *               categories, crosshair, dateTimeLabelFormats, height, left,
  *               lineWidth, linkedTo, maxZoom, minRange, minTickInterval,
  *               offset, opposite, pane, plotBands, plotLines,
- *               reversedStacks, showEmpty, title, top, width, zoomEnabled
+ *               reversedStacks, scrollbar, showEmpty, title, top, width,
+ *               zoomEnabled
  * @product      highcharts highstock highmaps
  * @type         {*|Array<*>}
  * @optionparent colorAxis
@@ -297,7 +297,7 @@ var colorAxisDefaults = {
          * @type    {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
          * @product highcharts highstock highmaps
          */
-        color: Palette.neutralColor40
+        color: "#999999" /* Palette.neutralColor40 */
     },
     /**
      * The axis labels show the number for each tick.
@@ -339,7 +339,7 @@ var colorAxisDefaults = {
      * @type    {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
      * @product highcharts highstock highmaps
      */
-    minColor: Palette.highlightColor10,
+    minColor: "#e6ebf5" /* Palette.highlightColor10 */,
     /**
      * The color to represent the maximum of the color axis. Unless
      * [dataClasses](#colorAxis.dataClasses) or
@@ -358,7 +358,7 @@ var colorAxisDefaults = {
      * @type    {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
      * @product highcharts highstock highmaps
      */
-    maxColor: Palette.highlightColor100,
+    maxColor: "#003399" /* Palette.highlightColor100 */,
     /**
      * Color stops for the gradient of a scalar color axis. Use this in
      * cases where a linear gradient between a `minColor` and `maxColor`
@@ -366,6 +366,10 @@ var colorAxisDefaults = {
      * first item is a float between 0 and 1 assigning the relative
      * position in the gradient, and the second item is the color.
      *
+     * @sample highcharts/coloraxis/coloraxis-stops/
+     *         Color axis stops
+     * @sample highcharts/coloraxis/color-key-with-stops/
+     *         Color axis stops with custom colorKey
      * @sample {highmaps} maps/demo/heatmap/
      *         Heatmap with three color stops
      *

@@ -75,7 +75,8 @@ var CircleUtilities;
      * Returns the area of the circular segment.
      */
     function getCircularSegmentArea(r, h) {
-        return r * r * Math.acos(1 - h / r) - (r - h) * Math.sqrt(h * (2 * r - h));
+        return (r * r * Math.acos(1 - h / r) -
+            (r - h) * Math.sqrt(h * (2 * r - h)));
     }
     CircleUtilities.getCircularSegmentArea = getCircularSegmentArea;
     /**
@@ -184,7 +185,7 @@ var CircleUtilities;
     }
     CircleUtilities.getCirclesIntersectionPoints = getCirclesIntersectionPoints;
     /**
-     * Tests wether the first circle is completely overlapping the second
+     * Tests whether the first circle is completely overlapping the second
      * circle.
      *
      * @private
@@ -203,7 +204,7 @@ var CircleUtilities;
     }
     CircleUtilities.isCircle1CompletelyOverlappingCircle2 = isCircle1CompletelyOverlappingCircle2;
     /**
-     * Tests wether a point lies within a given circle.
+     * Tests whether a point lies within a given circle.
      * @private
      * @param {Highcharts.PositionObject} point
      * The point to test for.
@@ -219,7 +220,7 @@ var CircleUtilities;
     }
     CircleUtilities.isPointInsideCircle = isPointInsideCircle;
     /**
-     * Tests wether a point lies within a set of circles.
+     * Tests whether a point lies within a set of circles.
      *
      * @private
      *
@@ -239,7 +240,7 @@ var CircleUtilities;
     }
     CircleUtilities.isPointInsideAllCircles = isPointInsideAllCircles;
     /**
-     * Tests wether a point lies outside a set of circles.
+     * Tests whether a point lies outside a set of circles.
      *
      * TODO: add unit tests.
      *

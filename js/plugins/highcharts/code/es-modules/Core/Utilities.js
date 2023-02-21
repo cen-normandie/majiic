@@ -48,11 +48,11 @@ var charts = H.charts, doc = H.doc, win = H.win;
 function error(code, stop, chart, params) {
     var severity = stop ? 'Highcharts error' : 'Highcharts warning';
     if (code === 32) {
-        code = severity + ": Deprecated member";
+        code = "".concat(severity, ": Deprecated member");
     }
     var isCode = isNumber(code);
     var message = isCode ?
-        severity + " #" + code + ": www.highcharts.com/errors/" + code + "/" :
+        "".concat(severity, " #").concat(code, ": www.highcharts.com/errors/").concat(code, "/") :
         code.toString();
     var defaultHandler = function () {
         if (stop) {
@@ -71,7 +71,7 @@ function error(code, stop, chart, params) {
             message += '?';
         }
         objectEach(params, function (value, key) {
-            additionalMessages_1 += "\n - " + key + ": " + value;
+            additionalMessages_1 += "\n - ".concat(key, ": ").concat(value);
             if (isCode) {
                 message += encodeURI(key) + '=' + encodeURI(value);
             }
@@ -197,7 +197,9 @@ function cleanRecursively(newer, older) {
             // Arrays, primitives and DOM nodes are copied directly
         }
         else if (isObject(newer[key]) ||
-            newer[key] !== older[key]) {
+            newer[key] !== older[key] ||
+            // If the newer key is explicitly undefined, keep it (#10525)
+            (key in newer && !(key in older))) {
             result[key] = newer[key];
         }
     });
@@ -352,16 +354,20 @@ function defined(obj) {
     return typeof obj !== 'undefined' && obj !== null;
 }
 /**
- * Set or get an attribute or an object of attributes. To use as a setter, pass
- * a key and a value, or let the second argument be a collection of keys and
- * values. To use as a getter, pass only a string as the second argument.
+ * Set or get an attribute or an object of attributes.
+ *
+ * To use as a setter, pass a key and a value, or let the second argument be a
+ * collection of keys and values. When using a collection, passing a value of
+ * `null` or `undefined` will remove the attribute.
+ *
+ * To use as a getter, pass only a string as the second argument.
  *
  * @function Highcharts.attr
  *
  * @param {Highcharts.HTMLDOMElement|Highcharts.SVGDOMElement} elem
  *        The DOM element to receive the attribute(s).
  *
- * @param {string|Highcharts.HTMLAttributes|Highcharts.SVGAttributes} [prop]
+ * @param {string|Highcharts.HTMLAttributes|Highcharts.SVGAttributes} [keyOrAttribs]
  *        The property or an object of key-value pairs.
  *
  * @param {number|string} [value]
@@ -370,28 +376,34 @@ function defined(obj) {
  * @return {string|null|undefined}
  *         When used as a getter, return the value.
  */
-function attr(elem, prop, value) {
+function attr(elem, keyOrAttribs, value) {
+    var isGetter = isString(keyOrAttribs) && !defined(value);
     var ret;
-    // if the prop is a string
-    if (isString(prop)) {
-        // set the value
+    var attrSingle = function (value, key) {
+        // Set the value
         if (defined(value)) {
-            elem.setAttribute(prop, value);
-            // get the value
+            elem.setAttribute(key, value);
+            // Get the value
         }
-        else if (elem && elem.getAttribute) {
-            ret = elem.getAttribute(prop);
+        else if (isGetter) {
+            ret = elem.getAttribute(key);
             // IE7 and below cannot get class through getAttribute (#7850)
-            if (!ret && prop === 'class') {
-                ret = elem.getAttribute(prop + 'Name');
+            if (!ret && key === 'class') {
+                ret = elem.getAttribute(key + 'Name');
             }
+            // Remove the value
         }
-        // else if prop is defined, it is a hash of key/value pairs
+        else {
+            elem.removeAttribute(key);
+        }
+    };
+    // If keyOrAttribs is a string
+    if (isString(keyOrAttribs)) {
+        attrSingle(value, keyOrAttribs);
+        // Else if keyOrAttribs is defined, it is a hash of key/value pairs
     }
     else {
-        objectEach(prop, function (val, key) {
-            elem.setAttribute(key, val);
-        });
+        objectEach(keyOrAttribs, attrSingle);
     }
     return ret;
 }
@@ -442,10 +454,8 @@ function syncTimeout(fn, delay, context) {
  *
  * @function Highcharts.clearTimeout
  *
- * @param {number} id
- *        Id of a timeout.
- *
- * @return {void}
+ * @param {number|undefined} id
+ * Id of a timeout.
  */
 function internalClearTimeout(id) {
     if (defined(id)) {
@@ -515,9 +525,8 @@ function pick() {
  */
 function css(el, styles) {
     if (H.isMS && !H.svg) { // #2686
-        if (styles && typeof styles.opacity !== 'undefined') {
-            styles.filter =
-                'alpha(opacity=' + (styles.opacity * 100) + ')';
+        if (styles && defined(styles.opacity)) {
+            styles.filter = "alpha(opacity=".concat(styles.opacity * 100, ")");
         }
     }
     extend(el.style, styles);
@@ -584,7 +593,7 @@ function extendClass(parent, members) {
     return obj;
 }
 /**
- * Left-pad a string to a given length by adding a character repetetively.
+ * Left-pad a string to a given length by adding a character repetitively.
  *
  * @function Highcharts.pad
  *
@@ -650,14 +659,12 @@ function relativeLength(value, base, offset) {
 function wrap(obj, method, func) {
     var proceed = obj[method];
     obj[method] = function () {
-        var args = Array.prototype.slice.call(arguments), outerArgs = arguments, ctx = this;
-        ctx.proceed = function () {
-            proceed.apply(ctx, arguments.length ? arguments : outerArgs);
-        };
-        args.unshift(proceed);
-        var ret = func.apply(this, args);
-        ctx.proceed = null;
-        return ret;
+        var outerArgs = arguments, scope = this;
+        return func.apply(this, [
+            function () {
+                return proceed.apply(scope, arguments.length ? arguments : outerArgs);
+            }
+        ].concat([].slice.call(arguments)));
     };
 }
 /**
@@ -706,7 +713,7 @@ function getMagnitude(num) {
 function normalizeTickInterval(interval, multiples, magnitude, allowDecimals, hasTickAmount) {
     var i, retInterval = interval;
     // round to a tenfold of 1, 2, 2.5 or 5
-    magnitude = pick(magnitude, 1);
+    magnitude = pick(magnitude, getMagnitude(interval));
     var normalized = interval / magnitude;
     // multiples for a linear scale
     if (!multiples) {
@@ -757,8 +764,6 @@ function normalizeTickInterval(interval, multiples, magnitude, allowDecimals, ha
  *
  * @param {Function} sortFunction
  *        The function to sort it with, like with regular Array.prototype.sort.
- *
- * @return {void}
  */
 function stableSort(arr, sortFunction) {
     // @todo It seems like Chrome since v70 sorts in a stable way internally,
@@ -848,7 +853,7 @@ function destroyObjectProperties(obj, except) {
     });
 }
 /**
- * Discard a HTML element by moving it to the bin and delete.
+ * Discard a HTML element
  *
  * @function Highcharts.discardElement
  *
@@ -856,17 +861,10 @@ function destroyObjectProperties(obj, except) {
  *        The HTML node to discard.
  */
 function discardElement(element) {
-    // create a garbage bin element, not part of the DOM
-    if (!garbageBin) {
-        garbageBin = createElement('div');
+    if (element && element.parentElement) {
+        element.parentElement.removeChild(element);
     }
-    // move the node and empty bin
-    if (element) {
-        garbageBin.appendChild(element);
-    }
-    garbageBin.innerHTML = '';
 }
-var garbageBin;
 /**
  * Fix JS round off float errors.
  *
@@ -882,7 +880,8 @@ var garbageBin;
  *         The corrected float number.
  */
 function correctFloat(num, prec) {
-    return parseFloat(num.toPrecision(prec || 14));
+    // When the number is higher than 1e14 use the number (#16275)
+    return num > 1e14 ? num : parseFloat(num.toPrecision(prec || 14));
 }
 /**
  * The time unit lookup
@@ -1004,7 +1003,7 @@ function getStyle(el, prop, toInt) {
         error(27, true);
     }
     // Otherwise, get the computed style
-    var css = win.getComputedStyle(el, undefined); // eslint-disable-line no-undefined
+    var css = win.getComputedStyle(el, void 0); // eslint-disable-line no-undefined
     if (css) {
         style = css.getPropertyValue(prop);
         if (pick(toInt, prop !== 'opacity')) {
@@ -1061,7 +1060,7 @@ var find = Array.prototype.find ?
         var i;
         var length = arr.length;
         for (i = 0; i < length; i++) {
-            if (callback(arr[i], i)) { // eslint-disable-line callback-return
+            if (callback(arr[i], i)) { // eslint-disable-line node/callback-return
                 return arr[i];
             }
         }
@@ -1124,8 +1123,6 @@ function offset(el) {
  *
  * @param {T} [ctx]
  *        The context.
- *
- * @return {void}
  */
 function objectEach(obj, fn, ctx) {
     /* eslint-enable valid-jsdoc */
@@ -1234,7 +1231,7 @@ objectEach({
 }, function (val, key) {
     H[key] = function (arr) {
         var _a;
-        error(32, false, void 0, (_a = {}, _a["Highcharts." + key] = "use Array." + val, _a));
+        error(32, false, void 0, (_a = {}, _a["Highcharts.".concat(key)] = "use Array.".concat(val), _a));
         return Array.prototype[val].apply(arr, [].slice.call(arguments, 1));
     };
 });
@@ -1329,9 +1326,6 @@ function removeEvent(el, type, fn) {
     /* eslint-enable valid-jsdoc */
     /**
      * @private
-     * @param {string} type - event type
-     * @param {Highcharts.EventCallbackFunction<T>} fn - callback
-     * @return {void}
      */
     function removeOneEvent(type, fn) {
         var removeEventListener = (el.removeEventListener || H.removeEventListenerPolyfill);
@@ -1341,8 +1335,6 @@ function removeEvent(el, type, fn) {
     }
     /**
      * @private
-     * @param {any} eventCollection - collection
-     * @return {void}
      */
     function removeAllEvents(eventCollection) {
         var types, len;

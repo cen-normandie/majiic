@@ -179,7 +179,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                     </div>
                                 </div>
                             </div>
-                            <div id="panel_all" class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4 d-none"> <!--bg-dark-->
+                            <div id="panel_all" class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4 "> <!--bg-dark-->
                                 <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Realise / Previsionnel :</h4></div>
                                 <div class="d-flex w-100 align-items-center justify-content-center">
                                     <div id="container_sum" class="d-flex w-100"></div>
@@ -187,11 +187,11 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                                 <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Realise / Previsionnel par action:</h4></div>
                                 <div class="d-flex w-100">
-                                    <div id="container" class="d-flex w-100"></div>
+                                    <div id="container" class="d-flex w-100" style="max-height:400px;"></div>
                                 </div>
                                 <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Actions du projet :</h4></div>
                                 <div class="d-flex flex-column w-100 bg-light mb-2">
-                                    <table id="actionsDT" class="table table-hover table-sm" style="width:100%"> <!--table-dark-->
+                                    <table id="actionsDT" class="table table-hover w-100" width="100%"> <!--table-dark-->
                                         <thead>
                                             <tr>
                                                 <th>ID Action</th>
@@ -442,7 +442,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
 
 <!-- HIGHCHARTS -->
-<script type="text/javascript" src="js/plugins/highcharts/code/highcharts.js"></script>
+<script type="text/javascript" src="js/plugins/highcharts/code/highstock.js"></script>
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
 
 <!--Datatable bs5-->
@@ -470,6 +470,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 $(document).ready(function() {
     load_projets_ajax();
+    dtActions.columns.adjust();
 });
 
 

@@ -29,7 +29,7 @@ let chart = null;
 //
 function load_projets_ajax () {
     $.ajax({
-        url      : "php/ajax/projets/projets_.ajax.js.php",
+        url      : "php/ajax/projets/projets.ajax.js.php",
         data     : {},
         method   : "POST",
         dataType : "json",
@@ -222,8 +222,6 @@ function apply_filters() {
         document.getElementById("save_projet").classList.add("d-none");
         document.getElementById("panel_all").classList.add("d-none");
         //document.getElementById("export_excel_temps").classList.add("d-none");
-
-
     }
 };
 
@@ -272,7 +270,8 @@ const dtActions =$('#actionsDT').DataTable({
     ],
     scrollY: '200px',
     scrollCollapse: true,
-    paging: false
+    paging: false,
+    autoWidth: false
 });
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement si responsable projet --> edition possible
@@ -399,6 +398,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         const json_real = [];
         const json_previ_sum = [];
         const json_real_sum = [];
+        let nb_actions = 0;
         dtActions.clear();
             const data_previ_sum  = new Object();
             const data_real_sum = new Object();
@@ -409,7 +409,8 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             data_real_sum.color = project[0].color;
             for (const actions in actions_f) {
                 //console.log(actions_f);
-                
+                //console.log(projets_f);
+                    nb_actions++;
                     const p_ = actions_f[actions].personne_action ?? '';
                     const personnes_actions = p_.split('|');
                     var badges_ = '';
@@ -436,10 +437,10 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                     const data_previ = new Object();
                     const data_real = new Object();
                     if (!!actions_f[actions].personne_action) { 
-                        data_previ.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
+                        data_previ.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action;
                         data_previ.y = actions_f[actions].previ ?? 0;
                         data_previ_sum.y = data_previ_sum.y + (actions_f[actions].previ ?? 0);
-                        data_real.name = actions_f[actions].personne_action + " - "+actions_f[actions].code_action;
+                        data_real.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action;
                         data_real.y = actions_f[actions].realise ?? 0;
                         data_real_sum.y = data_real_sum.y + (actions_f[actions].realise ?? 0);
                         data_real.color = project[0].color;
@@ -447,6 +448,9 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                         json_real.push(data_real);
                     }
                 }
+                dtActions.draw();
+                projets_f.nb_actions = nb_actions;
+
                 json_previ.sort(GetSortOrder("name"));
                 json_real.sort(GetSortOrder("name"));
                 json_previ_sum.push(data_previ_sum);
@@ -470,7 +474,6 @@ document.getElementById("export_excel_temps").addEventListener("click", function
     //fonction de mise à jour des données du projet
     function update_projetInfos() {
         const project = projets_f;
-        console.log(project[0]);
         document.getElementById("nom_projet").value=project[0].name;
         document.getElementById("responsable_projet").value=project[0].responsable_projet;
         document.getElementById("type_projet").value=project[0].type_projet;
@@ -482,7 +485,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
         document.getElementById("p_color").value=project[0].color;
         document.getElementById("sites_string").value=project[0].sites;
         if (typeof project[0].files !== 'undefined') {
-            console.log(typeof project[0].files);
+            //console.log(typeof project[0].files);
             if ((project[0].files !== null) && (project[0].files !=='')) {
                 let str_ = '<ul class="list-group list-group">';
                 let d = project[0].files.split(', ').length;
@@ -505,7 +508,7 @@ document.getElementById("export_excel_temps").addEventListener("click", function
     //fonction d'enregistrement du projet en cours
     function save_projet () {
         const projet_ = new Object();
-        console.log(projets_f[0].id);
+        //console.log(projets_f[0].id);
         projet_.id = projets_f[0].id;
         projet_.name = document.getElementById("nom_projet").value;
         projet_.responsable_projet = document.getElementById("responsable_projet").value;
@@ -650,14 +653,16 @@ function get_action_content () {
         let i=0;
         let str_f='';
         e_financeurs_l.forEach(fx => {
-            const fx_ = document.getElementById("input_financeurs_"+i).value;
+            //console.log(document.getElementById("input_financeurs_"+i).value);
+            //console.log(document.getElementById("input_financeurs_"+i).value.split(' - ')[1]);
+            const fx_ = (document.getElementById("input_financeurs_"+i).value.split(' - ')[1] ? document.getElementById("input_financeurs_"+i).value.split(' - ')[1] : '');
             const fx_p = document.getElementById("input_p_financeurs_"+i).value;
             str_f +=(i>0 ? '|' : '');
             str_f=str_f+fx_+"_"+fx_p;
             i++;
 	    });
-        myAction.action_name = document.getElementById("input_actions").value;
-        myAction.site = document.getElementById("input_site").value;
+        myAction.action_name = (document.getElementById("input_actions").value.split(' - ')[1] ? document.getElementById("input_actions").value.split(' - ')[1] : '');
+        myAction.site = (document.getElementById("input_site").value.split(' - ')[1] ? document.getElementById("input_site").value.split(' - ')[1] : '');
         myAction.heures = document.getElementById("input_heures").value;
         myAction.financeurs = str_f;
         //myAction.id_projet = projets_f[0].id_projet;
@@ -788,9 +793,15 @@ function graph_( nom_projet_, real_, previ_) {
         },
         xAxis: {
             type: 'category',
-            accessibility: {
-                description: 'Countries'
-            }
+        title: {
+            text: null
+        },
+        min: 0,
+        max: ((projets_f.nb_actions<10) ? projets_f.nb_actions-1 : 10)  ,
+        scrollbar: {
+            enabled: true
+        },
+        tickLength: 0
         },
         yAxis: [{
             title: {

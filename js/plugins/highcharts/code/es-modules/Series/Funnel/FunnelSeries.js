@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -26,7 +28,6 @@ var __extends = (this && this.__extends) || (function () {
 import Chart from '../../Core/Chart/Chart.js';
 import H from '../../Core/Globals.js';
 var noop = H.noop;
-import palette from '../../Core/Color/Palette.js';
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 var Series = SeriesRegistry.series, PieSeries = SeriesRegistry.seriesTypes.pie;
 import U from '../../Core/Utilities.js';
@@ -69,11 +70,13 @@ var FunnelSeries = /** @class */ (function (_super) {
             dataLabel.height), offset = verticalAlign === 'middle' ?
             (dlBox.topWidth - dlBox.bottomWidth) / 4 :
             (widthAtLabel - dlBox.bottomWidth) / 2, y = dlBox.y, x = dlBox.x;
+        // #16176: Only SVGLabel has height set
+        var dataLabelHeight = pick(dataLabel.height, dataLabel.getBBox().height);
         if (verticalAlign === 'middle') {
-            y = dlBox.y - dlBox.height / 2 + dataLabel.height / 2;
+            y = dlBox.y - dlBox.height / 2 + dataLabelHeight / 2;
         }
         else if (verticalAlign === 'top') {
-            y = dlBox.y - dlBox.height + dataLabel.height +
+            y = dlBox.y - dlBox.height + dataLabelHeight +
                 options.padding;
         }
         if (verticalAlign === 'top' && !reversed ||
@@ -410,13 +413,13 @@ var FunnelSeries = /** @class */ (function (_super) {
                  *
                  * @type {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
                  */
-                color: palette.neutralColor20,
+                color: "#cccccc" /* Palette.neutralColor20 */,
                 /**
                  * A specific border color for the selected point.
                  *
                  * @type {Highcharts.ColorString}
                  */
-                borderColor: palette.neutralColor100
+                borderColor: "#000000" /* Palette.neutralColor100 */
             }
         }
     });

@@ -14,17 +14,19 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 import Chart from './Chart.js';
-import D from '../DefaultOptions.js';
+import D from '../Defaults.js';
 var getOptions = D.getOptions;
 import U from '../Utilities.js';
 var isArray = U.isArray, merge = U.merge, splat = U.splat;
@@ -61,10 +63,9 @@ var GanttChart = /** @class */ (function (_super) {
      *        Function to run when the chart has loaded and and all external
      *        images are loaded.
      *
-     * @return {void}
      *
-     * @fires Highcharts.GanttChart#event:init
-     * @fires Highcharts.GanttChart#event:afterInit
+     * @emits Highcharts.GanttChart#event:init
+     * @emits Highcharts.GanttChart#event:afterInit
      */
     GanttChart.prototype.init = function (userOptions, callback) {
         var defaultOptions = getOptions(), xAxisOptions = userOptions.xAxis, yAxisOptions = userOptions.yAxis;
@@ -126,7 +127,8 @@ var GanttChart = /** @class */ (function (_super) {
                 reversed: true,
                 // Set default type treegrid, but only if 'categories' is
                 // undefined
-                type: yAxisOptions.categories ? yAxisOptions.type : 'treegrid'
+                type: yAxisOptions.categories ?
+                    yAxisOptions.type : 'treegrid'
             }, yAxisOptions // user options
             );
         });

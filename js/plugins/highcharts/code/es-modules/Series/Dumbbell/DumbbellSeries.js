@@ -12,10 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -26,7 +28,6 @@ var colProto = ColumnSeries.prototype;
 import DumbbellPoint from './DumbbellPoint.js';
 import H from '../../Core/Globals.js';
 var noop = H.noop;
-import palette from '../../Core/Color/Palette.js';
 import Series from '../../Core/Series/Series.js';
 var seriesProto = Series.prototype;
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
@@ -83,6 +84,9 @@ var DumbbellSeries = /** @class */ (function (_super) {
             seriesOptions.states.hover &&
             seriesOptions.states.hover.connectorWidthPlus, 1), dashStyle = pick(pointOptions.dashStyle, seriesOptions.dashStyle), pointTop = pick(point.plotLow, point.plotY), pxThreshold = yAxis.toPixels(seriesOptions.threshold || 0, true), pointHeight = chart.inverted ?
             yAxis.len - pxThreshold : pxThreshold, pointBottom = pick(point.plotHigh, pointHeight), attribs, origProps;
+        if (typeof pointTop !== 'number') {
+            return {};
+        }
         if (point.state) {
             connectorWidth = connectorWidth + connectorWidthPlus;
         }
@@ -102,7 +106,7 @@ var DumbbellSeries = /** @class */ (function (_super) {
             connectorWidth = 0;
         }
         // Connector should reflect upper marker's zone color
-        if (point.upperGraphic) {
+        if (point.graphics && point.graphics[1]) {
             origProps = {
                 y: point.y,
                 zone: point.zone
@@ -138,7 +142,6 @@ var DumbbellSeries = /** @class */ (function (_super) {
      *
      * @param {Highcharts.Point} point The point to inspect.
      *
-     * @return {void}
      */
     DumbbellSeries.prototype.drawConnector = function (point) {
         var series = this, animationLimit = pick(series.options.animationLimit, 250), verb = point.connector && series.chart.pointCount < animationLimit ?
@@ -149,7 +152,7 @@ var DumbbellSeries = /** @class */ (function (_super) {
                 .attr({
                 zIndex: -1
             })
-                .add(series.markerGroup);
+                .add(series.group);
         }
         point.connector[verb](this.getConnectorAttribs(point));
     };
@@ -181,19 +184,27 @@ var DumbbellSeries = /** @class */ (function (_super) {
      *
      * @param {Highcharts.Series} this The series of points.
      *
-     * @return {void}
      */
     DumbbellSeries.prototype.translate = function () {
+        var _this = this;
+        var inverted = this.chart.inverted;
         // Calculate shapeargs
         this.setShapeArgs.apply(this);
         // Calculate point low / high values
         this.translatePoint.apply(this, arguments);
         // Correct x position
         this.points.forEach(function (point) {
-            var shapeArgs = point.shapeArgs, pointWidth = point.pointWidth;
-            point.plotX = shapeArgs.x;
+            var pointWidth = point.pointWidth, _a = point.shapeArgs, shapeArgs = _a === void 0 ? {} : _a, tooltipPos = point.tooltipPos;
+            point.plotX = shapeArgs.x || 0;
             shapeArgs.x = point.plotX - pointWidth / 2;
-            point.tooltipPos = null;
+            if (tooltipPos) {
+                if (inverted) {
+                    tooltipPos[1] = _this.xAxis.len - point.plotX;
+                }
+                else {
+                    tooltipPos[0] = point.plotX;
+                }
+            }
         });
         this.columnMetrics.offset -= this.columnMetrics.width / 2;
     };
@@ -206,7 +217,6 @@ var DumbbellSeries = /** @class */ (function (_super) {
      *
      * @param {Highcharts.Series} this The series of points.
      *
-     * @return {void}
      */
     DumbbellSeries.prototype.drawPoints = function () {
         var series = this, chart = series.chart, pointLength = series.points.length, seriesLowColor = series.lowColor = series.options.lowColor, i = 0, lowerGraphicColor, point, zoneColor;
@@ -214,21 +224,22 @@ var DumbbellSeries = /** @class */ (function (_super) {
         // Draw connectors and color upper markers
         while (i < pointLength) {
             point = series.points[i];
+            var _a = point.graphics || [], lowerGraphic = _a[0], upperGraphic = _a[1];
             series.drawConnector(point);
-            if (point.upperGraphic) {
-                point.upperGraphic.element.point = point;
-                point.upperGraphic.addClass('highcharts-lollipop-high');
+            if (upperGraphic) {
+                upperGraphic.element.point = point;
+                upperGraphic.addClass('highcharts-lollipop-high');
             }
             point.connector.element.point = point;
-            if (point.lowerGraphic) {
+            if (lowerGraphic) {
                 zoneColor = point.zone && point.zone.color;
                 lowerGraphicColor = pick(point.options.lowColor, seriesLowColor, point.options.color, zoneColor, point.color, series.color);
                 if (!chart.styledMode) {
-                    point.lowerGraphic.attr({
+                    lowerGraphic.attr({
                         fill: lowerGraphicColor
                     });
                 }
-                point.lowerGraphic.addClass('highcharts-lollipop-low');
+                lowerGraphic.addClass('highcharts-lollipop-low');
             }
             i++;
         }
@@ -320,7 +331,7 @@ var DumbbellSeries = /** @class */ (function (_super) {
          * @since 8.0.0
          * @product   highcharts highstock
          */
-        lowColor: palette.neutralColor80,
+        lowColor: "#333333" /* Palette.neutralColor80 */,
         /**
          * Color of the line that connects the dumbbell point's values.
          * By default it is the series' color.
@@ -461,7 +472,7 @@ export default DumbbellSeries;
  *
  * @type        {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
  * @since       8.0.0
- * @default     ${palette.neutralColor80}
+ * @default     #333333
  * @product     highcharts highstock
  * @apioption   series.dumbbell.data.lowColor
  */

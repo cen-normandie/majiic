@@ -147,3 +147,6 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
   color:#fff;
   font-weight: 700;
 }
+.dataTables_scrollHeadInner {
+  width:100% !important;
+}

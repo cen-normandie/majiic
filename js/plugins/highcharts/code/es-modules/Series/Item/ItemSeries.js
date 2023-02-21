@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -25,7 +27,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import H from '../../Core/Globals.js';
 import ItemPoint from './ItemPoint.js';
-import D from '../../Core/DefaultOptions.js';
+import D from '../../Core/Defaults.js';
 var defaultOptions = D.defaultOptions;
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 var PieSeries = SeriesRegistry.seriesTypes.pie;
@@ -112,7 +114,7 @@ var ItemSeries = /** @class */ (function (_super) {
         this.points.forEach(function (point) {
             var attr, graphics, pointAttr, pointMarkerOptions = point.marker || {}, symbol = (pointMarkerOptions.symbol ||
                 seriesMarkerOptions.symbol), r = pick(pointMarkerOptions.radius, seriesMarkerOptions.radius), size = defined(r) ? 2 * r : itemSize, padding = size * options.itemPadding, x, y, width, height;
-            point.graphics = graphics = point.graphics || {};
+            point.graphics = graphics = point.graphics || [];
             if (!series.chart.styledMode) {
                 pointAttr = series.pointAttribs(point, point.selected && 'select');
             }
@@ -121,7 +123,7 @@ var ItemSeries = /** @class */ (function (_super) {
                     point.graphic = renderer.g('point')
                         .add(series.group);
                 }
-                for (var val = 0; val < point.y; val++) {
+                for (var val = 0; val < (point.y || 0); val++) {
                     // Semi-circle
                     if (series.center && series.slots) {
                         // Fill up the slots from left to right
@@ -154,25 +156,33 @@ var ItemSeries = /** @class */ (function (_super) {
                     if (typeof r !== 'undefined') {
                         attr.r = r;
                     }
-                    if (graphics[val]) {
-                        graphics[val].animate(attr);
+                    var graphic = graphics[val];
+                    if (graphic) {
+                        graphic.animate(attr);
                     }
                     else {
-                        graphics[val] = renderer
-                            .symbol(symbol, null, null, null, null, {
+                        if (pointAttr) {
+                            extend(attr, pointAttr);
+                        }
+                        graphic = renderer
+                            .symbol(symbol, void 0, void 0, void 0, void 0, {
                             backgroundSize: 'within'
                         })
-                            .attr(extend(attr, pointAttr))
+                            .attr(attr)
                             .add(point.graphic);
                     }
-                    graphics[val].isActive = true;
+                    graphic.isActive = true;
+                    graphics[val] = graphic;
                     i++;
                 }
             }
-            objectEach(graphics, function (graphic, key) {
+            graphics.forEach(function (graphic, i) {
+                if (!graphic) {
+                    return;
+                }
                 if (!graphic.isActive) {
                     graphic.destroy();
-                    delete graphics[key];
+                    graphics.splice(i, 1);
                 }
                 else {
                     graphic.isActive = false;
@@ -216,9 +226,9 @@ var ItemSeries = /** @class */ (function (_super) {
     ItemSeries.prototype.getSlots = function () {
         var center = this.center, diameter = center[2], innerSize = center[3], row, slots = this.slots, x, y, rowRadius, rowLength, colCount, increment, angle, col, itemSize = 0, rowCount, fullAngle = (this.endAngleRad - this.startAngleRad), itemCount = Number.MAX_VALUE, finalItemCount, rows, testRows, rowsOption = this.options.rows, 
         // How many rows (arcs) should be used
-        rowFraction = (diameter - innerSize) / diameter, isCircle = fullAngle % (2 * Math.PI) === 0;
+        rowFraction = (diameter - innerSize) / diameter, isCircle = fullAngle % (2 * Math.PI) === 0, total = this.total || 0;
         // Increase the itemSize until we find the best fit
-        while (itemCount > this.total + (rows && isCircle ? rows.length : 0)) {
+        while (itemCount > total + (rows && isCircle ? rows.length : 0)) {
             finalItemCount = itemCount;
             // Reset
             slots.length = 0;
@@ -272,8 +282,7 @@ var ItemSeries = /** @class */ (function (_super) {
          * @private
          * @param {Highcharts.ItemRowContainerObject} item
          * Wrapped object with angle and row
-         * @return {void}
-         */
+             */
         function cutOffRow(item) {
             if (overshoot > 0) {
                 item.row.colCount--;
@@ -319,7 +328,9 @@ var ItemSeries = /** @class */ (function (_super) {
     };
     ItemSeries.prototype.translate = function (_positions) {
         // Initialize chart without setting data, #13379.
-        if (this.total === 0) {
+        if (this.total === 0 && // check if that is a (semi-)circle
+            isNumber(this.options.startAngle) &&
+            isNumber(this.options.endAngle)) {
             this.center = this.getCenter();
         }
         if (!this.slots) {
@@ -492,7 +503,7 @@ export default ItemSeries;
  *
  * @type      {Array<number|Array<string,(number|null)>|null|*>}
  * @extends   series.pie.data
- * @excludes  sliced
+ * @exclude   sliced
  * @product   highcharts
  * @apioption series.item.data
  */

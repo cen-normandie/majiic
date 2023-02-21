@@ -12,21 +12,21 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 import Color from '../../Core/Color/Color.js';
-import ColorMapMixin from '../../Mixins/ColorMapSeries.js';
-var colorMapSeriesMixin = ColorMapMixin.colorMapSeriesMixin;
+import ColorMapComposition from '../ColorMapComposition.js';
 import HeatmapPoint from './HeatmapPoint.js';
 import LegendSymbol from '../../Core/Legend/LegendSymbol.js';
-import palette from '../../Core/Color/Palette.js';
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 var Series = SeriesRegistry.series, _a = SeriesRegistry.seriesTypes, ColumnSeries = _a.column, ScatterSeries = _a.scatter;
 import SVGRenderer from '../../Core/Renderer/SVG/SVGRenderer.js';
@@ -79,19 +79,14 @@ var HeatmapSeries = /** @class */ (function (_super) {
      */
     HeatmapSeries.prototype.drawPoints = function () {
         var _this = this;
-        // In styled mode, use CSS, otherwise the fill used in the style
-        // sheet will take precedence over the fill attribute.
+        // In styled mode, use CSS, otherwise the fill used in the style sheet
+        // will take precedence over the fill attribute.
         var seriesMarkerOptions = this.options.marker || {};
         if (seriesMarkerOptions.enabled || this._hasPointMarkers) {
             Series.prototype.drawPoints.call(this);
             this.points.forEach(function (point) {
                 if (point.graphic) {
                     point.graphic[_this.chart.styledMode ? 'css' : 'animate'](_this.colorAttribs(point));
-                    if (_this.options.borderRadius) {
-                        point.graphic.attr({
-                            r: _this.options.borderRadius
-                        });
-                    }
                     if (point.value === null) { // #15708
                         point.graphic.addClass('highcharts-null-point');
                     }
@@ -136,53 +131,68 @@ var HeatmapSeries = /** @class */ (function (_super) {
      * @private
      */
     HeatmapSeries.prototype.init = function () {
-        var options;
-        Series.prototype.init.apply(this, arguments);
-        options = this.options;
+        _super.prototype.init.apply(this, arguments);
+        var options = this.options;
         // #3758, prevent resetting in setData
         options.pointRange = pick(options.pointRange, options.colsize || 1);
         // general point range
         this.yAxis.axisPointRange = options.rowsize || 1;
         // Bind new symbol names
         symbols.ellipse = symbols.circle;
+        // @todo
+        //
+        // Setting the border radius here is a workaround. It should be set in
+        // the shapeArgs or returned from `markerAttribs`. However,
+        // Series.drawPoints does not pick up markerAttribs to be passed over to
+        // `renderer.symbol`. Also, image symbols are not positioned by their
+        // top left corner like other symbols are. This should be refactored,
+        // then we could save ourselves some tests for .hasImage etc. And the
+        // evaluation of borderRadius would be moved to `markerAttribs`.
+        if (options.marker) {
+            options.marker.r = options.borderRadius;
+        }
     };
     /**
      * @private
      */
     HeatmapSeries.prototype.markerAttribs = function (point, state) {
-        var pointMarkerOptions = point.marker || {}, seriesMarkerOptions = this.options.marker || {}, seriesStateOptions, pointStateOptions, shapeArgs = point.shapeArgs || {}, hasImage = point.hasImage, attribs = {};
-        if (hasImage) {
+        var shapeArgs = point.shapeArgs || {};
+        if (point.hasImage) {
             return {
                 x: point.plotX,
                 y: point.plotY
             };
         }
-        // Setting width and height attributes on image does not affect
-        // on its dimensions.
-        if (state) {
-            seriesStateOptions = seriesMarkerOptions.states[state] || {};
-            pointStateOptions = pointMarkerOptions.states &&
-                pointMarkerOptions.states[state] || {};
-            [['width', 'x'], ['height', 'y']].forEach(function (dimension) {
-                // Set new width and height basing on state options.
-                attribs[dimension[0]] = (pointStateOptions[dimension[0]] ||
-                    seriesStateOptions[dimension[0]] ||
-                    shapeArgs[dimension[0]]) + (pointStateOptions[dimension[0] + 'Plus'] ||
-                    seriesStateOptions[dimension[0] + 'Plus'] || 0);
-                // Align marker by a new size.
-                attribs[dimension[1]] =
-                    shapeArgs[dimension[1]] +
-                        (shapeArgs[dimension[0]] -
-                            attribs[dimension[0]]) / 2;
-            });
+        // Setting width and height attributes on image does not affect on its
+        // dimensions.
+        if (state && state !== 'normal') {
+            var pointMarkerOptions = point.options.marker || {}, seriesMarkerOptions = this.options.marker || {}, seriesStateOptions = (seriesMarkerOptions.states &&
+                seriesMarkerOptions.states[state]) || {}, pointStateOptions = (pointMarkerOptions.states &&
+                pointMarkerOptions.states[state]) || {};
+            // Set new width and height basing on state options.
+            var width = (pointStateOptions.width ||
+                seriesStateOptions.width ||
+                shapeArgs.width ||
+                0) + (pointStateOptions.widthPlus ||
+                seriesStateOptions.widthPlus ||
+                0);
+            var height = (pointStateOptions.height ||
+                seriesStateOptions.height ||
+                shapeArgs.height ||
+                0) + (pointStateOptions.heightPlus ||
+                seriesStateOptions.heightPlus ||
+                0);
+            // Align marker by the new size.
+            var x = (shapeArgs.x || 0) + ((shapeArgs.width || 0) - width) / 2, y = (shapeArgs.y || 0) + ((shapeArgs.height || 0) - height) / 2;
+            return { x: x, y: y, width: width, height: height };
         }
-        return state ? attribs : shapeArgs;
+        return shapeArgs;
     };
     /**
      * @private
      */
     HeatmapSeries.prototype.pointAttribs = function (point, state) {
-        var series = this, attr = Series.prototype.pointAttribs.call(series, point, state), seriesOptions = series.options || {}, plotOptions = series.chart.options.plotOptions || {}, seriesPlotOptions = plotOptions.series || {}, heatmapPlotOptions = plotOptions.heatmap || {}, stateOptions, brightness, 
+        var series = this, attr = Series.prototype.pointAttribs.call(series, point, state), seriesOptions = series.options || {}, plotOptions = series.chart.options.plotOptions || {}, seriesPlotOptions = plotOptions.series || {}, heatmapPlotOptions = plotOptions.heatmap || {}, 
         // Get old properties in order to keep backward compatibility
         borderColor = (point && point.options.borderColor) ||
             seriesOptions.borderColor ||
@@ -199,32 +209,19 @@ var HeatmapSeries = /** @class */ (function (_super) {
             this.color);
         // Apply old borderWidth property if exists.
         attr['stroke-width'] = borderWidth;
-        if (state) {
-            stateOptions =
-                merge(seriesOptions.states[state], seriesOptions.marker &&
-                    seriesOptions.marker.states[state], point &&
-                    point.options.states &&
-                    point.options.states[state] || {});
-            brightness = stateOptions.brightness;
+        if (state && state !== 'normal') {
+            var stateOptions = merge((seriesOptions.states &&
+                seriesOptions.states[state]), (seriesOptions.marker &&
+                seriesOptions.marker.states &&
+                seriesOptions.marker.states[state]), (point &&
+                point.options.states &&
+                point.options.states[state] || {}));
             attr.fill =
                 stateOptions.color ||
-                    Color.parse(attr.fill).brighten(brightness || 0).get();
-            attr.stroke = stateOptions.lineColor;
+                    Color.parse(attr.fill).brighten(stateOptions.brightness || 0).get();
+            attr.stroke = (stateOptions.lineColor || attr.stroke); // #17896
         }
         return attr;
-    };
-    /**
-     * @private
-     */
-    HeatmapSeries.prototype.setClip = function (animation) {
-        var series = this, chart = series.chart;
-        Series.prototype.setClip.apply(series, arguments);
-        if (series.options.clip !== false || animation) {
-            series.markerGroup
-                .clip((animation || series.clipBox) && series.sharedClipKey ?
-                chart.sharedClips[series.sharedClipKey] :
-                chart.clipRect);
-        }
     };
     /**
      * @private
@@ -233,41 +230,28 @@ var HeatmapSeries = /** @class */ (function (_super) {
         var series = this, options = series.options, symbol = options.marker && options.marker.symbol || 'rect', shape = symbols[symbol] ? symbol : 'rect', hasRegularShape = ['circle', 'square'].indexOf(shape) !== -1;
         series.generatePoints();
         series.points.forEach(function (point) {
-            var pointAttr, sizeDiff, hasImage, cellAttr = point.getCellAttributes(), shapeArgs = {};
-            shapeArgs.x = Math.min(cellAttr.x1, cellAttr.x2);
-            shapeArgs.y = Math.min(cellAttr.y1, cellAttr.y2);
-            shapeArgs.width = Math.max(Math.abs(cellAttr.x2 - cellAttr.x1), 0);
-            shapeArgs.height = Math.max(Math.abs(cellAttr.y2 - cellAttr.y1), 0);
-            hasImage = point.hasImage =
-                (point.marker && point.marker.symbol || symbol || '')
-                    .indexOf('url') === 0;
-            // If marker shape is regular (symetric), find shorter
-            // cell's side.
+            var cellAttr = point.getCellAttributes();
+            var x = Math.min(cellAttr.x1, cellAttr.x2), y = Math.min(cellAttr.y1, cellAttr.y2), width = Math.max(Math.abs(cellAttr.x2 - cellAttr.x1), 0), height = Math.max(Math.abs(cellAttr.y2 - cellAttr.y1), 0);
+            point.hasImage = (point.marker && point.marker.symbol || symbol || '').indexOf('url') === 0;
+            // If marker shape is regular (square), find the shorter cell's
+            // side.
             if (hasRegularShape) {
-                sizeDiff = Math.abs(shapeArgs.width - shapeArgs.height);
-                shapeArgs.x = Math.min(cellAttr.x1, cellAttr.x2) +
-                    (shapeArgs.width < shapeArgs.height ? 0 : sizeDiff / 2);
-                shapeArgs.y = Math.min(cellAttr.y1, cellAttr.y2) +
-                    (shapeArgs.width < shapeArgs.height ? sizeDiff / 2 : 0);
-                shapeArgs.width = shapeArgs.height =
-                    Math.min(shapeArgs.width, shapeArgs.height);
+                var sizeDiff = Math.abs(width - height);
+                x = Math.min(cellAttr.x1, cellAttr.x2) +
+                    (width < height ? 0 : sizeDiff / 2);
+                y = Math.min(cellAttr.y1, cellAttr.y2) +
+                    (width < height ? sizeDiff / 2 : 0);
+                width = height = Math.min(width, height);
             }
-            pointAttr = {
-                plotX: (cellAttr.x1 + cellAttr.x2) / 2,
-                plotY: (cellAttr.y1 + cellAttr.y2) / 2,
-                clientX: (cellAttr.x1 + cellAttr.x2) / 2,
-                shapeType: 'path',
-                shapeArgs: merge(true, shapeArgs, {
-                    d: symbols[shape](shapeArgs.x, shapeArgs.y, shapeArgs.width, shapeArgs.height)
-                })
-            };
-            if (hasImage) {
-                point.marker = {
-                    width: shapeArgs.width,
-                    height: shapeArgs.height
-                };
+            if (point.hasImage) {
+                point.marker = { width: width, height: height };
             }
-            extend(point, pointAttr);
+            point.plotX = point.clientX = (cellAttr.x1 + cellAttr.x2) / 2;
+            point.plotY = (cellAttr.y1 + cellAttr.y2) / 2;
+            point.shapeType = 'path';
+            point.shapeArgs = merge(true, { x: x, y: y, width: width, height: height }, {
+                d: symbols[shape](x, y, width, height, { r: options.borderRadius })
+            });
         });
         fireEvent(series, 'afterTranslate');
     };
@@ -298,7 +282,11 @@ var HeatmapSeries = /** @class */ (function (_super) {
          */
         animation: false,
         /**
-         * The border radius for each heatmap item.
+         * The border radius for each heatmap item. The border's color and
+         * width can be set in marker options.
+         *
+         * @see [lineColor](#plotOptions.heatmap.marker.lineColor)
+         * @see [lineWidth](#plotOptions.heatmap.marker.lineWidth)
          */
         borderRadius: 0,
         /**
@@ -363,7 +351,7 @@ var HeatmapSeries = /** @class */ (function (_super) {
          *
          * @type {Highcharts.ColorString|Highcharts.GradientColorObject|Highcharts.PatternObject}
          */
-        nullColor: palette.neutralColor3,
+        nullColor: "#f7f7f7" /* Palette.neutralColor3 */,
         dataLabels: {
             formatter: function () {
                 var numberFormatter = this.series.chart.numberFormatter;
@@ -373,7 +361,10 @@ var HeatmapSeries = /** @class */ (function (_super) {
             inside: true,
             verticalAlign: 'middle',
             crop: false,
-            overflow: false,
+            /**
+             * @ignore-option
+             */
+            overflow: 'allow',
             padding: 0 // #3837
         },
         /**
@@ -544,25 +535,27 @@ var HeatmapSeries = /** @class */ (function (_super) {
     return HeatmapSeries;
 }(ScatterSeries));
 extend(HeatmapSeries.prototype, {
+    axisTypes: ColorMapComposition.seriesMembers.axisTypes,
+    colorKey: ColorMapComposition.seriesMembers.colorKey,
+    directTouch: true,
+    getExtremesFromAll: true,
+    parallelArrays: ColorMapComposition.seriesMembers.parallelArrays,
+    pointArrayMap: ['y', 'value'],
+    pointClass: HeatmapPoint,
+    specialGroup: 'group',
+    trackerGroups: ColorMapComposition.seriesMembers.trackerGroups,
     /**
      * @private
      */
     alignDataLabel: ColumnSeries.prototype.alignDataLabel,
-    axisTypes: colorMapSeriesMixin.axisTypes,
-    colorAttribs: colorMapSeriesMixin.colorAttribs,
-    colorKey: colorMapSeriesMixin.colorKey,
-    directTouch: true,
+    colorAttribs: ColorMapComposition.seriesMembers.colorAttribs,
     /**
      * @private
      */
     drawLegendSymbol: LegendSymbol.drawRectangle,
-    getExtremesFromAll: true,
-    getSymbol: Series.prototype.getSymbol,
-    parallelArrays: colorMapSeriesMixin.parallelArrays,
-    pointArrayMap: ['y', 'value'],
-    pointClass: HeatmapPoint,
-    trackerGroups: colorMapSeriesMixin.trackerGroups
+    getSymbol: Series.prototype.getSymbol
 });
+ColorMapComposition.compose(HeatmapSeries);
 SeriesRegistry.registerSeriesType('heatmap', HeatmapSeries);
 /* *
  *

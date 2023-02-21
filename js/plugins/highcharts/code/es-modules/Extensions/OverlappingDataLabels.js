@@ -34,9 +34,7 @@ addEvent(Chart, 'render', function collectAndHide() {
             !yAxis.options.stackLabels.allowOverlap) {
             objectEach(yAxis.stacking.stacks, function (stack) {
                 objectEach(stack, function (stackItem) {
-                    if (stackItem.label &&
-                        stackItem.label.visibility !== 'hidden' // #15607
-                    ) {
+                    if (stackItem.label) {
                         labels.push(stackItem.label);
                     }
                 });
@@ -123,7 +121,8 @@ Chart.prototype.hideOverlappingLabels = function (labels) {
             if (alignValue) {
                 xOffset = +alignValue * boxWidth;
             }
-            else if (isNumber(label.x) && Math.round(label.x) !== label.translateX) {
+            else if (isNumber(label.x) &&
+                Math.round(label.x) !== label.translateX) {
                 xOffset = label.x - label.translateX;
             }
             return {
@@ -161,7 +160,10 @@ Chart.prototype.hideOverlappingLabels = function (labels) {
                 box2 &&
                 label1 !== label2 && // #6465, polar chart with connectEnds
                 label1.newOpacity !== 0 &&
-                label2.newOpacity !== 0) {
+                label2.newOpacity !== 0 &&
+                // #15863 dataLabels are no longer hidden by translation
+                label1.visibility !== 'hidden' &&
+                label2.visibility !== 'hidden') {
                 if (isIntersectRect(box1, box2)) {
                     (label1.labelrank < label2.labelrank ? label1 : label2)
                         .newOpacity = 0;
@@ -185,23 +187,26 @@ Chart.prototype.hideOverlappingLabels = function (labels) {
  * @private
  * @function hideOrShow
  * @param {Highcharts.SVGElement} label
- *        The label.
+ * The label.
  * @param {Highcharts.Chart} chart
- *        The chart that contains the label.
+ * The chart that contains the label.
  * @return {boolean}
+ * Whether label is affected
  */
 function hideOrShow(label, chart) {
     var complete, newOpacity, isLabelAffected = false;
     if (label) {
         newOpacity = label.newOpacity;
         if (label.oldOpacity !== newOpacity) {
-            // Make sure the label is completely hidden to avoid catching
-            // clicks (#4362)
+            // Make sure the label is completely hidden to avoid catching clicks
+            // (#4362)
             if (label.alignAttr && label.placed) { // data labels
                 label[newOpacity ? 'removeClass' : 'addClass']('highcharts-data-label-hidden');
                 complete = function () {
                     if (!chart.styledMode) {
-                        label.css({ pointerEvents: newOpacity ? 'auto' : 'none' });
+                        label.css({
+                            pointerEvents: newOpacity ? 'auto' : 'none'
+                        });
                     }
                 };
                 isLabelAffected = true;

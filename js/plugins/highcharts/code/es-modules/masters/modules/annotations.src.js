@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v9.2.2 (2021-08-24)
+ * @license Highcharts JS v10.3.3 (2023-01-20)
  * @module highcharts/modules/annotations
  * @requires highcharts
  *
@@ -10,6 +10,8 @@
  * License: www.highcharts.com/license
  */
 'use strict';
-import '../../Extensions/Annotations/Annotations.js';
-import '../../Extensions/Annotations/NavigationBindings.js';
-import '../../Extensions/Annotations/Popup.js';
+import Highcharts from '../../Core/Globals.js';
+import Annotation from '../../Extensions/Annotations/Annotation.js';
+var G = Highcharts;
+G.Annotation = Annotation;
+Annotation.compose(G.Chart, G.Pointer, G.SVGRenderer);

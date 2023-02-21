@@ -10,23 +10,24 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import palette from '../../../Core/Color/Palette.js';
-import MultipleLinesMixin from '../../../Mixins/MultipleLines.js';
-import ReduceArrayMixin from '../../../Mixins/ReduceArray.js';
+import AU from '../ArrayUtilities.js';
+import MultipleLinesComposition from '../MultipleLinesComposition.js';
+import Palettes from '../../../Core/Color/Palettes.js';
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
 var SMAIndicator = SeriesRegistry.seriesTypes.sma;
 import U from '../../../Core/Utilities.js';
 var merge = U.merge, extend = U.extend;
-var getArrayExtremes = ReduceArrayMixin.getArrayExtremes;
 /* *
  *
  *  Class
@@ -44,22 +45,27 @@ var getArrayExtremes = ReduceArrayMixin.getArrayExtremes;
 var PCIndicator = /** @class */ (function (_super) {
     __extends(PCIndicator, _super);
     function PCIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
         /* *
-        *
-        *  Properties
-        *
-        * */
+         *
+         *  Properties
+         *
+         * */
         _this.data = void 0;
         _this.options = void 0;
         _this.points = void 0;
         return _this;
     }
     /* *
-    *
-    *  Functions
-    *
-    * */
+     *
+     *  Functions
+     *
+     * */
     PCIndicator.prototype.getValues = function (series, params) {
         var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal ? yVal.length : 0, 
         // 0- date, 1-top line, 2-middle line, 3-bottom line
@@ -72,7 +78,7 @@ var PCIndicator = /** @class */ (function (_super) {
         for (i = period; i <= yValLen; i++) {
             date = xVal[i - 1];
             slicedY = yVal.slice(i - period, i);
-            extremes = getArrayExtremes(slicedY, low, high);
+            extremes = AU.getArrayExtremes(slicedY, low, high);
             TL = extremes[1];
             BL = extremes[0];
             ML = (TL + BL) / 2;
@@ -106,6 +112,16 @@ var PCIndicator = /** @class */ (function (_super) {
      */
     PCIndicator.defaultOptions = merge(SMAIndicator.defaultOptions, {
         /**
+         * Option for fill color between lines in Price channel Indicator.
+         *
+         * @sample {highstock} stock/indicators/indicator-area-fill
+         *      background fill between lines
+         *
+         * @type {Highcharts.Color}
+         * @apioption plotOptions.pc.fillColor
+         *
+         */
+        /**
          * @excluding index
          */
         params: {
@@ -121,7 +137,7 @@ var PCIndicator = /** @class */ (function (_super) {
                  *
                  * @type {Highcharts.ColorString}
                  */
-                lineColor: palette.colors[2],
+                lineColor: Palettes.colors[2],
                 /**
                  * Pixel width of the line.
                  */
@@ -136,7 +152,7 @@ var PCIndicator = /** @class */ (function (_super) {
                  *
                  * @type {Highcharts.ColorString}
                  */
-                lineColor: palette.colors[8],
+                lineColor: Palettes.colors[8],
                 /**
                  * Pixel width of the line.
                  */
@@ -150,16 +166,14 @@ var PCIndicator = /** @class */ (function (_super) {
     return PCIndicator;
 }(SMAIndicator));
 extend(PCIndicator.prototype, {
-    getTranslatedLinesNames: MultipleLinesMixin.getTranslatedLinesNames,
-    drawGraph: MultipleLinesMixin.drawGraph,
-    toYData: MultipleLinesMixin.toYData,
-    pointArrayMap: ['top', 'middle', 'bottom'],
-    pointValKey: 'middle',
+    areaLinesNames: ['top', 'bottom'],
     nameBase: 'Price Channel',
     nameComponents: ['period'],
     linesApiNames: ['topLine', 'bottomLine'],
-    translate: MultipleLinesMixin.translate
+    pointArrayMap: ['top', 'middle', 'bottom'],
+    pointValKey: 'middle'
 });
+MultipleLinesComposition.compose(PCIndicator);
 SeriesRegistry.registerSeriesType('pc', PCIndicator);
 /* *
  *
@@ -167,6 +181,11 @@ SeriesRegistry.registerSeriesType('pc', PCIndicator);
  *
  * */
 export default PCIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A Price channel indicator. If the [type](#series.pc.type) option is not
  * specified, it is inherited from [chart.type](#chart.type).

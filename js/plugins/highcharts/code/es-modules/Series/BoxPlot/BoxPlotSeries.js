@@ -12,10 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24,7 +26,6 @@ var __extends = (this && this.__extends) || (function () {
 import ColumnSeries from '../Column/ColumnSeries.js';
 import H from '../../Core/Globals.js';
 var noop = H.noop;
-import palette from '../../Core/Color/Palette.js';
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 import U from '../../Core/Utilities.js';
 var extend = U.extend, merge = U.merge, pick = U.pick;
@@ -248,9 +249,12 @@ var BoxPlotSeries = /** @class */ (function (_super) {
      * @optionparent plotOptions.boxplot
      */
     BoxPlotSeries.defaultOptions = merge(ColumnSeries.defaultOptions, {
+        /**
+         * @type {number|null}
+         */
         threshold: null,
         tooltip: {
-            pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> ' +
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> <b>' +
                 '{series.name}</b><br/>' +
                 'Maximum: {point.high}<br/>' +
                 'Upper quartile: {point.q3}<br/>' +
@@ -285,7 +289,7 @@ var BoxPlotSeries = /** @class */ (function (_super) {
          * @since   3.0
          * @product highcharts
          */
-        fillColor: palette.backgroundColor,
+        fillColor: "#ffffff" /* Palette.backgroundColor */,
         /**
          * The width of the line surrounding the box. If any of
          * [stemWidth](#plotOptions.boxplot.stemWidth),
@@ -346,7 +350,7 @@ var BoxPlotSeries = /** @class */ (function (_super) {
                 brightness: -0.3
             }
         },
-
+        */
         /**
          * The color of the stem, the vertical line extending from the box to
          * the whiskers. If `undefined`, the series color is used.

@@ -22,9 +22,9 @@ SELECT
     $2||to_char(e.e_end AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as end, 
     EXTRACT(epoch FROM e.e_end - e.e_start)/3600 as nb_heures,
     e.e_id_projet,
+    e.e_nom_projet,
     e.e_id_action,
     a.code_action,
-    e.e_nom_projet,
     e.e_lieu,
     e.e_commentaire,
     e.e_salissure,
@@ -43,7 +43,7 @@ ORDER by 3, 2
 $result = pg_execute($dbconn, "sql", array($_POST["nom_personne"], $quote));
 $row_ = 1;
 //write first line title
-$arr_columnname = ['id','objet','start','end','nb_heures','id_projet','id_action','nom_action','nom_projet','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
+$arr_columnname = ['id','objet','start','end','nb_heures','id_projet','nom_projet','id_action','nom_action','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
 for ($column = 1; $column <= 17; $column++) {
     $column_in_pg = $column -1;
     $sheet->setCellValueByColumnAndRow($column, $row_, $arr_columnname[$column_in_pg]);

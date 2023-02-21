@@ -10,23 +10,22 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 import Chart from '../../../Core/Chart/Chart.js';
-import RequiredIndicatorMixin from '../../../Mixins/IndicatorRequired.js';
 import SeriesRegistry from '../../../Core/Series/SeriesRegistry.js';
 var LineSeries = SeriesRegistry.seriesTypes.line;
 import U from '../../../Core/Utilities.js';
 var addEvent = U.addEvent, error = U.error, extend = U.extend, isArray = U.isArray, merge = U.merge, pick = U.pick, splat = U.splat;
-import './SMAComposition.js';
-var generateMessage = RequiredIndicatorMixin.generateMessage;
 /* *
  *
  *  Class
@@ -57,14 +56,12 @@ var SMAIndicator = /** @class */ (function (_super) {
         _this.options = void 0;
         _this.points = void 0;
         return _this;
-        /* eslint-enable valid-jsdoc */
     }
     /* *
      *
      *  Functions
      *
      * */
-    /* eslint-disable valid-jsdoc */
     /**
      * @private
      */
@@ -78,7 +75,8 @@ var SMAIndicator = /** @class */ (function (_super) {
      * @private
      */
     SMAIndicator.prototype.getName = function () {
-        var name = this.name, params = [];
+        var params = [];
+        var name = this.name;
         if (!name) {
             (this.nameComponents || []).forEach(function (component, index) {
                 params.push(this.options.params[component] +
@@ -93,7 +91,8 @@ var SMAIndicator = /** @class */ (function (_super) {
      * @private
      */
     SMAIndicator.prototype.getValues = function (series, params) {
-        var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal.length, range = 0, sum = 0, SMA = [], xData = [], yData = [], index = -1, i, SMAPoint;
+        var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal.length, SMA = [], xData = [], yData = [];
+        var i, index = -1, range = 0, SMAPoint, sum = 0;
         if (xVal.length < period) {
             return;
         }
@@ -127,36 +126,40 @@ var SMAIndicator = /** @class */ (function (_super) {
      * @private
      */
     SMAIndicator.prototype.init = function (chart, options) {
-        var indicator = this, requiredIndicators = indicator.requireIndicators();
-        // Check whether all required indicators are loaded.
-        if (!requiredIndicators.allLoaded) {
-            return error(generateMessage(indicator.type, requiredIndicators.needed));
-        }
+        var indicator = this;
         _super.prototype.init.call(indicator, chart, options);
         // Only after series are linked indicator can be processed.
         var linkedSeriesUnbiner = addEvent(Chart, 'afterLinkSeries', function () {
             var hasEvents = !!indicator.dataEventsToUnbind.length;
             if (indicator.linkedParent) {
                 if (!hasEvents) {
-                    indicator.dataEventsToUnbind.push(addEvent(indicator.bindTo.series ?
-                        indicator.linkedParent :
-                        indicator.linkedParent.xAxis, indicator.bindTo.eventName, function () {
+                    // No matter which indicator, always recalculate after
+                    // updating the data.
+                    indicator.dataEventsToUnbind.push(addEvent(indicator.linkedParent, 'updatedData', function () {
                         indicator.recalculateValues();
                     }));
+                    // Some indicators (like VBP) requires an additional
+                    // event (afterSetExtremes) to properly show the data.
+                    if (indicator.calculateOn.xAxis) {
+                        indicator.dataEventsToUnbind.push(addEvent(indicator.linkedParent.xAxis, indicator.calculateOn.xAxis, function () {
+                            indicator.recalculateValues();
+                        }));
+                    }
                 }
-                if (indicator.calculateOn === 'init') {
+                // Most indicators are being calculated on chart's init.
+                if (indicator.calculateOn.chart === 'init') {
                     if (!indicator.processedYData) {
                         indicator.recalculateValues();
                     }
                 }
-                else {
-                    if (!hasEvents) {
-                        var unbinder_1 = addEvent(indicator.chart, indicator.calculateOn, function () {
-                            indicator.recalculateValues();
-                            // Call this just once, on init
-                            unbinder_1();
-                        });
-                    }
+                else if (!hasEvents) {
+                    // Some indicators (like VBP) has to recalculate their
+                    // values after other chart's events (render).
+                    var unbinder_1 = addEvent(indicator.chart, indicator.calculateOn.chart, function () {
+                        indicator.recalculateValues();
+                        // Call this just once.
+                        unbinder_1();
+                    });
                 }
             }
             else {
@@ -174,14 +177,23 @@ var SMAIndicator = /** @class */ (function (_super) {
     };
     /**
      * @private
-     * @return {void}
      */
     SMAIndicator.prototype.recalculateValues = function () {
-        var indicator = this, oldData = indicator.points || [], oldDataLength = (indicator.xData || []).length, processedData = (indicator.getValues(indicator.linkedParent, indicator.options.params) || {
+        var croppedDataValues = [], indicator = this, oldData = indicator.points || [], oldDataLength = (indicator.xData || []).length, emptySet = {
             values: [],
             xData: [],
             yData: []
-        }), croppedDataValues = [], overwriteData = true, oldFirstPointIndex, oldLastPointIndex, croppedData, min, max, i;
+        };
+        var overwriteData = true, oldFirstPointIndex, oldLastPointIndex, croppedData, min, max, i;
+        // Updating an indicator with redraw=false may destroy data.
+        // If there will be a following update for the parent series,
+        // we will try to access Series object without any properties
+        // (except for prototyped ones). This is what happens
+        // for example when using Axis.setDataGrouping(). See #16670
+        var processedData = indicator.linkedParent.options &&
+            indicator.linkedParent.yData && // #18176, #18177 indicators should
+            indicator.linkedParent.yData.length ? // work with empty dataset
+            (indicator.getValues(indicator.linkedParent, indicator.options.params) || emptySet) : emptySet;
         // We need to update points to reflect changes in all,
         // x and y's, values. However, do it only for non-grouped
         // data - grouping does it for us (#8572)
@@ -227,12 +239,12 @@ var SMAIndicator = /** @class */ (function (_super) {
         }
         // Removal of processedXData property is required because on
         // first translate processedXData array is empty
-        if (indicator.bindTo.series === false) {
+        if (indicator.calculateOn.xAxis && indicator.processedXData) {
             delete indicator.processedXData;
             indicator.isDirty = true;
             indicator.redraw();
         }
-        indicator.isDirtyData = false;
+        indicator.isDirtyData = !!indicator.linkedSeries;
     };
     /**
      * @private
@@ -240,30 +252,15 @@ var SMAIndicator = /** @class */ (function (_super) {
     SMAIndicator.prototype.processData = function () {
         var series = this, compareToMain = series.options.compareToMain, linkedParent = series.linkedParent;
         _super.prototype.processData.apply(series, arguments);
-        if (linkedParent && linkedParent.compareValue && compareToMain) {
-            series.compareValue = linkedParent.compareValue;
+        if (series.dataModify &&
+            linkedParent &&
+            linkedParent.dataModify &&
+            linkedParent.dataModify.compareValue &&
+            compareToMain) {
+            series.dataModify.compareValue =
+                linkedParent.dataModify.compareValue;
         }
         return;
-    };
-    /**
-     * @private
-     */
-    SMAIndicator.prototype.requireIndicators = function () {
-        var obj = {
-            allLoaded: true
-        };
-        // Check whether all required indicators are loaded, else return
-        // the object with missing indicator's name.
-        this.requiredIndicators.forEach(function (indicator) {
-            if (SeriesRegistry.seriesTypes[indicator]) {
-                SeriesRegistry.seriesTypes[indicator].prototype.requireIndicators();
-            }
-            else {
-                obj.allLoaded = false;
-                obj.needed = indicator;
-            }
-        });
-        return obj;
     };
     /**
      * The parameter allows setting line series type and use OHLC indicators.
@@ -335,7 +332,7 @@ var SMAIndicator = /** @class */ (function (_super) {
              * example using OHLC data, index=2 means the indicator will be
              * calculated using Low values.
              */
-            index: 0,
+            index: 3,
             /**
              * The base period for indicator calculations. This is the number of
              * data points which are taken into account for the indicator
@@ -347,16 +344,12 @@ var SMAIndicator = /** @class */ (function (_super) {
     return SMAIndicator;
 }(LineSeries));
 extend(SMAIndicator.prototype, {
-    bindTo: {
-        series: true,
-        eventName: 'updatedData'
+    calculateOn: {
+        chart: 'init'
     },
-    calculateOn: 'init',
     hasDerivedData: true,
     nameComponents: ['period'],
     nameSuffixes: [],
-    // Defines on which other indicators is this indicator based on.
-    requiredIndicators: [],
     useCommonDataGrouping: true
 });
 SeriesRegistry.registerSeriesType('sma', SMAIndicator);
@@ -382,4 +375,4 @@ export default SMAIndicator;
  * @requires  stock/indicators/indicators
  * @apioption series.sma
  */
-''; // adds doclet above to the transpiled file
+(''); // adds doclet above to the transpiled file

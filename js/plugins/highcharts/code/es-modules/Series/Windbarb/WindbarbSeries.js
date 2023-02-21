@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -25,9 +27,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import A from '../../Core/Animation/AnimationUtilities.js';
 var animObject = A.animObject;
+import ApproximationRegistry from '../../Extensions/DataGrouping/ApproximationRegistry.js';
 import H from '../../Core/Globals.js';
-var noop = H.noop;
-import OnSeriesMixin from '../../Mixins/OnSeries.js';
+import OnSeriesComposition from '../OnSeriesComposition.js';
 import SeriesRegistry from '../../Core/Series/SeriesRegistry.js';
 var Series = SeriesRegistry.series, ColumnSeries = SeriesRegistry.seriesTypes.column;
 import U from '../../Core/Utilities.js';
@@ -73,8 +75,8 @@ var WindbarbSeries = /** @class */ (function (_super) {
      * @private
      */
     WindbarbSeries.registerApproximation = function () {
-        if (H.approximations && !H.approximations.windbarb) {
-            H.approximations.windbarb = function (values, directions) {
+        if (!ApproximationRegistry.windbarb) {
+            ApproximationRegistry.windbarb = function (values, directions) {
                 var vectorX = 0, vectorY = 0, i, len = values.length;
                 for (i = 0; i < len; i++) {
                     vectorX += values[i] * Math.cos(directions[i] * H.deg2rad);
@@ -162,21 +164,6 @@ var WindbarbSeries = /** @class */ (function (_super) {
             }
         }
         return path;
-    };
-    WindbarbSeries.prototype.translate = function () {
-        var beaufortFloor = this.beaufortFloor, beaufortName = this.beaufortName;
-        OnSeriesMixin.translate.call(this);
-        this.points.forEach(function (point) {
-            var level = 0;
-            // Find the beaufort level (zero based)
-            for (; level < beaufortFloor.length; level++) {
-                if (beaufortFloor[level] > point.value) {
-                    break;
-                }
-            }
-            point.beaufortLevel = level - 1;
-            point.beaufort = beaufortName[level - 1];
-        });
     };
     WindbarbSeries.prototype.drawPoints = function () {
         var chart = this.chart, yAxis = this.yAxis, inverted = chart.inverted, shapeOffset = this.options.vectorLength / 2;
@@ -355,21 +342,35 @@ var WindbarbSeries = /** @class */ (function (_super) {
     });
     return WindbarbSeries;
 }(ColumnSeries));
+OnSeriesComposition.compose(WindbarbSeries);
 extend(WindbarbSeries.prototype, {
-    pointArrayMap: ['value', 'direction'],
-    parallelArrays: ['x', 'value', 'direction'],
+    beaufortFloor: [0, 0.3, 1.6, 3.4, 5.5, 8.0, 10.8, 13.9, 17.2, 20.8,
+        24.5, 28.5, 32.7],
     beaufortName: ['Calm', 'Light air', 'Light breeze',
         'Gentle breeze', 'Moderate breeze', 'Fresh breeze',
         'Strong breeze', 'Near gale', 'Gale', 'Strong gale', 'Storm',
         'Violent storm', 'Hurricane'],
-    beaufortFloor: [0, 0.3, 1.6, 3.4, 5.5, 8.0, 10.8, 13.9, 17.2, 20.8,
-        24.5, 28.5, 32.7],
+    invertible: false,
+    parallelArrays: ['x', 'value', 'direction'],
+    pointArrayMap: ['value', 'direction'],
+    pointClass: WindbarbPoint,
     trackerGroups: ['markerGroup'],
-    getPlotBox: OnSeriesMixin.getPlotBox,
-    // Don't invert the marker group (#4960)
-    invertGroups: noop
+    translate: function () {
+        var beaufortFloor = this.beaufortFloor, beaufortName = this.beaufortName;
+        OnSeriesComposition.translate.call(this);
+        this.points.forEach(function (point) {
+            var level = 0;
+            // Find the beaufort level (zero based)
+            for (; level < beaufortFloor.length; level++) {
+                if (beaufortFloor[level] > point.value) {
+                    break;
+                }
+            }
+            point.beaufortLevel = level - 1;
+            point.beaufort = beaufortName[level - 1];
+        });
+    }
 });
-WindbarbSeries.prototype.pointClass = WindbarbPoint;
 /* *
  *
  * Registry

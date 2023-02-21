@@ -12,10 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -65,15 +67,16 @@ var HTMLRenderer = /** @class */ (function (_super) {
      * @function Highcharts.SVGRenderer#html
      *
      * @param {string} str
-     *        The text of (subset) HTML to draw.
+     * The text of (subset) HTML to draw.
      *
      * @param {number} x
-     *        The x position of the text's lower left corner.
+     * The x position of the text's lower left corner.
      *
      * @param {number} y
-     *        The y position of the text's lower left corner.
+     * The y position of the text's lower left corner.
      *
      * @return {Highcharts.HTMLDOMElement}
+     * HTML element.
      */
     HTMLRenderer.prototype.html = function (str, x, y) {
         var wrapper = this.createElement('span'), element = wrapper.element, renderer = wrapper.renderer, isSVG = renderer.isSVG, addSetters = function (gWrapper, style) {
@@ -181,8 +184,7 @@ var HTMLRenderer = /** @class */ (function (_super) {
                              * @private
                              * @param {*} value
                              * @param {string} key
-                             * @return {void}
-                             */
+                                                     */
                             function translateSetter(value, key) {
                                 parentGroup[key] = value;
                                 if (key === 'translateX') {
@@ -205,7 +207,9 @@ var HTMLRenderer = /** @class */ (function (_super) {
                                         display: parentGroup.display,
                                         opacity: parentGroup.opacity,
                                         cursor: parentGroupStyles.cursor,
-                                        pointerEvents: parentGroupStyles.pointerEvents,
+                                        pointerEvents: (
+                                        // #5595
+                                        parentGroupStyles.pointerEvents),
                                         visibility: parentGroup.visibility
                                         // the top group is appended to container
                                     }, htmlGroup || container);

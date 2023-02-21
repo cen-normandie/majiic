@@ -10,10 +10,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40,6 +42,11 @@ var correctFloat = U.correctFloat, isArray = U.isArray, merge = U.merge;
 var EMAIndicator = /** @class */ (function (_super) {
     __extends(EMAIndicator, _super);
     function EMAIndicator() {
+        /* *
+         *
+         *  Static Properties
+         *
+         * */
         var _this = _super !== null && _super.apply(this, arguments) || this;
         /* *
          *
@@ -68,14 +75,14 @@ var EMAIndicator = /** @class */ (function (_super) {
     EMAIndicator.prototype.calculateEma = function (xVal, yVal, i, EMApercent, calEMA, index, SMA) {
         var x = xVal[i - 1], yValue = index < 0 ?
             yVal[i - 1] :
-            yVal[i - 1][index], y;
-        y = typeof calEMA === 'undefined' ?
+            yVal[i - 1][index], y = typeof calEMA === 'undefined' ?
             SMA : correctFloat((yValue * EMApercent) +
             (calEMA * (1 - EMApercent)));
         return [x, y];
     };
     EMAIndicator.prototype.getValues = function (series, params) {
-        var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal ? yVal.length : 0, EMApercent = 2 / (period + 1), sum = 0, EMA = [], xData = [], yData = [], index = -1, SMA = 0, calEMA, EMAPoint, i;
+        var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal ? yVal.length : 0, EMApercent = 2 / (period + 1), EMA = [], xData = [], yData = [];
+        var calEMA, EMAPoint, i, index = -1, sum = 0, SMA = 0;
         // Check period, if bigger than points length, skip
         if (yValLen < period) {
             return;
@@ -107,13 +114,12 @@ var EMAIndicator = /** @class */ (function (_super) {
      * `linkedTo` option to be set.
      *
      * @sample stock/indicators/ema
-     *         Exponential moving average indicator
+     * Exponential moving average indicator
      *
      * @extends      plotOptions.sma
      * @since        6.0.0
      * @product      highstock
      * @requires     stock/indicators/indicators
-     * @requires     stock/indicators/ema
      * @optionparent plotOptions.ema
      */
     EMAIndicator.defaultOptions = merge(SMAIndicator.defaultOptions, {
@@ -141,6 +147,11 @@ SeriesRegistry.registerSeriesType('ema', EMAIndicator);
  *
  * */
 export default EMAIndicator;
+/* *
+ *
+ *  API Options
+ *
+ * */
 /**
  * A `EMA` series. If the [type](#series.ema.type) option is not
  * specified, it is inherited from [chart.type](#chart.type).
@@ -150,7 +161,6 @@ export default EMAIndicator;
  * @product   highstock
  * @excluding dataParser, dataURL
  * @requires  stock/indicators/indicators
- * @requires  stock/indicators/ema
  * @apioption series.ema
  */
 ''; // adds doclet above to the transpiled file

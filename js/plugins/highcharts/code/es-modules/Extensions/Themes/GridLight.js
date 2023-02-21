@@ -10,7 +10,7 @@
  *
  * */
 'use strict';
-import D from '../../Core/DefaultOptions.js';
+import D from '../../Core/Defaults.js';
 var setOptions = D.setOptions;
 import U from '../../Core/Utilities.js';
 var createElement = U.createElement;
@@ -27,8 +27,10 @@ var GridLightTheme;
      *
      * */
     GridLightTheme.options = {
-        colors: ['#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',
-            '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+        colors: [
+            '#7cb5ec', '#f7a35c', '#90ee7e', '#7798BF', '#aaeeee', '#ff0066',
+            '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'
+        ],
         chart: {
             backgroundColor: null,
             style: {

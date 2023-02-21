@@ -14,10 +14,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -111,7 +113,7 @@ var Pie3DSeries = /** @class */ (function (_super) {
             series.data.forEach(function (point) {
                 var shapeArgs = point.shapeArgs, r = shapeArgs.r, 
                 // #3240 issue with datalabels for 0 and null values
-                a1 = (shapeArgs.alpha || options3d_1.alpha) * deg2rad, b1 = (shapeArgs.beta || options3d_1.beta) * deg2rad, a2 = (shapeArgs.start + shapeArgs.end) / 2, labelPosition = point.labelPosition, connectorPosition = labelPosition.connectorPosition, yOffset = (-r * (1 - Math.cos(a1)) * Math.sin(a2)), xOffset = r * (Math.cos(b1) - 1) * Math.cos(a2);
+                a1 = ((shapeArgs.alpha || options3d_1.alpha) * deg2rad), b1 = ((shapeArgs.beta || options3d_1.beta) * deg2rad), a2 = ((shapeArgs.start + shapeArgs.end) / 2), labelPosition = point.labelPosition, connectorPosition = (labelPosition.connectorPosition), yOffset = (-r * (1 - Math.cos(a1)) * Math.sin(a2)), xOffset = r * (Math.cos(b1) - 1) * Math.cos(a2);
                 // Apply perspective on label positions
                 [
                     labelPosition.natural,
@@ -169,6 +171,25 @@ var Pie3DSeries = /** @class */ (function (_super) {
                     seriesOptions.slicedOffset *
                     Math.cos(alpha * deg2rad))
             };
+        });
+    };
+    /**
+     * @private
+     */
+    Pie3DSeries.prototype.drawTracker = function () {
+        _super.prototype.drawTracker.apply(this, arguments);
+        // Do not do this if the chart is not 3D
+        if (!this.chart.is3d()) {
+            return;
+        }
+        this.points.forEach(function (point) {
+            if (point.graphic) {
+                ['out', 'inn', 'side1', 'side2'].forEach(function (face) {
+                    if (point.graphic) {
+                        point.graphic[face].element.point = point;
+                    }
+                });
+            }
         });
     };
     return Pie3DSeries;

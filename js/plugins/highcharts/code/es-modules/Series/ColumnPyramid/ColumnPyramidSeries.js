@@ -12,10 +12,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -122,16 +124,19 @@ var ColumnPyramidSeries = /** @class */ (function (_super) {
                     (chart.plotHeight - translatedThreshold);
             // topXwidth and bottomXwidth = width of lines from the center
             // calculated from tanges proportion.
-            // Can not be a NaN #12514
-            topXwidth = stackHeight ? (barW * (barY - topPointY)) / stackHeight : 0;
+            // Cannot be a NaN #12514
+            topXwidth = stackHeight ?
+                (barW * (barY - topPointY)) / stackHeight : 0;
             // like topXwidth, but with height of point
-            bottomXwidth = stackHeight ? (barW * (barY + barH - topPointY)) / stackHeight : 0;
+            bottomXwidth = stackHeight ?
+                (barW * (barY + barH - topPointY)) / stackHeight :
+                0;
             /*
                     /\
-                    /  \
+                   /  \
             x1,y1,------ x2,y1
-                    /      \
-                ----------
+                /      \
+               ----------
             x4,y2        x3,y2
             */
             x1 = barX - topXwidth + barW;
@@ -146,9 +151,9 @@ var ColumnPyramidSeries = /** @class */ (function (_super) {
             }
             // inverted chart
             if (chart.inverted) {
-                invBarPos = chart.plotWidth - barY;
-                stackHeight = (topPointY -
-                    (chart.plotWidth - translatedThreshold));
+                invBarPos = yAxis.width - barY;
+                stackHeight =
+                    topPointY - (yAxis.width - translatedThreshold);
                 // proportion tanges
                 topXwidth = (barW *
                     (topPointY - invBarPos)) / stackHeight;

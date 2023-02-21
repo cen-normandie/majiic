@@ -337,7 +337,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 
 <!-- HIGHCHARTS -->
-<script type="text/javascript" src="js/plugins/highcharts/code/highcharts.js"></script>
+<script type="text/javascript" src="js/plugins/highcharts/code/highstock.js"></script>
 <script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
 
 <!--Datatable bs5-->

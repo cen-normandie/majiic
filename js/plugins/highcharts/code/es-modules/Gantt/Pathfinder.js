@@ -11,7 +11,12 @@
 'use strict';
 import Connection from './Connection.js';
 import Chart from '../Core/Chart/Chart.js';
+import D from '../Core/Defaults.js';
+var defaultOptions = D.defaultOptions;
 import H from '../Core/Globals.js';
+import Point from '../Core/Series/Point.js';
+import U from '../Core/Utilities.js';
+var addEvent = U.addEvent, defined = U.defined, error = U.error, extend = U.extend, merge = U.merge, pick = U.pick, splat = U.splat;
 /**
  * The default pathfinder algorithm to use for a chart. It is possible to define
  * your own algorithms by adding them to the
@@ -35,14 +40,9 @@ import H from '../Core/Globals.js';
  * @typedef {"fastAvoid"|"simpleConnect"|"straight"|string} Highcharts.PathfinderTypeValue
  */
 ''; // detach doclets above
-import D from '../Core/DefaultOptions.js';
-var defaultOptions = D.defaultOptions;
-import Point from '../Core/Series/Point.js';
-import U from '../Core/Utilities.js';
-var addEvent = U.addEvent, defined = U.defined, error = U.error, extend = U.extend, merge = U.merge, objectEach = U.objectEach, pick = U.pick, splat = U.splat;
 import pathfinderAlgorithms from './PathfinderAlgorithms.js';
 import '../Extensions/ArrowSymbols.js';
-var deg2rad = H.deg2rad, max = Math.max, min = Math.min;
+var max = Math.max, min = Math.min;
 /*
  @todo:
      - Document how to write your own algorithms
@@ -448,7 +448,8 @@ var Pathfinder = /** @class */ (function () {
                     // For Gantt series the connect could be
                     // defined as a dependency
                     if (ganttPointOptions && ganttPointOptions.dependency) {
-                        ganttPointOptions.connect = ganttPointOptions.dependency;
+                        ganttPointOptions.connect = ganttPointOptions
+                            .dependency;
                     }
                     var to, connects = (point.options &&
                         point.options.connect &&
@@ -476,19 +477,20 @@ var Pathfinder = /** @class */ (function () {
         // to new connections.
         for (var j = 0, k = void 0, found = void 0, lenOld = oldConnections.length, lenNew = pathfinder.connections.length; j < lenOld; ++j) {
             found = false;
+            var oldCon = oldConnections[j];
             for (k = 0; k < lenNew; ++k) {
-                if (oldConnections[j].fromPoint ===
-                    pathfinder.connections[k].fromPoint &&
-                    oldConnections[j].toPoint ===
-                        pathfinder.connections[k].toPoint) {
-                    pathfinder.connections[k].graphics =
-                        oldConnections[j].graphics;
+                var newCon = pathfinder.connections[k];
+                if ((oldCon.options && oldCon.options.type) ===
+                    (newCon.options && newCon.options.type) &&
+                    oldCon.fromPoint === newCon.fromPoint &&
+                    oldCon.toPoint === newCon.toPoint) {
+                    newCon.graphics = oldCon.graphics;
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                oldConnections[j].destroy();
+                oldCon.destroy();
             }
         }
         // Clear obstacles to force recalculation. This must be done on every
@@ -548,7 +550,7 @@ var Pathfinder = /** @class */ (function () {
      *
      * @function Highcharts.Pathfinder#getChartObstacles
      *
-     * @param {object} options
+     * @param {Object} options
      *        Options for the calculation. Currenlty only
      *        options.algorithmMargin.
      *
@@ -604,7 +606,7 @@ var Pathfinder = /** @class */ (function () {
      * @param {Array<object>} obstacles
      *        An array of obstacles to inspect.
      *
-     * @return {object}
+     * @return {Object}
      *         The calculated metrics, as an object with maxHeight and maxWidth
      *         properties.
      */
@@ -728,11 +730,11 @@ extend(Point.prototype, /** @lends Point.prototype */ {
      *        The radius of the marker, to calculate the additional distance to
      *        the center of the marker.
      *
-     * @param {object} anchor
+     * @param {Object} anchor
      *        The anchor point of the path and marker as an object with x/y
      *        properties.
      *
-     * @return {object}
+     * @return {Object}
      *         The marker vector as an object with x/y properties.
      */
     getMarkerVector: function (radians, markerRadius, anchor) {
