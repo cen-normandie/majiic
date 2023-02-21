@@ -6,9 +6,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-//$_POST["nom_personne"] = 'Benoit Perceval';
-$_year_begin = strval($_POST["year"]);
-$_year_end = strval($_POST["year"] + 1);
+$_year = strval($_POST["year"]);
+
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
@@ -25,11 +24,11 @@ FROM $progecen_projets p
 LEFT JOIN $progecen_actions a on p.id_projet = a.id_projet
 LEFT JOIN $progecen_group g on a.personnes = g.id_group
 WHERE (a.personnes ~* $1 or g.personnes ~* $1 )
-AND ( date_part('year', TO_DATE( $2 ,'YYYY') ) = date_part('year', p.date_debut )  )
-ORDER by 3, 2
+AND ( $2 = date_part('year', p.date_debut )::text  )
+ORDER by 1,3,5
 "
 );
-$result = pg_execute($dbconn, "sql", array($_POST["nom_personne"], $_year_begin ));
+$result = pg_execute($dbconn, "sql", array($_POST["nom_personne"], $_year ));
 $row_ = 1;
 //write first line title
 $arr_columnname = ['id_projet','nom_projet','id_action','nom_action','site','personne'];
