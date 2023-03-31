@@ -143,8 +143,9 @@ function autocompleteArray(inp, arr) {
       }
     }
     let content ="";
+    let abs_path = document.getElementById("absolute_path").value;
     for (const element of array_docs) {
-      content +=`<div class="mx-1"><a href="/majiic/php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
+      content +=`<div class="mx-1"><a href="${abs_path}/php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
     }
     document.getElementById("doc_refs").innerHTML=content;
     document.getElementById("list_docs").classList.remove("d-none");

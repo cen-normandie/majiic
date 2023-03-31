@@ -103,6 +103,15 @@
                 <i class="fas fa-utensils"></i> Panier Repas / <i class="fas fa-socks"></i> Prime Salissure
             </a>
     </div>';
+    echo '
+    <hr class="bg-secondary mx-2 my-1">
+    <div class="ml-2">
+    <span class="nav-link text-secondary">Réservation de matériel:</span>
+        <a class="nav-link"  href="reservation.php">
+                <span data-feather=""></span>
+                <i class="fas fa-clipboard-list-check"></i> Résa
+            </a>
+    </div>';
   }
 
 

@@ -74,12 +74,23 @@ if (in_array($_SESSION['email'], $admins)) {
             <div class="d-flex bg-light">
                 <div id="" class="d-flex flex-column bg-light w-100 m-2 ">
                     <div class="d-flex flex-column">
-                        <div class="autocompleteBS col-10">
-                            <div class="input-group w-100">
-                                <span for="input_projet" class="input-group-text">Projet : </span>
-                                <input type="text" class="form-control" id="input_projet" aria-describedby="basic-addon3">
-                                <span class="input-group-text justify-content-center" id="del"><i class="far fa-trash-alt"></i></span>
+                        <div class="d-flex w-100">
+                            <div class="d-flex flex-column col-11 justify-content-center align-items-center">
+                                <div class="autocompleteBS col-12">
+                                    <div class="input-group w-100">
+                                        <span for="input_projet" class="input-group-text">Projet : </span>
+                                        <input type="text" class="form-control" id="input_projet" aria-describedby="basic-addon3">
+                                        <span class="input-group-text justify-content-center" id="del"><i class="far fa-trash-alt"></i></span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="d-flex flex-column col-1 justify-content-center align-items-center">
+                                <div class="d-flex h-100">
+                                    <span class="input-group-text justify-content-center d-flex h-100 ">
+                                        <a id="refresh" href="#"><i class="fas fa-sync-alt text-dark"></i></a>
+                                    </span>
+                                </div>
+                            </div>  
                         </div>
                         <div class="d-flex justify-content-start align-items-center col-12">
                             <div id="edition" class="form-check form-switch my-2 d-none">
@@ -179,7 +190,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                     </div>
                                 </div>
                             </div>
-                            <div id="panel_all" class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4 "> <!--bg-dark-->
+                            <div id="panel_all" class="d-flex flex-column text-secondary col-md-8 col-lg-9 px-4 d-none"> <!--bg-dark-->
                                 <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Realise / Previsionnel :</h4></div>
                                 <div class="d-flex w-100 align-items-center justify-content-center">
                                     <div id="container_sum" class="d-flex w-100"></div>

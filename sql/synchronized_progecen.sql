@@ -145,3 +145,10 @@ date_valide_panier,
 date_saisie_salissure, 
 date_valide_salissure
 	FROM fdw.temps_personnes;
+
+--Suppression de l'historique
+DELETE FROM progecen_copy.temps_suivi;
+
+--Suppression des events negatifs
+DELETE  from progecen_copy.temps
+where e_end < e_start;
