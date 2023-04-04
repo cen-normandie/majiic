@@ -173,7 +173,8 @@ $("#save_create_account").on('click',function(e){
                             $.ajax({
                             type : 'POST',
                             crossDomain: true,
-                            url: "http://cen-normandie.com/majiic/php/sent_mail.php",
+                            //http://cen-normandie.com/majiic/php/sent_mail.php
+                            url: "/php/sent_mail.php",
                             async    : false,
                             data     : {courriel : mail, dwp : pwd, nom_ : nom, prenom_ : prenom, cgu_ : true, cgu_content},
                             error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
