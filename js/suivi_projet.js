@@ -273,6 +273,11 @@ const dtActions =$('#actionsDT').DataTable({
     paging: false,
     autoWidth: false
 });
+
+document.getElementById("refresh").addEventListener("click", function() {
+    location.reload();
+})
+
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement si responsable projet --> edition possible
 //////////////////////////////////////////////////////

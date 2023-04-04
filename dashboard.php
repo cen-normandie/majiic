@@ -294,6 +294,10 @@ if (in_array($_SESSION['email'], $admins)) {
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
 			<kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd>
 		</div>
+        <div class="d-none" id="absolute_path" ><?php echo $root_; ?></div>
+        <div class="d-none" id="dir_from_localhost" ><?php $docroot_; ?></div>
+        <div class="d-none" id="cur_dir" ><?php echo $dir_; ?></div>
+        <div class="d-none" id="sep" ><?php echo DIRECTORY_SEPARATOR; ?></div>
 	</div>
 
 
@@ -309,8 +313,8 @@ if (in_array($_SESSION['email'], $admins)) {
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class="toast-body">
-                <strong>Attention :</strong> la base de données foncière n'est pas finalisée :
-                données en cours de saisie !
+                <strong>Attention :</strong> Les informations foncières sont actualisées en fonction des documents transmis, si problème :
+                    Contactez le service SIG --> foncier@cen-normandie.fr
 			</div>
 		</div>
 	</div>

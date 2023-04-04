@@ -127,11 +127,13 @@ if (in_array($_SESSION['email'], $admins)) {
         <div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-right">
             <kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd>
         </div>
-    </div>
 
-<div class="d-none" id="absolute_path" ><?php echo $root_; ?></div>
-<div class="d-none" id="cur_dir" ><?php echo $dir_; ?></div>
-<div class="d-none" id="sep" ><?php echo DIRECTORY_SEPARATOR; ?></div>
+        <div class="list-group" id="absolute_path" ><?php echo $root_; ?></div>
+        <div class="list-group" id="dir_from_localhost" ><?php echo $docroot_; ?></div>
+        <div class="list-group" id="cur_dir" ><?php echo $dir_; ?></div>
+        <div class="list-group" id="sep" ><?php echo DIRECTORY_SEPARATOR; ?></div>
+
+    </div>
 
 </div>
 

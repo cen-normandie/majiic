@@ -86,9 +86,9 @@ if (in_array($_SESSION['email'], $admins)) {
                             </div>
                             <div class="d-flex flex-column col-1 justify-content-center align-items-center">
                                 <div class="d-flex h-100">
-                                    <span class="input-group-text justify-content-center d-flex h-100 ">
-                                        <a id="refresh" href="#"><i class="fas fa-sync-alt text-dark"></i></a>
-                                    </span>
+                                    <button class="input-group-text justify-content-center" id="refresh">
+                                        <i class="fas fa-sync-alt text-dark"></i>
+                                    </button>
                                 </div>
                             </div>  
                         </div>

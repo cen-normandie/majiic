@@ -70,10 +70,6 @@ if (in_array($_SESSION['email'], $admins)) {
             </div>
             
             <div class="d-flex bg-light ">
-                
-                
-
-                
             </div>	
 		</div>
 
