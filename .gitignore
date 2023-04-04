@@ -6,3 +6,5 @@
 /php/docs/foncier/autres/*
 /php/docs/foncier/*
 robots.txt
+/errors/error.php
+.htaccess
