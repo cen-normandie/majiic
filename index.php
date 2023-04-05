@@ -52,11 +52,10 @@
 					</form>
 				</div>
 				<div class="p-2 w-50">
-					<div class="alert alert-info my-2">
+					<!--<div class="alert alert-info my-2">
 					<strong>Attention !</strong> Les identifiants pour les personnes disposant déjà d'un compte MAJIIC (pour l'accès aux données VISUDGFIP) ont été mis à jour.
 					</br>Le nouveau mot de passe est celui que vous utilisez pour démarrer l'ordinateur.</br></br>
-					<strong>NB : </strong>
-					</div>
+					</div>-->
 				</div>
 				<div class="mt-auto p-2">
 						<div class="my-2">
