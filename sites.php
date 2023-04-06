@@ -129,7 +129,6 @@ if (in_array($_SESSION['email'], $admins)) {
         </div>
 
         <div class="list-group" id="absolute_path" ><?php echo $root_; ?></div>
-        <div class="list-group" id="dir_from_localhost" ><?php echo " rootdir : ".$rootdir; ?></div>
         <div class="list-group" id="dir_from_localhost" ><?php echo $docroot_; ?></div>
         <div class="list-group" id="cur_dir" ><?php echo $dir_; ?></div>
         <div class="list-group" id="sep" ><?php echo DIRECTORY_SEPARATOR; ?></div>
