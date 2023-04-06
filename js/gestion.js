@@ -327,7 +327,7 @@ $('#save_new_doc').click(
                 console.log(data);
                 file_name_end = data;
                     if( data == 'Errors' ) {
-                        alert('Mistake');
+                        create_toast(true , 'La copie sur le serveur a échouée !' )
                     }
                 }
         });
@@ -398,8 +398,7 @@ function save_bdd_convention(id_doc_, lien) {
                 //refresh_page();
                 ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
                 setTimeout(() => { 
-                    //refresh_page(); 
-                    console.log(lien);
+                    refresh_page(); 
                 }, 6000);
                 }
         });
@@ -430,8 +429,7 @@ function save_bdd_acquisition(id_doc_, lien) {
                 //refresh_page();
                 ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
                 setTimeout(() => { 
-                    //refresh_page(); 
-                    console.log(lien);
+                    refresh_page(); 
                  }, 6000);
                 }
         });

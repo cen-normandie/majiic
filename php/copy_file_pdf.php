@@ -31,15 +31,12 @@ if( isset($_FILES["file"]))
         $file_name = $_POST["id_doc"];
     }
     
-    //echo 'Path :'.$path_doc_foncier.DIRECTORY_SEPARATOR.$file_name.'.pdf';
-    
     if (move_uploaded_file($_FILES["file"]["tmp_name"], $path_doc_foncier.DIRECTORY_SEPARATOR.basename($file_name).'.pdf' )) {
-        //echo "Uploaded";
-        echo $file_name;
+        echo "Uploaded";
     } else {
-        //echo "Error";
         echo "Error";
     }
+
 }
 
 
