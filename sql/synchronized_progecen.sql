@@ -1,10 +1,11 @@
-DROP TABLE IF EXISTS progecen_copy.action;
-DROP TABLE IF EXISTS progecen_copy.projet;
-DROP TABLE IF EXISTS progecen_copy.temps_personnes;
-DROP TABLE IF EXISTS progecen_copy.fdtada;
-DROP TABLE IF EXISTS progecen_copy.fdttech;
+--DROP TABLE IF EXISTS progecen_copy.action;
+--DROP TABLE IF EXISTS progecen_copy.projet;
+--DROP TABLE IF EXISTS progecen_copy.temps_personnes;
+--DROP TABLE IF EXISTS progecen_copy.fdtada;
+--DROP TABLE IF EXISTS progecen_copy.fdttech;
+--DROP TABLE IF EXISTS progecen_copy.liste_action;
+--DROP TABLE IF EXISTS progecen_copy.liste_cout CASCADE;
 DROP TABLE IF EXISTS progecen_copy.liste_action;
-DROP TABLE IF EXISTS progecen_copy.liste_cout CASCADE;
 CREATE TABLE progecen_copy.liste_action as 
 (
 	SELECT 
@@ -14,6 +15,7 @@ CREATE TABLE progecen_copy.liste_action as
 	FROM progecen_copy.actions GROUP BY 2 ORDER BY 2,1
 );
 
+/*
 update progecen_copy.group set
 personnes = (SELECT string_agg(technicien, ' , ') FROM progecen_copy.liste_equipetechnique_rouen)
 where id_group = 'GE_ROUEN';
@@ -23,15 +25,18 @@ where id_group = 'ZOO';
 update progecen_copy.group set
 personnes = ('Samuel Vigot , Yann Gary , Frédéric Labaune , Antonin Lepeltier')
 where id_group = 'GE_CAEN';
+*/
 
+/*
 DROP TABLE IF EXISTS progecen_copy.liste_equipetechnique_rouen CASCADE;
 DROP TABLE IF EXISTS progecen_copy.liste_equipezoot_rouen CASCADE;
 DROP VIEW IF EXISTS progecen_copy.analyse_financeur;
 DROP VIEW IF EXISTS progecen_copy.analyse_prime;
 DROP VIEW IF EXISTS progecen_copy.analyse_temps_financeur;
+*/
 
 --PROJETS
---DELETE FROM progecen_copy.projets;
+DELETE FROM progecen_copy.projets;
 INSERT INTO progecen_copy.projets(
 	id_projet, 
 	nom_projet, 
@@ -61,7 +66,7 @@ annee_saisie
 	FROM bd_progecen.projet;
 
 --ACTION
---DELETE FROM progecen_copy.actions;
+DELETE FROM progecen_copy.actions;
 INSERT INTO progecen_copy.actions(
 	id_action, 
 	code_action, 
@@ -98,7 +103,7 @@ update progecen_copy.actions set financements = replace (financements,'|ø_ø', 
 
 --TEMPS
 -- FROM FDW
--- DELETE FROM progecen_copy.temps
+DELETE FROM progecen_copy.temps;
 INSERT INTO progecen_copy.temps(
 	e_id, 
 	e_id_projet, 
@@ -152,3 +157,9 @@ DELETE FROM progecen_copy.temps_suivi;
 --Suppression des events negatifs
 DELETE  from progecen_copy.temps
 where e_end < e_start;
+
+--Mise à jour du nom_projet dans les temps 
+update progecen_copy.temps set 
+e_nom_projet = p.nom_projet
+from progecen_copy.projets p
+where p.id_projet::text = e_id_projet;
