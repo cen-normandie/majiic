@@ -146,7 +146,7 @@ function autocompleteArray(inp, arr) {
     let dir_from_localhost = document.getElementById("dir_from_localhost").innerText;
     for (const element of array_docs) {
       //content +=`<div class="mx-1"><a href="${dir_from_localhost}/php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
-      content +=`<div class="mx-1"><a href="../php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
+      content +=`<div class="mx-1"><a href="./php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
     }
     document.getElementById("doc_refs").innerHTML=content; 
     document.getElementById("list_docs").classList.remove("d-none");
