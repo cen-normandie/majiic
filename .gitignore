@@ -1,5 +1,6 @@
 /php/properties.php
 /php/files/*
+/php/test_ldap.php
 /php/sent_mail_update_pwd.php
 /php/sent_mail.php
 /php/docs/gestion/*
