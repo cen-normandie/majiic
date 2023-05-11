@@ -5,10 +5,6 @@ if (isset($_SESSION)) {
     session_destroy();
 }
 
-
-
-
-
 $mail_bd_result = '';
 $password_bd_result = '';
 $id_user_bd_result = '';
