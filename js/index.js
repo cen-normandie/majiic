@@ -119,7 +119,7 @@ $("#save_update_pwd_mail").on('click',function(e){
         $.ajax({
         type : 'POST',
         crossDomain: true,
-        url: "http://cen-normandie.com/majiic/php/sent_mail_update_pwd.php",
+        url: "/php/sent_mail_update_pwd.php",
         async    : false,
         data     : {courriel : mail},
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
