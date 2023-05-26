@@ -163,3 +163,17 @@ update progecen_copy.temps set
 e_nom_projet = p.nom_projet
 from progecen_copy.projets p
 where p.id_projet::text = e_id_projet;
+
+--Correction des champs sites dans action + temps
+UPDATE progecen_copy.actions set 
+site = REPLACE(site, '00AAA', '00AAA - Pas de site en particulier' )
+WHERE site like '%00AAA%';
+UPDATE progecen_copy.actions set 
+site = REPLACE(site, 'NaN', '' )
+WHERE site like '%NaN%';
+UPDATE progecen_copy.temps set 
+e_id_site = REPLACE(e_id_site, '00AAA', '00AAA - Pas de site en particulier' )
+WHERE e_id_site like '%00AAA%';
+UPDATE progecen_copy.temps set 
+e_id_site = REPLACE(e_id_site, 'NaN', '' )
+WHERE e_id_site like '%NaN%';

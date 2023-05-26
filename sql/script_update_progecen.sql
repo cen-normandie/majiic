@@ -422,9 +422,10 @@ create table progecen_copy.group (
 id_group text primary key,
 personnes text
 );
-insert into progecen_copy.group (id_group, personnes) values ('GE_CAEN', 'Samuel Vigot , Yann Gary , Frédéric Labaune , Antonin Lepeltier');
+insert into progecen_copy.group (id_group, personnes) values ('GE_CAEN', 'Samuel Vigot , Yann Gary , Frédéric Labaune , Antonin Lepeltier, Benoit Perceval');
 insert into progecen_copy.group (id_group, personnes) values ('GE_ROUEN', 'Michael Poultier , Fabien Deblangy , Christophe Leroux , Christian Massamba , Alexis Follet , Idrissa Diakhite , Quentin Trevel , Olivier Labbe , Loic Pernel , Alexandre Renoult , Anne-Céline Loeber , Patrick Gezolme , Hugues Hermeline , Benoît Evrard , Damien Duparc , Pierre Filloux , Valentin Pierrepont , Guillaume Delarue , Julien Dequatremarre');
 insert into progecen_copy.group (id_group, personnes) values ('ZOO', 'Anne-Céline Loeber , Fabien Deblangy , Patrick Gezolme , Christian Massamba , Hugues Hermeline , Alexis Follet , Benoît Evrard , Quentin Trevel , Olivier Labbe , Alexandre Renoult , Damien Duparc , Pierre Filloux , Michael Poultier , Christophe Leroux , Idrissa Diakhite , Loic Pernel , Guillaume Delarue , Julien Dequatremare , Valentin Pierrepont');
+
 
 
 /*CREATE TABLE temps import tmp*/
@@ -470,6 +471,9 @@ Projets
 
 
 */
+
+
+
 
 
 /* CREATION TABLE actions_gp ?? */
