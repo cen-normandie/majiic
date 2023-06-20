@@ -33,14 +33,14 @@ $result = pg_execute($dbconn, "sql", array($_POST["nom_personne"], $_year ));
 $row_ = 1;
 //write first line title
 $arr_columnname = ['id_projet','nom_projet','id_action','nom_action','site','personne', 'nb_h_previ'];
-for ($column = 1; $column <= 6; $column++) {
+for ($column = 1; $column <= 7; $column++) {
     $column_in_pg = $column -1;
     $sheet->setCellValueByColumnAndRow($column, $row_, $arr_columnname[$column_in_pg]);
 }
 $row_ = 2;
 while($row = pg_fetch_array($result))
 {
-    for ($column = 1; $column <= 6; $column++) {
+    for ($column = 1; $column <= 7; $column++) {
         $column_in_pg = $column -1;
         //echo 'col = '.$column . 'row[x] = '.$row[$column_in_pg].'</br>';
         $sheet->setCellValueByColumnAndRow($column, $row_, is_null($row[$column_in_pg]) ? '' : $row[$column_in_pg]);
