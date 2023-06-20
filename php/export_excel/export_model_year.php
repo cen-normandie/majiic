@@ -19,7 +19,8 @@ SELECT
     a.id_action,
     a.code_action,
     a.site,
-    a.personnes
+    a.personnes,
+    a.nb_h_previ
 FROM $progecen_projets p 
 LEFT JOIN $progecen_actions a on p.id_projet = a.id_projet
 LEFT JOIN $progecen_group g on a.personnes = g.id_group
@@ -31,7 +32,7 @@ ORDER by 1,3,5
 $result = pg_execute($dbconn, "sql", array($_POST["nom_personne"], $_year ));
 $row_ = 1;
 //write first line title
-$arr_columnname = ['id_projet','nom_projet','id_action','nom_action','site','personne'];
+$arr_columnname = ['id_projet','nom_projet','id_action','nom_action','site','personne', 'nb_h_previ'];
 for ($column = 1; $column <= 6; $column++) {
     $column_in_pg = $column -1;
     $sheet->setCellValueByColumnAndRow($column, $row_, $arr_columnname[$column_in_pg]);
