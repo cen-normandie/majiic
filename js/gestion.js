@@ -328,14 +328,16 @@ $('#save_new_doc').click(
                 file_name_end = data;
                     if( data == 'Errors' ) {
                         create_toast(true , 'La copie sur le serveur a échouée !' )
+                    } else {
+                        method_prefix = 'save_bdd_';
+                        method_name = block_targeted_val;
+                        console.log(method_prefix + method_name);
+                        //Call fonction de maniere dynamique
+                        window[method_prefix + method_name](id_doc, file_name_end);
                     }
                 }
         });
-        method_prefix = 'save_bdd_';
-        method_name = block_targeted_val;
-        console.log(method_prefix + method_name);
-        //Call fonction de maniere dynamique
-        window[method_prefix + method_name](id_doc, file_name_end);
+
     }
 );
 
@@ -572,9 +574,11 @@ function save_bdd_ddg(id_doc_, lien) {
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
+                console.log("doc : "+id_doc_);
+                console.log("lien : "+lien);
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
-                setTimeout(() => { refresh_page(); }, 6000);
+                /* ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                setTimeout(() => { refresh_page(); }, 6000); */
                 }
         });
     };
