@@ -553,7 +553,7 @@ function save_bdd_ore(id_doc_, lien) {
 
 function save_bdd_ddg(id_doc_, lien) {
         var fd = new FormData();
-        fd.append('id_doc', $("#n_gestion_nom").val());
+        fd.append('id_doc', $("#"+id_doc_).val());
         fd.append('nom_doc', $("#n_gestion_nom").val());
         fd.append('n_type_doc_gestion', $("#n_type_doc_gestion").val());
         fd.append('n_gestion_date_start', $("#n_gestion_date_start").val());

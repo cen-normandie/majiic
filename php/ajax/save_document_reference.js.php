@@ -258,7 +258,7 @@ if ($doc == 'convention') {
         ($1,$2,$3,$4,$5,$6,$7,$8) "
     );
     $return_execute = pg_execute($dbconn, "ddg",array(
-        $_POST["lien"],
+        $_POST["id_doc"],
         $_POST["nom_doc"],
         $_POST["n_type_doc_gestion"],
         $_POST["n_gestion_date_start"],

@@ -30,15 +30,15 @@ if( isset($_FILES["file"]))
     }
     
     if ( move_uploaded_file($_FILES['file']['tmp_name'], $path_doc_gestion.DIRECTORY_SEPARATOR.basename($file_name).'.pdf' )) {
-        //echo "Uploaded";
+        echo $file_name;
     } else {
-        //echo "Error";
+        echo "Error";
     }
 }
 
 
 //echo "fichier PDF enregistré";
-echo $file_name;
+//echo $file_name;
 
 ?>
 
