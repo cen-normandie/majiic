@@ -87,9 +87,9 @@ $sujet = "Modification mot de passe Majiic CEN Normandie";
 //=========
  
 //=====Création du header de l'e-mail.
-$header = "From: \"cen normandie\"<contact@cen-normandie.fr>".$passage_ligne;
-$header.= "MIME-Version: 1.0".$passage_ligne;
-$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+$header = "From: \"cen normandie\"<contact@cen-normandie.fr>";
+$header.= "MIME-Version: 1.0";
+$header.= "Content-Type: multipart/alternative;";
 //==========
  
 //==========
