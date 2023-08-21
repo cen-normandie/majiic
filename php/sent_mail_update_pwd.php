@@ -90,7 +90,7 @@ $sujet = "Modification mot de passe VisuDGFip CEN Normandie";
 //=========
  
 //=====Création du header de l'e-mail.
-$header = "From: \"cen normandie\"<contact@cen-bn.fr>".$passage_ligne;
+$header = "From: \"cen normandie\"<contact@cen-normandie.fr>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
@@ -113,7 +113,7 @@ $message_html.= $passage_ligne."--".$boundary."--".$passage_ligne;
 //==========
  
 //=====Envoi de l'e-mail.
-mail($mail,$sujet,$message,$header);
+mail($mail,$sujet,$message_html,$header);
 //==========
 
 echo "send";
