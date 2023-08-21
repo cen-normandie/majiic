@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'properties.php';
-$_POST['courriel'] = 'b.perceval@superceval.fr';
+$_POST['courriel'] = 'b.perceval@cen-normandie.fr';
 
 $mail = str_replace("'","''",$_POST['courriel']); // Déclaration de l'adresse de destination.
 
