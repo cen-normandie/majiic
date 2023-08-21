@@ -95,7 +95,7 @@ $headers .= 'From:' . 'contact@cen-normandie.xyz';
 //==========
  
 //=====Envoi de l'e-mail.
-if (mail($mail,$sujet,$message_html,$header)) {
+if (mail($mail,$sujet,$message_html,$headers)) {
     echo "send";
 } else {
     echo "error envoi mail";
