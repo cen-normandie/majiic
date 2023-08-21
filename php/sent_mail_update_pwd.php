@@ -86,7 +86,7 @@ $boundary = "-----=".md5(rand());
 //==========
  
 //=====Définition du sujet.
-$sujet = "Modification mot de passe VisuDGFip CEN Normandie";
+$sujet = "Modification mot de passe Majiic CEN Normandie";
 //=========
  
 //=====Création du header de l'e-mail.
