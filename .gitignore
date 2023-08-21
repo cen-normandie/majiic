@@ -1,7 +1,7 @@
 /php/properties.php
 /php/files/*
 /php/sent_mail_update_pwd__.php
-/php/sent_mail.php
+/php/sent_mail__.php
 /php/sent_mail_old.php
 /php/docs/gestion/*
 /php/docs/foncier/autres/*
