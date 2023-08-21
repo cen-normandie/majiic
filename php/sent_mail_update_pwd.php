@@ -113,12 +113,16 @@ $message_html.= $passage_ligne."--".$boundary."--".$passage_ligne;
 //==========
  
 //=====Envoi de l'e-mail.
-mail($mail,$sujet,$message_html,$header);
+if (mail($mail,$sujet,$message_html,$header)) {
+    echo "send";
+} else {
+    echo "error envoi mail";
+}
 //==========
 
-echo "send";
+
 } else 
 {
-echo "error";
+echo "error acces db";
 }
 ?>
