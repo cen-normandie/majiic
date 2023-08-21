@@ -55,7 +55,7 @@ $message_html .= "<p style=\"color:#004fa2;font-size:18px;font-weight:600;font-f
 $message_html .= "<p><span style=\"color:#004fa2;font-size:16px;font-weight:600;font-family: Calibri, Helvetica, Arial, sans-serif;\">Pour le compte :&nbsp;</span>";
 $message_html .= "<span style=\"font-family: Calibri, Helvetica, Arial, sans-serif;\">".$mail."</span></p>";
 $message_html .= "<p><span style=\"color:#004fa2;font-size:16px;font-weight:600;font-family: Calibri, Helvetica, Arial, sans-serif;\">Le mot de passe associé est le suivant :&nbsp;</span>";
-$message_html .= "<span style=\"font-family: Calibri, Helvetica, Arial, sans-serif;\">$pwd_new</span></p>";
+$message_html .= "<span style=\"font-family: Calibri, Helvetica, Arial, sans-serif;\">".$pwd_new."</span></p>";
 
 $message_html .= "<p><span style=\"color:#004fa2;font-size:16px;font-weight:600;font-family: Calibri, Helvetica, Arial, sans-serif;\">Vous pouvez dès à présent vous connecter à l'aide du nouveau mot de passe.</span>";
 $message_html .= "<span style=\"\"></span></p>";
@@ -81,9 +81,6 @@ $message_html .= "</html>";
 
 //==========
  
-//=====Création de la boundary
-$boundary = "-----=".md5(rand());
-//==========
  
 //=====Définition du sujet.
 $sujet = "Modification mot de passe Majiic CEN Normandie";
@@ -95,21 +92,6 @@ $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
  
-//=====Création du message.
-//$message = $passage_ligne."--".$boundary.$passage_ligne;
-////=====Ajout du message au format texte.
-//$message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
-//$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-//$message.= $passage_ligne.$message_txt.$passage_ligne;
-//==========
-$message_html.= $passage_ligne."--".$boundary.$passage_ligne;
-//=====Ajout du message au format HTML
-$message_html.= "Content-Type: text/html; charset=\"UTF-8\"".$passage_ligne;
-$message_html.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-$message_html.= $passage_ligne.$message_html.$passage_ligne;
-//==========
-$message_html.= $passage_ligne."--".$boundary."--".$passage_ligne;
-$message_html.= $passage_ligne."--".$boundary."--".$passage_ligne;
 //==========
  
 //=====Envoi de l'e-mail.
