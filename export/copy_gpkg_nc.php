@@ -14,11 +14,11 @@ if($ldapconn) {
     if ($ldapbind) {
         echo "LDAP bind successful...";
         $ldap_base_dn = "DC=CSNHN,DC=LOCAL";
-        $filter = "(memberof=CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL)";
+        $filter = "(memberof=CN=NextcloudUsers,CN=Users,DC=CSNHN,DC=LOCAL)";
         $justthese = array("mail", "samaccountname", "sn", "givenname", "cn", "memberof");
         $result = ldap_search($ldapconn, $ldap_base_dn, $filter, $justthese);
         $result_salarie = ldap_get_entries($ldapconn, $result);
-        echo in_array("CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL", $result_salarie[0]["memberof"]);
+        echo in_array("CN=NextcloudUsers,CN=Users,DC=CSNHN,DC=LOCAL", $result_salarie[0]["memberof"]);
         echo implode(",", $result_salarie[0]["memberof"]);
             
     } else {
