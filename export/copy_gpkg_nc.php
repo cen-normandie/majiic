@@ -8,21 +8,21 @@ if($ldapconn) {
 	echo "Connect success<br>";
     ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
     ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
-        // binding to ldap server
-        $ldapbind = ldap_bind($ldapconn, "CSNHN\Administrateur", "CENN2021");
-        // verify binding
-        if ($ldapbind) {
-            echo "LDAP bind successful...";
-            $ldap_base_dn = "DC=CSNHN,DC=LOCAL";
-            $filter = "(&(memberof=CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL))";
-            $justthese = array("mail", "samaccountname", "sn", "givenname", "cn", "memberof");
-            $result = ldap_search($ldapconn, $ldap_base_dn, $filter, $justthese);
-            $result_salarie = ldap_get_entries($ldapconn, $result);
-            echo in_array("CN=NextcloudUsers,CN=Users,DC=CSNHN,DC=LOCAL", $result_salarie[0]["memberof"]);
+    // binding to ldap server
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\Administrateur", "CENN2021");
+    // verify binding
+    if ($ldapbind) {
+        echo "LDAP bind successful...";
+        $ldap_base_dn = "DC=CSNHN,DC=LOCAL";
+        $filter = "(&(memberof=CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL))";
+        $justthese = array("mail", "samaccountname", "sn", "givenname", "cn", "memberof");
+        $result = ldap_search($ldapconn, $ldap_base_dn, $filter, $justthese);
+        $result_salarie = ldap_get_entries($ldapconn, $result);
+        echo in_array("CN=NextcloudUsers,CN=Users,DC=CSNHN,DC=LOCAL", $result_salarie[0]["memberof"]);
             
-        } else {
-            echo "LDAP bind failed...";
-        }
+    } else {
+        echo "LDAP bind failed...";
+    }
 }
 else {
 	echo "Connect Failure";
