@@ -12,14 +12,28 @@ if($ldapconn) {
     $ldapbind = ldap_bind($ldapconn, "CSNHN\Administrateur", "CENN2021");
     // verify binding
     if ($ldapbind) {
-        echo "LDAP bind successful...";
-        $ldap_base_dn = "DC=CSNHN,DC=LOCAL";
-        $filter = "(memberof=CN=NextcloudUsers,CN=Users,DC=CSNHN,DC=LOCAL)";
-        $justthese = array("mail", "samaccountname", "sn", "givenname", "cn", "memberof");
-        $result = ldap_search($ldapconn, $ldap_base_dn, $filter, $justthese);
-        $result_salarie = ldap_get_entries($ldapconn, $result);
-        echo in_array("CN=NextcloudUsers,CN=Users,DC=CSNHN,DC=LOCAL", $result_salarie[0]["memberof"]);
-        echo implode(",", $result_salarie[0]["memberof"]);
+        $result = ldap_search($ldapconn,$ldaptree, "(cn=*)") or die ("Error in search query: ".ldap_error($ldapconn));
+        $data = ldap_get_entries($ldapconn, $result);
+        
+        // SHOW ALL DATA
+        echo '<h1>Dump all data</h1><pre>';
+        print_r($data);    
+        echo '</pre>';
+        
+        
+        // iterate over array and print data for each entry
+        echo '<h1>Show me the users</h1>';
+        for ($i=0; $i<$data["count"]; $i++) {
+            //echo "dn is: ". $data[$i]["dn"] ."<br />";
+            echo "User: ". $data[$i]["cn"][0] ."<br />";
+            if(isset($data[$i]["mail"][0])) {
+                echo "Email: ". $data[$i]["mail"][0] ."<br /><br />";
+            } else {
+                echo "Email: None<br /><br />";
+            }
+        }
+        // print number of entries found
+        echo "Number of entries found: " . ldap_count_entries($ldapconn, $result);
             
     } else {
         echo "LDAP bind failed...";
