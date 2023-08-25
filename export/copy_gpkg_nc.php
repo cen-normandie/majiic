@@ -15,7 +15,7 @@ if($ldapconn) {
     $ldapbind = ldap_bind($ldapconn, "CSNHN\Administrateur", "CENN2021");
     // verify binding
     if ($ldapbind) {
-        $result = ldap_search($ldapconn,$ldaptree, "(cn=*)") or die ("Error in search query: ".ldap_error($ldapconn));
+        $result = ldap_search($ldapconn,$ldaptree, "(cn=Users)") or die ("Error in search query: ".ldap_error($ldapconn));
         $data = ldap_get_entries($ldapconn, $result);
         
         // SHOW ALL DATA
