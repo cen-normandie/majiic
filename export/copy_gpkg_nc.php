@@ -4,7 +4,8 @@
 //For testing the AD server is work or not
 $ldaphost="192.168.0.211";
 $ldapconn=ldap_connect($ldaphost);
-$ldaptree    = "OU=Users,DC=CSNHN,DC=LOCAL";
+//$filter = "(&(mail=$courriel)(memberof=CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL))";
+$ldaptree    = "OU=SBSUsers,OU=Users,OU=MyBusiness,DC=CSNHN,DC=LOCAL";
 if($ldapconn) {
 	echo "Connect success<br>";
     ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
