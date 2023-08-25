@@ -19,7 +19,7 @@ if($ldapconn) {
         $result = ldap_search($ldapconn, $ldap_base_dn, $filter, $justthese);
         $result_salarie = ldap_get_entries($ldapconn, $result);
         echo in_array("CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL", $result_salarie[0]["memberof"]);
-        echo $result_salarie[0]["memberof"];
+        echo implode(",", $result_salarie[0]["memberof"]);
             
     } else {
         echo "LDAP bind failed...";
