@@ -9,4 +9,5 @@
 robots.txt
 /errors/error.php
 .htaccess
-/export/*
+/export/.htaccess
+/export/*.gpkg
