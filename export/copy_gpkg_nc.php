@@ -5,7 +5,8 @@
 $ldaphost="192.168.0.211";
 $ldapconn=ldap_connect($ldaphost);
 //$filter = "(&(mail=$courriel)(memberof=CN=PROGECEN_SALARIE,CN=Users,DC=CSNHN,DC=LOCAL))";
-$ldaptree    = "memberof=CN=PROGECEN_SALARIE,DC=CSNHN,DC=LOCAL";
+$SEARCH_STRING = 'NextcloudUsers';
+$ldaptree    = "(|(dc=$SEARCH_STRING)(o=$SEARCH_STRING)(ou=$SEARCH_STRING) (cn=$SEARCH_STRING)(uid=$SEARCH_STRING)(mail=$SEARCH_STRING))";
 if($ldapconn) {
 	echo "Connect success<br>";
     ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
