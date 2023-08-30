@@ -20,7 +20,8 @@ if($ldapconn) {
         for ($i=0; $i<$result["count"]; $i++)
         {
             echo $result[$i]["description"][0];
-            echo ' || '.$result[$i]["mail"][0];
+            echo ' || '.strtolower($result[$i]["mail"][0]);
+            echo ' || '.$result[$i]["name"][0];
             echo ' || '.$result[$i]["cn"][0].'<br>';
         }   
     } else {
