@@ -253,9 +253,11 @@ if ($doc == 'convention') {
         d_fin_doc_gestion, 
         auteurs, 
         commentaires,
-        lien)
+        lien,
+        d_maj_doc_gestion,
+        multisite)
         VALUES 
-        ($1,$2,$3,$4,$5,$6,$7,$8) "
+        ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) "
     );
     $return_execute = pg_execute($dbconn, "ddg",array(
         $_POST["id_doc"],
@@ -265,7 +267,9 @@ if ($doc == 'convention') {
         $_POST["n_gestion_date_end"],
         $_POST["n_gestion_auteurs"],
         $_POST["n_gestion_commentaire"],
-        $_POST["lien"]
+        $_POST["lien"],
+        $_POST["n_gestion_date_maj"],
+        $_POST["n_multisite"]
     ));
 }
 

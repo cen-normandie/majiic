@@ -122,6 +122,12 @@ $('#n_gestion_date_end').datepicker({
     language: 'fr',
     autoclose: true
 });
+$('#n_gestion_date_maj').datepicker({
+    format : 'dd-mm-yyyy',
+    locale: 'fr',
+    language: 'fr',
+    autoclose: true
+});
 $('#n_date_1').datepicker({
     format : 'dd-mm-yyyy',
     locale: 'fr',
@@ -560,8 +566,10 @@ function save_bdd_ddg(id_doc_, lien) {
         fd.append('n_type_doc_gestion', $("#n_type_doc_gestion").val());
         fd.append('n_gestion_date_start', $("#n_gestion_date_start").val());
         fd.append('n_gestion_date_end', $("#n_gestion_date_end").val());
+        fd.append('n_gestion_date_maj', $("#n_gestion_date_maj").val());
         fd.append('n_gestion_auteurs', $("#n_gestion_auteurs").val());
         fd.append('n_gestion_commentaire', $("#n_gestion_commentaire").val());
+        fd.append('n_multisite', $("#n_multisite").val());
         fd.append('type_doc_', 'ddg');
         fd.append('lien',lien);
         $.ajax({

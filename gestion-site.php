@@ -374,6 +374,10 @@ if (in_array($_SESSION['email'], $admins)) {
                       <span class="input-group-text" id="l_n_gestion_date_end">Date Fin DDG<i class="fas fa-calendar-alt mx-2"></i></span>
                       <input class="form-control" id="n_gestion_date_end" placeholder="04-04-2004" aria-label="" aria-describedby="l_n_gestion_date_end"></input>
                     </div>
+                    <div class="input-group p-2">
+                      <span class="input-group-text" id="l_n_gestion_date_maj">Date MAJ DDG<i class="fas fa-calendar-alt mx-2"></i></span>
+                      <input class="form-control" id="n_gestion_date_maj" placeholder="04-04-2004" aria-label="" aria-describedby="n_gestion_date_maj"></input>
+                    </div>
                   </div>
                   <div class="d-flex flex-column text-white w-50">
                     <div class="input-group p-2">
@@ -384,7 +388,23 @@ if (in_array($_SESSION['email'], $admins)) {
                       <span class="input-group-text" id="l_n_gestion_commentaire">Commentaires</span>
                       <input id="n_gestion_commentaire" type="text" class="form-control" placeholder="BlABlèBlu" aria-label="" aria-describedby="l_n_gestion_commentaire">
                     </div>
+                    <div class="input-group p-2">
+                      <span class="input-group-text" id="l_n_multisite">Document "Multisite"</span>
+                      <select class="form-select" id="n_multisite" aria-label="" aria-describedby="l_n_multisite">
+                        <option selected="selected" value="non">non</option>
+                        <option value="oui">oui</option>
+                      </select>
+                    </div>
                   </div>
+                  <!--<div class="d-flex flex-column text-white w-50">
+                    <div class="input-group p-2">
+                      <span class="input-group-text" id="l_n_cat_site">Catégorie de site</span>
+                      <select class="form-select" id="n_cat_site" aria-label="Default select example" aria-describedby="l_n_cat_site">
+                        <option selected="selected" value="1">Catégorie 1 (convention de gestion, acquisition) </option>
+                        <option value="2">Site d'intervention</option>
+                      </select>
+                    </div>
+                  </div>-->
                 </div>
               </div>
             </div>

@@ -51,6 +51,7 @@ WITH t as (
                         FROM $sites g
                         WHERE coalesce(g.geom_pp, g.geom) is not null
 						            AND sites.id_site = g.id_site
+                        AND g.categorie_site = '1'
                         ) As lp 
             ON lg.id_site = lp.id_site  ) As f )  As fc
   )
