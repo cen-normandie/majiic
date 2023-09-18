@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);
 include 'properties.php';
 
 if (isset($_SESSION)) {

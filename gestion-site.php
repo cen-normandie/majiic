@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -34,7 +35,6 @@
   <body>
 
 <?php
-session_start();
 include 'php/properties.php';
 
 
@@ -393,7 +393,7 @@ if (in_array($_SESSION['email'], $admins)) {
                       <select class="form-select" id="n_multisite" aria-label="" aria-describedby="l_n_multisite">
                         <option selected="selected" value="non">non</option>
                         <option value="oui">oui</option>
-                        
+
                       </select>
                     </div>
                   </div>

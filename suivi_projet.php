@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="fr">
   <head>
@@ -32,7 +33,6 @@
   <body>
 
 <?php
-session_start();
 include 'php/properties.php';
 
 

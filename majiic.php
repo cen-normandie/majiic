@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -28,7 +29,6 @@
   <body>
 
 <?php
-session_start();
 include 'php/properties.php';
 
 
