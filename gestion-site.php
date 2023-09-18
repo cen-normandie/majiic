@@ -393,6 +393,7 @@ if (in_array($_SESSION['email'], $admins)) {
                       <select class="form-select" id="n_multisite" aria-label="" aria-describedby="l_n_multisite">
                         <option selected="selected" value="non">non</option>
                         <option value="oui">oui</option>
+                        
                       </select>
                     </div>
                   </div>
