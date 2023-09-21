@@ -1,5 +1,5 @@
 <?php
-//session_start ();
+session_start ();
 include 'properties.php';
 
 if (isset($_SESSION)) {
@@ -54,5 +54,4 @@ else {
     /*header ('location: index.php');*/
     echo "Failed and failed";
 }
-
 ?>
