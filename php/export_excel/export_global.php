@@ -8,6 +8,10 @@ $sheet = $spreadsheet->getActiveSheet();
 
 $_year_begin = strval($_POST["year"]);
 $_year_end = strval($_POST["year"] + 1);
+
+$_year_begin = '2023';
+$_year_end = '2024';
+
 $quote = "'";
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
