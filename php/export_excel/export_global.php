@@ -9,9 +9,6 @@ $sheet = $spreadsheet->getActiveSheet();
 $_year_begin = strval($_POST["year"]);
 $_year_end = strval($_POST["year"] + 1);
 
-$_year_begin = '2023';
-$_year_end = '2024';
-
 $quote = "'";
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
@@ -43,9 +40,7 @@ WHERE (e.e_start > TO_DATE( $1 ,'YYYY') AND e.e_end < TO_DATE( $2,'YYYY') )
 ORDER by 3, 2
 "
 );
-echo $_year_begin;
-echo $_year_end;
-echo "OK";
+
 $result = pg_execute($dbconn, "sql", array($_year_begin, $_year_end, $quote ));
 $row_ = 1;
 //write first line title
