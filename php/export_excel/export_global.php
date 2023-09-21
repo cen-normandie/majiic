@@ -6,6 +6,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
+phpinfo();
+
 $_year_begin = strval($_POST["year"]);
 $_year_end = strval($_POST["year"] + 1);
 
