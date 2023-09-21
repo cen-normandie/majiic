@@ -12,12 +12,9 @@ $id_user_bd_result = '';
 $id_ids_obs_bd_result = '';
 $nom_ids_obs_bd_result = '';
 
-$pwd = pg_escape_string($_POST['password']);
-$courriel = pg_escape_string($_POST['email']);
-
 if (isset($_POST['email']) && isset($_POST['password'])) {
     if( ($_POST['email'] != '') && ($_POST['password'] != '') ) {
-
+        $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")or die ('Connexion impossible :'. pg_last_error());
         $result = pg_prepare($dbconn, "sql", 
         "select 
         i.u_courriel,
