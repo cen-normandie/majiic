@@ -33,6 +33,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $result = pg_execute($dbconn, "sql", array($_POST['password'] ,$_POST['email']));
         while($row = pg_fetch_row($result))
         {
+            session_start ();
             $_SESSION['email']                  = trim($row[0]);
             $_SESSION['password']               = $_POST['password'];
             $_SESSION['session']                = trim($row[2]);
