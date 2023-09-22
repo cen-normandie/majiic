@@ -1,5 +1,6 @@
 /php/properties.php
-/php/files/*
+/php/files/*.xlsx
+/php/*.pdf
 /php/sent_mail_update_pwd.php
 /php/sent_mail.php
 /php/sent_mail_old.php
