@@ -2,36 +2,18 @@
 include '../properties.php';
 $arr = array();
 
-
-//connexion a la BD
-$dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
-or die ('Connexion impossible :'. pg_last_error());
-
-$sql = "SELECT email, nom_signature, intitule_signature, coalesce(mobile, '' ), bureau, coalesce(fixe, '-' ) FROM users.personnes where poste='y';";
-
-//execute la requete dans le moteur de base de donnees
-$query_result = pg_query($dbconn,$sql) or die ( pg_last_error());
-while($row = pg_fetch_row($query_result))
-{
-  echo trim($row[0]);
-}
-//ferme la connexion a la BD
-pg_close($dbconn);
-
-
-
-
 $name = '';
 $titre = '';
 $cell = '';
 $bureau = '';
 $fixe = '';
-//connexion a la BD
-$dbconn = pg_connect('host=95.128.44.119 port=5432 dbname=sicen user=postgres password=tFcxyFM9upcKNh84x')
-or die ('Connexion impossible :'. pg_last_error());
-  
-$sql = "SELECT email, nom_signature, intitule_signature, coalesce(mobile, '' ), bureau, coalesce(fixe, '-' ) FROM intranet.personnes where poste='y';";
 
+
+
+//connexion a la BD
+$dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
+
+$sql = "SELECT email, nom_signature, intitule_signature, coalesce(mobile, '' ), bureau, coalesce(fixe, '-' ) FROM users.personnes where poste='y';";
 
 function replace_char_html_($str) {
     $init = array("é", "è", "à","ç", "É","ï");
@@ -99,8 +81,8 @@ echo $name;
 
 //////////////////////////////////////////////////////
 // IL FAUT CONVERTIR UTF-8 en ISO pour Windows server
-$myfile = fopen('C:/wamp64/www/signatures/signatures/'.iconv('UTF-8', 'ISO-8859-15', $name).".htm", "w") or die("Unable to open file!");
-
+//$myfile = fopen('/signatures/'.iconv('UTF-8', 'ISO-8859-15', $name).".htm", "w") or die("Unable to open file!");
+$myfile = fopen('./signatures/'.$name.'.htm', "w") or die("Unable to open file!");
 
 $txt = "<meta http-equiv='Content-Type'  content='text/html charset=UTF-8' />
 <table border=0 cellspacing=0 cellpadding=0 width=600 style=''>
