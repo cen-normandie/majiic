@@ -82,7 +82,7 @@ echo $name;
 //////////////////////////////////////////////////////
 // IL FAUT CONVERTIR UTF-8 en ISO pour Windows server
 //$myfile = fopen('/signatures/'.iconv('UTF-8', 'ISO-8859-15', $name).".htm", "w") or die("Unable to open file!");
-$myfile = fopen('./signatures/'.$name.'.htm', "w") or die("Unable to open file!");
+$myfile = fopen('.'.DIRECTORY_SEPARATOR.'signatures'.DIRECTORY_SEPARATOR.$name.'.htm', "w") or die("Unable to open file!");
 
 $txt = "<meta http-equiv='Content-Type'  content='text/html charset=UTF-8' />
 <table border=0 cellspacing=0 cellpadding=0 width=600 style=''>
