@@ -29,6 +29,7 @@ WITH t as (
   tags,
   color
   FROM $progecen_projets
+  WHERE etat <> 'Réalisé'
 )
 SELECT json_agg(t) FROM t
 "

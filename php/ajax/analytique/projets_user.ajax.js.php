@@ -33,7 +33,9 @@ WITH t as (
   FROM $progecen_projets p
     LEFT JOIN $progecen_actions a on a.id_projet = p.id_projet 
     LEFT JOIN $progecen_group g on a.personnes = g.id_group
-  WHERE a.personnes ~* $1 or g.personnes ~* $1
+  WHERE 
+  p.etat <> 'Réalisé' AND 
+  ( a.personnes ~* $1 or g.personnes ~* $1 )
   group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
 )
 SELECT json_agg(t) FROM t
