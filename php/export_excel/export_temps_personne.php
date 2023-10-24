@@ -25,6 +25,7 @@ SELECT
     e.e_nom_projet,
     e.e_id_action,
     a.code_action,
+    a.site,
     e.e_lieu,
     e.e_commentaire,
     e.e_salissure,
@@ -43,15 +44,15 @@ ORDER by 3, 2
 $result = pg_execute($dbconn, "sql", array($_POST["nom_personne"], $quote));
 $row_ = 1;
 //write first line title
-$arr_columnname = ['id','objet','start','end','nb_heures','id_projet','nom_projet','id_action','nom_action','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
-for ($column = 1; $column <= 17; $column++) {
+$arr_columnname = ['id','objet','start','end','nb_heures','id_projet','nom_projet','id_action','nom_action','site','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
+for ($column = 1; $column <= 18; $column++) {
     $column_in_pg = $column -1;
     $sheet->setCellValueByColumnAndRow($column, $row_, $arr_columnname[$column_in_pg]);
 }
 $row_ = 2;
 while($row = pg_fetch_array($result))
 {
-    for ($column = 1; $column <= 17; $column++) {
+    for ($column = 1; $column <= 18; $column++) {
         $column_in_pg = $column -1;
         //echo 'col = '.$column . 'row[x] = '.$row[$column_in_pg].'</br>';
         $sheet->setCellValueByColumnAndRow($column, $row_, is_null($row[$column_in_pg]) ? '' : $row[$column_in_pg]);

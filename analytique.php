@@ -107,13 +107,11 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <option id="">B</option>-->
                             </select>
                         </div>
-                        <div class="input-group input-group-sm mb-3">
+                        <!--<div class="input-group input-group-sm mb-3">
                             <span for="input_site" class="input-group-text">Site : </span>
                             <select type="text" class="form-control" id="input_site" aria-describedby="">
-                                <!--<option id="">A</option>
-                                <option id="">B</option>-->
                             </select>
-                        </div>
+                        </div>-->
                         <div class="d-flex">
                             <div class="d-flex flex-column w-25">
                                 <div class="form-check form-check-inline form-control-sm py-0">
@@ -216,13 +214,13 @@ if (in_array($_SESSION['email'], $admins)) {
                         <option id="">B</option>-->
                     </select>
                 </div>
-                <div class="input-group input-group-sm mb-3">
+                <!--<div class="input-group input-group-sm mb-3">
                     <span for="input_site" class="input-group-text">Site : </span>
                     <select type="text" class="form-control" id="update_input_site" aria-describedby="">
-                        <!--<option id="">A</option>
-                        <option id="">B</option>-->
+                        <option id="">A</option>
+                        <option id="">B</option>
                     </select>
-                </div>
+                </div>-->
                 <div class="d-flex">
                     <div class="d-flex flex-column w-25">
                         <div class="form-check form-check-inline form-control-sm py-0">

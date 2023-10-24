@@ -497,9 +497,9 @@ document.getElementById("export_excel_temps").addEventListener("click", function
                 let str__ = '';
                 if (d > 1) {
                     let nbd = project[0].files.split(', ');
-                    nbd.forEach(element => str__ = str__+ `<a class="list-group-item" href="./php/files/${element}" target="blank_" ><span style="font-size:12px;">${element}</span></a>` );
+                    nbd.forEach(element => str__ = str__+ `<a class="list-group-item col-12 text-truncate" href="./php/files/${element}" target="blank_" ><span style="font-size:12px;">${element}</span></a>` );
                 } else if (project[0].files.split(', ').length = 1) {
-                    str__ = `<a class="list-group-item" href="./php/files/${project[0].files}" target="blank_" ><span style="font-size:12px;">${project[0].files}</span></a>`;
+                    str__ = `<a class="list-group-item col-12 text-truncate" href="./php/files/${project[0].files}" target="blank_" ><span style="font-size:12px;">${project[0].files}</span></a>`;
                 }
                 str_ +='</ul>';
                 document.getElementById("docs").innerHTML=str__;
