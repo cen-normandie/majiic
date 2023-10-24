@@ -14,7 +14,60 @@ $nom_ids_obs_bd_result = '';
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
     if( ($_POST['email'] != '') && ($_POST['password'] != '') ) {
-        $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")or die ('Connexion impossible :'. pg_last_error());
+
+        $ldaphost="192.168.0.211";
+        $ldapconn=ldap_connect($ldaphost);
+        if($ldapconn)
+            //echo "Connect success<br>";
+        //else
+            //echo "Connect Failure";
+        ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+
+        if ($ldapconn) {
+            $log = "CSNHN\\".$_POST['email'];
+            // binding to ldap server
+            $ldapbind = ldap_bind($ldapconn, $log, $_POST['password']);
+            // verify binding
+            if ($ldapbind) {
+                    $filter="(sAMAccountName=".$_POST['email'].")";
+                    $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
+                    $entries= ldap_get_entries($ldapconn, $result);
+                    $groups = $entries[0]["memberof"];
+
+                    session_start ();
+                    $_SESSION['email'] = $entries[0]["mail"][0];
+                    $_SESSION['password'] = $_POST['password'];
+                    $_SESSION['u_nom_user_progecen'] = $entries[0]["name"][0];
+                    $_SESSION['u_responsable'] = false;
+                    $_SESSION['u_ge_caen'] = false;
+                    $_SESSION['u_ge_rouen'] = false;
+                    $_SESSION['u_zoot'] = false;
+                    $_SESSION['session'] = $entries[0]["mail"][0];
+        
+                    foreach($groups as $group) {
+                        if( str_contains($group, 'PROGECEN_RESP_PROJET')) {
+                            $_SESSION['u_responsable'] = true;
+                        }
+                        if( str_contains($group, 'EQUIPE_GE_CAEN')) {
+                            $_SESSION['u_ge_caen'] = true;
+                        }
+                        if( str_contains($group, 'PROGECEN_EQUIPETECHNIQUE_ROUEN')) {
+                            $_SESSION['u_ge_rouen'] = true;
+                        }
+                        if( str_contains($group, 'PROGECEN_EQUIPEZOOT_ROUEN')) {
+                            $_SESSION['u_zoot'] = true;
+                        }
+                        
+                    }
+                echo "Success";
+            } else {
+                echo "LDAP bind failed...";
+            }
+        }
+
+
+/*         $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")or die ('Connexion impossible :'. pg_last_error());
         $result = pg_prepare($dbconn, "sql", 
         "select 
         i.u_courriel,
@@ -45,7 +98,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             $_SESSION['u_responsable']          = $row[7];
             echo "Success";
         }
-        pg_close($dbconn);
+        pg_close($dbconn); */
     }
     else {
         echo "Failed";

@@ -91,13 +91,14 @@ $("#signin").click( function () {
                         url      : "php/ajax/logs.js.php",
                         type     : "POST",
                         data     : {email: $("#courriel").val()},
-                        async    : true,
+                        async    : false,
                         dataType : "text",
                         error    : function(request, error) { console.log("not ajax success ");},
-                        success  : function(data) {}
+                        success  : function(data) {
+                            console.log("success");
+                            window.location.href = 'sites.php';
+                        }
                     });// End ajax
-                    console.log("success");
-                    window.location.href = 'sites.php';
                 }
                 else /*(data == "Failed")*/
                 {
