@@ -35,12 +35,13 @@ if( isset($file_name))
                 e_panier,
                 e_date_saisie,
                 e_date_saisie_salissure,
-                e_personne
+                e_personne,
+                e_id_site
             ) 
         VALUES ($1,
             $2::timestamp AT TIME ZONE 'UTC',
             $3::timestamp AT TIME ZONE 'UTC',
-            $4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14);"
+            $4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15);"
     );
     
     echo (pg_execute($dbconn, "insert_",array(
@@ -51,13 +52,14 @@ if( isset($file_name))
         ($sheet->getActiveSheet()->getCellByColumnAndRow(7, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(8, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(9, $row)->getValue()??''),
-        ($sheet->getActiveSheet()->getCellByColumnAndRow(10, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(11, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(12, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(13, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(14, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(15, $row)->getValue()??''),
-        ($sheet->getActiveSheet()->getCellByColumnAndRow(17, $row)->getValue()??'')
+        ($sheet->getActiveSheet()->getCellByColumnAndRow(16, $row)->getValue()??''),
+        ($sheet->getActiveSheet()->getCellByColumnAndRow(18, $row)->getValue()??''),
+        ($sheet->getActiveSheet()->getCellByColumnAndRow(10, $row)->getValue()??'')
     )) or die ( pg_last_error()));
 
     //ferme la connexion a la BD
