@@ -14,3 +14,4 @@ robots.txt
 .htaccess
 /export/.htaccess
 /export/*.gpkg
+!signatures/out/.htaccess
