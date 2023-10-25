@@ -79,33 +79,33 @@ if ($ldapconn) {
         <table border=0 cellspacing=0 cellpadding=0 width=600 style=''>
             <tr height=5>
                 <td width=120 style='background:#CEDE90'>
-                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='../img/5_5.png'></p>
+                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='https://cenwms.xyz/img/5_5.png'></p>
                 </td>
                 <td width=120 style='background:#B7C657'>
-                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='../img/5_5.png'></p>
+                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='https://cenwms.xyz/img/5_5.png'></p>
                 </td>
                 <td width=120 style='background:#849F2C'>
-                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='../img/5_5.png'></p>
+                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='https://cenwms.xyz/img/5_5.png'></p>
                 </td>
                 <td width=120 style='background:#4B6426'>
-                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='../img/5_5.png'></p>
+                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='https://cenwms.xyz/img/5_5.png'></p>
                 </td>
                 <td width=120 style='background:#3A5121'>
-                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='../img/5_5.png'></p>
+                    <p style='line-height:5px;mso-line-height-rule: exactly;'><img border=0 width=3 height=3 src='https://cenwms.xyz/img/5_5.png'></p>
                 </td>
             </tr>
             <tr>
                 <td colspan=1 width=80 height=0 style='background:#4B6426;'>
                     <p style='margin-top:20px;margin-bottom:20px;'>
                         <p  align=center style='text-align:center;line-height:18px;margin-bottom:0px;margin-top:0px;margin-left:4px;'>
-                            <a href='https://www.facebook.com/CENNormandie/' target='blank_'><img border=0 width=16 height=16 src='../img/fk.png'></a>&nbsp; 
-                            <a href='https://www.instagram.com/cennormandie/' target='blank_'><img border=0 width=16 height=16 src='../img/im.png'></a>&nbsp; 
-                            <a href='https://twitter.com/cen_normandie' target='blank_'><img border=0 width=16 height=16 src='../img/tr.png'></a>&nbsp; 
-                            <a href='https://www.youtube.com/channel/UC0eh_NNl-WEjZhoIuUGRA3g' target='blank_'><img border=0 width=16 height=16 src='../img/ye.png'></a>&nbsp; 
-                            <a href='https://www.youtube.com/channel/UC0eh_NNl-WEjZhoIuUGRA3g' target='blank_'><img border=0 width=16 height=16 src='../img/ye.png'></a>&nbsp; 
+                            <a href='https://www.facebook.com/CENNormandie/' target='blank_'><img border=0 width=16 height=16 src='https://cenwms.xyz/img/fk.png'></a>&nbsp; 
+                            <a href='https://www.instagram.com/cennormandie/' target='blank_'><img border=0 width=16 height=16 src='https://cenwms.xyz/img/im.png'></a>&nbsp; 
+                            <a href='https://twitter.com/cen_normandie' target='blank_'><img border=0 width=16 height=16 src='https://cenwms.xyz/img/tr.png'></a>&nbsp; 
+                            <a href='https://www.youtube.com/channel/UC0eh_NNl-WEjZhoIuUGRA3g' target='blank_'><img border=0 width=16 height=16 src='https://cenwms.xyz/img/ye.png'></a>&nbsp; 
+                            <a href='https://www.youtube.com/channel/UC0eh_NNl-WEjZhoIuUGRA3g' target='blank_'><img border=0 width=16 height=16 src='https://cenwms.xyz/img/ye.png'></a>&nbsp; 
                         <p>
                         <p  align=center style='text-align:center;margin-bottom:0px;margin-top:0px;'>
-                            <a href='https://cen-normandie.fr' target='blank_'><img border=0 width=80 height=8 src='../img/site_web.png'><a>
+                            <a href='https://cen-normandie.fr' target='blank_'><img border=0 width=80 height=8 src='https://cenwms.xyz/img/site_web.png'><a>
                         </p>
                     </p>
                 </td>
@@ -117,13 +117,13 @@ if ($ldapconn) {
                     </p>
                 </td>
                 <td colspan=2  style='background:white;border-right-style:solid;border-right-color:#3A5121;border-right-width:1px;'>
-                    <img border=0 width=240 height=80 src='../img/logo.png'>
+                    <img border=0 width=240 height=80 src='https://cenwms.xyz/img/logo.png'>
                 </td>
             </tr>
         </table border=0 cellspacing=0 cellpadding=0 width=600 style=''>
             <tr>
                 <td colspan=5>
-                    <img border=0 src='../img/actu.jpg'>
+                    <img border=0 src='https://cenwms.xyz/img/actu.jpg'>
                 </td>
             </tr>
         </table>
