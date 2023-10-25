@@ -23,7 +23,7 @@
   $_SESSION['is_admin'] = false;
   $admins = array(
     "n.moreira@cen-normandie.fr", 
-    "c.bouteiller@cen-normandie.fr", 
+    "m.seguin@cen-normandie.fr", 
     "f.buissart@cen-normandie.fr", 
     "b.perceval@cen-normandie.fr", 
     "v.boucey@cen-normandie.fr",
@@ -32,11 +32,10 @@
   $rh = array(
     "b.perceval@cen-normandie.fr", 
     "v.yver@cen-normandie.fr",
-    "h.bliard@cen-normandie.fr"
+    "h.bliard@cen-normandie.fr",
+    "n.peschard@cen-normandie.fr"
   ); 
-  $responsables=array(
-    "3 - Benoit Perceval"=>"b.perceval@cen-normandie.fr"
-  );
+
   
   if (in_array($_SESSION['email'], $admins)) {
       $_SESSION['is_admin'] = true;
@@ -63,6 +62,20 @@
       <span data-feather=""></span>
       <i class="fas fa-user-shield"></i> Majiic
     </a>
+  </li>
+  <hr class="bg-secondary mx-2 my-1">
+  <span class="nav-link text-secondary">SIG :</span>
+  <li class="nav-item">
+      <a class="nav-link"  href="https://geonature.cenwms.xyz/geonature" target="_blank">
+        <span data-feather=""></span>
+        <i class="fas fa-ticket-alt"></i> Géonature
+      </a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link"  href="http://gestparc.csnhn.local/glpi/" target="_blank">
+        <span data-feather=""></span>
+        <i class="fas fa-ticket-alt"></i> Ouvrir un ticket
+      </a>
   </li>
   <hr class="bg-secondary mx-2 my-1">
   <?php 
@@ -104,22 +117,11 @@
                 <i class="fas fa-utensils"></i> Panier Repas / <i class="fas fa-socks"></i> Prime Salissure
             </a>
     </div>';
-    echo '
-    <hr class="bg-secondary mx-2 my-1">
-    <div class="ml-2">
-    <span class="nav-link text-secondary">Réservation de matériel:</span>
-        <a class="nav-link"  href="reservation.php">
-                <span data-feather=""></span>
-                <i class="fas fa-clipboard-list-check"></i> Résa
-            </a>
-    </div>';
   }
 
 
 ?>
-  <li class="nav-item">
-    
-  </li>
+
   
 
 
