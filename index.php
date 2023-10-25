@@ -60,12 +60,12 @@
 					</div>
 				</div>
 				<div class="mt-auto p-4">
-						<div class="my-2">
+<!-- 						<div class="my-2">
 							<button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#CreateAccount">Création de compte</button>
 						</div>
 						<div class="my-2">
 							<button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#ModalDelete">Réinitialiser le Mot de passe</button>
-						</div>
+						</div> -->
 				</div>
 			</div>
 		</div>
@@ -78,7 +78,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="CreateAccount" tabindex="-1" aria-labelledby="CreateAccountLabel" aria-hidden="true" >
+<!-- <div class="modal fade" id="CreateAccount" tabindex="-1" aria-labelledby="CreateAccountLabel" aria-hidden="true" >
   <div class="modal-dialog modal-lg" >
     <div class="modal-content" style="max-height:90vh;overflow-y:scroll;">
       <div class="d-flex modal-header">
@@ -146,10 +146,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 		
-		<div id="ModalDelete" class="modal fade" >
+<!-- 		<div id="ModalDelete" class="modal fade" >
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -171,11 +171,11 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" id="save_update_pwd_mail" class="btn btn-primary"  aria-hidden="true">Réinitialiser le mot de passe</button> <!--data-dismiss="modal"-->
+						<button type="button" id="save_update_pwd_mail" class="btn btn-primary"  aria-hidden="true">Réinitialiser le mot de passe</button>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 
 
