@@ -35,12 +35,12 @@
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
 			<div class="d-flex align-items-start flex-column" style="height:500px">
-				<div class="p-2 w-50"><h2>Connexion à l'application CEN Normandie</h2></div>
-				<div class="p-2 w-50">
+				<div class="p-4 w-50"><h2>Connexion à l'application CEN Normandie</h2></div>
+				<div class="p-4 w-50">
 					<form role="form">
 						<div class="input-group w-50">
 							<span class="input-group-text justify-content-center col-2" id="user"><i class="fas fa-user"></i></span>
-                            <input id="courriel" type="text" class="form-control col-10 " placeholder="courriel@mail.com" aria-label="courriel@mail.com" aria-describedby="user" >
+                            <input id="courriel" type="text" class="form-control col-10 " placeholder="Identifiant Progecen ex: ABC " aria-label="courriel@mail.com" aria-describedby="user" >
                         </div>
 						<div class="input-group w-50 my-2">
 							<span class="input-group-text justify-content-center col-2" id="passwordLabel"><i class="fas fa-key"></i></span>
@@ -51,13 +51,15 @@
 						</div>
 					</form>
 				</div>
-				<div class="p-2 w-50">
-					<!--<div class="alert alert-info my-2">
-					<strong>Attention !</strong> Les identifiants pour les personnes disposant déjà d'un compte MAJIIC (pour l'accès aux données VISUDGFIP) ont été mis à jour.
-					</br>Le nouveau mot de passe est celui que vous utilisez pour démarrer l'ordinateur.</br></br>
-					</div>-->
+				<div class="p-4 w-50">
+					<div class="alert alert-info d-flex justify-content-center">
+						<div>
+							<strong>Attention !</strong> Le système d'authentification été mis à jour.
+							</br>Il faut désormais saisir votre identifiant + mot de passe Progecen</br></br>
+						</div>
+					</div>
 				</div>
-				<div class="mt-auto p-2">
+				<div class="mt-auto p-4">
 						<div class="my-2">
 							<button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#CreateAccount">Création de compte</button>
 						</div>

@@ -13,12 +13,12 @@ ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
 echo '################################ A USER ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\BP", "JR4Love#");
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\...", "...");
     // verify binding
     if ($ldapbind) {
         echo "LDAP bind successful... A USER";
             //POUR AVOIR UN TABLEAU AVEC LA LISTE DES SALARIES
-            $filter="(sAMAccountName=BP)";
+            $filter="(sAMAccountName=...)";
             $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
             $entries= ldap_get_entries($ldapconn, $result);
             $groups = $entries[0]["memberof"];
