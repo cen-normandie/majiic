@@ -73,7 +73,7 @@ if ($ldapconn) {
 
         //////////////////////////////////////////////////////
         // IL FAUT CONVERTIR UTF-8 en ISO pour Windows server
-        $myfile = fopen($root_.DIRECTORY_SEPARATOR.'signatures'.DIRECTORY_SEPARATOR.'out'.DIRECTORY_SEPARATOR.$name.'.htm', "w") or die("Unable to open file!");
+        $myfile = fopen($root_f.DIRECTORY_SEPARATOR.'signatures'.DIRECTORY_SEPARATOR.'out'.DIRECTORY_SEPARATOR.$name.'.htm', "w") or die("Unable to open file!");
 
         $txt = "<meta http-equiv='Content-Type'  content='text/html charset=UTF-8' />
         <table border=0 cellspacing=0 cellpadding=0 width=600 style=''>
