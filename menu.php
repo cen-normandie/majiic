@@ -68,7 +68,7 @@
   <li class="nav-item">
       <a class="nav-link"  href="https://geonature.cenwms.xyz/geonature" target="_blank">
         <span data-feather=""></span>
-        <i class="fas fa-ticket-alt"></i> Géonature
+        <i class="fas fa-frog"></i> Géonature
       </a>
   </li>
   <li class="nav-item">
