@@ -90,7 +90,7 @@ $("#signin").click( function () {
                     $.ajax({
                         url      : "php/ajax/logs.js.php",
                         type     : "POST",
-                        data     : {email: $("#courriel").val()},
+                        data     : {email: $("#courriel").val(), },
                         async    : false,
                         dataType : "text",
                         error    : function(request, error) { console.log("not ajax success ");},
@@ -99,12 +99,13 @@ $("#signin").click( function () {
                             window.location.href = 'sites.php';
                         }
                     });// End ajax
+                } else if (data == "CGU") {
+                    alert("Vous n'avez pas accepter les CGU --> Contactez votre service SIG");
                 }
                 else /*(data == "Failed")*/
                 {
-                    alert('Connexion impossible... Vérifiez le courriel et le mot de passe');
+                    alert('Connexion impossible... Vérifiez votre identifiant et votre mot de passe');
                 }
-                
             }
         });// End ajax
     }
@@ -113,9 +114,6 @@ $("#signin").click( function () {
 $("#save_update_pwd_mail").on('click',function(e){
     var mail = $("#update_pwd_mail").val();
     var mailOk = check_mail(mail);
-    
-    
-    
     if (mailOk) {
         $.ajax({
         type : 'POST',
@@ -139,8 +137,6 @@ $("#save_update_pwd_mail").on('click',function(e){
     }
 
 });
-
-
 
 $("#save_create_account").on('click',function(e){
     var mail = $("#inscription_mail").val();
@@ -196,16 +192,10 @@ $("#save_create_account").on('click',function(e){
                         }
                     }
         });
-        
-        
-        
     } else {
         alert("Veuillez accepter les Conditions Générales d'Utilisation");
         sessionStorage.setItem('trying', 'account');
         location.reload();
-    }
-    
-    
-    
+    }  
 });
 
