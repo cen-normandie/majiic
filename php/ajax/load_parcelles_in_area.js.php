@@ -33,8 +33,8 @@ FROM (SELECT 'Feature' As type
         INNER JOIN (SELECT 
             idpar as id, 
 					idcom as commune, 
-					substring(idpar from 5 for 3) as prefixe, 
-					substring(idpar from 8 for 2) as section, 
+					substring(idpar from 6 for 3) as prefixe, 
+					substring(idpar from 9 for 2) as section, 
 					right(idpar, 4 ) as numero,
 					geompar as geom
        FROM $parcelles_cad
