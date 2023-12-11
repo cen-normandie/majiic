@@ -63,6 +63,37 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                             $_SESSION['cgu'] = true;
                         }
                     }
+
+                    $filter="(cn=PROGECEN_RESP_PROJET)";
+                    $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
+                    $entries= ldap_get_entries($ldapconn, $result);
+                    $groups = $entries[0]["member"];
+                    $list_responsable = array();
+                    foreach($groups as $group) {
+                        if (str_contains($group, "CN=")) {
+                            $name_a = explode("CN=", $group)[1];
+                            $name_ = explode(",OU", $name_a)[0];
+                            array_push($list_responsable, $name_);
+                        }
+                        sort($list_responsable);
+                    }
+                    $ii = 0;
+                    //liste des responables projets triés
+                    $responsables= array();
+                    //liste des responables projets triés html
+                    $responsables_html = '';
+                    //liste des responables projets triés html
+                    $responsables_html_wo_id = '';
+                    foreach($list_responsable as $resp) {
+                        $responsables[$resp] = $ii." - ".$resp;
+                        $responsables_html = $responsables_html.'<option value = "'.$ii.' - '.$resp.'">'.$ii.' - '.$resp.'</option>';
+                        $responsables_html_wo_id = $responsables_html_wo_id.'<option value = "'.$resp.'">'.$resp.'</option>';
+                        $ii ++;
+                    }
+                    $_SESSION['responsables']=$responsables;
+                    $_SESSION['responsables_html']=$responsables_html;
+                    $_SESSION['responsables_html_wo_id']=$responsables_html_wo_id ;
+
                 if($_SESSION['cgu']) {
                     echo "Success";
                 } else {

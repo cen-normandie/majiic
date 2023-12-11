@@ -113,7 +113,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <span class="input-group-text" id="basic-addon1">Responsable : </span>
                                     <!--<input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">-->
                                     <select class="form-select" id="responsable_projet" disabled>
-                                        <?php echo $responsables_html_wo_id; ?>
+                                        <?php //echo $responsables_html_wo_id; ?>
+                                        <?php echo $_SESSION['responsables_html_wo_id']; ?>
                                     </select>
                                 </div>
                                 <div class="input-group input-group-sm p-2">

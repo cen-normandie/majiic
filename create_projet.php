@@ -79,7 +79,8 @@ if (in_array($_SESSION['email'], $admins)) {
                     <div class="input-group input-group-sm py-2">
                         <label class="input-group-text" for="l_type_projet">Responsable : </label>
                         <select class="form-select" id="responsable_projet" >
-                            <?php echo $responsables_html ?>
+                            <?php //echo $responsables_html ?>
+                            <?php echo $_SESSION['responsables_html']; ?>
                         </select>
 
                         
