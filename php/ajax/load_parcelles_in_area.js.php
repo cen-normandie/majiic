@@ -9,7 +9,7 @@ or die ('Connexion impossible :'. pg_last_error());
 
 $dep=substr($_POST["id"], 0, 2);
 
-$sql = "
+/* $sql = "
 SELECT row_to_json(fc)
 FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
 FROM (SELECT 'Feature' As type
@@ -22,7 +22,26 @@ FROM (SELECT 'Feature' As type
        FROM pci_vecteur_complet 
         WHERE id like '".$_POST["id"]."%' and st_isvalid(geom) ) As lp 
       ON lg.id = lp.id ) As f )  As fc;
-";
+"; */
+$sql = "
+SELECT row_to_json(fc)
+FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+FROM (SELECT 'Feature' As type
+   , ST_AsGeoJSON( st_transform(lg.geompar,4326) )::json As geometry
+   , row_to_json(lp) As properties
+  FROM $parcelles_cad As lg 
+        INNER JOIN (SELECT 
+            idpar as id, 
+					idcom as commune, 
+					substring(idpar from 5 for 3) as prefixe, 
+					substring(idpar from 8 for 2) as section, 
+					right(idpar, 4 ) as numero,
+					geompar as geom
+       FROM $parcelles_cad
+        WHERE idpar like '".$_POST["id"]."%' and st_isvalid(geompar) ) As lp 
+      ON lg.idpar = lp.id ) As f )  As fc;
+      ";
+
 
 $query_result = pg_exec($dbconn,$sql) or die (pg_last_error());
 while($row = pg_fetch_row($query_result))
