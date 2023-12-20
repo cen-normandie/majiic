@@ -409,6 +409,7 @@ function save_event (event) {
             console.log(data);
             }
     });
+    calendar.fullCalendar("gotoDate", event.e_start);
 }
 
 function save_update_event (event) {
