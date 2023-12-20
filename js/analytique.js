@@ -215,10 +215,12 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 
         //Mets à jour les actions liées au projet
         //Same like select input projet change
-        keys["id_projet"][0] = $('#update_input_projet').val().split(' | ')[1];
-        filters_active["id_projet"] = true;
-        //filtre les données
-        apply_filters();
+        if ( ($('#update_input_projet').val() ) !== null) {
+            keys["id_projet"][0] = $('#update_input_projet').val().split(' | ')[1];
+            filters_active["id_projet"] = true;
+            //filtre les données
+            apply_filters();
+        }
         console.log(arg.event._def.extendedProps.e_id_action);
         $('#input_action option[id="'+arg.event._def.extendedProps.e_id_action+'"]').attr("selected", "selected");
         $('#update_input_action option[id="'+arg.event._def.extendedProps.e_id_action+'"]').attr("selected", "selected");
