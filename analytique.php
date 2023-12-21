@@ -1,4 +1,23 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'php/properties.php';
+if (!isset($_SESSION['email'])) {
+    header('Location: index.php');
+    exit();
+};
+if (!isset($_SESSION['password'])) {
+    header('Location: index.php');
+    exit();
+};
+if (!isset($_SESSION['session'])) {
+    header('Location: index.php');
+    exit();
+};
+$_SESSION['is_admin'] = false;
+$admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
+if (in_array($_SESSION['email'], $admins)) {
+    $_SESSION['is_admin'] = true;
+}
+?>
 <!doctype html>
 <html lang="fr">
   <head>
@@ -34,32 +53,6 @@
     <link href="css/autocomplete.dashboard.css" rel="stylesheet">
   </head>
   <body>
-
-<?php
-include 'php/properties.php';
-
-
-if (!isset($_SESSION['email'])) {
-    header('Location: index.php');
-    exit();
-};
-if (!isset($_SESSION['password'])) {
-    header('Location: index.php');
-    exit();
-};
-if (!isset($_SESSION['session'])) {
-    header('Location: index.php');
-    exit();
-};
-$_SESSION['is_admin'] = false;
-$admins = array("n.moreira@cen-normandie.fr", "m.seguin@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
-
-
-if (in_array($_SESSION['email'], $admins)) {
-    $_SESSION['is_admin'] = true;
-}
-?>
-
 
 <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
   <?php $_POST["page"] = basename(__FILE__);include("menu.php"); ?>
@@ -368,9 +361,6 @@ $(document).ready(function() {
             calendar.refetchEvents();
     }
 });
-
-
-
 //propriétés dans le json projets et valeur clef
 const keys = {
     "id_projet" : ["null","id"]
@@ -395,12 +385,6 @@ function filtre_obj(arr, requete) {
     }
   })
 }
-
-
-
-
-
 </script>
-
   </body>
 </html>

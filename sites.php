@@ -1,4 +1,23 @@
-<?php session_start(); ?>
+<?php session_start(); 
+include 'php/properties.php';
+if (!isset($_SESSION['email'])) {
+    header('Location: index.php');
+    exit();
+};
+if (!isset($_SESSION['password'])) {
+    header('Location: index.php');
+    exit();
+};
+if (!isset($_SESSION['session'])) {
+    header('Location: index.php');
+    exit();
+};
+$_SESSION['is_admin'] = false;
+$admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
+if (in_array($_SESSION['email'], $admins)) {
+    $_SESSION['is_admin'] = true;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,8 +29,6 @@
     <title>CEN Normandie</title>
     <link rel="shortcut icon" href="img/CenNormandie.ico" />
     <script>L_PREFER_CANVAS = true;</script>
-    
-    
     <!--LEAFLET-->
     <link href="js/leaflet1.7/leaflet.css" rel="stylesheet" type="text/css">
     <link href="js/leaflet/plugins/leaflet_label/css/leafleat_label.css" rel="stylesheet" type="text/css">
@@ -27,31 +44,6 @@
     <link href="fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<?php
-include 'php/properties.php';
-
-
-if (!isset($_SESSION['email'])) {
-    header('Location: index.php');
-    exit();
-};
-if (!isset($_SESSION['password'])) {
-    header('Location: index.php');
-    exit();
-};
-if (!isset($_SESSION['session'])) {
-    header('Location: index.php');
-    exit();
-};
-$_SESSION['is_admin'] = false;
-$admins = array("n.moreira@cen-normandie.fr", "m.seguin@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
-
-if (in_array($_SESSION['email'], $admins)) {
-    $_SESSION['is_admin'] = true;
-}
-?>
-
-
 <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
     <?php $_POST["page"] = basename(__FILE__);include("menu.php"); ?>
     <div class="d-flex flex-column col-md-9 col-lg-10 h-100 bg-light" style="overflow-y:auto;overflow-x:hidden;min-height:100vh;">

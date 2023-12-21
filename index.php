@@ -14,12 +14,8 @@
     <!-- Custom Fonts -->
     <link href="fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet" type="text/css">
 	<link href="css/cennormandie.css" rel="stylesheet" type="text/css">
-    
-    
-    
 </head>
 <body>
-
 <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
 	<div class="d-flex flex-column col-md-3 col-lg-2 h-100 bg-dark sticky-top " style="min-height:100vh;">
 		<div class="d-flex justify-content-center mt-2 align-items-center w-100">
@@ -74,9 +70,6 @@
 		</div>
 	</div>
 </div>
-
-
-
 <!-- Modal -->
 <!-- <div class="modal fade" id="CreateAccount" tabindex="-1" aria-labelledby="CreateAccountLabel" aria-hidden="true" >
   <div class="modal-dialog modal-lg" >
@@ -176,10 +169,6 @@
 				</div>
 			</div>
 		</div> -->
-
-
-
-
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -199,8 +188,6 @@
 
 $(document).ready(function(){
 });
-
     </script>
-    
 </body>
 </html>

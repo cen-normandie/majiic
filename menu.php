@@ -9,17 +9,12 @@
       <span class="nav-link text-secondary">Sites :</span>
       <a class="nav-link <?php $t = ((($_POST['page']) == 'sites.php') ? ' active' : '' ); echo $t; ?>" href="sites.php">
         <span data-feather=""></span><i class="fas fa-home ml-4"></i> Consulter un Site
-      </a>
-      
-  
-  <?php 
-  
+      </a> 
+<?php 
     //WRITE ALL SESSIONS VARS
     //echo "<h3> PHP List All Session Variables</h3>";
     //foreach ($_SESSION as $key=>$val)
     //echo "<span  class='text-white'>".$key." ".$val."</span><br/>";
-  
-  
   $_SESSION['is_admin'] = false;
   $admins = array(
     "n.moreira@cen-normandie.fr", 
@@ -35,12 +30,9 @@
     "h.bliard@cen-normandie.fr",
     "n.peschard@cen-normandie.fr"
   ); 
-
-  
   if (in_array($_SESSION['email'], $admins)) {
       $_SESSION['is_admin'] = true;
   }
-
   if ($_SESSION['is_admin']) {
     $link_ = '
     <a class="nav-link ';
@@ -118,13 +110,6 @@
             </a>
     </div>';
   }
-
-
 ?>
-
-  
-
-
-  
 </ul>
 </div>
