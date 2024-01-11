@@ -26,6 +26,7 @@ function initmap() {
     
     //var osmUrlbg='http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png';
     //var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    //var ignOrtho='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
     var ignOrtho='https://wxs.ign.fr/essentiels/geoportail/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=ORTHOIMAGERY.ORTHOPHOTOS&format=image/jpeg&style=normal';
 
     //var osmbg=new L.TileLayer(osmUrlbg,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});

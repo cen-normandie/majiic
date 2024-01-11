@@ -330,7 +330,7 @@ $(document).ready(function() {
     //charge les projets (fonction qui appelle ensuite le chargement des actions
     load_projets_ajax();
 
-    var get_vars = document.getElementById("get_start");
+/*     var get_vars = document.getElementById("get_start");
     console.log(get_vars);
     //Test si les variable get sont renseignées pour un event depuis outlook 
     if(get_vars){
@@ -362,7 +362,7 @@ $(document).ready(function() {
             calendar.refetchEvents();
     //delete
     delete window.get_vars;
-    }
+    } */
     
 });
 //propriétés dans le json projets et valeur clef
