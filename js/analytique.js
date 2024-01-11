@@ -409,7 +409,7 @@ function save_event (event) {
             console.log(data);
             }
     });
-    calendar.gotoDate(event.e_start);
+    //calendar.gotoDate(event.e_start);
 }
 
 function save_update_event (event) {
