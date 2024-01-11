@@ -1,10 +1,10 @@
 <?php
 include '../../properties.php';
+$year_ = date("Y");
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
 $result = pg_prepare($dbconn, "sql", 
-
 
 
 //array_to_json(array_agg(f)) As features
@@ -30,6 +30,7 @@ WITH t as (
   color
   FROM $progecen_projets
   WHERE etat <> 'Réalisé'
+  AND date_fin > to_date( $1::text||'0101', 'YYYYMMDD')
 )
 SELECT json_agg(t) FROM t
 "
@@ -80,7 +81,7 @@ SELECT json_agg(t) FROM t
 //  )
 //  FROM $sites order by 1
 
-$result = pg_execute($dbconn, "sql", array());
+$result = pg_execute($dbconn, "sql", array($year_));
 while($row = pg_fetch_row($result))
 {
   echo trim($row[0]);

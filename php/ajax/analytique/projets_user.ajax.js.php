@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../properties.php';
+$year_ = date("Y");
 
 $user = $_SESSION['u_nom_user_progecen'];//$_SESSION['u_id_progecen'];
 
@@ -36,6 +37,7 @@ WITH t as (
   WHERE 
   p.etat <> 'Réalisé' AND 
   ( a.personnes ~* $1 or g.personnes ~* $1 )
+  AND p.date_fin > to_date( $2::text||'0101', 'YYYYMMDD')
   group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
 )
 SELECT json_agg(t) FROM t
@@ -87,7 +89,7 @@ SELECT json_agg(t) FROM t
 //  )
 //  FROM $sites order by 1
 
-$result = pg_execute($dbconn, "sql", array($user));
+$result = pg_execute($dbconn, "sql", array($user,$year_));
 while($row = pg_fetch_row($result))
 {
   echo trim($row[0]);
