@@ -133,11 +133,20 @@ $('#update_input_projet').on('change', function() {
   apply_filters();
 });
 //Listen objet input update in modal
-$("#input_objet").on("input", function() {
+/* $("#input_objet").on("input", function() {
     ( ($("#input_objet").val() == '') ? $("#help").addClass('visible_s') : $("#help").removeClass('visible_s'));
     $('#event_title').text($("#input_objet").val());
     $('#event_title').attr('title',$("#input_objet").val());
-});
+}); */
+//v2024 input objet listener
+const input = document.getElementById("input_objet");
+const log = document.getElementById("event_title");
+input.addEventListener("input", updateValue);
+function updateValue(e) {
+    (e.target.value == '') ? (log.textContent = '...', log.setAttribute('title','...'), input.value = '...' ) : (log.textContent = e.target.value , log.setAttribute('title',e.target.value)) ;
+};
+
+
 // Listen fro save update event 
 $('#update_e').on('click', function() {
     let event = calendar.getEventById( $('#update_id_e').html() );
@@ -153,7 +162,13 @@ $('#delete_e').on('click', function() {
     calendar.refetchEvents();
     modal_edit.hide()
 });
-
+// Listen from input_objet if empty
+$('#input_objet').on('change', function() {
+    console.log("change");
+    if (this.value = '') {
+        document.getElementById("#event_title").value = '...';
+    }
+});
 
 
 

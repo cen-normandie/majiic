@@ -84,7 +84,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         <h4>Ajouter un évènement :</h4>
                         <div class="input-group input-group-sm mb-3">
                             <span for="objet" class="input-group-text">Objet : </span>
-                            <input type="text" class="form-control" id="input_objet" ></input>
+                            <input type="text" class="form-control" id="input_objet" onClick="this.select();" value="..."></input>
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <span for="input_projet" class="input-group-text">Projet : </span>
@@ -150,8 +150,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center visible_s w-100" id="help" >
-                            <div class="col-7 d-flex justify-content-center" id="external-events-list"><div class="fs-4 m-0 badge bg-success fc-event col-6 text-truncate" id="event_title" title="" ></div></div>
+                        <div class="d-flex align-items-center w-100" id="help" >
+                            <div class="col-7 d-flex justify-content-center" id="external-events-list"><div class="fs-4 m-0 badge bg-success fc-event col-6 text-truncate" id="event_title" title="" >...</div></div>
                             <div class="col-5 py-4"><small>Glisser / déposer l'évènement sur le calendrier</small></div>
                         </div>
                     </div>
