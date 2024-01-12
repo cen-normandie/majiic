@@ -75,6 +75,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
                                 <button id="export_2022" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
                                 <button id="export_2023" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
+                                <button id="export_2024" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
                             
                         </li>
                         <li class="list-group-item"><strong class="fs-5">B</strong> - Téléchargez la liste des codes projets <--> codes actions <--> codes sites servant de référentiel :
@@ -83,6 +84,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="anal_2021" type="button" class="btn btn-outline-warning  shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
                                 <button id="anal_2022" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
                                 <button id="anal_2023" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
+                                <button id="anal_2024" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
                             
                         </li>
                         <li class="list-group-item"><strong class="fs-5">C</strong> - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
@@ -94,6 +96,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                         <option value="2021">2021</option>
                                         <option value="2022">2022</option>
                                         <option value="2023" selected>2023</option>
+                                        <option value="2024" >2024</option>
                                     </select>
                                 </div>
                                 <div class="input-group my-2">
