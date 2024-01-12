@@ -132,14 +132,20 @@ function autocompleteArray(inp, arr) {
     document.getElementById("input_site").value = '';
     //apply_filters();
     clearDocRef();
+    clearDDG();
   });
 
 
   function addDocRef() {
     let array_docs = [];
+    let array_ddgs = [];
     for (const parcelle in parcelles_f) {
       if ( !array_docs.includes(parcelles_f[parcelle].doc_reference) ) {
         array_docs.push(parcelles_f[parcelle].doc_reference);
+      }
+      if ( !array_ddgs.includes(parcelles_f[parcelle].id_doc_gestion) ) {
+        console.log(parcelles_f[parcelle]);
+        array_ddgs.push(parcelles_f[parcelle].id_doc_gestion);
       }
     }
     let content ="";
@@ -150,6 +156,11 @@ function autocompleteArray(inp, arr) {
     }
     document.getElementById("doc_refs").innerHTML=content;
     document.getElementById("list_docs").classList.remove("d-none");
+
+    for (const element_ of array_ddgs) {
+      load_DDG(element_);
+      //content_ddgs +=`<div class="mx-1"><a href="./php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
+    }
    } 
   function clearDocRef() {
     document.getElementById("doc_refs").innerHTML='';
@@ -162,3 +173,31 @@ function autocompleteArray(inp, arr) {
     filters_active["id_site"] = false;
     apply_filters();
   }
+  function clearDDG() {
+    document.getElementById("list_ddg").classList.add("d-none");
+  }
+
+  //loading from doc_ref acquisition or convention call is in js.autocompleteArray/aucomplete.dashboard.js
+function load_DDG(id_ddg) {
+  $.ajax({
+      url      : "php/ajax/search_autocomplete_ddg.js.php",
+      data     : {id_ddg},
+      method   : "POST",
+      dataType : "json",
+      async    : true,
+      error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+      success  : function(data) {
+            if(innerHTML=data[0].nom_doc_gestion != 'ø') {
+              document.getElementById("list_ddg").classList.remove("d-none");
+              document.getElementById("ddg_nom").innerHTML=data[0].nom_doc_gestion;
+              document.getElementById("ddg_type").innerHTML=data[0].type_doc_gestion;
+              document.getElementById("ddg_start").innerHTML=data[0].d_debut_doc_gestion;
+              document.getElementById("ddg_end").innerHTML=data[0].d_fin_doc_gestion;
+              document.getElementById("ddg_auteurs").innerHTML=data[0].auteurs;
+              document.getElementById("ddg_commentaires").innerHTML=data[0].commentaires;
+              document.getElementById("ddg_multisite").innerHTML=data[0].multisite; 
+              document.getElementById("ddg_lien").innerHTML=`<div class="mx-1"><a href="./php/docs/gestion/${data[0].lien}.pdf" target="_blank" class="link-secondary fs-6"><div><i class=" mx-1 fas fa-file-pdf text-danger"></i>${data[0].lien}</div></a></div>`; 
+            }
+          }
+  });
+}

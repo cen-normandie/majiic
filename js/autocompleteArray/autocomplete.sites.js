@@ -162,3 +162,5 @@ function autocompleteArray(inp, arr) {
     filters_active["id_site"] = false;
     //apply_filters();
   }
+
+

@@ -44,6 +44,7 @@ t as (
   s.bassin,
   s.ucg,
   p.doc_reference,
+  p.id_doc_gestion,
   (
     	    SELECT row_to_json(fc) as geojson
             FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features

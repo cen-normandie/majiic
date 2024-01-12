@@ -36,6 +36,7 @@ WITH t as (
   statuts_protection,
   bassin,
   ucg,
+  id_doc_gestion,
   round( (st_area( coalesce(geom_pp, geom) )/10000)::numeric,2) as surface,
   (
 	    SELECT row_to_json(fc) as geojson

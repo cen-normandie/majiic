@@ -28,6 +28,7 @@ WITH t as (
   s.ucg,
   y.date_,
   p.doc_reference,
+  p.id_doc_gestion,
   (
     SELECT row_to_json(fc) as geojson
       FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features

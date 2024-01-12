@@ -175,11 +175,36 @@ if (in_array($_SESSION['email'], $admins)) {
                             
                         </div>
                     </div>
-                    <ul class="list-group my-2">
-                        <li id="list_docs" class="list-group-item d-none">
-                            <div id="doc_refs" class="d-flex flex-wrap align-items-start">
+                    <ul id="list_docs" class="mb-3 list-group d-none">
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs"><span class="fw-bold">Document(s) Foncier :</span></li>
+                        <li class="list-group-item">
+                            <div id="doc_refs" class="d-flex flex-wrap align-items-start xxs">
                             </div>
                         </li>
+                    </ul>
+                    <ul class="mb-1 list-group d-none" id="list_ddg">
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light"><span class="fw-bold xxs">Document(s) de gestion :</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Nom :<span id="ddg_nom" class="col-9 text-truncate text-secondary">...</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Type :<span id="ddg_type" class="col-9 text-truncate text-secondary">...</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Validité : <span id="ddg_start" class="xxs"></span><--><span id="ddg_end" class="xxs"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Auteurs :<span id="ddg_auteurs" class="col-9 text-truncate text-secondary">...</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Commentaires :<span id="ddg_commentaires" class="col-8 text-truncate text-secondary">...</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Multisite :<span id="ddg_multisite" class="col-9 text-truncate text-secondary">...</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light xxs">
+                                Lien :<span id="ddg_lien" class="col-9 text-truncate text-secondary">...</span>
+                            </li>
                     </ul>
                     
 

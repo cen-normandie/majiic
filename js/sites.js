@@ -257,28 +257,3 @@ change_load("Chargement des données");
 //chargement des sites
 //cette fonction appelle ensuite load_parcelles_ajax
 load_sites_ajax();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
