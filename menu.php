@@ -16,24 +16,25 @@
     //foreach ($_SESSION as $key=>$val)
     //echo "<span  class='text-white'>".$key." ".$val."</span><br/>";
   $_SESSION['is_admin'] = false;
-  $admins = array(
+/*   $admins = array(
     "n.moreira@cen-normandie.fr", 
     "m.seguin@cen-normandie.fr", 
     "f.buissart@cen-normandie.fr", 
     "b.perceval@cen-normandie.fr", 
     "v.boucey@cen-normandie.fr",
     "m.pellevilain@cen-normandie.fr"
-  );
-  $rh = array(
+  ); */
+/*   $rh = array(
     "b.perceval@cen-normandie.fr", 
     "v.yver@cen-normandie.fr",
     "h.bliard@cen-normandie.fr",
     "n.peschard@cen-normandie.fr"
-  ); 
-  if (in_array($_SESSION['email'], $admins)) {
-      $_SESSION['is_admin'] = true;
-  }
-  if ($_SESSION['is_admin']) {
+  );  */
+  //if (in_array($_SESSION['email'], $admins)) {
+  //    $_SESSION['is_admin'] = true;
+  //}
+  //if ($_SESSION['is_admin']) {
+  if ($_SESSION['is_equipe_si']) {
     $link_ = '
     <a class="nav-link ';
     $t = ((($_POST["page"]) == "gestion-site.php") ? " active" : "" );
@@ -132,7 +133,8 @@
         <hr class="bg-secondary mx-2 my-1">
 '; 
   }; */
-  if (in_array($_SESSION['email'], $rh)) {
+  //if (in_array($_SESSION['email'], $rh)) {
+  if ($_SESSION['is_equipe_rh']) {
     echo '<div class="ml-2">
     <span class="nav-link text-secondary">RH :</span>
         <a class="nav-link"  href="rh.php">

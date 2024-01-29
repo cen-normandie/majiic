@@ -45,6 +45,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['u_zoot'] = false;
                     $_SESSION['session'] = $entries[0]["mail"][0];
                     $_SESSION['cgu'] = false ;
+                    $_SESSION['is_equipe_si'] = false;
+                    $_SESSION['is_equipe_rh'] = false;
         
                     foreach($groups as $group) {
                         if( str_contains($group, 'PROGECEN_RESP_PROJET')) {
@@ -61,6 +63,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                         if( str_contains($group, 'CGU_Foncier')) {
                             $_SESSION['cgu'] = true;
+                        }
+                        if( str_contains($group, 'FILIERE_GEOMATIQUE')) {
+                            $_SESSION['is_equipe_si'] = true;
+                        }
+                        if( str_contains($group, 'FILIERE_RESSOURCES_HUMAINE')) {
+                            $_SESSION['is_equipe_rh'] = true;
                         }
                     }
 
