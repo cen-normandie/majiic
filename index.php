@@ -36,14 +36,14 @@
 					<form role="form">
 						<div class="input-group w-50">
 							<span class="input-group-text justify-content-center col-2" id="user"><i class="fas fa-user"></i></span>
-                            <input id="courriel" type="text" class="form-control col-10 " placeholder="Identifiant Progecen ex: ABC " aria-label="courriel@mail.com" aria-describedby="user" tabindex="0">
+                            <input id="courriel" type="text" class="form-control col-10 " placeholder="Identifiant Progecen ex: ABC " aria-label="courriel@mail.com" aria-describedby="user" tabindex="1">
                         </div>
 						<div class="input-group w-50 my-2">
 							<span class="input-group-text justify-content-center col-2" id="passwordLabel"><i class="fas fa-key"></i></span>
-                            <input id="pwd" type="password" class="form-control col-10 " placeholder="MoTDePassE" aria-label="MoTDePassE" aria-describedby="passwordLabel" tabindex="1" >
+                            <input id="pwd" type="password" class="form-control col-10 " placeholder="MoTDePassE" aria-label="MoTDePassE" aria-describedby="passwordLabel" tabindex="2" >
                         </div>
 						<div class="my-2">
-							<button type="button" id="signin" class="btn btn-primary" tabindex="2">Valider</button>
+							<button type="button" id="signin" class="btn btn-primary" tabindex="3">Valider</button>
 						</div>
 					</form>
 				</div>
