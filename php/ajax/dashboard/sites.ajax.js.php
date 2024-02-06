@@ -9,33 +9,33 @@ $result = pg_prepare($dbconn, "sql",
 "
 WITH t as (
   SELECT 
-  $sites.id_site as id, 
-  nom_site as name, 
+  s.id_site as id, 
+  s.nom_site as name, 
   'site' as tablename,
-  doc_reference,
-  lien_doc,
-  nb_parc,
-  ens,
-  code_milieu_princ,
-  date_crea_site,
-  gestionnaire_site,
-  doc_gestion_presence,
-  doc_justif_admin,
-  CASE WHEN zh THEN 1 ELSE 0 END as is_zh,
-  is_aesn,
-  is_ddg,
-  ens as is_ens,
-  is_acquisition,
-  is_convention,
-  mc as is_mc,
-  is_bail_e,
-  is_bail_r,
-  is_pau,
-  is_ore,
-  dep as dep,
-  statuts_protection,
-  bassin,
-  ucg,
+  s.doc_reference,
+  s.lien_doc,
+  s.nb_parc,
+  s.ens,
+  s.code_milieu_princ,
+  s.date_crea_site,
+  s.gestionnaire_site,
+  s.doc_gestion_presence,
+  s.doc_justif_admin,
+  CASE WHEN s.zh THEN 1 ELSE 0 END as is_zh,
+  s.is_aesn,
+  s.is_ddg,
+  s.ens as is_ens,
+  s.is_acquisition,
+  s.is_convention,
+  s.mc as is_mc,
+  s.is_bail_e,
+  s.is_bail_r,
+  s.is_pau,
+  s.is_ore,
+  s.dep as dep,
+  s.statuts_protection,
+  s.bassin,
+  s.ucg,
   round( (st_area( coalesce(geom_pp, geom) )/10000)::numeric,2) as surface,
   (
 	    SELECT row_to_json(fc) as geojson
@@ -58,7 +58,7 @@ WITH t as (
             ON lg.id_site = lp.id_site  ) As f )  As fc
   ),
   d.autres_docs
-  FROM $sites left join $sites_data d on d.id_site = $sites.id_site
+  FROM $sites s left join $sites_data d on d.id_site = $sites.id_site
   order by 1
 )
 SELECT json_agg(t) FROM t
