@@ -516,7 +516,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <span class="input-group-text" id="l_id_site_autre_doc">Site</span>
                 <input id="id_site_autre_doc" type="text" class="form-control" placeholder="0014_014" aria-label="" aria-describedby="l_id_site_autre_doc">
               </div>
-              <div class="input-group p-2">
+              <div class="input-group p-2 mb-4">
                 <input type="file" class="form-control" id="doc_pdf_autre" />
                 <button id="save_new_doc_autre" type="input-group-btn" class="btn btn-outline-success">Sauvegarder le document</button>
               </div>
