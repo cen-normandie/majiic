@@ -138,6 +138,7 @@ function autocompleteArray(inp, arr) {
 
   function addDocRef() {
     let array_docs = [];
+    let array_docs_autres = [];
     let array_ddgs = [];
     for (const parcelle in parcelles_f) {
       if ( !array_docs.includes(parcelles_f[parcelle].doc_reference) ) {
@@ -148,11 +149,20 @@ function autocompleteArray(inp, arr) {
         array_ddgs.push(parcelles_f[parcelle].id_doc_gestion);
       }
     }
+    for (const doc in sites_f[0].autres_docs.split("|") ) {
+      if ( doc !== null) {
+        console.log(doc);
+        array_docs_autres.push(doc);
+      }
+    }
     let content ="";
     //let dir_from_localhost = document.getElementById("dir_from_localhost").innerText;
     for (const element of array_docs) {
       //content +=`<div class="mx-1"><a href="${dir_from_localhost}/php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
       content +=`<div class="mx-1"><a href="./php/docs/foncier/${element}.pdf" target="_blank" class="link-secondary fs-6"><div>${element}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
+    }
+    for (const elemnt of array_docs_autres) {
+      content +=`<div class="mx-1"><a href="./php/docs/foncier/autres/${elemnt}.pdf" target="_blank" class="link-secondary fs-6"><div>${elemnt}<i class=" mx-1 fas fa-file-pdf text-danger"></i></div></a></div>`;
     }
     document.getElementById("doc_refs").innerHTML=content;
     document.getElementById("list_docs").classList.remove("d-none");
