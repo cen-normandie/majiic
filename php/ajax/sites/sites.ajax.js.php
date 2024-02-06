@@ -11,7 +11,7 @@ WITH t as (
   SELECT 
   s.id_site as id, 
   s.nom_site as name, 
-  s.'site' as tablename,
+  'site' as tablename,
   s.doc_reference,
   s.lien_doc,
   s.nb_parc,
