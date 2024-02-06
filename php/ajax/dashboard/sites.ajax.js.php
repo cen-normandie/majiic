@@ -57,8 +57,8 @@ WITH t as (
                         ) As lp 
             ON lg.id_site = lp.id_site  ) As f )  As fc
   ),
-  d.autres_docs
-  FROM $sites s left join $sites_data d on d.id_site = $sites.id_site
+  dd.autres_docs
+  FROM $sites s left join $sites_data as dd on dd.id_site = $sites.id_site
   order by 1
 )
 SELECT json_agg(t) FROM t
