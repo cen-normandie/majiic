@@ -37,6 +37,7 @@ WITH t as (
   s.bassin,
   s.ucg,
   round( (st_area( coalesce(s.geom_pp, s.geom) )/10000)::numeric,2) as surface,
+  dd.autres_docs,
   (
 	    SELECT row_to_json(fc) as geojson
         FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
@@ -56,8 +57,7 @@ WITH t as (
 						            AND s.id_site = g.id_site
                         ) As lp 
             ON lg.id_site = lp.id_site  ) As f )  As fc
-  ),
-  dd.autres_docs
+  )
   FROM $sites s left join $sites_data as dd on dd.id_site = s.id_site
   order by 1
 )
