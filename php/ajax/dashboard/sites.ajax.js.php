@@ -9,7 +9,7 @@ $result = pg_prepare($dbconn, "sql",
 "
 WITH t as (
   SELECT 
-  id_site as id, 
+  $sites.id_site as id, 
   nom_site as name, 
   'site' as tablename,
   doc_reference,
