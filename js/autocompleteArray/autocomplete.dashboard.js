@@ -151,9 +151,8 @@ function autocompleteArray(inp, arr) {
     }
     for (const doc in sites_f[0].autres_docs.split("|") ) {
       if (( sites_f[0].autres_docs.split("|")[doc] !== null) && (sites_f[0].autres_docs.split("|")[doc] !== "")) {
-        console.log(doc);
         console.log(sites_f[0].autres_docs.split("|")[doc]);
-        array_docs_autres.push(doc);
+        array_docs_autres.push(sites_f[0].autres_docs.split("|")[doc]);
       }
     }
     let content ="";
