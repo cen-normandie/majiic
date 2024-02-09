@@ -64,7 +64,32 @@ if ($ldapconn) {
 }
 echo '################################ A USER ################################ ################################</br>';
  */
-
+echo '################################ USERS ################################ ################################</br>';
+if ($ldapconn) {
+    // binding to ldap server
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\BP", "JR4Love#");
+    // verify binding
+    if ($ldapbind) {
+        echo "LDAP bind successful... A USER";
+            $filter="(cn=progecen_user)";
+            $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
+            $entries= ldap_get_entries($ldapconn, $result);
+            $groups = $entries[0]["member"];
+            foreach($groups as $group) {
+                if (str_contains($group, "CN=")) {
+                    print "<pre>";
+                    $name_a = explode("CN=", $group)[1];
+                    $name_ = explode(",OU", $name_a)[0];
+                    print_r($name_);
+                    print "</pre>";
+                }
+            }
+             
+    } else {
+        echo "LDAP bind failed...";
+    }
+}
+echo '################################ USERS ################################ ################################</br>';
 
 echo '################################ GROUP ################################ ################################</br>';
 if ($ldapconn) {
