@@ -147,13 +147,11 @@ $( "#ddg_autocomplete" ).autocomplete({
                 //var nom_site= value.split(' - ')[1];
                 var id_ddg= data[index]['id_doc_gestion']
                 var nom_ddg= data[index]['nom_doc_gestion']
-                //values_completed.items.push({label: nom_site, value: id_site, geometry: geom_site_centroid});
                  JSON_values_completed.push({
                     label: id_ddg,
                     value: nom_ddg
                 });
             })
-            //console.log(JSON_values_completed);
             response(JSON_values_completed);
           }
         } );
