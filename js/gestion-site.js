@@ -143,6 +143,8 @@ $( "#ddg_autocomplete" ).autocomplete({
           success: function( data ) {
             var JSON_values_completed = [];
             $.each(data, function (index, value) {
+                console.log(index);
+                console.log(value);
                 var id_ddg= value
                 var nom_ddg= value
                 //values_completed.items.push({label: nom_site, value: id_site, geometry: geom_site_centroid});
