@@ -138,7 +138,7 @@ $( "#ddg_autocomplete" ).autocomplete({
           url: "php/ajax/search_autocomplete_ddg.js.php",
           dataType : "json",
           data: {
-            id_ddg: request.term
+            term: request.term
           },
           success: function( data ) {
             var JSON_values_completed = [];
@@ -150,7 +150,9 @@ $( "#ddg_autocomplete" ).autocomplete({
                     label: id_ddg,
                     value: id_ddg
                 });
+                console.log('Pushed result');
             })
+            console.log(JSON_values_completed);
             response(JSON_values_completed);
           }
         } );
