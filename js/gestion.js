@@ -587,7 +587,7 @@ function save_bdd_ddg(id_doc_, lien) {
                 //refresh_page();
                 ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
                 setTimeout(() => { 
-                    //refresh_page(); 
+                    refresh_page(); 
                 }, 6000);
                 }
         });
