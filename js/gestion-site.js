@@ -143,18 +143,17 @@ $( "#ddg_autocomplete" ).autocomplete({
           success: function( data ) {
             var JSON_values_completed = [];
             $.each(data, function (index, value) {
-                console.log(index);
-                console.log(value);
-                var id_ddg= value
-                var nom_ddg= value
+                //var id_site= value.split(' - ')[0];
+                //var nom_site= value.split(' - ')[1];
+                var id_ddg= data[index]['id_doc_gestion']
+                var nom_ddg= data[index]['nom_doc_gestion']
                 //values_completed.items.push({label: nom_site, value: id_site, geometry: geom_site_centroid});
                  JSON_values_completed.push({
                     label: id_ddg,
-                    value: id_ddg
+                    value: nom_ddg
                 });
-                console.log('Pushed result');
             })
-            console.log(JSON_values_completed);
+            //console.log(JSON_values_completed);
             response(JSON_values_completed);
           }
         } );

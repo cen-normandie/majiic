@@ -11,16 +11,16 @@ $result = pg_execute($dbconn, "sql1", array($_POST["term"]));
 while($row = pg_fetch_array($result))
 {
   $arr[]=array(
-    'id_doc_gestion'      =>$row["id_doc_gestion"], 
-    'nom_doc_gestion'     =>$row["nom_doc_gestion"], 
-    'type_doc_gestion'    =>$row["type_doc_gestion"], 
-    'd_debut_doc_gestion' =>$row["d_debut_doc_gestion"], 
-    'd_fin_doc_gestion'   =>$row["d_fin_doc_gestion"], 
-    'auteurs'             =>$row["auteurs"], 
-    'commentaires'        =>$row["commentaires"],
-    'lien'                =>$row["lien"],
-    'd_maj_doc_gestion'   =>$row["d_maj_doc_gestion"], 
-    'multisite'           =>$row["multisite"]
+    'id_doc_gestion'      =>trim($row["id_doc_gestion"]), 
+    'nom_doc_gestion'     =>trim($row["nom_doc_gestion"]), 
+    'type_doc_gestion'    =>trim($row["type_doc_gestion"]), 
+    'd_debut_doc_gestion' =>trim($row["d_debut_doc_gestion"]), 
+    'd_fin_doc_gestion'   =>trim($row["d_fin_doc_gestion"]), 
+    'auteurs'             =>trim($row["auteurs"]), 
+    'commentaires'        =>trim($row["commentaires"]),
+    'lien'                =>trim($row["lien"]),
+    'd_maj_doc_gestion'   =>trim($row["d_maj_doc_gestion"]), 
+    'multisite'           =>trim($row["multisite"])
     );
 }
 //ferme la connexion a la BD
