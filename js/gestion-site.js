@@ -138,7 +138,7 @@ $( "#ddg_autocomplete" ).autocomplete({
           url: "php/ajax/search_autocomplete_ddg.js.php",
           dataType : "json",
           data: {
-            term: request.term
+            id_ddg: request.term
           },
           success: function( data ) {
             var JSON_values_completed = [];
