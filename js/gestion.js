@@ -566,7 +566,7 @@ function save_bdd_ddg(id_doc_, lien) {
         fd.append('n_type_doc_gestion', $("#n_type_doc_gestion").val());
         fd.append('n_gestion_date_start', $("#n_gestion_date_start").val());
         fd.append('n_gestion_date_end', $("#n_gestion_date_end").val());
-        fd.append('n_gestion_date_maj', ( $("#n_gestion_date_maj").val() ?? '01-01-1900' ) );
+        fd.append('n_gestion_date_maj', ( $("#n_gestion_date_maj").val() ?? $("#n_gestion_date_start").val() ) );
         fd.append('n_gestion_auteurs', $("#n_gestion_auteurs").val());
         fd.append('n_gestion_commentaire', $("#n_gestion_commentaire").val());
         fd.append('n_multisite', $("#n_multisite").val());
