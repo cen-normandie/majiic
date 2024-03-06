@@ -37,7 +37,7 @@ if( isset($_FILES["file"]))
         //echo "Uploaded";
     } else {
         //echo "Error";
-        
+
     }
 }
 
@@ -50,7 +50,7 @@ $return_execute = false;
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
 $result = pg_prepare($dbconn, "autre_doc", "UPDATE $sites_data set autres_docs = coalesce( autres_docs ,'')||$1 where id_site = $2 ");
-$return_execute = pg_execute($dbconn, "autre_doc",array( $file_name."'|'" , $id_site ));
+$return_execute = pg_execute($dbconn, "autre_doc",array( $file_name."|" , $id_site ));
 //$sql = "UPDATE $sites_data set autres_docs = coalesce( autres_docs ,'') || '".$file_name."' || '|' where id_site = '".$id_site."' ;";
 //echo $sql;
 //execute la requete dans le moteur de base de donnees  

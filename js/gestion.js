@@ -358,6 +358,7 @@ $('#save_new_doc_autre').click(
         fd.append('name_doc', name_doc);
         fd.append('id_site', id_site);
         console.log(active_file);
+        console.log('this is ok');
         $.ajax({
         // copy du fichier pdf sur le serveur
         url      : "php/copy_file_pdf_autre.php",
