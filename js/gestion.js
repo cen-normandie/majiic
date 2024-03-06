@@ -375,9 +375,9 @@ $('#save_new_doc_autre').click(
         success  : function(data) {
             //refresh_page();
             ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
-            setTimeout(() => { 
+            /* setTimeout(() => { 
                 refresh_page(); 
-            }, 6000);
+            }, 6000); */
             }
         });
         
