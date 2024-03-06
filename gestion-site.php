@@ -538,7 +538,7 @@ if (in_array($_SESSION['email'], $admins)) {
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class="toast-body">
-                <strong id="info_txt"></strong>
+                <span></span><strong id="info_txt"></strong></span>
 			</div>
 		</div>
 	</div>

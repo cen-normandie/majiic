@@ -5,7 +5,7 @@ var form_function = {};
 function create_toast( success_ , text) {
     
     if (success_) {
-        $('#info_txt').val( text );
+        $('#info_txt').text( text );
         var element = document.getElementById("infos_toast");
             element.classList.add("border-success");
             element.classList.add("text-success");
@@ -14,7 +14,7 @@ function create_toast( success_ , text) {
         var element = document.getElementById("info_txt").innerText='Document copié sur le serveur et enregistré en BDD';
     }
     else {
-        $('#info_txt').val( text );
+        $('#info_txt').text( text );
         var element = document.getElementById("infos_toast");
             element.classList.add("border-danger");
             element.classList.add("text-danger");
