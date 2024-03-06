@@ -3,7 +3,7 @@ var form_function = {};
 
 
 function create_toast( success_ , text) {
-    let the_text = (text) ? '<br>'.text : '<br> -_- | °-° | ^-^' ;
+    let the_text = (text) ? ''.text : '    -_-    |    °-°    |    ^-^    ' ;
     if (success_) {
         //$('#info_txt').text( text );
         var element = document.getElementById("infos_toast");
@@ -413,7 +413,7 @@ function save_bdd_convention(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false ) : create_toast(true) );
                 setTimeout(() => { 
                     refresh_page(); 
                 }, 6000);
@@ -444,7 +444,7 @@ function save_bdd_acquisition(id_doc_, lien) {
         dataType : "text",
         success  : function(data) {
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false) : create_toast(true ) );
                 setTimeout(() => { 
                     refresh_page(); 
                  }, 6000);
@@ -476,7 +476,7 @@ function save_bdd_bail_e(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false ) : create_toast(true) );
                 setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
@@ -506,7 +506,7 @@ function save_bdd_bail_rural(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false) : create_toast(true ) );
                 setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
@@ -535,7 +535,7 @@ function save_bdd_pret_usage(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false ) : create_toast(true ) );
                 setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
@@ -562,7 +562,7 @@ function save_bdd_ore(id_doc_, lien) {
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
         success  : function(data) {
                 //refresh_page();
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false ) : create_toast(true ) );
                 setTimeout(() => { refresh_page(); }, 6000);
                 }
         });
@@ -596,7 +596,7 @@ function save_bdd_ddg(id_doc_, lien) {
                 console.log("lien : "+lien);
                 //refresh_page();
                 console.log(default_date);
-                ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+                ( (data.includes("0")) ? create_toast(false ) : create_toast(true ) );
                 setTimeout(() => { 
                     //refresh_page(); 
                 }, 6000);
