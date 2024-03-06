@@ -22,6 +22,7 @@ $file_name = $_POST["name_doc"];
 $id_site = $_POST["id_site"];
 
 
+
 if( isset($_FILES["file"]))
 {
     //$file_name = $_FILES['file']['name'];
@@ -36,23 +37,36 @@ if( isset($_FILES["file"]))
         //echo "Uploaded";
     } else {
         //echo "Error";
+        
     }
 }
 
 
 echo "fichier PDF enregistré";
 
+$return_execute = false; 
 
 //connexion a la BD
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
-$sql = "UPDATE $sites_data set autres_docs = coalesce( autres_docs ,'') || '".$file_name."' || '|' where id_site = '".$id_site."' ;";
+$result = pg_prepare($dbconn, "autre_doc", "UPDATE $sites_data set autres_docs = coalesce( autres_docs ,'')||$1 where id_site = $2 ");
+$return_execute = pg_execute($dbconn, "autre_doc",array( $file_name."'|'" , $id_site ));
+//$sql = "UPDATE $sites_data set autres_docs = coalesce( autres_docs ,'') || '".$file_name."' || '|' where id_site = '".$id_site."' ;";
 //echo $sql;
 //execute la requete dans le moteur de base de donnees  
-$query_result = pg_query($dbconn,$sql) or die ( pg_last_error());
+//$query_result = pg_query($dbconn,$sql) or die ( pg_last_error());
 //ferme la connexion a la BD
 pg_close($dbconn);
-echo 'Le document est associé au site suivant : '.$id_site;
+
+
+if ($return_execute == false) {
+    echo 0;
+} else {
+    echo ' Document enregistré(e) et rattaché au site :'.$id_site;
+};
+
+
+//echo 'Le document est associé au site suivant : '.$id_site;
 
 
 
