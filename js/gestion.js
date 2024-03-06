@@ -367,10 +367,18 @@ $('#save_new_doc_autre').click(
         contentType : false,
         async    : false,
         error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
-        success  : function(data) {
+/*         success  : function(data) {
                 console.log(data);
                 refresh_page();
                 }
+        }); */
+        success  : function(data) {
+            //refresh_page();
+            ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+            setTimeout(() => { 
+                refresh_page(); 
+            }, 6000);
+            }
         });
         
     }
