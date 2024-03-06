@@ -3,24 +3,24 @@ var form_function = {};
 
 
 function create_toast( success_ , text) {
-    
+    let the_text = (text) ? '<br>'.text : '<br> -_- | °-° | ^-^' ;
     if (success_) {
-        $('#info_txt').text( text );
+        //$('#info_txt').text( text );
         var element = document.getElementById("infos_toast");
             element.classList.add("border-success");
             element.classList.add("text-success");
         var element = document.getElementById("iii");
             element.classList.add("text-success");
-        var element = document.getElementById("info_txt").innerText='Document copié sur le serveur et enregistré en BDD';
+        var element = document.getElementById("info_txt").innerText='Document copié sur le serveur et enregistré en BDD'+the_text;
     }
     else {
-        $('#info_txt').text( text );
+        //$('#info_txt').text( text );
         var element = document.getElementById("infos_toast");
             element.classList.add("border-danger");
             element.classList.add("text-danger");
         var element = document.getElementById("iii");
             element.classList.add("text-danger");
-        var element = document.getElementById("info_txt").innerText='Attention le document n\'a pas été enregistré vérifiez les champs';
+        var element = document.getElementById("info_txt").innerText='Attention le document n\'a pas été enregistré vérifiez les champs'+the_text;
     }
 
     var toastElList = [].slice.call(document.querySelectorAll('.toast'))
@@ -375,7 +375,7 @@ $('#save_new_doc_autre').click(
         }); */
         success  : function(data) {
             //refresh_page();
-            ( (data.includes("0")) ? create_toast(false , 'Document non-enregistré en BDD -_- ' ) : create_toast(true , 'Document Enregistré !' ) );
+            ( (data.includes("0")) ? create_toast(false  ) : create_toast(true  ) );
             /* setTimeout(() => { 
                 refresh_page(); 
             }, 6000); */
