@@ -42,7 +42,6 @@ if( isset($_FILES["file"]))
 }
 
 
-echo "fichier PDF enregistré";
 
 $return_execute = false; 
 
@@ -62,7 +61,7 @@ pg_close($dbconn);
 if ($return_execute == false) {
     echo 0;
 } else {
-    echo ' Document enregistré(e) et rattaché au site :'.$id_site;
+    echo 1;
 };
 
 
