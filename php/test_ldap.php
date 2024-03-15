@@ -91,10 +91,26 @@ if ($ldapconn) {
 }
 echo '################################ USERS ################################ ################################</br>';
 
+echo 'TEST</br><br></br>';
+//POUR AVOIR UN TABLEAU AVEC LA LISTE DES RESPONSABLE DE PROJET
+$filter="(memberof=CN=PROGECEN_RESP_PROJET,CN=Users,DC=CSNHN,DC=LOCAL)";
+$sr=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
+$result = ldap_get_entries($ldapconn, $sr);
+$_SESSION["responsable_projet"] = array();
+for ($i=0; $i<$result["count"]; $i++)
+{
+    //session_start();
+    print "<pre>";
+    print_r($result[$i]["cn"][0]);
+    print "</pre>";
+}
+echo 'TEST</br><br></br>';
+
+
 echo '################################ GROUP ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\BP", "JR4Love#");
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\progecenadm", "Outcen_24@");
     // verify binding
     if ($ldapbind) {
         echo "LDAP bind successful... A USER";
