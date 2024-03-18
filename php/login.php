@@ -112,6 +112,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 echo "LDAP bind failed...";
             }
         }
+
 /*         $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")or die ('Connexion impossible :'. pg_last_error());
         $result = pg_prepare($dbconn, "sql", 
         "select 
