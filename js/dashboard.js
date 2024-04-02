@@ -72,7 +72,7 @@ function update_map_p(parcelles_json) {
     //map.removeLayer( sites_geojson_feature );
     $(parcelles_json).each(function(key, data) {
         //ajoute les geojson
-        parcelles_geojson_feature.addData(data.geojson);
+        //parcelles_geojson_feature.addData(data.geojson);
     });
 }
 
