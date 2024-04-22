@@ -129,8 +129,8 @@ INSERT INTO progecen_copy.temps(
 SELECT 
 id, 
 id_projet, 
-coalesce((select a.id from fdw.action a  
- 	left join fdw.projet p
+coalesce((select a.id from bd_progecen.action a  
+ 	left join bd_progecen.projet p
  	on a.id_projet = p.id
  	where temps_personnes.id_action = a.code_action and temps_personnes.id_projet = p.id and temps_personnes.personne = a.personne 
  limit 1),row_number() over() ),
@@ -149,7 +149,7 @@ case when coalesce(panier,0) = 1 THEN true else false end,
 date_valide_panier, 
 date_saisie_salissure, 
 date_valide_salissure
-	FROM fdw.temps_personnes;
+	FROM bd_progecen.temps_personnes;
 
 --Suppression de l'historique
 DELETE FROM progecen_copy.temps_suivi;
