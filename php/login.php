@@ -113,38 +113,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             }
         }
 
-/*         $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")or die ('Connexion impossible :'. pg_last_error());
-        $result = pg_prepare($dbconn, "sql", 
-        "select 
-        i.u_courriel,
-        i.u_pwd, 
-        i.u_id_session , 
-        i.u_nom||' '||i.u_prenom as nom_prenom, 
-        i.u_id ,
-        i.u_prenom||' '||i.u_nom as prenom_nom,
-        i.u_id_progecen,
-        i.u_responsable
-        from $users i
-        where (i.u_pwd = md5( $1 ) and i.u_courriel = $2)
-        "
-        );
-        
-        $result = pg_execute($dbconn, "sql", array($_POST['password'] ,$_POST['email']));
-        while($row = pg_fetch_row($result))
-        {
-            session_start ();
-            $_SESSION['email']                  = trim($row[0]);
-            $_SESSION['password']               = $_POST['password'];
-            $_SESSION['session']                = trim($row[2]);
-            $_SESSION['nom_prenom']             = $row[3];
-            $_SESSION['u_id']                   = $row[4];
-            //$_SESSION['u_nomuser_progecen']     = $row[5];
-            $_SESSION['id_personne_progecen']   = $row[6];
-            $_SESSION['u_nom_user_progecen']    = $row[5];
-            $_SESSION['u_responsable']          = $row[7];
-            echo "Success";
-        }
-        pg_close($dbconn); */
     }
     else {
         echo "Failed";
