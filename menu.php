@@ -103,37 +103,6 @@
 
 
   <?php 
-/*   if (($_SESSION['email'] == "b.perceval@cen-normandie.fr") || ($_SESSION['email'] == "m.pellevilain@cen-normandie.fr")) {
-    echo '
-        <div class="ml-2">
-            <span class="nav-link text-secondary">Projets :</span>
-            <a class="nav-link"  href="analytique.php">
-                <span data-feather=""></span>
-                <i class="far fa-calendar-alt"></i> Analytique
-            </a>
-            <a class="nav-link"  href="suivi_projet.php">
-                <span data-feather=""></span>
-                <i class="fas fa-tasks"></i> Suivi Projet
-            </a>';
-    //if ( $_SESSION['u_responsable']!== false ) {
-      echo '<a class="nav-link"  href="create_projet.php">
-              <span data-feather=""></span>
-              <i class="fas fa-plus"></i> Création de projet
-            </a>';
-    //}
-    echo '  <a class="nav-link"  href="import_temps_excel.php">
-                <span data-feather=""></span>
-                <i class="fas fa-edit"></i> Optimisation des temps
-            </a>
-            <a class="nav-link"  href="export.php">
-                <span data-feather=""></span>
-                <i class="fas fa-file-excel"></i> Export des feuilles de temps
-            </a>
-        </div>
-        <hr class="bg-secondary mx-2 my-1">
-'; 
-  }; */
-  //if (in_array($_SESSION['email'], $rh)) {
   if ($_SESSION['is_equipe_rh']) {
     echo '<div class="ml-2">
     <span class="nav-link text-secondary">RH :</span>
