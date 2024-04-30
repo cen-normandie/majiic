@@ -37,7 +37,7 @@ WITH t as (
   s.bassin,
   s.ucg,
   round( (st_area( coalesce(s.geom_pp, s.geom) )/10000)::numeric,2) as surface,
-  coalesce(d.autres_docs, '|'::text) as autres_docs,
+  coalesce(d.autres_docs, '') as autres_docs,
   (
 	    SELECT row_to_json(fc) as geojson
         FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
