@@ -2,12 +2,10 @@
 //For testing the AD server is work or not
 $ldaphost="192.168.0.211";
 $ldapconn=ldap_connect($ldaphost);
-if($ldapconn) {
+if($ldapconn)
 	echo "Connect success<br>";
-}
-else {
+else
 	echo "Connect Failure";
-}
 ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
 //Reference：http://php.net/manual/en/function.ldap-bind.php
@@ -69,7 +67,7 @@ echo '################################ A USER ################################ #
 echo '################################ USERS ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\...", "...");
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\BP", "JR4Love#");
     // verify binding
     if ($ldapbind) {
         echo "LDAP bind successful... A USER";
@@ -96,7 +94,7 @@ echo '################################ USERS ################################ ##
 echo '################################ GROUP ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\..", "...#");
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\BP", "JR4Love#");
     // verify binding
     if ($ldapbind) {
         echo "LDAP bind successful... A USER";

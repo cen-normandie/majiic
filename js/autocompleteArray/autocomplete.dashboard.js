@@ -191,7 +191,7 @@ function autocompleteArray(inp, arr) {
 function load_DDG(id_ddg) {
   $.ajax({
       url      : "php/ajax/search_autocomplete_ddg.js.php",
-      data     : {id_ddg},
+      data     : {term:id_ddg},
       method   : "POST",
       dataType : "json",
       async    : true,
