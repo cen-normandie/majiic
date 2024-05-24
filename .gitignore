@@ -16,3 +16,5 @@ robots.txt
 /export/*.gpkg
 !signatures/out/.htaccess
 /signatures/out/*.htm
+php/test_ldap.php
+php/test_ldap.php
