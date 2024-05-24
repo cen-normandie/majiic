@@ -5,10 +5,15 @@ $ldapconn=ldap_connect($ldaphost);
 if($ldapconn) {
 	echo "Connect success<br>";
 }
-else
+else{
 	echo "Connect Failure";
+}
+
+
+if($ldapconn) {
 ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+}
 //Reference：http://php.net/manual/en/function.ldap-bind.php
 
 /* echo '################################ A USER ################################ ################################</br>';
