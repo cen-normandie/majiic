@@ -2,8 +2,9 @@
 //For testing the AD server is work or not
 $ldaphost="192.168.0.211";
 $ldapconn=ldap_connect($ldaphost);
-if($ldapconn)
+if($ldapconn) {
 	echo "Connect success<br>";
+}
 else
 	echo "Connect Failure";
 ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
