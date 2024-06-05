@@ -143,6 +143,7 @@ const input = document.getElementById("input_objet");
 const log = document.getElementById("event_title");
 input.addEventListener("input", updateValue);
 function updateValue(e) {
+    console.log(e);
     (e.target.value == '') ? 
     (log.textContent = '...', log.setAttribute('title','...'), input.value = '...' ) : (log.textContent = e.target.value , log.setAttribute('title',e.target.value)) ;
 };
