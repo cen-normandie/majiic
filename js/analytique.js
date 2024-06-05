@@ -167,9 +167,9 @@ $('#delete_e').on('click', function() {
 // Listen from input_objet if empty
 $('#input_objet').on('change', function() {
     console.log("change");
-    if (this.value = '') {
-        document.getElementById("#event_title").value = '...';
-    }
+    //if (this.value = '') {
+    //    document.getElementById("#event_title").value = '...';
+    //}
 });
 
 
