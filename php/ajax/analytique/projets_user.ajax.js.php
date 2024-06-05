@@ -37,7 +37,7 @@ WITH t as (
   WHERE 
   p.etat <> 'Réalisé' AND 
   ( a.personnes ~* $1 or g.personnes ~* $1 )
-
+AND $2 = $2
   group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
 )
 SELECT json_agg(t) FROM t
