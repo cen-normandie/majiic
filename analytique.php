@@ -84,7 +84,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         <h4>Ajouter un évènement :</h4>
                         <div class="input-group input-group-sm mb-3">
                             <span for="objet" class="input-group-text">Objet : </span>
-                            <input type="text" class="form-control" id="input_objet" onClick="this.select();" value="..."></input>
+                            <input type="text" class="form-control" id="input_objet"  value="..."></input><!-- onClick="this.select();"-->
                         </div>
                         <div class="input-group input-group-sm mb-3">
                             <span for="input_projet" class="input-group-text">Projet : </span>
