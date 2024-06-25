@@ -220,6 +220,7 @@ function apply_filters() {
         document.getElementById("edition").classList.add("d-none");
         document.getElementById("add_an_action").classList.add("d-none");
         document.getElementById("save_projet").classList.add("d-none");
+        document.getElementById("delete_projet").classList.add("d-none");
         document.getElementById("panel_all").classList.add("d-none");
         //document.getElementById("export_excel_temps").classList.add("d-none");
     }
@@ -301,10 +302,12 @@ document.getElementById("edit_projet").addEventListener("click", function() {
     if(edit) {
         document.getElementById("add_an_action").classList.remove("d-none");
         document.getElementById("save_projet").classList.remove("d-none");
+        document.getElementById("delete_projet").classList.remove("d-none");
         //document.getElementById("export_excel_temps").classList.remove("d-none");
     } else {
         document.getElementById("add_an_action").classList.add("d-none");
         document.getElementById("save_projet").classList.add("d-none");
+        document.getElementById("delete_projet").classList.add("d-none");
         //document.getElementById("export_excel_temps").classList.add("d-none");
     }
     dtActions.column( 7 ).visible(edit);
@@ -331,6 +334,47 @@ document.getElementById("export_excel_temps").addEventListener("click", function
             }
     });
 });
+
+
+document.getElementById("delete_projet").addEventListener("click", function() {
+    delete_projet();
+});
+//fonction de suppression du projet en cours (supprime les actions et les temps liés)
+    function delete_projet () {
+        const id_projet_del = new Object();
+        //console.log(projets_f[0].id);
+        id_projet_del.id = projets_f[0].id;
+        if (window.confirm(`Voulez-vous vraiment supprimer ce projet  ${projets_f[0].name} ? (les actions et les temps saisis seront également supprimés)`))
+            {
+                // They clicked Yes
+                console.log(`DELETE ! `);
+                $.ajax({
+                    url: "php/ajax/projets/edit_projet/delete_projet.js.php",
+                    type: "POST",
+                    dataType: "json",
+                    async    : true,
+                    data: {
+                        'projet':projets_f[0].id
+                    },
+                    error    : function(request, error) { 
+                        alert("Erreur : responseText: "+request.responseText);
+                        },
+                    success  : function(data) {
+                        console.log(data);
+                        document.getElementById("t_content").innerHTML= 'Projet supprimé ! -_- la page peut être rechargée !';
+                        $('#toast_info').toast('show');
+                        //location.reload();
+                        }
+                });
+            }
+            else
+            {
+                // They clicked no
+                console.log(`CANCELLED ! ${projets_f[0].name}`);
+                let Projet_id_JsonString= JSON.stringify('');
+            }
+    }
+
 
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour ajouter pré-créer une action

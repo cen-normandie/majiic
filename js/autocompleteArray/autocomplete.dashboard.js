@@ -145,13 +145,14 @@ function autocompleteArray(inp, arr) {
         array_docs.push(parcelles_f[parcelle].doc_reference);
       }
       if ( !array_ddgs.includes(parcelles_f[parcelle].id_doc_gestion) ) {
-        console.log(parcelles_f[parcelle]);
+        //console.log(parcelles_f[parcelle]);
         array_ddgs.push(parcelles_f[parcelle].id_doc_gestion);
       }
     }
     for (const doc in sites_f[0].autres_docs.split("|") ) {
+      //console.log(sites_f[0]);
       if (( sites_f[0].autres_docs.split("|")[doc] !== null) && (sites_f[0].autres_docs.split("|")[doc] !== "")) {
-        console.log(sites_f[0].autres_docs.split("|")[doc]);
+        //console.log(sites_f[0].autres_docs.split("|")[doc]);
         array_docs_autres.push(sites_f[0].autres_docs.split("|")[doc]);
       }
     }

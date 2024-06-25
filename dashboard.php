@@ -232,10 +232,12 @@ if (in_array($_SESSION['email'], $admins)) {
                             <div id="nb_site_ddg" class="my-2"></div>
                         </div>
                     </div>
-                    
-                    
-
-                    
+<!--                     <div class="d-flex w-100">
+                        <div class="col-12">
+                            <div id="evol" class="my-2"></div>
+                            <p>tmp</p>
+                        </div>
+                    </div> -->
                 </div>
             </div>	
 		</div>

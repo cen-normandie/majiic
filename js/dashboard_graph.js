@@ -40,6 +40,47 @@ let gNbsiteDep = new Highcharts.chart("nbSite_Dep", {
 
 
 
+
+    // Create the chart
+/*     let evol_surfaces = new Highcharts.chart("evol", {
+        chart: {
+            type: 'column',
+            backgroundColor: '#f8f9fa',
+            },
+        title: {
+            text: 'Surfaces / Année'
+        },
+        xAxis: {categories: ['année']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Somme Ha'
+            }
+        },
+        credits: {
+                enabled: false
+            },
+        series: [
+        {
+            name: '1994',
+            data: [0]
+        },{
+            name: '27',
+            data: [0]
+        },{
+            name: '50',
+            data: [0]
+        },{
+            name: '61',
+            data: [0]
+        },{
+            name: '2024',
+            data: [0]
+        }]
+    });
+ */
+
 let gNbDDG = new Highcharts.chart("nb_site_ddg", {
             chart: {
                 type: 'bar',

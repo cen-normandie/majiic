@@ -7,7 +7,17 @@ $result = pg_prepare($dbconn, "sql",
 
 //array_to_json(array_agg(f)) As features
 "
-WITH t as (
+WITH da_ as (
+	select id_site, doc_reference, sum(sum) as ha, date_::text as annee from $dates_ group by 1,2,4
+	order by annee
+),
+foncier as (
+  SELECT s_.id_site, JSON_AGG(da_.*) as evol
+        FROM $sites s_ left join da_ on da_.id_site = s_.id_site
+      group by 1
+      order by 1
+),
+t as (
   SELECT 
   s.id_site as id, 
   s.nom_site as name, 
@@ -38,6 +48,7 @@ WITH t as (
   s.ucg,
   round( (st_area( coalesce(s.geom_pp, s.geom) )/10000)::numeric,2) as surface,
   coalesce(d.autres_docs, '') as autres_docs,
+  (select evol from foncier where s.id_site = foncier.id_site ) as evolution,
   (
 	    SELECT row_to_json(fc) as geojson
         FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features

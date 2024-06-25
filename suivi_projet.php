@@ -175,6 +175,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                         <button id="add_an_action" type="button" class="btn btn-outline-danger shadow my-1 d-none" data-bs-toggle="modal" data-bs-target="#ModalAddAction" ><i class="fas fa-plus pr-2"></i> Ajouter une action</button>
                                         <button id="save_projet" type="button" class="btn btn-outline-success shadow my-1 d-none" ><i class="fas fa-save pr-2"></i> Enregistrer le Projet</button>
                                         <button id="export_excel_temps" type="button" class="btn btn-outline-primary shadow my-1 " ><i class="fas fa-file-excel pr-2"></i> Export des temps réalisés</button>
+                                        <button id="delete_projet" type="button" class="btn btn-outline-danger shadow my-1 d-none" ><i class="fas fa-trash pr-2"></i> Supprimer le Projet</button>
                                         <div>Lier des fichiers au projet :</div>
                                         <div class="input-group input-group-sm pt-2">
                                             <input id="input_file" type="file" class="form-control" placeholder="" aria-label="Docs" aria-describedby="" value="Ajouter un fichier">

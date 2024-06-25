@@ -77,18 +77,18 @@
             <span data-feather=""></span>
             <i class="far fa-calendar-alt"></i> Analytique
         </a>
-        <a class="nav-link"  href="suivi_projet.php">
+<!--         <a class="nav-link"  href="suivi_projet.php">
             <span data-feather=""></span>
             <i class="fas fa-tasks"></i> Suivi Projet
-        </a>
+        </a> -->
         <a class="nav-link"  href="create_projet.php">
           <span data-feather=""></span>
           <i class="fas fa-plus"></i> Création de projet
         </a>
-        <a class="nav-link"  href="import_temps_excel.php">
+<!--         <a class="nav-link"  href="import_temps_excel.php">
           <span data-feather=""></span>
           <i class="fas fa-edit"></i> Optimisation des temps
-        </a>
+        </a> -->
         <a class="nav-link"  href="export.php">
           <span data-feather=""></span>
           <i class="fas fa-file-excel"></i> Export des feuilles de temps
