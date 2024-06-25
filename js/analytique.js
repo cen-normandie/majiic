@@ -143,7 +143,9 @@ const input = document.getElementById("input_objet");
 const log = document.getElementById("event_title");
 input.addEventListener("input", updateValue);
 function updateValue(e) {
-    (e.target.value == '') ? (log.textContent = '...', log.setAttribute('title','...'), input.value = '...' ) : (log.textContent = e.target.value , log.setAttribute('title',e.target.value)) ;
+    console.log(e);
+    (e.target.value == '') ? 
+    (log.textContent = '...', log.setAttribute('title','...'), input.value = '...' ) : (log.textContent = e.target.value , log.setAttribute('title',e.target.value)) ;
 };
 
 
@@ -165,9 +167,9 @@ $('#delete_e').on('click', function() {
 // Listen from input_objet if empty
 $('#input_objet').on('change', function() {
     console.log("change");
-    if (this.value = '') {
-        document.getElementById("#event_title").value = '...';
-    }
+    //if (this.value = '') {
+    //    document.getElementById("#event_title").value = '...';
+    //}
 });
 
 
@@ -196,6 +198,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   locale: 'fr',
   slotDuration: '00:30:00',
   slotLabelInterval: 30,
+  scrollTime: '08:00:00',
   slotMinTime: '04:00:00', // Start time for the calendar
   slotMaxTime: '24:00:00', // End time for the calendar
   allDaySlot: true,

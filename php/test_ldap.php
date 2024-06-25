@@ -1,14 +1,19 @@
 <?php
-include 'properties.php';
 //For testing the AD server is work or not
 $ldaphost="192.168.0.211";
 $ldapconn=ldap_connect($ldaphost);
-if($ldapconn)
+if($ldapconn) {
 	echo "Connect success<br>";
-else
+}
+else{
 	echo "Connect Failure";
+}
+
+
+if($ldapconn) {
 ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
+}
 //Reference：http://php.net/manual/en/function.ldap-bind.php
 
 /* echo '################################ A USER ################################ ################################</br>';
@@ -68,21 +73,9 @@ echo '################################ A USER ################################ #
 echo '################################ USERS ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\\".$Admin."", $AdminPwd);
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\...", "...");
     // verify binding
     if ($ldapbind) {
-
-        $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
-        or die ('Connexion impossible :'. pg_last_error());
-        $result = pg_prepare($dbconn, "sql_del", 
-        "DELETE FROM $progecen_personnes_ "
-        );
-        $result = pg_execute($dbconn, "sql_del", array()) or die ('Connexion impossible :'. pg_last_error());
-        
-        $result_i = pg_prepare($dbconn, "sql_insert", 
-        "INSERT INTO $progecen_personnes_ (personne) VALUES ( $1 ) "
-        );
-
         echo "LDAP bind successful... A USER";
             $filter="(cn=progecen_user)";
             $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
@@ -95,10 +88,8 @@ if ($ldapconn) {
                     $name_ = explode(",OU", $name_a)[0];
                     print_r($name_);
                     print "</pre>";
-                    $result_i = pg_execute($dbconn, "sql_insert", array($name_)) or die ('Connexion impossible :'. pg_last_error());
                 }
             }
-        pg_close($dbconn);
              
     } else {
         echo "LDAP bind failed...";
@@ -106,26 +97,10 @@ if ($ldapconn) {
 }
 echo '################################ USERS ################################ ################################</br>';
 
-echo 'TEST</br><br></br>';
-//POUR AVOIR UN TABLEAU AVEC LA LISTE DES RESPONSABLE DE PROJET
-$filter="(memberof=CN=PROGECEN_RESP_PROJET,CN=Users,DC=CSNHN,DC=LOCAL)";
-$sr=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
-$result = ldap_get_entries($ldapconn, $sr);
-$_SESSION["responsable_projet"] = array();
-for ($i=0; $i<$result["count"]; $i++)
-{
-    //session_start();
-    print "<pre>";
-    print_r($result[$i]["cn"][0]);
-    print "</pre>";
-}
-echo 'TEST</br><br></br>';
-
-
 echo '################################ GROUP ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\XXXXX", "XXXXX@");
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\..", "..");
     // verify binding
     if ($ldapbind) {
         echo "LDAP bind successful... A USER";
