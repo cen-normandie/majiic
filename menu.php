@@ -65,7 +65,7 @@
       </a>
   </li>
   <li class="nav-item">
-      <a class="nav-link"  href="http://gestparc.csnhn.local/glpi/" target="_blank">
+      <a class="nav-link"  href="https://gestparc/glpi/" target="_blank">
         <span data-feather=""></span>
         <i class="fas fa-ticket-alt"></i> Ouvrir un ticket
       </a>
