@@ -65,7 +65,7 @@
       </a>
   </li>
   <li class="nav-item">
-      <a class="nav-link"  href="https://gestparc/glpi/" target="_blank">
+      <a class="nav-link"  href="https://gestparc.csnhn.local/glpi/" target="_blank">
         <span data-feather=""></span>
         <i class="fas fa-ticket-alt"></i> Ouvrir un ticket
       </a>
@@ -81,10 +81,10 @@
             <span data-feather=""></span>
             <i class="fas fa-tasks"></i> Suivi Projet
         </a>
-        <a class="nav-link"  href="create_projet.php">
+<!--         <a class="nav-link"  href="create_projet.php">
           <span data-feather=""></span>
           <i class="fas fa-plus"></i> Création de projet
-        </a>
+        </a> -->
 <!--         <a class="nav-link"  href="import_temps_excel.php">
           <span data-feather=""></span>
           <i class="fas fa-edit"></i> Optimisation des temps
