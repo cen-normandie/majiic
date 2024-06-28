@@ -11,7 +11,7 @@ Sub export()
         Dim ie As Object
         Set ie = CreateObject("Internetexplorer.Application")
         Set objAppointment = Application.ActiveInspector.CurrentItem
-        urlimport = "https://cen-n.FR/analytique.php?datedebut=" & DateDiff("s", #1/1/1970#, Format(objAppointment.Start, "yyyy/mm/dd hh:mm:ss")) & _
+        urlimport = "https://cen-n.fr/analytique.php?datedebut=" & DateDiff("s", #1/1/1970#, Format(objAppointment.Start, "yyyy/mm/dd hh:mm:ss")) & _
                     "&datefin=" & DateDiff("s", #1/1/1970#, Format(objAppointment.End, "yyyy/mm/dd hh:mm:ss")) & _
                     "&objet=" & Replace(objAppointment.Subject, " ", "_") & _
                     "&remarque=" & Replace(objAppointment.Body, " ", "_")
