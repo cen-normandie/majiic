@@ -81,10 +81,10 @@
             <span data-feather=""></span>
             <i class="fas fa-tasks"></i> Suivi Projet
         </a>
-         <a class="nav-link"  href="create_projet.php">
+<!--          <a class="nav-link"  href="create_projet.php">
           <span data-feather=""></span>
           <i class="fas fa-plus"></i> Création de projet
-        </a> 
+        </a>  -->
 <!--         <a class="nav-link"  href="import_temps_excel.php">
           <span data-feather=""></span>
           <i class="fas fa-edit"></i> Optimisation des temps
