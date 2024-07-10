@@ -328,6 +328,8 @@ function add_event_properties (event) {
     event.e_objet = $('#input_objet').val();
     //start
     event.e_start = event._instance.range.start.toString().split(' GMT')[0];
+    console.log(event._instance.range.start.toUTCString().split(' GMT')[0]);
+    console.log(event._instance.range.start.toString().split(' GMT')[0]);
     //event.e_start = event._instance.range.start;
     //end
     event.e_end = event._instance.range.end.toString().split(' GMT')[0];
