@@ -327,12 +327,15 @@ function add_event_properties (event) {
     //objet
     event.e_objet = $('#input_objet').val();
     //start
-    event.e_start = event._instance.range.start.toString().split(' GMT')[0];
-    console.log(event._instance.range.start.toUTCString().split(' GMT')[0]);
-    console.log(event._instance.range.start.toString().split(' GMT')[0]);
+    event.e_start = event._instance.range.start.toUTCString().split(' GMT')[0];
+    //console.log(event._instance.range.start.toUTCString().split(' GMT')[0]);
+    //---TESTS WIth UTC
+    //console.log(event._instance.range.start.toString().split(' GMT')[0]);
+
     //event.e_start = event._instance.range.start;
     //end
-    event.e_end = event._instance.range.end.toString().split(' GMT')[0];
+    //---TESTS WIth UTC
+    event.e_end = event._instance.range.end.toUTCString().split(' GMT')[0];
     //lieu
     ///////////////////////////
     //const lieu = $("input[name='Lieux']:checked").val();
@@ -371,9 +374,11 @@ function add_update_event_properties (event,uuid_) {
     //objet
     event.e_objet = $('#update_input_objet').val();
     //start
-    event.e_start = event._instance.range.start.toString().split(' GMT')[0];
+    //---TESTS WIth UTC
+    event.e_start = event._instance.range.start.toUTCString().split(' GMT')[0];
     //end
-    event.e_end = event._instance.range.end.toString().split(' GMT')[0];
+    //---TESTS WIth UTC
+    event.e_end = event._instance.range.end.toUTCString().split(' GMT')[0];
     //lieu
     /////////////////////////////
     //const lieu = $("input[name='update_Lieux']:checked").val();
