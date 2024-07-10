@@ -199,7 +199,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   slotDuration: '00:30:00',
   slotLabelInterval: 30,
   scrollTime: '08:00:00',
-  slotMinTime: '04:00:00', // Start time for the calendar
+  slotMinTime: '00:00:00', // Start time for the calendar
   slotMaxTime: '24:00:00', // End time for the calendar
   allDaySlot: true,
   editable: true,
