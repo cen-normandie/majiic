@@ -476,8 +476,9 @@ function save_update_event_resized (event) {
         url      : "php/ajax/analytique/event/update_event_resized.js.php",
         data     : {
             e_uuid:event.e_uuid,
-            e_start:event.e_start.toString().split(' GMT')[0],
-            e_end:event.e_end.toString().split(' GMT')[0]
+            //---TESTS WIth UTC
+            e_start:event.e_start.toUTCString().split(' GMT')[0],
+            e_end:event.e_end.toUTCString().split(' GMT')[0]
         },
         method   : "POST",
         dataType : "text",
