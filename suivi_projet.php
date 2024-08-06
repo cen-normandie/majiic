@@ -435,7 +435,7 @@ if (in_array($_SESSION['email'], $admins)) {
   </div>
 </div>
 
-<!-- The Modal Action-->
+<!-- The Modal UPDATE Action-->
 <div class="modal p-0" id="ModalUpAction">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -444,7 +444,7 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-header">
         <div class="d-flex flex-column w-100">
             <div class="d-flex justify-content-between w-100">
-                <h5 class="modal-title">Modifier une action : </h5>
+                <h5 class="modal-title">Modifier l'action : </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="d-flex flex-inline w-100">
@@ -457,6 +457,7 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-body">
         <div class="d-flex flex-column w-100 px-2">
             <h6>Action numéro :</h6>
+            <span id="id_action_update"></span>
             <div class="d-flex  justify-content-between my-2">
                 <div class="autocompleteBS w-75">
                     <div class="input-group input-group-sm">
