@@ -18,3 +18,4 @@ robots.txt
 !signatures/out/.htaccess
 /signatures/out/*.htm
 php/test_ldap.php
+php/synchro_liste_personne.php

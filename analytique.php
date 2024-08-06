@@ -331,7 +331,7 @@ $(document).ready(function() {
     load_projets_ajax();
 
     var get_vars = document.getElementById("get_start");
-    console.log(get_vars);
+    //console.log(get_vars);
     //Test si les variable get sont renseignées pour un event depuis outlook 
     if(get_vars){
             get_uuid();

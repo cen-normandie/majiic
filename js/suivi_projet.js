@@ -804,23 +804,17 @@ function add_events_actions () {
     });
     elements3.forEach(element => {
         element.addEventListener("click", function() {
-            //c_action = projets_f.id
-            document.getElementById("id_action_update").textContent=element.getAttribute('id').replace('up_action_', '');
-            /* actions_f[actions].id_action, //id_action
-            actions_f[actions].code_action, //code_action
-            actions_f[actions].financements ?? '', //financeurs
-            actions_f[actions].site ?? '', //site
-            actions_f[actions].previ ?? 0, //nb_h_previ
-            actions_f[actions].realise ?? 0, //nb_h_real */
-            document.getElementById("input_up_actions").value=element.getAttribute('id').replace('up_action_', '');
-            document.getElementById("input_up_financeurs").value=element.getAttribute('id').replace('up_action_', '');
-            document.getElementById("input_up_site").value=element.getAttribute('id').replace('up_action_', '');
-            document.getElementById("input_up_heures").value=0;
-            //console.log(actions_f);
-            //console.log(actions_f[actions].filter(x => x.id_action === element.getAttribute('id').replace('up_action_', '')));
+            // On recupere l'action
+            let id_action__ = element.getAttribute('id').replace('up_action_', '');
+            let action__ = actions_f.find(obj => obj.id_action == id_action__);
+            //console.log(action__);
 
-
-
+            document.getElementById("id_action_update").textContent=action__.id_action;
+            document.getElementById("input_up_actions").value=action__.code_action; // manque id --> exemple "Paturage" et dans le select c'est "03R_CN2K - Paturage"
+            document.getElementById("input_up_financeurs").value=action__.financements;
+            document.getElementById("input_up_site").value=action__.site; // manque id --> exemple "Chicheboville" et dans le select c'est "0014_014 - MARAIS DE CHICHEBOVILLE"
+            // personne /////////////////// manque id --> exemple "Benoit Perceval" et dans le select c'est "705 - Benoit Perceval"
+            document.getElementById("input_up_heures").value=action__.nb_h_previ;
             ModalUpAction.show();
         });
     });
