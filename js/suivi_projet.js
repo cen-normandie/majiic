@@ -465,7 +465,8 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                     var badges_ = '';
                     var x = `
                     <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
-                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>
+                    <button id="up_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-info fs-6 px-1"><i class="fas fa-edit"></i></button>`
                     //Liste des badges personnes
                     for (const pe in personnes_actions) {
                         badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
