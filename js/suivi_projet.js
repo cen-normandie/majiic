@@ -787,7 +787,7 @@ function add_events_actions () {
     elements1.forEach(element => {
         element.addEventListener("click", function() {
             //c_action = projets_f.id
-            document.getElementById("id_action_update").textContent=element.getAttribute('id').replace('add_p_action_', '');
+            document.getElementById("id_action_add_p").textContent=element.getAttribute('id').replace('add_p_action_', '');
             ModalAddPersonne.show(element.getAttribute('id'));
         });
     });

@@ -272,7 +272,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="d-flex justify-content-between w-100">
-                <span id="id_action_update"></span>
+                <span id="id_action_add_p"></span>
             </div>
         </div>
       </div>
