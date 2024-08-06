@@ -780,6 +780,7 @@ document.getElementById("add_action").addEventListener("click", function() {
 function add_events_actions () {
     const elements1 = document.querySelectorAll(`[id^="add_p"]`);
     const elements2 = document.querySelectorAll(`[id^="del_action_"]`);
+    const elements3 = document.querySelectorAll(`[id^="up_action_"]`);
     elements1.forEach(element => {
         element.addEventListener("click", function() {
             //c_action = projets_f.id
@@ -792,6 +793,13 @@ function add_events_actions () {
             //c_action = projets_f.id
             document.getElementById("id_action_delete").textContent=element.getAttribute('id').replace('del_action_', '');
             ModalDelAction.show(element.getAttribute('id'));
+        });
+    });
+    elements3.forEach(element => {
+        element.addEventListener("click", function() {
+            //c_action = projets_f.id
+            document.getElementById("id_action_update").textContent=element.getAttribute('id').replace('up_action_', '');
+            ModalUpAction.show(element.getAttribute('id'));
         });
     });
 }
