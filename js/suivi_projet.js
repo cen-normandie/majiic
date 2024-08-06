@@ -485,6 +485,7 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                         badges_, //personnes
                         x //test badges
                     ] ).draw();
+
     
                     //formate un nouveau json des actions pour alimenter les graphiques
                     const data_previ = new Object();
@@ -805,6 +806,19 @@ function add_events_actions () {
         element.addEventListener("click", function() {
             //c_action = projets_f.id
             document.getElementById("id_action_update").textContent=element.getAttribute('id').replace('up_action_', '');
+            /* actions_f[actions].id_action, //id_action
+            actions_f[actions].code_action, //code_action
+            actions_f[actions].financements ?? '', //financeurs
+            actions_f[actions].site ?? '', //site
+            actions_f[actions].previ ?? 0, //nb_h_previ
+            actions_f[actions].realise ?? 0, //nb_h_real */
+            document.getElementById("input_up_actions").textContent=element.getAttribute('id').replace('up_action_', '');
+            document.getElementById("input_up_financeurs").textContent=element.getAttribute('id').replace('up_action_', '');
+            document.getElementById("input_up_site").textContent=element.getAttribute('id').replace('up_action_', '');
+            document.getElementById("input_up_heures").textContent=0;
+
+
+
             ModalUpAction.show(element.getAttribute('id'));
         });
     });
