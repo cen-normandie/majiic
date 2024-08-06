@@ -65,6 +65,7 @@ function load_actions_ajax () {
             }
             actions_liste_array.sort();
             autocompleteArray_actions(document.getElementById("input_actions"), actions_liste_array);
+            autocompleteArray_actions(document.getElementById("input_up_actions"), actions_liste_array);
             load_financeurs_ajax();
             }
     });
@@ -87,6 +88,7 @@ function load_financeurs_ajax () {
             }
             financeurs_liste_array.sort();
             autocompleteArray_financeurs(document.getElementById("input_financeurs"), financeurs_liste_array);
+            autocompleteArray_financeurs(document.getElementById("input_up_financeurs"), financeurs_liste_array);
             load_personnes_ajax();
             }
     });
@@ -154,6 +156,7 @@ function init_sites_array() {
         sites_array.push(sites[site].id+' - '+sites[site].name);
     }
     autocompleteArray_sites_liste(document.getElementById("input_site"), sites_array);
+    autocompleteArray_sites_liste(document.getElementById("input_up_site"), sites_array);
 }
 
 
