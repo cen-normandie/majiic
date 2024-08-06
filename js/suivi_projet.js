@@ -812,14 +812,14 @@ function add_events_actions () {
             actions_f[actions].site ?? '', //site
             actions_f[actions].previ ?? 0, //nb_h_previ
             actions_f[actions].realise ?? 0, //nb_h_real */
-            document.getElementById("input_up_actions").textContent=element.getAttribute('id').replace('up_action_', '');
-            document.getElementById("input_up_financeurs").textContent=element.getAttribute('id').replace('up_action_', '');
-            document.getElementById("input_up_site").textContent=element.getAttribute('id').replace('up_action_', '');
-            document.getElementById("input_up_heures").textContent=0;
+            document.getElementById("input_up_actions").value=element.getAttribute('id').replace('up_action_', '');
+            document.getElementById("input_up_financeurs").value=element.getAttribute('id').replace('up_action_', '');
+            document.getElementById("input_up_site").value=element.getAttribute('id').replace('up_action_', '');
+            document.getElementById("input_up_heures").value=0;
 
 
 
-            ModalUpAction.show(element.getAttribute('id'));
+            ModalUpAction.show();
         });
     });
 }
