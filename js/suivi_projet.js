@@ -604,7 +604,7 @@ let ModalUpAction = new bootstrap.Modal(document.getElementById('ModalUpAction')
   });
 document.getElementById("add_action_personne").addEventListener("click", function() {
     const myUAction = new Object();
-    myUAction.id_action = document.getElementById("id_action_update").innerText;
+    myUAction.id_action = document.getElementById("id_action_add_p").innerText;
     myUAction.personne = document.getElementById("input_personnes").value.split(' - ')[1];
     //add Ajax function to have valid id_action
     let  UActionJsonString= JSON.stringify(myUAction);
