@@ -816,8 +816,8 @@ function add_events_actions () {
             document.getElementById("input_up_financeurs").value=element.getAttribute('id').replace('up_action_', '');
             document.getElementById("input_up_site").value=element.getAttribute('id').replace('up_action_', '');
             document.getElementById("input_up_heures").value=0;
-            console.log(actions_f[actions]);
-            console.log(actions_f[actions].filter(x => x.id_action === element.getAttribute('id').replace('up_action_', '')));
+            console.log(actions_f);
+            //console.log(actions_f[actions].filter(x => x.id_action === element.getAttribute('id').replace('up_action_', '')));
 
 
 
