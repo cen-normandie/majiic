@@ -456,8 +456,7 @@ if (in_array($_SESSION['email'], $admins)) {
       <!-- Modal body -->
       <div class="modal-body">
         <div class="d-flex flex-column w-100 px-2">
-            <h6>Action numéro :</h6>
-            <span id="id_action_update"></span>
+            <h6>Action numéro : <span id="id_action_update"></span></h6>
             <div class="d-flex  justify-content-between my-2">
                 <div class="autocompleteBS w-75">
                     <div class="input-group input-group-sm">
