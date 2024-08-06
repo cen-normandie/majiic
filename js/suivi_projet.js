@@ -599,6 +599,9 @@ let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPers
 let ModalDelAction = new bootstrap.Modal(document.getElementById('ModalDelAction'), {
     keyboard: false
   });
+let ModalUpAction = new bootstrap.Modal(document.getElementById('ModalUpAction'), {
+    keyboard: false
+  });
 document.getElementById("add_action_personne").addEventListener("click", function() {
     const myUAction = new Object();
     myUAction.id_action = document.getElementById("id_action_update").innerText;
