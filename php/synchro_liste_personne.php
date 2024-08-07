@@ -31,6 +31,9 @@ include 'properties.php';
                 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
                 $del = pg_prepare($dbconn, "sql_del", "DELETE FROM progecen_copy.liste_personne_ ");
                 $del = pg_execute($dbconn, "sql_del", array());
+                $seq = pg_prepare($dbconn, "sql_seq", "ALTER SEQUENCE progecen_copy.liste_personne__id_seq RESTART WITH 1;");
+                $seq = pg_execute($dbconn, "sql_seq", array());
+                
                 $result = pg_prepare($dbconn, "sql", "INSERT INTO progecen_copy.liste_personne_ (personne) VALUES ( $1 );");
                 foreach($list_personne as $personne) {
                     $result = pg_execute($dbconn, "sql", array($personne)) or die ('Connexion impossible :'. pg_last_error());
