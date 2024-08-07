@@ -65,7 +65,6 @@ function load_actions_ajax () {
             }
             actions_liste_array.sort();
             autocompleteArray_actions(document.getElementById("input_actions"), actions_liste_array);
-            autocompleteArray_actions(document.getElementById("input_up_actions"), actions_liste_array);
             load_financeurs_ajax();
             }
     });
@@ -88,7 +87,6 @@ function load_financeurs_ajax () {
             }
             financeurs_liste_array.sort();
             autocompleteArray_financeurs(document.getElementById("input_financeurs"), financeurs_liste_array);
-            autocompleteArray_financeurs(document.getElementById("input_up_financeurs"), financeurs_liste_array);
             load_personnes_ajax();
             }
     });
@@ -156,7 +154,6 @@ function init_sites_array() {
         sites_array.push(sites[site].id+' - '+sites[site].name);
     }
     autocompleteArray_sites_liste(document.getElementById("input_site"), sites_array);
-    autocompleteArray_sites_liste(document.getElementById("input_up_site"), sites_array);
 }
 
 
@@ -467,9 +464,9 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                     const personnes_actions = p_.split('|');
                     var badges_ = '';
                     var x = `
-                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
-                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>
-                    <button id="up_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-info fs-6 px-1"><i class="fas fa-edit"></i></button>`
+                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-edit"></i></button>
+                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+                    /* <button id="up_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-info fs-6 px-1"><i class="fas fa-edit"></i></button> */
                     //Liste des badges personnes
                     for (const pe in personnes_actions) {
                         badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
@@ -603,13 +600,15 @@ let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPers
 let ModalDelAction = new bootstrap.Modal(document.getElementById('ModalDelAction'), {
     keyboard: false
   });
-let ModalUpAction = new bootstrap.Modal(document.getElementById('ModalUpAction'), {
+/* let ModalUpAction = new bootstrap.Modal(document.getElementById('ModalUpAction'), {
     keyboard: false
-  });
+  }); */
 document.getElementById("add_action_personne").addEventListener("click", function() {
     const myUAction = new Object();
     myUAction.id_action = document.getElementById("id_action_add_p").innerText;
-    myUAction.personne = document.getElementById("input_personnes").value.split(' - ')[1];
+    let personne__ok = ( document.getElementById("input_personnes").value.includes(' - '))  ? document.getElementById("input_personnes").value.split(' - ')[1] : document.getElementById("input_personnes").value ;
+    myUAction.personne = personne__ok;
+    myUAction.nb_h_previ = document.getElementById("input_up_heures").value;
     //add Ajax function to have valid id_action
     let  UActionJsonString= JSON.stringify(myUAction);
     //Sauvegarde de la personne en BDD
@@ -787,11 +786,16 @@ document.getElementById("add_action").addEventListener("click", function() {
 function add_events_actions () {
     const elements1 = document.querySelectorAll(`[id^="add_p"]`);
     const elements2 = document.querySelectorAll(`[id^="del_action_"]`);
-    const elements3 = document.querySelectorAll(`[id^="up_action_"]`);
+    /* const elements3 = document.querySelectorAll(`[id^="up_action_"]`); */
     elements1.forEach(element => {
         element.addEventListener("click", function() {
-            //c_action = projets_f.id
-            document.getElementById("id_action_add_p").textContent=element.getAttribute('id').replace('add_p_action_', '');
+            // On recupere l'action
+            let id_action__ = element.getAttribute('id').replace('add_p_action_', '');
+            let action__ = actions_f.find(obj => obj.id_action == id_action__);
+            let personne__ = (action__.personne_action !== '' )  ? action__.personne_action : '' ;
+            document.getElementById("id_action_add_p").textContent=id_action__;
+            document.getElementById("input_personnes").value= personne__;
+            document.getElementById("input_up_heures").value=action__.previ;
             ModalAddPersonne.show(element.getAttribute('id'));
         });
     });
@@ -802,7 +806,7 @@ function add_events_actions () {
             ModalDelAction.show(element.getAttribute('id'));
         });
     });
-    elements3.forEach(element => {
+    /* elements3.forEach(element => {
         element.addEventListener("click", function() {
             // On recupere l'action
             let id_action__ = element.getAttribute('id').replace('up_action_', '');
@@ -817,19 +821,19 @@ function add_events_actions () {
             document.getElementById("input_up_heures").value=action__.nb_h_previ;
             ModalUpAction.show();
         });
-    });
+    }); */
 }
 
 
 
-document.getElementById("add_action_personne").addEventListener("click", function() {
+
 /*     if (!!document.getElementById("input_personnes").value) {
         console.log("list_personnes_action_"+document.getElementById("id_action_update").textContent);
         let s = '<div id=""><span class="badge mt-1 bg-success text-light">'+document.getElementById("input_personnes").value+'<i id="" class="ps-1 fas fa-window-close"></i></span></div>';
         document.getElementById("list_personnes_action_"+document.getElementById("id_action_update").textContent ).insertAdjacentElement("beforeend", s)
     } */
     
-});
+
 
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour le graphique par action

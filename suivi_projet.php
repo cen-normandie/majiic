@@ -268,7 +268,7 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-header">
         <div class="d-flex flex-column w-100">
             <div class="d-flex justify-content-between w-100">
-                <h5 class="modal-title">Ajouter / Modifier une personne sur l'action : </h5>
+                <h5 class="modal-title">Ajouter / Modifier l'action</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="d-flex justify-content-between w-100">
@@ -288,6 +288,12 @@ if (in_array($_SESSION['email'], $admins)) {
                             <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
                             <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
                         </div>
+                    </div>
+                </div>
+                <div class="w-75">
+                    <div class="input-group input-group-sm w-100">
+                        <span for="input_up_heures" class="input-group-text">Heures : </span>
+                        <input type="number" class="form-control" id="input_up_heures" aria-describedby="basic-addon3" placeholder="5">
                     </div>
                 </div>
                 <div class="d-flex justify-content-center" id="help">
@@ -428,88 +434,6 @@ if (in_array($_SESSION['email'], $admins)) {
         <div class="col-4 d-flex justify-content-between w-100">
             <button type="button" class="btn btn-outline-success" id="del_action_complete">Supprimer</button>
             <button type="button" class="btn btn-outline-danger" id="cancel_del_action">Annuler</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- The Modal UPDATE Action-->
-<div class="modal p-0" id="ModalUpAction">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <div class="d-flex flex-column w-100">
-            <div class="d-flex justify-content-between w-100">
-                <h5 class="modal-title">Modifier l'action : </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="d-flex flex-inline w-100">
-                <small></small>
-            </div>
-        </div>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="d-flex flex-column w-100 px-2">
-            <h6>Action numéro : <span id="id_action_update"></span></h6>
-            <div class="d-flex  justify-content-between my-2">
-                <div class="autocompleteBS w-75">
-                    <div class="input-group input-group-sm">
-                        <span for="input_up_actions" class="input-group-text">Action : </span>
-                        <input type="text" class="form-control" id="input_up_actions" aria-describedby="basic-addon3" placeholder="fauche, ANIM_...">
-                        <span class="input-group-text justify-content-center" id="del_up_action"><i class="far fa-trash-alt"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between my-2">
-                <div class="autocompleteBS w-75" id="financeurs">
-                    <div class="input-group input-group-sm">
-                        <span for="input_up_financeurs" class="input-group-text">Financeur : </span>
-                        <input type="text" class="form-control grow-1" id="input_up_financeurs" aria-describedby="basic-addon3" placeholder="Lehman Brothers...">
-                        <span class="input-group-text">% :</span>
-                        <input type="number" class="form-control" id="input_p_up_financeurs" aria-describedby="basic-addon3" placeholder="100">
-                        <span class="input-group-text justify-content-center" id="del_up_financeur"><i class="far fa-trash-alt"></i></span>
-                    </div>
-                </div>
-                <div class="ml-1">
-                    <div id="up_plus_f" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-plus"></i></div>
-                </div>
-            </div>
-            <div  id="up_list_f" class="d-flex flex-column align-items-end w-100">
-            </div>
-            <div class="d-flex  justify-content-between my-2">
-                <div class="autocompleteBS w-75" id="sites">
-                    <div class="input-group input-group-sm">
-                        <span for="input_up_site" class="input-group-text">Site : </span>
-                        <input type="text" class="form-control" id="input_up_site" aria-describedby="basic-addon3" placeholder="...">
-                        <span class="input-group-text justify-content-center" id="del_up_site"><i class="far fa-trash-alt"></i></span>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex  justify-content-between my-2">
-                <div class="w-75">
-                    <div class="input-group input-group-sm w-100">
-                        <span for="input_up_heures" class="input-group-text">Heures : </span>
-                        <input type="number" class="form-control" id="input_up_heures" aria-describedby="basic-addon3" placeholder="5">
-                    </div>
-                </div>
-                <div class="ml-2">
-                </div>
-            </div>
-        </div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <!--<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>-->
-        <div class="col-4 d-flex justify-content-between w-100">
-            <button type="button" class="btn btn-outline-success" id="add_up_action">Modifier</button>
-            <button type="button" class="btn btn-outline-danger" id="cancel_up_action_modal" data-dismiss="ModalUpAction">Annuler</button>
         </div>
       </div>
 
