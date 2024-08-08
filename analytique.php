@@ -359,6 +359,7 @@ $(document).ready(function() {
             e_event.e_commentaire = document.getElementById("get_remarque").innerHTML;
             save_event(e_event);
             calendar.getEventById(new_uuid).remove();
+            calendar.gotoDate(document.getElementById("get_start").innerHTML);
             calendar.refetchEvents();
             calendar.gotoDate(event.e_start);
     //delete

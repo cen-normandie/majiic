@@ -207,8 +207,8 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   },
   footerToolbar:{
     left: '',
-    center: '',
-    right: 'sw15'
+    center: 'sw15',
+    right: ''
   },
   editable: true,
   droppable: true, // this allows things to be dropped onto the calendar
