@@ -156,6 +156,11 @@ if (in_array($_SESSION['email'], $admins)) {
                         </div>
                     </div>
                     <hr class="m-1">
+                    <div class="d-flex justify-content-end h-100">
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-light btn-sm" id="switch"><i class="fas fa-clock px-2"></i>Créneaux de 15 minutes</button>
+                                </div>
+                    </div>
                 </div>
                 </div>
             </div>	

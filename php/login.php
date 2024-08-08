@@ -85,7 +85,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                         sort($list_responsable);
                     }
-                    $ii = 0;
+                    /* $ii = 0;
                     //liste des responables projets triés
                     $responsables= array();
                     //liste des responables projets triés html
@@ -100,7 +100,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     }
                     $_SESSION['responsables']=$responsables;
                     $_SESSION['responsables_html']=$responsables_html;
-                    $_SESSION['responsables_html_wo_id']=$responsables_html_wo_id ;
+                    $_SESSION['responsables_html_wo_id']=$responsables_html_wo_id ; */
 
                 if($_SESSION['cgu']) {
                     echo "Success";

@@ -171,6 +171,11 @@ function apply_filters() {
             //Test s'il y a des actions ?
             if ((actions_f[0] == null)) {
                 console.log("Pas d'actions...");
+                //update projet infos
+                update_projetInfos();
+                document.getElementById("t_content").innerHTML= `Attention le projet ne comporte pas d'actions pour le moment !`;
+                $('#toast_info').toast('show');
+
             } else {
                 //mets à jour le tableau des actions
                 update_dtActions();
@@ -240,6 +245,25 @@ $("#p_date_end").datepicker({
     autoclose: true
 });
 
+function load_responsable_ajax () {
+    $.ajax({
+        url      : "php/ajax/projets/create_projet/load_responsable.js.php",
+        data     : {},
+        method   : "POST",
+        dataType : "json",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        success  : function(data) {
+            personnes_liste = data ;
+            let personnes_liste_array = [];
+            for (const personne in personnes_liste) {
+                personnes_liste_array.push(personnes_liste[personne].id+' - '+personnes_liste[personne].name);
+            }
+            personnes_liste_array.sort();
+            autocompleteArray_responsable(document.getElementById("responsable_projet"), personnes_liste_array);
+            }
+    });
+}
 
 //Initialisation du tableau datatable
 const dtActions =$('#actionsDT').DataTable({
@@ -562,7 +586,7 @@ document.getElementById("delete_projet").addEventListener("click", function() {
         //console.log(projets_f[0].id);
         projet_.id = projets_f[0].id;
         projet_.name = document.getElementById("nom_projet").value;
-        projet_.responsable_projet = document.getElementById("responsable_projet").value;
+        projet_.responsable_projet = document.getElementById("responsable_projet").value.split(' - ')[1];
         projet_.type_projet = document.getElementById("type_projet").value;
         projet_.etat_projet = document.getElementById("etat_projet").value;
         projet_.echelle_projet = document.getElementById("echelle_projet").value;

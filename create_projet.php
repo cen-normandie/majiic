@@ -72,14 +72,14 @@ if (in_array($_SESSION['email'], $admins)) {
                         <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" value="">
                     </div>
                     <div class="input-group input-group-sm py-2">
-                        <label class="input-group-text" for="l_type_projet">Responsable : </label>
-                        <select class="form-select" id="responsable_projet" >
-                            <?php //echo $responsables_html ?>
-                            <?php echo $_SESSION['responsables_html']; ?>
-                        </select>
-
-                        
-
+                    
+                    <div class="autocompleteBS w-100" id="personnes">
+                        <div class="input-group input-group-sm">
+                            <span for="responsable_projet" class="input-group-text">Responsable : </span>
+                            <input type="text" class="form-control" id="responsable_projet" aria-describedby="basic-addon3" placeholder="...">
+                            <span class="input-group-text justify-content-center" id="del_responsable"><i class="far fa-trash-alt"></i></span>
+                        </div>
+                    </div>
                     </div>
                     <div class="input-group input-group-sm py-2">
                         <label class="input-group-text" for="l_type_projet">Type de projet : </label>
@@ -191,6 +191,9 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="js/plugins/datatable/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="js/plugins/datatable/Buttons-1.7.0/js/buttons.html5.min.js"></script>
 
+<!-- Custom -->
+<script type="text/javascript" src="js/autocompleteArray/autocomplete.responsable_projet.js" ></script>
+
 <!-- general.js -->
 <script type="text/javascript" src="js/general/general.js" ></script>
 <!-- Empty.js -->
@@ -199,7 +202,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 
 $(document).ready(function() {
-    
+    load_responsable_ajax();
 });
 
 

@@ -184,11 +184,31 @@ let modal_edit = new bootstrap.Modal(document.getElementById('ModalEditEvent'), 
 //Calendar
 var calendarEl = document.getElementById('calendar');
 var calendar = new FullCalendar.Calendar(calendarEl, {
-  timeZone:'UTC',  
+  timeZone:'UTC', 
+  customButtons: {
+    sw15: {
+      text: '15min/30min',
+      click: function() {
+        if (calendar.getOption('slotLabelInterval') == 30) {
+            calendar.setOption('slotDuration','00:15:00');
+            calendar.setOption('slotLabelInterval',15);
+        } else {
+            calendar.setOption('slotDuration','00:30:00');
+            calendar.setOption('slotLabelInterval',30);
+        }
+      },
+      buttonIcons:'alarm'
+    }
+  },
   headerToolbar: {
     left: 'prev,next today',
     center: 'title',
-    right: 'dayGridMonth,timeGridWeek'
+    right: ''
+  },
+  footerToolbar:{
+    left: '',
+    center: '',
+    right: 'sw15'
   },
   editable: true,
   droppable: true, // this allows things to be dropped onto the calendar
@@ -198,10 +218,12 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   locale: 'fr',
   slotDuration: '00:30:00',
   slotLabelInterval: 30,
+  //slotDuration: '00:15:00',
+  //slotLabelInterval: 15,
   scrollTime: '08:00:00',
   slotMinTime: '00:00:00', // Start time for the calendar
   slotMaxTime: '24:00:00', // End time for the calendar
-  allDaySlot: true,
+  allDaySlot: false,
   editable: true,
   droppable: true, // this allows things to be dropped onto the calendar
   selectable: true,
@@ -285,9 +307,16 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 });
 calendar.render();
 
-
-
-
+document.getElementById("switch").addEventListener("click", function() {
+    //calendar('00:15:00');
+    if (calendar.getOption('slotLabelInterval') == 30) {
+        calendar.setOption('slotDuration','00:15:00');
+        calendar.setOption('slotLabelInterval',15);
+    } else {
+        calendar.setOption('slotDuration','00:30:00');
+        calendar.setOption('slotLabelInterval',30);
+    }
+});
 
 //configure External Event
 var containerEl = document.getElementById('external-events-list');
