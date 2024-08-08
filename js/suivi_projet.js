@@ -512,10 +512,14 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                     const data_previ = new Object();
                     const data_real = new Object();
                     if (!!actions_f[actions].personne_action) { 
-                        data_previ.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action;
+
+                        //test si un site est présent (utile pour la gestion)
+                        let action_name_site = ((actions_f[actions].site == '' || actions_f[actions].site == 'Ø' || actions_f[actions].site == null) ? '' : " - "+actions_f[actions].site);
+
+                        data_previ.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action + action_name_site;
                         data_previ.y = actions_f[actions].previ ?? 0;
                         data_previ_sum.y = data_previ_sum.y + (actions_f[actions].previ ?? 0);
-                        data_real.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action;
+                        data_real.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action + action_name_site;
                         data_real.y = actions_f[actions].realise ?? 0;
                         data_real_sum.y = data_real_sum.y + (actions_f[actions].realise ?? 0);
                         data_real.color = project[0].color;
