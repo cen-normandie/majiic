@@ -307,17 +307,6 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 });
 calendar.render();
 
-document.getElementById("switch").addEventListener("click", function() {
-    //calendar('00:15:00');
-    if (calendar.getOption('slotLabelInterval') == 30) {
-        calendar.setOption('slotDuration','00:15:00');
-        calendar.setOption('slotLabelInterval',15);
-    } else {
-        calendar.setOption('slotDuration','00:30:00');
-        calendar.setOption('slotLabelInterval',30);
-    }
-});
-
 //configure External Event
 var containerEl = document.getElementById('external-events-list');
 new FullCalendar.Draggable(containerEl, {
