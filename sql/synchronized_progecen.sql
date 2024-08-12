@@ -177,3 +177,6 @@ WHERE e_id_site like '%00AAA%';
 UPDATE progecen_copy.temps set 
 e_id_site = REPLACE(e_id_site, 'NaN', '' )
 WHERE e_id_site like '%NaN%';
+
+UPDATE progecen_copy.actions set 
+financements = REPLACE(financements, '||', '|' );

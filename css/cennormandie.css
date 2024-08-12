@@ -154,3 +154,8 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 .xxs {
     font-size: 14px;
 }
+
+/* FullCalendar custom button*/
+.fc .fc-sw15-button {
+  font-size:12px;
+}

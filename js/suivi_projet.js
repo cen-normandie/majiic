@@ -171,6 +171,11 @@ function apply_filters() {
             //Test s'il y a des actions ?
             if ((actions_f[0] == null)) {
                 console.log("Pas d'actions...");
+                //update projet infos
+                update_projetInfos();
+                document.getElementById("t_content").innerHTML= `Attention le projet ne comporte pas d'actions pour le moment !`;
+                $('#toast_info').toast('show');
+
             } else {
                 //mets à jour le tableau des actions
                 update_dtActions();
@@ -240,6 +245,25 @@ $("#p_date_end").datepicker({
     autoclose: true
 });
 
+function load_responsable_ajax () {
+    $.ajax({
+        url      : "php/ajax/projets/create_projet/load_responsable.js.php",
+        data     : {},
+        method   : "POST",
+        dataType : "json",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        success  : function(data) {
+            personnes_liste = data ;
+            let personnes_liste_array = [];
+            for (const personne in personnes_liste) {
+                personnes_liste_array.push(personnes_liste[personne].id+' - '+personnes_liste[personne].name);
+            }
+            personnes_liste_array.sort();
+            autocompleteArray_responsable(document.getElementById("responsable_projet"), personnes_liste_array);
+            }
+    });
+}
 
 //Initialisation du tableau datatable
 const dtActions =$('#actionsDT').DataTable({
@@ -464,8 +488,9 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                     const personnes_actions = p_.split('|');
                     var badges_ = '';
                     var x = `
-                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-user-plus"></i></button>
+                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-edit"></i></button>
                     <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+                    /* <button id="up_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-info fs-6 px-1"><i class="fas fa-edit"></i></button> */
                     //Liste des badges personnes
                     for (const pe in personnes_actions) {
                         badges_ = badges_ + '<div id=""><span class="badge mt-1 bg-secondary text-light">'+personnes_actions[pe]+'</span></div>'; //<i id="" class="ps-1 fas fa-window-close"></i>
@@ -481,15 +506,20 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                         badges_, //personnes
                         x //test badges
                     ] ).draw();
+
     
                     //formate un nouveau json des actions pour alimenter les graphiques
                     const data_previ = new Object();
                     const data_real = new Object();
                     if (!!actions_f[actions].personne_action) { 
-                        data_previ.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action;
+
+                        //test si un site est présent (utile pour la gestion)
+                        let action_name_site = ((actions_f[actions].site == '' || actions_f[actions].site == 'Ø' || actions_f[actions].site == null) ? '' : " - "+actions_f[actions].site);
+
+                        data_previ.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action + action_name_site;
                         data_previ.y = actions_f[actions].previ ?? 0;
                         data_previ_sum.y = data_previ_sum.y + (actions_f[actions].previ ?? 0);
-                        data_real.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action;
+                        data_real.name = actions_f[actions].personne_action +" - "+actions_f[actions].code_action + action_name_site;
                         data_real.y = actions_f[actions].realise ?? 0;
                         data_real_sum.y = data_real_sum.y + (actions_f[actions].realise ?? 0);
                         data_real.color = project[0].color;
@@ -560,7 +590,7 @@ document.getElementById("delete_projet").addEventListener("click", function() {
         //console.log(projets_f[0].id);
         projet_.id = projets_f[0].id;
         projet_.name = document.getElementById("nom_projet").value;
-        projet_.responsable_projet = document.getElementById("responsable_projet").value;
+        projet_.responsable_projet = document.getElementById("responsable_projet").value.split(' - ')[1];
         projet_.type_projet = document.getElementById("type_projet").value;
         projet_.etat_projet = document.getElementById("etat_projet").value;
         projet_.echelle_projet = document.getElementById("echelle_projet").value;
@@ -598,10 +628,15 @@ let ModalAddPersonne = new bootstrap.Modal(document.getElementById('ModalAddPers
 let ModalDelAction = new bootstrap.Modal(document.getElementById('ModalDelAction'), {
     keyboard: false
   });
+/* let ModalUpAction = new bootstrap.Modal(document.getElementById('ModalUpAction'), {
+    keyboard: false
+  }); */
 document.getElementById("add_action_personne").addEventListener("click", function() {
     const myUAction = new Object();
-    myUAction.id_action = document.getElementById("id_action_update").innerText;
-    myUAction.personne = document.getElementById("input_personnes").value.split(' - ')[1];
+    myUAction.id_action = document.getElementById("id_action_add_p").innerText;
+    let personne__ok = ( document.getElementById("input_personnes").value.includes(' - '))  ? document.getElementById("input_personnes").value.split(' - ')[1] : document.getElementById("input_personnes").value ;
+    myUAction.personne = personne__ok;
+    myUAction.nb_h_previ = document.getElementById("input_up_heures").value;
     //add Ajax function to have valid id_action
     let  UActionJsonString= JSON.stringify(myUAction);
     //Sauvegarde de la personne en BDD
@@ -779,10 +814,16 @@ document.getElementById("add_action").addEventListener("click", function() {
 function add_events_actions () {
     const elements1 = document.querySelectorAll(`[id^="add_p"]`);
     const elements2 = document.querySelectorAll(`[id^="del_action_"]`);
+    /* const elements3 = document.querySelectorAll(`[id^="up_action_"]`); */
     elements1.forEach(element => {
         element.addEventListener("click", function() {
-            //c_action = projets_f.id
-            document.getElementById("id_action_update").textContent=element.getAttribute('id').replace('add_p_action_', '');
+            // On recupere l'action
+            let id_action__ = element.getAttribute('id').replace('add_p_action_', '');
+            let action__ = actions_f.find(obj => obj.id_action == id_action__);
+            let personne__ = (action__.personne_action !== '' )  ? action__.personne_action : '' ;
+            document.getElementById("id_action_add_p").textContent=id_action__;
+            document.getElementById("input_personnes").value= personne__;
+            document.getElementById("input_up_heures").value=action__.previ;
             ModalAddPersonne.show(element.getAttribute('id'));
         });
     });
@@ -793,18 +834,34 @@ function add_events_actions () {
             ModalDelAction.show(element.getAttribute('id'));
         });
     });
+    /* elements3.forEach(element => {
+        element.addEventListener("click", function() {
+            // On recupere l'action
+            let id_action__ = element.getAttribute('id').replace('up_action_', '');
+            let action__ = actions_f.find(obj => obj.id_action == id_action__);
+            //console.log(action__);
+
+            document.getElementById("id_action_update").textContent=action__.id_action;
+            document.getElementById("input_up_actions").value=action__.code_action; // manque id --> exemple "Paturage" et dans le select c'est "03R_CN2K - Paturage"
+            document.getElementById("input_up_financeurs").value=action__.financements;
+            document.getElementById("input_up_site").value=action__.site; // manque id --> exemple "Chicheboville" et dans le select c'est "0014_014 - MARAIS DE CHICHEBOVILLE"
+            // personne /////////////////// manque id --> exemple "Benoit Perceval" et dans le select c'est "705 - Benoit Perceval"
+            document.getElementById("input_up_heures").value=action__.nb_h_previ;
+            ModalUpAction.show();
+        });
+    }); */
 }
 
 
 
-document.getElementById("add_action_personne").addEventListener("click", function() {
+
 /*     if (!!document.getElementById("input_personnes").value) {
         console.log("list_personnes_action_"+document.getElementById("id_action_update").textContent);
         let s = '<div id=""><span class="badge mt-1 bg-success text-light">'+document.getElementById("input_personnes").value+'<i id="" class="ps-1 fas fa-window-close"></i></span></div>';
         document.getElementById("list_personnes_action_"+document.getElementById("id_action_update").textContent ).insertAdjacentElement("beforeend", s)
     } */
     
-});
+
 
 //////////////////////////////////////////////////////
 //Gestion des dom et evenement pour le graphique par action

@@ -102,13 +102,16 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">
                                 </div>
                                 <div class="input-group input-group-sm p-2">
-                                    <span class="input-group-text" id="basic-addon1">Responsable : </span>
-                                    <!--<input id="responsable_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">-->
-                                    <select class="form-select" id="responsable_projet" disabled>
-                                        <?php //echo $responsables_html_wo_id; ?>
-                                        <?php echo $_SESSION['responsables_html_wo_id']; ?>
-                                    </select>
+                                    <div class="autocompleteBS w-100" id="personnes">
+                                        <div class="input-group input-group-sm">
+                                            <span for="responsable_projet" class="input-group-text">Responsable : </span>
+                                            <input type="text" class="form-control" id="responsable_projet" aria-describedby="basic-addon3" disabled placeholder="...">
+                                            <span class="input-group-text justify-content-center" id="del_responsable"><i class="far fa-trash-alt"></i></span>
+                                        </div>
+                                    </div>
                                 </div>
+
+
                                 <div class="input-group input-group-sm p-2">
                                     <label class="input-group-text" for="l_type_projet">Type de projet : </label>
                                     <select class="form-select" id="type_projet" disabled>
@@ -268,11 +271,11 @@ if (in_array($_SESSION['email'], $admins)) {
       <div class="modal-header">
         <div class="d-flex flex-column w-100">
             <div class="d-flex justify-content-between w-100">
-                <h5 class="modal-title">Ajouter / Modifier une personne sur l'action : </h5>
+                <h5 class="modal-title">Ajouter / Modifier l'action</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="d-flex justify-content-between w-100">
-                <span id="id_action_update"></span>
+                <span id="id_action_add_p"></span>
             </div>
         </div>
       </div>
@@ -288,6 +291,12 @@ if (in_array($_SESSION['email'], $admins)) {
                             <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
                             <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
                         </div>
+                    </div>
+                </div>
+                <div class="w-75">
+                    <div class="input-group input-group-sm w-100">
+                        <span for="input_up_heures" class="input-group-text">Heures : </span>
+                        <input type="number" class="form-control" id="input_up_heures" aria-describedby="basic-addon3" placeholder="5">
                     </div>
                 </div>
                 <div class="d-flex justify-content-center" id="help">
@@ -435,6 +444,7 @@ if (in_array($_SESSION['email'], $admins)) {
   </div>
 </div>
 
+
 <span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 <span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 
@@ -468,6 +478,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript" src="js/autocompleteArray/autocomplete.personnes.js" ></script>
 <script type="text/javascript" src="js/autocompleteArray/autocomplete.financeurs.js" ></script>
 <script type="text/javascript" src="js/autocompleteArray/autocomplete.sites_liste.js" ></script>
+<script type="text/javascript" src="js/autocompleteArray/autocomplete.responsable_projet.js" ></script>
 
 
 <script type="text/javascript" src="js/suivi_projet.js" ></script>
@@ -476,6 +487,7 @@ if (in_array($_SESSION['email'], $admins)) {
 $(document).ready(function() {
     load_projets_ajax();
     dtActions.columns.adjust();
+    load_responsable_ajax();
 });
 
 

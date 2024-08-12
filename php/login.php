@@ -49,16 +49,16 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['is_equipe_rh'] = false;
         
                     foreach($groups as $group) {
-                        if( str_contains($group, 'PROGECEN_RESP_PROJET')) {
+                        if( str_contains($group, 'progecen_resp_projet')) {
                             $_SESSION['u_responsable'] = true;
                         }
-                        if( str_contains($group, 'EQUIPE_GE_CAEN')) {
+                        if( str_contains($group, 'ge_caen')) {
                             $_SESSION['u_ge_caen'] = true;
                         }
-                        if( str_contains($group, 'PROGECEN_EQUIPETECHNIQUE_ROUEN')) {
+                        if( str_contains($group, 'ge_rouen')) {
                             $_SESSION['u_ge_rouen'] = true;
                         }
-                        if( str_contains($group, 'PROGECEN_EQUIPEZOOT_ROUEN')) {
+                        if( str_contains($group, 'zoo')) {
                             $_SESSION['u_zoot'] = true;
                         }
                         if( str_contains($group, 'CGU_Foncier')) {
@@ -72,7 +72,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                     }
 
-                    $filter="(cn=PROGECEN_RESP_PROJET)";
+                    $filter="(cn=progecen_resp_projet)";
                     $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
                     $entries= ldap_get_entries($ldapconn, $result);
                     $groups = $entries[0]["member"];
@@ -85,7 +85,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                         sort($list_responsable);
                     }
-                    $ii = 0;
+                    /* $ii = 0;
                     //liste des responables projets triés
                     $responsables= array();
                     //liste des responables projets triés html
@@ -100,7 +100,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     }
                     $_SESSION['responsables']=$responsables;
                     $_SESSION['responsables_html']=$responsables_html;
-                    $_SESSION['responsables_html_wo_id']=$responsables_html_wo_id ;
+                    $_SESSION['responsables_html_wo_id']=$responsables_html_wo_id ; */
 
                 if($_SESSION['cgu']) {
                     echo "Success";

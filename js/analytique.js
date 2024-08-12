@@ -184,11 +184,31 @@ let modal_edit = new bootstrap.Modal(document.getElementById('ModalEditEvent'), 
 //Calendar
 var calendarEl = document.getElementById('calendar');
 var calendar = new FullCalendar.Calendar(calendarEl, {
-  timeZone:'UTC',  
+  timeZone:'UTC', 
+  customButtons: {
+    sw15: {
+      text: '15min/30min',
+      click: function() {
+        if (calendar.getOption('slotLabelInterval') == 30) {
+            calendar.setOption('slotDuration','00:15:00');
+            calendar.setOption('slotLabelInterval',15);
+        } else {
+            calendar.setOption('slotDuration','00:30:00');
+            calendar.setOption('slotLabelInterval',30);
+        }
+      },
+      buttonIcons:'alarm'
+    }
+  },
   headerToolbar: {
     left: 'prev,next today',
     center: 'title',
-    right: 'dayGridMonth,timeGridWeek'
+    right: ''
+  },
+  footerToolbar:{
+    left: '',
+    center: 'sw15',
+    right: ''
   },
   editable: true,
   droppable: true, // this allows things to be dropped onto the calendar
@@ -198,10 +218,12 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
   locale: 'fr',
   slotDuration: '00:30:00',
   slotLabelInterval: 30,
+  //slotDuration: '00:15:00',
+  //slotLabelInterval: 15,
   scrollTime: '08:00:00',
-  slotMinTime: '04:00:00', // Start time for the calendar
+  slotMinTime: '00:00:00', // Start time for the calendar
   slotMaxTime: '24:00:00', // End time for the calendar
-  allDaySlot: true,
+  allDaySlot: false,
   editable: true,
   droppable: true, // this allows things to be dropped onto the calendar
   selectable: true,
@@ -285,10 +307,6 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 });
 calendar.render();
 
-
-
-
-
 //configure External Event
 var containerEl = document.getElementById('external-events-list');
 new FullCalendar.Draggable(containerEl, {
@@ -327,10 +345,15 @@ function add_event_properties (event) {
     //objet
     event.e_objet = $('#input_objet').val();
     //start
-    event.e_start = event._instance.range.start.toString().split(' GMT')[0];
+    event.e_start = event._instance.range.start.toUTCString().split(' GMT')[0];
+    //console.log(event._instance.range.start.toUTCString().split(' GMT')[0]);
+    //---TESTS WIth UTC
+    //console.log(event._instance.range.start.toString().split(' GMT')[0]);
+
     //event.e_start = event._instance.range.start;
     //end
-    event.e_end = event._instance.range.end.toString().split(' GMT')[0];
+    //---TESTS WIth UTC
+    event.e_end = event._instance.range.end.toUTCString().split(' GMT')[0];
     //lieu
     ///////////////////////////
     //const lieu = $("input[name='Lieux']:checked").val();
@@ -369,9 +392,11 @@ function add_update_event_properties (event,uuid_) {
     //objet
     event.e_objet = $('#update_input_objet').val();
     //start
-    event.e_start = event._instance.range.start.toString().split(' GMT')[0];
+    //---TESTS WIth UTC
+    event.e_start = event._instance.range.start.toUTCString().split(' GMT')[0];
     //end
-    event.e_end = event._instance.range.end.toString().split(' GMT')[0];
+    //---TESTS WIth UTC
+    event.e_end = event._instance.range.end.toUTCString().split(' GMT')[0];
     //lieu
     /////////////////////////////
     //const lieu = $("input[name='update_Lieux']:checked").val();
@@ -469,8 +494,9 @@ function save_update_event_resized (event) {
         url      : "php/ajax/analytique/event/update_event_resized.js.php",
         data     : {
             e_uuid:event.e_uuid,
-            e_start:event.e_start.toString().split(' GMT')[0],
-            e_end:event.e_end.toString().split(' GMT')[0]
+            //---TESTS WIth UTC
+            e_start:event.e_start.toUTCString().split(' GMT')[0],
+            e_end:event.e_end.toUTCString().split(' GMT')[0]
         },
         method   : "POST",
         dataType : "text",
