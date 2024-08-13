@@ -111,7 +111,7 @@ if(isset($_GET['erreur'])) {
 
 <div id="article">
 <h2 class="neon_2">OUPS!</h2>
-<h4><span class="neon">Le </span><span class="cen">CEN Normandie</span><span class="neon"> est désolé c'est une erreur <?php echo $str ;?></span></h4>
+<h4><span class="neon">Le </span><span class="cen">CEN Normandie</span><span class="neon"> est désolé c'est une erreur <?php echo $_GET['erreur'] ;?></span></h4>
 <h4 class="neon"><?php echo $str; ?></h4>
 <h2>-_-</h2>
 </div>
