@@ -68,7 +68,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 </div>
             </div>
             
-            <div class="d-flex bg-light mb-4">
+            <div class="d-flex bg-light mb-5">
                 
                 <div id="calendar" class="d-flex flex-column bg-light w-50 p-2">
                 </div>
