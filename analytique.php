@@ -62,13 +62,13 @@ if (in_array($_SESSION['email'], $admins)) {
 			<div class="m-2"><a class="logout text-light" href="php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
-            <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
+            <div class="d-flex justify-content-start bg-light m-2 border-bottom">
                 <h2 class="">Saisie Analytique</h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 " style="margin-bottom: .5rem">
                 </div>
             </div>
             
-            <div class="d-flex bg-light ">
+            <div class="d-flex bg-light mb-4">
                 
                 <div id="calendar" class="d-flex flex-column bg-light w-50 p-2">
                 </div>
@@ -159,9 +159,9 @@ if (in_array($_SESSION['email'], $admins)) {
                 </div>
                 </div>
             </div>	
-		</div>
-		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
-			<kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd>
+		</div>        
+		<div class="d-flex mx-auto justify-content-end align-items-center text-muted fixed-bottom">
+			<div  class="d-flex" ><kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd></div> 
 		</div>
 	</div>
 
