@@ -12,7 +12,7 @@ $result = pg_prepare($dbconn, "sql",
 "
 SELECT array_to_json(array_agg(row_to_json(t))) FROM 
 (
-  SELECT id_action as id , definition as name, niveau FROM $progecen_liste_actions order by 1
+  SELECT id_action as id , definition as name FROM $progecen_liste_actions order by 1
 ) t
 "
 );
