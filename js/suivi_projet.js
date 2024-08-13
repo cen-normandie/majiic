@@ -300,6 +300,7 @@ const dtActions =$('#actionsDT').DataTable({
 });
 
 document.getElementById("refresh").addEventListener("click", function() {
+    clearProjet();
     location.reload();
 })
 
