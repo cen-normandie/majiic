@@ -37,7 +37,7 @@ function load_responsable_ajax () {
 function save_projet () {
     const projet_ = new Object();
     projet_.name = document.getElementById("nom_projet").value;
-    projet_.responsable_projet = document.getElementById("input_personnes").value.split(' - ')[1];
+    projet_.responsable_projet = document.getElementById("responsable_projet").value.split(' - ')[1];
     projet_.type_projet = document.getElementById("type_projet").value;
     projet_.etat_projet = document.getElementById("etat_projet").value;
     projet_.echelle_projet = document.getElementById("echelle_projet").value;
