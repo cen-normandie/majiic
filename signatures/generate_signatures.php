@@ -16,7 +16,7 @@ if($ldapconn)
 	echo "Connect success<br>";
 else
 	echo "Connect Failure";
-$ad_id = "CSNHN\\".$AD_admin;
+$ad_id = "CSNHN\\"."$AD_admin";
 $ad_pwd = $AD_admin_pwd;
 ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
