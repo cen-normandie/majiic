@@ -17,4 +17,4 @@ robots.txt
 !signatures/out/.htaccess
 /signatures/out/*.htm
 php/test_ldap.php
-
+/download/*
