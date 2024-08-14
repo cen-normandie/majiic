@@ -6,9 +6,9 @@ include 'properties.php';
         if ($ldapconn) {
             ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
-            $log = "CSNHN\\"."...";
+            $log = "CSNHN\\"."$AD_admin";
             // binding to ldap server
-            $ldapbind = ldap_bind($ldapconn, $log, "...");
+            $ldapbind = ldap_bind($ldapconn, $log, "$AD_admin_pwd");
             // verify binding
             if ($ldapbind) {
                 echo "LDAP bind successful...";
