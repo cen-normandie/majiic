@@ -587,11 +587,12 @@ document.getElementById("delete_projet").addEventListener("click", function() {
 
     //fonction d'enregistrement du projet en cours
     function save_projet () {
+        let responsable_p_ = ((document.getElementById("responsable_projet").value).includes(" - ") ? document.getElementById("responsable_projet").value.split(' - ')[1] : document.getElementById("responsable_projet").value);
         const projet_ = new Object();
         //console.log(projets_f[0].id);
         projet_.id = projets_f[0].id;
         projet_.name = document.getElementById("nom_projet").value;
-        projet_.responsable_projet = document.getElementById("responsable_projet").value.split(' - ')[1];
+        projet_.responsable_projet = responsable_p_;
         projet_.type_projet = document.getElementById("type_projet").value;
         projet_.etat_projet = document.getElementById("etat_projet").value;
         projet_.echelle_projet = document.getElementById("echelle_projet").value;
