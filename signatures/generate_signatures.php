@@ -49,8 +49,8 @@ if ($ldapconn) {
             } else {
                 $tel_string = '';
             }
-            if ( isset( $result_salarie[$i]["othertelephone"] ) ) {
-                $tel_string = $tel_string.$result_salarie[$i]["othertelephone"][0];
+            if ( isset( $result_salarie[$i]["othermobile"] ) ) {
+                $tel_string = $tel_string.$result_salarie[$i]["othermobile"][0];
             }
             $bu = $result_salarie[$i]["description"][0];
 
