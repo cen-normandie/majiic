@@ -461,7 +461,7 @@ pg_close($dbconn);
 
 <span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 <span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
-<span id="admin_projet" class="d-none" value="<?php echo $is_admin_projet;?>"></span>
+<span id="admin_projet" class="d-none" value="<?php echo $_SESSION['is_admin_projet'];?>"></span>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->
