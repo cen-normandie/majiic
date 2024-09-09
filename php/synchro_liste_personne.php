@@ -86,8 +86,8 @@ include 'properties.php';
                         $name_ = explode(",OU", $name_a)[0];
                         array_push($list_admin_projet, $name_);
                     }
-                    sort($list_admin_projet);
                 }
+                sort($list_admin_projet);
                 
                 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
                 $del = pg_prepare($dbconn, "sql_del_a", "DELETE FROM $progecen_admin_projet ");

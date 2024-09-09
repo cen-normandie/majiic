@@ -13,10 +13,24 @@ if (!isset($_SESSION['session'])) {
     exit();
 };
 $_SESSION['is_admin'] = false;
-$admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
+$admins = array("f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
 if (in_array($_SESSION['email'], $admins)) {
     $_SESSION['is_admin'] = true;
 }
+//Admin Projet
+//liste des admin projet
+$dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
+$list_admin_projet = array();
+$sel = pg_prepare($dbconn, "sql_a", "SELECT personne FROM $progecen_admin_projet ");
+$sel = pg_execute($dbconn, "sql_a", array());
+while($row = pg_fetch_row($sel))
+{
+    array_push($list_admin_projet, $row[0]);
+}
+if (in_array($_SESSION['u_nom_user_progecen'], $list_admin_projet )) {
+    $_SESSION['is_admin_projet'] = true;
+}
+pg_close($dbconn);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -447,6 +461,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 <span id="c_resp" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
 <span id="c_user" class="d-none" value="<?php echo $_SESSION['u_nom_user_progecen']  ; ?>"><?php echo $_SESSION['u_nom_user_progecen']  ; ?></span>
+<span id="admin_projet" class="d-none" value="<?php echo $is_admin_projet;?>"></span>
 
 <script src="js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->

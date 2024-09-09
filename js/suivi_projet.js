@@ -192,8 +192,13 @@ function apply_filters() {
             } else {
                 document.getElementById("edition").classList.add("d-none");
             }
-            //si membre du codir
-            
+            //si membre du hroupe codir progecen_admin_projet
+            const a_a = document.getElementById("admin_projet").getAttribute("value");
+            if (a_a) {
+                document.getElementById("edition").classList.remove("d-none");
+            } else {
+                document.getElementById("edition").classList.add("d-none");
+            }
 
         }
     }
