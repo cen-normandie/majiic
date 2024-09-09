@@ -192,6 +192,9 @@ function apply_filters() {
             } else {
                 document.getElementById("edition").classList.add("d-none");
             }
+            //si membre du codir
+            
+
         }
     }
     //affiche les graphiques et le tableau des actions

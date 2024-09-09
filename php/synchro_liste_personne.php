@@ -69,6 +69,39 @@ include 'properties.php';
                     echo $personne;
                 }
                 pg_close($dbconn);
+
+
+
+                //liste des admin projet
+                $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
+                $filter="(cn=progecen_admin_projet)";
+                $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
+                $entries= ldap_get_entries($ldapconn, $result);
+                $groups = $entries[0]["member"];
+                $list_admin_projet = array();
+
+                foreach($groups as $group) {
+                    if (str_contains($group, "CN=")) {
+                        $name_a = explode("CN=", $group)[1];
+                        $name_ = explode(",OU", $name_a)[0];
+                        array_push($list_admin_projet, $name_);
+                    }
+                    sort($list_admin_projet);
+                }
+                
+                $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
+                $del = pg_prepare($dbconn, "sql_del_a", "DELETE FROM $progecen_admin_projet ");
+                $del = pg_execute($dbconn, "sql_del_a", array());
+                $seq = pg_prepare($dbconn, "sql_seq_a", "ALTER SEQUENCE $seq_l_a_r_personne RESTART WITH 1;");
+                $seq = pg_execute($dbconn, "sql_seq_a", array());
+                
+                $result = pg_prepare($dbconn, "sql", "INSERT INTO $progecen_admin_projet (personne) VALUES ( $1 );");
+                foreach($list_admin_projet as $personne) {
+                    $result = pg_execute($dbconn, "sql", array($personne)) or die ('Connexion impossible :'. pg_last_error());
+                    echo $personne;
+                }
+                pg_close($dbconn);
+
                 
             } else {
                 echo "LDAP bind failed...";
