@@ -34,6 +34,7 @@
 </head>
 <?php
 include '../php/properties.php';
+
 $str = '';
 if( isset($_SERVER['HTTP_CLIENT_IP']) ) {
     $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -42,7 +43,11 @@ if( isset($_SERVER['HTTP_CLIENT_IP']) ) {
 } else if (isset($_SERVER['REMOTE_ADDR'])) {
     $ip = $_SERVER['REMOTE_ADDR'];
 }
-
+if( isset($_GET['mail']) ) {
+    
+} else {
+    
+}
 
     $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
                 $result = pg_prepare($dbconn, "sql", "INSERT INTO $hack_ (ip) VALUES ( $1 );");

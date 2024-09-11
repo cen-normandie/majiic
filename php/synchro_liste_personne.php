@@ -102,6 +102,23 @@ include 'properties.php';
                 }
                 pg_close($dbconn);
 
+
+                //hacklist
+                $filter="(cn=progecen_user)";
+                $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
+                $entries= ldap_get_entries($ldapconn, $result);
+                $groups = $entries[0]["member"];
+                $list_hack = array();
+
+                foreach($groups as $group) {
+                    if (str_contains($group, "CN=")) {
+                        $name_a = explode("CN=", $group)[1];
+                        $name_ = explode(",OU", $name_a)[0];
+                        array_push($list_hack, $name_);
+                        echo "</br>".$group[0]["mail"][0];
+                    }
+                    sort($list_hack);
+                }
                 
             } else {
                 echo "LDAP bind failed...";
