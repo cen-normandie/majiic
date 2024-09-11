@@ -112,14 +112,19 @@ include 'properties.php';
                 echo "</br>Hack</br>";
 
                 foreach($groups as $group) {
-                    echo $group[0];
                     if (str_contains($group, "CN=")) {
+                        echo $group.'</br>';
                         $name_a = explode("CN=", $group)[1];
                         $name_ = explode(",OU", $name_a)[0];
                         array_push($list_hack, $name_);
-                        echo "</br>".$group[0]["mail"][0];
                     }
                     sort($list_hack);
+                }
+                //$dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
+                //$in_h = pg_prepare($dbconn, "q", "INSERT INTO $hack_ (mail) ");
+                foreach($list_hack as $mail_) {
+                    //$result = pg_execute($dbconn, "sql", array($mail_)) or die ('Connexion impossible :'. pg_last_error());
+                    echo $mail_;
                 }
                 
             } else {
