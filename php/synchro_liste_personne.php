@@ -112,11 +112,16 @@ include 'properties.php';
                 echo "</br>Hack</br>";
 
                 foreach($groups as $group) {
-                    echo $group.'</br>';
                     if (str_contains($group, "CN=")) {
                         $name_a = explode("CN=", $group)[1];
                         $name_ = explode(",OU", $name_a)[0];
-                        array_push($list_hack, $name_);
+                        
+
+                        $filter_h="(displayname=".$name_.")";
+                        $result_h=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter_h);
+                        $entries_h= ldap_get_entries($ldapconn, $result_h);
+                        $groups_h = $entries_h[0]["memberof"];
+                        array_push($list_hack, $entries_h[0]["mail"][0]);
                     }
                     sort($list_hack);
                 }
@@ -124,7 +129,7 @@ include 'properties.php';
                 //$in_h = pg_prepare($dbconn, "q", "INSERT INTO $hack_ (mail) ");
                 foreach($list_hack as $mail_) {
                     //$result = pg_execute($dbconn, "sql", array($mail_)) or die ('Connexion impossible :'. pg_last_error());
-                    echo $mail_;
+                    echo $mail_."</br>";
                 }
                 
             } else {
