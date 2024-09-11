@@ -109,6 +109,7 @@ include 'properties.php';
                 $entries= ldap_get_entries($ldapconn, $result);
                 $groups = $entries[0]["member"];
                 $list_hack = array();
+                echo "</br>Hack</br>";
 
                 foreach($groups as $group) {
                     if (str_contains($group, "CN=")) {
