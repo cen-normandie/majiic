@@ -112,8 +112,8 @@ include 'properties.php';
                 echo "</br>Hack</br>";
 
                 foreach($groups as $group) {
+                    echo $group.'</br>';
                     if (str_contains($group, "CN=")) {
-                        echo $group.'</br>';
                         $name_a = explode("CN=", $group)[1];
                         $name_ = explode(",OU", $name_a)[0];
                         array_push($list_hack, $name_);
