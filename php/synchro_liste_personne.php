@@ -101,36 +101,6 @@ include 'properties.php';
                     echo $personne;
                 }
                 pg_close($dbconn);
-
-
-                //hacklist
-                $filter="(cn=progecen_user)";
-                $result=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter);
-                $entries= ldap_get_entries($ldapconn, $result);
-                $groups = $entries[0]["member"];
-                $list_hack = array();
-                echo "</br>Hack</br>";
-
-                foreach($groups as $group) {
-                    if (str_contains($group, "CN=")) {
-                        $name_a = explode("CN=", $group)[1];
-                        $name_ = explode(",OU", $name_a)[0];
-                        
-
-                        $filter_h="(displayname=".$name_.")";
-                        $result_h=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter_h);
-                        $entries_h= ldap_get_entries($ldapconn, $result_h);
-                        $groups_h = $entries_h[0]["memberof"];
-                        array_push($list_hack, $entries_h[0]["mail"][0]);
-                    }
-                    sort($list_hack);
-                }
-                //$dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
-                //$in_h = pg_prepare($dbconn, "q", "INSERT INTO $hack_ (mail) ");
-                foreach($list_hack as $mail_) {
-                    //$result = pg_execute($dbconn, "sql", array($mail_)) or die ('Connexion impossible :'. pg_last_error());
-                    echo $mail_."</br>";
-                }
                 
             } else {
                 echo "LDAP bind failed...";
