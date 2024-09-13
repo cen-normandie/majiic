@@ -46,12 +46,12 @@ if( isset($_SERVER['HTTP_CLIENT_IP']) ) {
 if( isset($_GET['mail']) ) {
     
 } else {
-    
+
 }
 
     $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
-                $result = pg_prepare($dbconn, "sql", "INSERT INTO $hack_ (ip) VALUES ( $1 );");
-                $result = pg_execute($dbconn, "sql", array($ip)) or die ('Connexion impossible :'. pg_last_error());
+                $result = pg_prepare($dbconn, "sql", "INSERT INTO $hack_ (ip, mail) VALUES ( $1, $2 );");
+                $result = pg_execute($dbconn, "sql", array($ip, $_GET['mail'])) or die ('Connexion impossible :'. pg_last_error());
     pg_close($dbconn);
 
 ?>
@@ -61,3 +61,14 @@ if( isset($_GET['mail']) ) {
 <h2><span class="cen blink"><bold>Thank You ! <?php echo ' '.$ip ;?></bold></span></h2>
 </div>
 </html>
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+    await delay(10000);
+    document.location.href = 'http://cen-normandie.fr';
+
+});
+
+
+</script>
