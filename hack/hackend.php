@@ -63,14 +63,12 @@ if( isset($_GET['mail']) ) {
 </html>
 <script type="text/javascript">
 
-
-$(document).ready(function() {
-
+document.addEventListener("DOMContentLoaded", function(event) { 
     setTimeout(() => {
         document.location.href = 'http://cen-normandie.fr';
     }, 10000);
-
 });
+
 
 
 </script>
