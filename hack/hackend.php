@@ -65,8 +65,10 @@ if( isset($_GET['mail']) ) {
 
 
 $(document).ready(function() {
-    await delay(10000);
-    document.location.href = 'http://cen-normandie.fr';
+
+    setTimeout(() => {
+        document.location.href = 'http://cen-normandie.fr';
+    }, 10000);
 
 });
 
