@@ -77,7 +77,7 @@ echo '################################ A USER ################################ #
 echo '################################ USERS ################################ ################################</br>';
 if ($ldapconn) {
     // binding to ldap server
-    $ldapbind = ldap_bind($ldapconn, "CSNHN\BP", "JR4Love#");
+    $ldapbind = ldap_bind($ldapconn, "CSNHN\...", "...");
     // verify binding
     if ($ldapbind) {
         echo "LDAP bind successful... A USER";
