@@ -18,8 +18,8 @@ $result = pg_prepare($dbconn, "sql",
 SELECT 
     e.e_id, 
     e.e_objet, 
-    $3||to_char(e.e_start AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as start, 
-    $3||to_char(e.e_end AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as end,
+    to_char(e.e_start AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as start, 
+    to_char(e.e_end AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as end,
     EXTRACT(epoch FROM e.e_end - e.e_start)/3600 as nb_heures,
     e.e_id_projet,
     e.e_nom_projet,
@@ -31,8 +31,8 @@ SELECT
     e.e_commentaire,
     e.e_salissure,
     e.e_panier,
-    $3||to_char(e.e_date_saisie AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie,
-    $3||to_char(e.e_date_saisie_salissure AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie_salissure,
+    to_char(e.e_date_saisie AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie,
+    to_char(e.e_date_saisie_salissure AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie_salissure,
     p.color,
     e.e_personne
 FROM $progecen_temps e 
@@ -43,7 +43,8 @@ ORDER by 3, 2
 "
 );
 
-$result = pg_execute($dbconn, "sql", array($_year_begin, $_year_end, $quote ));
+$result = pg_execute($dbconn, "sql", array($_year_begin, $_year_end ));
+//$result = pg_execute($dbconn, "sql", array($_year_begin, $_year_end, $quote ));
 $row_ = 1;
 //write first line title
 $arr_columnname = ['id','objet','start','end','nb_heures','id_projet','nom_projet','id_action','nom_action','financements','site','lieu','commentaire','salissure','panier','date_saisie','date_saisie_salissure','color','personne'];
