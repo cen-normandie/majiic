@@ -1,4 +1,8 @@
 <?php
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+error_reporting(-1);
+
 //For testing the AD server is work or not
 $ldaphost="192.168.0.211";
 $ldapconn=ldap_connect($ldaphost);

@@ -87,6 +87,7 @@ $("#signin").click( function () {
             success  : function(data) {
                 if (data == "Success")
                 {   
+                    console.log("Error1");
                     $.ajax({
                         url      : "php/ajax/logs.js.php",
                         type     : "POST",
