@@ -5,7 +5,7 @@ $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN pas
 or die ('Connexion impossible :'. pg_last_error());
 $result = pg_prepare($dbconn, "sql", 
 "
-UPDATE $progecen_temps SET e_date_valide_panier = now()::date
+UPDATE $progecen_temps SET e_date_valide_panier = now()::date, e_commentaire = '_rh_panier_ok_'||now()::date::text||coalesce(e_commentaire, '')
 WHERE e_id::text = $1;
 "
 );

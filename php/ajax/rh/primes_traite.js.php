@@ -10,17 +10,11 @@ SELECT array_to_json(array_agg(row_to_json(t))) FROM
 SELECT 
 	p.e_id,
 	p.e_personne as personne, 
-	to_char(p.e_start::date, 'DD-MM-YYYY') as date_prime,
-    to_char(p.e_date_saisie::date, 'DD-MM-YYYY') as saisie,
-	to_char(p.e_date_valide_salissure::date, 'DD-MM-YYYY') as validation
-	FROM $progecen_temps p
-	WHERE p.e_salissure  is true 
-	AND p.e_date_valide_salissure is null
-	AND not exists (
-		select v.date_de_prime from $primes_valide v
-		where v.e_personne = p.e_personne AND v.date_de_prime::date = p.e_start::date 
-		)
-	order by 3 Desc, 2 Desc, 1 Asc
+	to_char(p.date_de_prime::date, 'DD-MM-YYYY') as date_de_prime,
+	e_commentaire as commentaire,
+	to_char(p.date_validation_rh::date, 'DD-MM-YYYY') as validation_rh
+	FROM $primes_valide p
+	order by 5 Desc, 2 Asc
 ) t
 "
 );

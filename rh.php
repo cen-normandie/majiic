@@ -62,7 +62,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
             </div>
             
-            <div class="d-flex bg-light ">
+            <div class="d-flex bg-light mb-2">
                 <div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> <!--bg-dark-->
                     <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Paniers Repas A valider:</h4></div>
                     <div class="d-flex flex-column w-100 bg-light mb-2">
@@ -81,7 +81,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         </table>
                     </div>
                     <div clas="d-flex col-md-6">
-                        <button id="export_paniers_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Paniers validés sur le mois</button>
+                        <button id="export_paniers_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Paniers traités sur le mois</button>
                     </div>
                     
                 </div>
@@ -103,11 +103,49 @@ if (in_array($_SESSION['email'], $admins)) {
                         </table>
                     </div>
                     <div clas="d-flex col-md-6">
-                        <button id="export_primes_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Primes validées sur le mois</button>
+                        <button id="export_primes_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Primes traitées sur le mois</button>
                     </div>
                     
                 </div>
             </div>	
+            <div class="d-flex bg-light mb-5">
+                <div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> 
+                    <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Paniers Traite</h4></div>
+                    <div class="d-flex flex-column w-100 bg-light mb-2">
+                        <table id="paniersDT_traite" class="table table-hover table-sm" style="width:100%"> 
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Personne</th>
+                                    <th>Date du panier</th>
+                                    <th>Commentaire</th>
+                                    <th>Date Validation RH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> 
+                    <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Primes Traitees</h4></div>
+                    <div class="d-flex flex-column w-100 bg-light mb-2">
+                        <table id="primeDT_traite" class="table table-hover table-sm" style="width:100%"> 
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Personne</th>
+                                    <th>Date de la prime</th>
+                                    <th>Commentaire</th>
+                                    <th>Date Validation RH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 		</div>
 
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
