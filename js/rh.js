@@ -124,7 +124,15 @@ const dtPaniers_traite =$('#paniersDT_traite').DataTable({
         }
     }
     ],
-
+    createdRow: function(row, data, index) {
+        if (data[3] != '' ) {
+            if ( ( data[3].includes('rh_panier_ok') ) ) {
+                $(row).css('background-color', '#38823d24');
+            } else if ( ( data[3].includes('rh_panier_ko') ) ) {
+                $(row).css('background-color', '#98222224');
+            }
+        }
+    },
     scrollY: '400px',
     scrollCollapse: true,
     paging: false
@@ -150,7 +158,7 @@ const dtPrimes_traite =$('#primeDT_traite').DataTable({
     buttons: [
         { 
             extend: 'excel', 
-            text:'exporter',
+            text:'Exporter',
             className: 'btn btn-sm btn-outline-success m-2',
             init: function(api, node, config) {
             }
@@ -290,7 +298,7 @@ function load_primes_traite_ajax () {
                 let rowNode_ = dtPrimes_traite.row.add( [
                     primes_traite_liste[prime].e_id,
                     primes_traite_liste[prime].personne, 
-                    primes_traite_liste[prime].date_deprime,
+                    primes_traite_liste[prime].date_de_prime,
                     primes_traite_liste[prime].commentaire,
                     primes_traite_liste[prime].validation_rh
                 ] ).node().id = primes_traite_liste[prime].e_id;

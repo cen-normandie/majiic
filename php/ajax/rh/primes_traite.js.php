@@ -14,6 +14,7 @@ SELECT
 	e_commentaire as commentaire,
 	to_char(p.date_validation_rh::date, 'DD-MM-YYYY') as validation_rh
 	FROM $primes_valide p
+	WHERE date_de_prime > to_date('2023', 'YYYY')
 	order by 5 Desc, 2 Asc
 ) t
 "
