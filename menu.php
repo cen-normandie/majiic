@@ -70,6 +70,12 @@
         <i class="fas fa-ticket-alt"></i> Ouvrir un ticket
       </a>
   </li>
+  <li class="nav-item">
+      <a class="nav-link"  href="http://wiki.cen-n.fr:3000" target="_blank">
+        <span data-feather=""></span>
+        <i class="fab fa-wikipedia-w"></i> Wiki CEN (tutos)
+      </a>
+  </li>
   <hr class="bg-secondary mx-2 my-1">
     <div class="ml-2">
       <span class="nav-link text-secondary">Projets :</span>

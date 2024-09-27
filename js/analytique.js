@@ -300,12 +300,28 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     arg.event.e_start = arg.event.start;
     arg.event.e_end = arg.event.end;
     arg.event.e_uuid = arg.event._def.publicId;
+    arg.event.backgroundColor = 'red';
     save_update_event_resized (arg.event);
     calendar.refetchEvents();
+    consoled(arg.event);
   },
   events: "php/ajax/analytique/load_events_calendar.js.php"
 });
 calendar.render();
+
+function consoled (e) {
+    const haha = calendar.getEvents();
+    var start__ = new Date( calendar.view.activeStart ) ;
+    var end__ = console.log( calendar.view.activeEnd.toUTCString().split(' GMT')[0] );
+    for (const e_ in haha) {
+        var ddd = new Date(haha[e_]._def.extendedProps.e_start);
+        if( ddd> start__) {
+            console.log(haha[e_]._def.ui.backgroundColor);
+            haha[e_]._def.ui.backgroundColor= 'red';
+        }
+    }
+}
+
 
 //configure External Event
 var containerEl = document.getElementById('external-events-list');
