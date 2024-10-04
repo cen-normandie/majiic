@@ -72,7 +72,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         <li class="list-group-item"><strong class="fs-5">A</strong> - Exportez vos temps existants :
                             
                                 <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
-                                <button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
+                                <!--<button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
                                 <button id="export_2022" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
                                 <button id="export_2023" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
                                 <button id="export_2024" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
@@ -81,7 +81,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         <li class="list-group-item"><strong class="fs-5">B</strong> - Téléchargez la liste des codes projets <--> codes actions <--> codes sites servant de référentiel :
                             
                                 <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
-                                <button id="anal_2021" type="button" class="btn btn-outline-warning  shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>
+                                <!--<button id="anal_2021" type="button" class="btn btn-outline-warning  shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
                                 <button id="anal_2022" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
                                 <button id="anal_2023" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
                                 <button id="anal_2024" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
@@ -93,7 +93,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <div class="input-group my-2">
                                     <label class="input-group-text" for="year_replace">Année : </label>
                                     <select class="form-select" id="year_replace" >
-                                        <option value="2021">2021</option>
+                                        <!--<option value="2021">2021</option>-->
                                         <option value="2022">2022</option>
                                         <option value="2023" selected>2023</option>
                                         <option value="2024" >2024</option>
