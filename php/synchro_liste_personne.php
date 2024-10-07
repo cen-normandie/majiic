@@ -24,9 +24,6 @@ include 'properties.php';
                         $name_a = explode("CN=", $group)[1];
                         $name_ = explode(",OU", $name_a)[0];
                         array_push($list_personne, $name_);
-                        echo $group;
-                        echo $group[0].'</br>';
-                        echo $group[1].'</br>';
                     }
                     sort($list_personne);
                 }
@@ -37,9 +34,16 @@ include 'properties.php';
                 $seq = pg_prepare($dbconn, "sql_seq", "ALTER SEQUENCE $seq_l_personne RESTART WITH 1;");
                 $seq = pg_execute($dbconn, "sql_seq", array());
                 
-                $result = pg_prepare($dbconn, "sql", "INSERT INTO $progecen_personnes_ (personne) VALUES ( $1 );");
+                $result = pg_prepare($dbconn, "sql", "INSERT INTO $progecen_personnes_ (personne, p_nom_prenom) VALUES ( $1 , $2 );");
                 foreach($list_personne as $personne) {
-                    $result = pg_execute($dbconn, "sql", array($personne)) or die ('Connexion impossible :'. pg_last_error());
+                    $wwww = $personne;
+                    if (str_contains($wwww," ")) {
+                        $lastname_firstname = explode(" ",$wwww)[1]." ".explode(" ",$wwww)[0];
+                        $result = pg_execute($dbconn, "sql", array($personne, $lastname_firstname)) or die ('Connexion impossible :'. pg_last_error());
+                    } else {
+                        $lastname_firstname = "";
+                        $result = pg_execute($dbconn, "sql", array($personne, $lastname_firstname)) or die ('Connexion impossible :'. pg_last_error());
+                    }
                     echo $personne;
                 }
                 pg_close($dbconn);

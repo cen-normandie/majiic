@@ -12,8 +12,8 @@ SELECT
 	p.e_personne as personne, 
 	to_char(p.e_start::date, 'DD-MM-YYYY') as date_panier,
 	to_char(p.e_date_saisie::date, 'DD-MM-YYYY') as saisie,
-	to_char(p.e_date_valide_panier::date, 'DD-MM-YYYY') as validation
-	FROM $progecen_temps p
+	m.p_nom_prenom as validation
+	FROM $progecen_temps p left join $progecen_personnes_ m ON p.e_personne = m.personne
 	WHERE p.e_panier  is true 
 	AND p.e_date_valide_panier is null
 	AND not exists (
@@ -24,6 +24,9 @@ SELECT
 ) t
 "
 );
+
+//to_char(p.e_date_valide_panier::date, 'DD-MM-YYYY') as validation
+
 $result = pg_execute($dbconn, "sql", array()) or die ('Connexion impossible :'. pg_last_error());
 while($row = pg_fetch_row($result))
 {
