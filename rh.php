@@ -73,7 +73,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <th>Personne</th>
                                     <th>Date du panier</th>
                                     <th>Saisie</th>
-                                    <th>Validation</th>
+                                    <th>Prénom</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,7 +95,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                     <th>Personne</th>
                                     <th>Date de prime</th>
                                     <th>Saisie</th>
-                                    <th>Validation</th>
+                                    <th>Prénom</th>
                                 </tr>
                             </thead>
                             <tbody>

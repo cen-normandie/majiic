@@ -12,7 +12,7 @@ SELECT
 	m.p_nom_prenom as personne, 
 	to_char(p.e_start::date, 'DD-MM-YYYY') as date_panier,
 	to_char(p.e_date_saisie::date, 'DD-MM-YYYY') as saisie,
-	to_char(p.e_date_valide_panier::date, 'DD-MM-YYYY') as validation
+	p.e_personne as prenom
 	FROM $progecen_temps p left join $progecen_personnes_ m ON p.e_personne = m.personne
 	WHERE p.e_panier  is true 
 	AND p.e_start > date_trunc('year', now())

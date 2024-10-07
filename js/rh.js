@@ -218,7 +218,8 @@ function load_paniers_ajax () {
                     paniers_liste[panier].personne, 
                     paniers_liste[panier].date_panier,
                     paniers_liste[panier].saisie,
-                    paniers_liste[panier].validation
+                    //paniers_liste[panier].validation
+                    paniers_liste[panier].prenom
                 ] ).node().id = paniers_liste[panier].e_id;
             }
             dtPaniers.draw();
@@ -273,7 +274,8 @@ function load_primes_ajax () {
                     primes_liste[prime].personne, 
                     primes_liste[prime].date_prime,
                     primes_liste[prime].saisie,
-                    primes_liste[prime].validation
+                    //primes_liste[prime].validation
+                    primes_liste[prime].prenom
                 ] ).node().id = primes_liste[prime].e_id;
             }
             dtPrimes.draw();
@@ -409,7 +411,7 @@ function delete_ids_array_prime_ko () {
     }    
 }
 
-document.getElementById("export_paniers_m1").addEventListener("click", function() {
+/* document.getElementById("export_paniers_m1").addEventListener("click", function() {
     $.ajax({
         url      : "php/export_excel/export_paniers_m1.php",
         data     : {},
@@ -435,5 +437,5 @@ document.getElementById("export_primes_m1").addEventListener("click", function()
             }
     });   
 });
-
+ */
 
