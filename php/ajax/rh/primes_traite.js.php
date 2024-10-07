@@ -9,12 +9,13 @@ SELECT array_to_json(array_agg(row_to_json(t))) FROM
 (
 SELECT 
 	p.e_id,
-	p.e_personne as personne, 
+	m.p_nom_prenom as personne, 
 	to_char(p.date_de_prime::date, 'DD-MM-YYYY') as date_de_prime,
 	e_commentaire as commentaire,
 	to_char(p.date_validation_rh::date, 'DD-MM-YYYY') as validation_rh
-	FROM $primes_valide p
-	WHERE date_de_prime > to_date('2023', 'YYYY')
+	FROM $primes_valide p left join $progecen_personnes_ m ON p.e_personne = m.personne
+	WHERE 
+	date_trunc('year', date_de_prime) = date_trunc('year', now())
 	order by 5 Desc, 2 Asc
 ) t
 "

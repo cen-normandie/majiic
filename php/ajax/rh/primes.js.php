@@ -9,12 +9,13 @@ SELECT array_to_json(array_agg(row_to_json(t))) FROM
 (
 SELECT 
 	p.e_id,
-	p.e_personne as personne, 
+	m.p_nom_prenom as personne, 
 	to_char(p.e_start::date, 'DD-MM-YYYY') as date_prime,
     to_char(p.e_date_saisie::date, 'DD-MM-YYYY') as saisie,
 	to_char(p.e_date_valide_salissure::date, 'DD-MM-YYYY') as validation
-	FROM $progecen_temps p
+	FROM $progecen_temps p left join $progecen_personnes_ m ON p.e_personne = m.personne
 	WHERE p.e_salissure  is true 
+	AND p.e_start > date_trunc('year', now())
 	AND p.e_date_valide_salissure is null
 	AND not exists (
 		select v.date_de_prime from $primes_valide v

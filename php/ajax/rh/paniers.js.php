@@ -9,12 +9,13 @@ SELECT array_to_json(array_agg(row_to_json(t))) FROM
 (
 SELECT 
     p.e_id,
-	p.e_personne as personne, 
+	m.p_nom_prenom as personne, 
 	to_char(p.e_start::date, 'DD-MM-YYYY') as date_panier,
 	to_char(p.e_date_saisie::date, 'DD-MM-YYYY') as saisie,
-	m.p_nom_prenom as validation
+	to_char(p.e_date_valide_panier::date, 'DD-MM-YYYY') as validation
 	FROM $progecen_temps p left join $progecen_personnes_ m ON p.e_personne = m.personne
 	WHERE p.e_panier  is true 
+	AND p.e_start > date_trunc('year', now())
 	AND p.e_date_valide_panier is null
 	AND not exists (
 		select v.date_du_panier from $paniers_valide v
