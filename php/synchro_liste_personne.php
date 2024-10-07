@@ -24,6 +24,9 @@ include 'properties.php';
                         $name_a = explode("CN=", $group)[1];
                         $name_ = explode(",OU", $name_a)[0];
                         array_push($list_personne, $name_);
+                        echo $group;
+                        echo $group[0].'</br>';
+                        echo $group[1].'</br>';
                     }
                     sort($list_personne);
                 }
