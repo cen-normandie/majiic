@@ -11,9 +11,6 @@ function validate_extension() {
     }
 
 }
-document.getElementById("export_2021").addEventListener("click", function() {
-    export_temps(2021);
-});
 document.getElementById("export_2022").addEventListener("click", function() {
     export_temps(2022);
 });
@@ -24,9 +21,6 @@ document.getElementById("export_2024").addEventListener("click", function() {
     export_temps(2024);
 });
 
-document.getElementById("anal_2021").addEventListener("click", function() {
-    export_model(2021);
-});
 document.getElementById("anal_2022").addEventListener("click", function() {
     export_model(2022);
 });
