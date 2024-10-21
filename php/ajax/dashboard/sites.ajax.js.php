@@ -66,10 +66,12 @@ t as (
                         FROM $sites g
                         WHERE g.geom is not null
 						            AND s.id_site = g.id_site
+                        AND s.categorie_site = $1
                         ) As lp 
             ON lg.id_site = lp.id_site  ) As f )  As fc
   )
   FROM $sites s left join $sites_data as d on d.id_site = s.id_site
+  WHERE s.categorie_site = $1
   order by 1
 )
 SELECT json_agg(t) FROM t
@@ -147,7 +149,7 @@ SELECT json_agg(t) FROM t
 //SELECT json_agg(t) FROM t
 
 
-$result = pg_execute($dbconn, "sql", array());
+$result = pg_execute($dbconn, "sql", array('1'));
 while($row = pg_fetch_row($result))
 {
   echo trim($row[0]);
