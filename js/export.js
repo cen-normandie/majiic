@@ -18,9 +18,6 @@ function load_personnes_ajax () {
     });
 }
 //export excel temps des projets
-document.getElementById("export_p_2021").addEventListener("click", function() {
-    export_(2021);
-});
 document.getElementById("export_p_2022").addEventListener("click", function() {
     export_(2022);
 });
@@ -32,9 +29,6 @@ document.getElementById("export_p_2024").addEventListener("click", function() {
 });
 
 //export excel temps des projets GLOBAL
-document.getElementById("export_2021").addEventListener("click", function() {
-    export_global(2021);
-});
 document.getElementById("export_2022").addEventListener("click", function() {
     export_global(2022);
 });
