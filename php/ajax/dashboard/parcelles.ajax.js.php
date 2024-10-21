@@ -19,6 +19,7 @@ f_ as (
   					round( (st_area( coalesce(g.geom_pp, g.geom) )/10000)::numeric,2) as surface
                           FROM $parcelles g
                           WHERE g.geom is not null
+                          AND g.categorie_site = $1
                           ) As lp 
               ON lg.id_unique = lp.id_unique  
   ),
@@ -52,6 +53,7 @@ t as (
     			) As f )  As fc
       )
   FROM $parcelles p LEFT JOIN  $sites s ON p.id_group = s.id_site 
+  WHERE p.categorie_site = $1
   order by 1
 )
 SELECT json_agg(t) FROM t
@@ -61,7 +63,7 @@ SELECT json_agg(t) FROM t
 //LEFT JOIN $doc_annee y ON y.doc_reference = p.doc_reference
 
 
-$result = pg_execute($dbconn, "sql", array());
+$result = pg_execute($dbconn, "sql", array('1'));
 while($row = pg_fetch_row($result))
 {
   echo trim($row[0]);
