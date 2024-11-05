@@ -35,6 +35,7 @@ include 'properties.php';
                 $seq = pg_execute($dbconn, "sql_seq", array());
                 
                 $result = pg_prepare($dbconn, "sql", "INSERT INTO $progecen_personnes_ (personne, p_nom_prenom) VALUES ( $1 , $2 );");
+                echo 'Equipe CEN :</br>';
                 foreach($list_personne as $personne) {
                     $wwww = $personne;
                     if (str_contains($wwww," ")) {
@@ -44,7 +45,7 @@ include 'properties.php';
                         $lastname_firstname = "";
                         $result = pg_execute($dbconn, "sql", array($personne, $lastname_firstname)) or die ('Connexion impossible :'. pg_last_error());
                     }
-                    echo $personne;
+                    echo $personne.'</br>';
                 }
                 pg_close($dbconn);
 
@@ -63,7 +64,7 @@ include 'properties.php';
                     }
                     sort($list_resp_projet);
                 }
-                
+                echo 'Equipe Responsable de projet CEN :</br>';
                 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS") or die ('Connexion impossible :'. pg_last_error());
                 $del = pg_prepare($dbconn, "sql_del_", "DELETE FROM $progecen_responsable_projet ");
                 $del = pg_execute($dbconn, "sql_del_", array());
@@ -73,7 +74,7 @@ include 'properties.php';
                 $result = pg_prepare($dbconn, "sql", "INSERT INTO $progecen_responsable_projet (personne) VALUES ( $1 );");
                 foreach($list_resp_projet as $personne) {
                     $result = pg_execute($dbconn, "sql", array($personne)) or die ('Connexion impossible :'. pg_last_error());
-                    echo $personne;
+                    echo $personne.'</br>';
                 }
                 pg_close($dbconn);
 
