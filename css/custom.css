@@ -1,0 +1,52 @@
+.un_v {
+visibility: hidden;
+}
+@font-face {
+font-family: Bebas;
+src: url(./fonts/Bebas-Regular.ttf);
+}
+@font-face {
+font-family: MoonFlower;
+src: url(./fonts/Moon-Flower.ttf);
+}
+.bebas {
+font-family: Bebas;
+}
+.moonflower {
+font-family: MoonFlower;
+}
+
+.autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    /* display: inline-block; */
+    /*border-radius: 2px;*/
+    
+  }
+  
+  .autocomplete-items {
+    max-height: 200px;
+    overflow-y: scroll;
+    z-index:99;
+  }
+  
+  .autocompleteItem {
+    padding: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+    font-size:14px;
+    margin-top:0px;
+    margin-bottom:0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /*when hovering an item:*/
+  .autocompleteItem:hover {
+    background-color: #e9e9e9; 
+  }
+  .autocompleteItem.autocomplete-active {
+    background-color: #e9e9e9; 
+  }
