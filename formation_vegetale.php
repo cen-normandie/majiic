@@ -58,7 +58,7 @@ if (in_array($_SESSION['email'], $admins)) {
 			<div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <span id="courriel" class="text-light"> <?php echo $_SESSION['email']; ?></span></span></div>
 			<div class="m-2"><a class="logout text-light" href="php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
 		</div>
-        <div class="d-flex flex-column justify-content-end" style="">
+    <div class="d-flex flex-column justify-content-end" style="">
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
                 <h2 class="bebas">Formation vegetale</h2>
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
@@ -107,14 +107,22 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                   </div>
                 </div>  
-            </div>	
+            </div>
+            <div class="d-flex bg-light w-100 m-4">
+              <div class="alert alert-info" role="alert">
+                Cet page sera destinée à la consultation de cartographie d'habitat. Vous pouvez toutefois saisir des données de test afin de vous familiariser avec les typologies existantes (HABREF v7.0).
+                <ul>
+                  <li>A - dessiner un polygone</li>
+                  <li>B - attribuer une formation végétale ou un habitat</li>
+                </ul>
+              </div>
+            </div>
 		</div>
 
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
 			<kbd class="small">CEN Normandie © <?php echo date("Y"); ?></kbd>
 		</div>
 	</div>
-
 </div>
 
 <!-- Modal -->
