@@ -23,7 +23,7 @@ WITH t as (
                         g.typo, 
                         g.code, 
                         g.lb,
-                        g.annee_saisie,
+                        g.annee_saisie::date,
                         g.observateur,
                         g.jdd_carto,
                         g.taxons

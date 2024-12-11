@@ -32,8 +32,7 @@ if (in_array($_SESSION['email'], $admins)) {
     
     
     <!--LEAFLET-->
-    <link href="css/leaflet.css" rel="stylesheet" type="text/css">
-    <link href="js/leaflet/plugins/leaflet_label/css/leafleat_label.css" rel="stylesheet" type="text/css">
+    <link href="js/leaflet-1.9.4/leaflet.css" rel="stylesheet" type="text/css">
     <!--LEAFLET DRAW-->
     <link href="js/Leaflet.draw/src/leaflet.draw.css" rel="stylesheet" type="text/css" >
     <!-- Bootstrap Core CSS -->
@@ -56,7 +55,7 @@ if (in_array($_SESSION['email'], $admins)) {
   <?php $_POST["page"] = basename(__FILE__);include("menu.php"); ?>
 	<div class="d-flex flex-column col-md-9 col-lg-10 bg-light " >
 		<div class="d-flex justify-content-end  bg-dark sticky-top">
-			<div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?php echo $_SESSION['email']; ?></span></div>
+			<div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <span id="courriel" class="text-light"> <?php echo $_SESSION['email']; ?></span></span></div>
 			<div class="m-2"><a class="logout text-light" href="php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
@@ -139,6 +138,18 @@ if (in_array($_SESSION['email'], $admins)) {
                 <input type="text" class="form-control" id="input_observateur" aria-describedby="basic-addon3">
             </div>
             </div>
+          <div class="autocompleteBS mt-4 mx-2">
+            <div class="input-group input-group-sm w-75">
+                <span for="input_hab_b" class="input-group-text">Formation Végétale 2: </span>
+                <input type="text" class="form-control" id="input_hab_b" aria-describedby="basic-addon3">
+            </div>
+            </div>
+            <div class="autocompleteBS mt-4 mx-2">
+            <div class="input-group input-group-sm w-75">
+                <span for="input_hab_c" class="input-group-text">Formation Végétale 3: </span>
+                <input type="text" class="form-control" id="input_hab_c" aria-describedby="basic-addon3">
+            </div>
+            </div>
             
         </div>
         <div class="modal-footer">
@@ -148,6 +159,7 @@ if (in_array($_SESSION['email'], $admins)) {
         </div>
     </div>
 </div>
+
 
 <!--JQUERY-->
 <script src="js/jquery-3.7.1.min.js"></script>

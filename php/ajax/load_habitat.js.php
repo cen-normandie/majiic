@@ -20,9 +20,15 @@ lb_auteur,
 niveau, 
 lb_niveau	
 	FROM $inpn_habref where lb_hab_fr is not null
-    and cd_typo IN ('7','107','100','28')
+    and cd_typo IN ('7','107','100')
     and (niveau >= 3)
-UNION
+
+   )
+SELECT json_agg(t) FROM t;
+"
+);
+
+/* UNION
 SELECT 
 id, 
 cd_hab, 
@@ -38,13 +44,7 @@ lb_niveau
 	FROM $inpn_habref where lb_hab_fr is not null
     and cd_typo ='28'
     and (niveau >= 2)
-order by cd_typo
-   )
-SELECT json_agg(t) FROM t;
-"
-);
-
-
+order by cd_typo */
 
 $result = pg_execute($dbconn, "sql", array());
 while($row = pg_fetch_row($result))

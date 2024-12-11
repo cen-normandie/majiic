@@ -76,6 +76,12 @@
         <i class="fab fa-wikipedia-w"></i> Wiki CEN (tutos)
       </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link <?php $t = ((($_POST['page']) == 'formation_vegetale.php') ? ' active' : '' ); echo $t; ?>" href="formation_vegetale.php">
+      <span data-feather=""></span>
+      <i class="fas fa-leaf"></i> Formation Végétale
+    </a>
+  </li>
   <hr class="bg-secondary mx-2 my-1">
     <div class="ml-2">
       <span class="nav-link text-secondary">Projets :</span>

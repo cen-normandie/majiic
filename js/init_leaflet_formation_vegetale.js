@@ -177,6 +177,8 @@ function initmap() {
     map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;
         $("#modalHabitat").modal("show");
+        let u_ = $("#courriel").html().trim();
+        $("#input_observateur").val( u_ );
         poly_.addLayer(layer);
         
         var shape = layer.toGeoJSON()
@@ -231,11 +233,27 @@ function load_habitat_ajax () {
             }
             habitats_array.sort();
             autocompleteArray_FG(document.getElementById("input_hab"), habitats_array);
+            autocompleteArray_FG(document.getElementById("input_hab_b"), habitats_array);
+            autocompleteArray_FG(document.getElementById("input_hab_c"), habitats_array);
             }
     });
 }
 
 $("#save_hab").click(function(){ 
+    let lb_code_b, lb_lib_b, lb_typo_b ='';
+    let lb_code_c, lb_lib_c, lb_typo_c ='';
+    if ($("#input_hab_b").val()) {
+        lb_code_b= $("#input_hab_b").val().split(' - ')[0];
+        lb_lib_b= $("#input_hab_b").val().split(' - ')[1];
+        lb_typo_b= $("#input_hab_b").val().split(' - ')[2];
+    }
+    if ($("#input_hab_c").val()) {
+        lb_code_c= $("#input_hab_c").val().split(' - ')[0];
+        lb_lib_c= $("#input_hab_c").val().split(' - ')[1];
+        lb_typo_c= $("#input_hab_c").val().split(' - ')[2];
+    }
+            
+
     $.ajax({
         url      : "php/ajax/save_habitat.js.php",
         data     : {
@@ -243,7 +261,13 @@ $("#save_hab").click(function(){
             lb_code: $("#input_hab").val().split(' - ')[0],
             lb_lib: $("#input_hab").val().split(' - ')[1],
             lb_typo: $("#input_hab").val().split(' - ')[2],
-            observateur: $("#input_observateur").val()
+            observateur: $("#input_observateur").val(),
+            lb_code_b_:lb_code_b, 
+            lb_lib_b_:lb_lib_b, 
+            lb_typo_b_:lb_lib_b,
+            lb_code_c_:lb_code_c, 
+            lb_lib_c_:lb_lib_c, 
+            lb_typo_c_:lb_lib_c
         },
         method   : "POST",
         dataType : "text",
