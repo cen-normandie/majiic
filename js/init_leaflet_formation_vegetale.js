@@ -140,6 +140,7 @@ function initmap() {
                     $("#observateur").val('...');
                     $("#jdd_carto").val('...');
                     $("#typo").val('...');
+                    $("#taxons_").html('...');
                 });
                 layer.bindPopup(content, {maxWidth : 400})
                 .on('popupopen', function (popup) {
