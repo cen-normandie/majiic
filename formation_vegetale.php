@@ -109,7 +109,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 </div>  
             </div>
             <div class="d-flex bg-light ">
-              <div class=" alert alert-warning w-100 m-4" role="alert">
+              <div class=" alert alert-warning w-100 m-2" role="alert">
                 Cette page sera destinée à la consultation de carto d'habitat (formation végétale). Vous pouvez toutefois saisir des données "test" afin de vous familiariser avec les typologies existantes (HABREF v7.0).
                 <ul>
                   <li>A - dessiner un polygone</li>
