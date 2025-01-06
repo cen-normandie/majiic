@@ -103,7 +103,8 @@ if (in_array($_SESSION['email'], $admins)) {
                       </ul>
                     </div>
                     <div class="d-flex justify-content-end">
-                      <div><span class="fw-bold fs-6">28</span> : <span class="fst-italic">Prodrome PVF2</span> | <span class="fw-bold fs-6">7</span> : <span class="fst-italic">EUNIS 2012</span> | <span class="fw-bold fs-6">100</span> : <span class="fst-italic">Eurovegchecklist 2016</span> | <span class="fw-bold fs-6">107</span> : <span class="fst-italic">EUNIS 2022</span></div>
+                      <div><span class="fw-bold fs-6">7</span> : <span class="fst-italic">EUNIS 2012</span> | <span class="fw-bold fs-6">100</span> : <span class="fst-italic">Eurovegchecklist 2016</span> | <span class="fw-bold fs-6">107</span> : <span class="fst-italic">EUNIS 2022</span></div>
+                      <!--<span class="fw-bold fs-6">28</span> : <span class="fst-italic">Prodrome PVF2</span> | -->
                     </div>
                   </div>
                 </div>  
