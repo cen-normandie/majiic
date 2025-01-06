@@ -70,8 +70,17 @@ if (in_array($_SESSION['email'], $admins)) {
             
             <div class="d-flex bg-light mb-5">
                 
-                <div id="calendar" class="d-flex flex-column bg-light w-50 p-2">
+                <div class="d-flex flex-column bg-light w-50 p-2 ">
+                    <div id="calendar" class="">
+                    </div>
+                    <div id="" class="d-flex col-4 align-items-end">
+                        <div class="input-group input-group-sm p-2 ">
+                            <span class="input-group-text" id="l_go_to_date">Go To Date<i class="fas fa-calendar-alt mx-2"></i> : </span>
+                            <input class="form-control" id="go_to_date" placeholder="01-01-2024" aria-label="" aria-describedby="l_go_to_date" value="" >
+                        </div>
+                    </div>
                 </div>
+                
                 <div id="panel" class="d-flex flex-column bg-light w-50">
                         <!--<div class="mb-3 autocompleteBS">
                             <label for="input_projet" class="form-label">Projet : </label>
