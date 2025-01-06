@@ -552,15 +552,10 @@ $("#go_to_date").datepicker({
 });
 
 $("#go_to_date").change(function(){
-    console.log(this.value);
     const parseDMY = s => {
         let [d, m, y] = s.split('-');
         return new Date(y, m-1, d);
       };
-      
-      console.log(parseDMY(this.value).toString());
-
-
      if(this.value != '') {
         calendar.gotoDate( parseDMY(this.value) );
     }
