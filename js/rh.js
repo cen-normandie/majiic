@@ -406,6 +406,15 @@ function delete_ids_array_prime_ko () {
             async    : true,
             error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);change_load();},
             success  : function(data) {
+                x_ ++;
+                primes_liste = data ;
+                console.log(data);
+                if (x_ = length_ ) {
+                    dtPrimes.rows( '.selected' ).remove().draw();
+                    primes_to_delete=[];
+                }
+
+                change_load();
                 }
         });       
     }    
