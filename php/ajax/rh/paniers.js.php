@@ -15,7 +15,7 @@ SELECT
 	p.e_personne as prenom
 	FROM $progecen_temps p left join $progecen_personnes_ m ON p.e_personne = m.personne
 	WHERE p.e_panier  is true 
-	AND p.e_start > date_trunc('year', now())
+	AND p.e_start > date_trunc('year', now()) - interval '1 year'
 	AND p.e_date_valide_panier is null
 	AND not exists (
 		select v.date_du_panier from $paniers_valide v
