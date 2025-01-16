@@ -163,7 +163,16 @@ const dtPrimes_traite =$('#primeDT_traite').DataTable({
             init: function(api, node, config) {
             }
         }
-        ],
+    ],
+    createdRow: function(row, data, index) {
+        if (data[3] != '' ) {
+            if ( ( data[3].includes('rh_prime_ok') ) ) {
+                $(row).css('background-color', '#38823d24');
+            } else if ( ( data[3].includes('rh_prime_ko') ) ) {
+                $(row).css('background-color', '#98222224');
+            }
+        }
+    },
     scrollY: '400px',
     scrollCollapse: true,
     paging: false
