@@ -499,8 +499,9 @@ document.getElementById("delete_projet").addEventListener("click", function() {
                     const personnes_actions = p_.split('|');
                     var badges_ = '';
                     var x = `
-                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" ><i class="fas fa-edit"></i></button>
-                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1"><i class="fas fa-trash-alt"></i></button>`
+                    <button id="add_p_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-warning fs-6 px-1" title="Editer l'action"><i class="fas fa-edit"></i></button>
+                    <button id="del_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-danger fs-6 px-1" title="Supprimer l'action"><i class="fas fa-trash-alt"></i></button>
+                    <button id="clone_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-success fs-6 px-1" title="Cloner l'action"><i class="fas fa-clone"></i></button>`
                     /* <button id="up_action_${actions_f[actions].id_action}" id_action="${actions_f[actions].id_action}" class="btn btn-sm bg-light text-info fs-6 px-1"><i class="fas fa-edit"></i></button> */
                     //Liste des badges personnes
                     for (const pe in personnes_actions) {
@@ -826,6 +827,7 @@ document.getElementById("add_action").addEventListener("click", function() {
 function add_events_actions () {
     const elements1 = document.querySelectorAll(`[id^="add_p"]`);
     const elements2 = document.querySelectorAll(`[id^="del_action_"]`);
+    const elements3 = document.querySelectorAll(`[id^="clone_action_"]`);
     /* const elements3 = document.querySelectorAll(`[id^="up_action_"]`); */
     elements1.forEach(element => {
         element.addEventListener("click", function() {
@@ -844,6 +846,30 @@ function add_events_actions () {
             //c_action = projets_f.id
             document.getElementById("id_action_delete").textContent=element.getAttribute('id').replace('del_action_', '');
             ModalDelAction.show(element.getAttribute('id'));
+        });
+    });
+    elements3.forEach(element => {
+        element.addEventListener("click", function() {
+            const myUActionClone = new Object();
+            myUActionClone.id_action = this.getAttribute("id_action");
+            let  UActionJsonString= JSON.stringify(myUActionClone);
+            //Sauvegarde de la personne en BDD
+            $.ajax({
+                url: "php/ajax/projets/edit_projet/clone_action.js.php",
+                type: "POST",
+                dataType: "text",
+                async    : true,
+                data: {
+                    'action': UActionJsonString
+                },
+                error    : function(request, error) { 
+                    alert("Erreur : responseText: "+request.responseText);
+                    },
+                success  : function(data) {
+                    document.getElementById("t_content").innerHTML= `L'action a été duppliquée !`;
+                    $('#toast_info').toast('show');
+                    }
+            }); 
         });
     });
     /* elements3.forEach(element => {

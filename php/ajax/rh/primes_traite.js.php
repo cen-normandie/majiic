@@ -15,7 +15,7 @@ SELECT
 	to_char(p.date_validation_rh::date, 'DD-MM-YYYY') as validation_rh
 	FROM $primes_valide p left join $progecen_personnes_ m ON p.e_personne = m.personne
 	WHERE 
-	date_trunc('year', date_de_prime) = date_trunc('year', now())
+	date_trunc('year', date_de_prime) > date_trunc('year', now() - interval '2 year' )
 	order by 5 Desc, 2 Asc
 ) t
 "
