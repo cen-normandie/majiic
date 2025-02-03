@@ -47,6 +47,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['cgu'] = false ;
                     $_SESSION['is_equipe_si'] = false;
                     $_SESSION['is_equipe_rh'] = false;
+                    $_SESSION['fdt_optimisation'] = false;
         
                     foreach($groups as $group) {
                         if( str_contains($group, 'progecen_resp_projet')) {
@@ -69,6 +70,9 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                         if( str_contains($group, 'FILIERE_RESSOURCES_HUMAINE')) {
                             $_SESSION['is_equipe_rh'] = true;
+                        }
+                        if( str_contains($group, 'fdt_optimisation')) {
+                            $_SESSION['fdt_optimisation'] = true;
                         }
                     }
 
