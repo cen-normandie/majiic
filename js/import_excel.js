@@ -11,9 +11,9 @@ function validate_extension() {
     }
 
 }
-document.getElementById("export_2022").addEventListener("click", function() {
+/* document.getElementById("export_2022").addEventListener("click", function() {
     export_temps(2022);
-});
+}); */
 document.getElementById("export_2023").addEventListener("click", function() {
     export_temps(2023);
 });
@@ -24,9 +24,9 @@ document.getElementById("export_2025").addEventListener("click", function() {
     export_temps(2025);
 });
 
-document.getElementById("anal_2022").addEventListener("click", function() {
+/* document.getElementById("anal_2022").addEventListener("click", function() {
     export_model(2022);
-});
+}); */
 document.getElementById("anal_2023").addEventListener("click", function() {
     export_model(2023);
 });
