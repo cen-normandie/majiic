@@ -69,7 +69,16 @@ if (in_array($_SESSION['email'], $admins)) {
                     Vos temps saisis existants seront supprimés. Seules les données du fichier Excel seront importées.
                     Attention toutefois cette opération n'est <span class="fw-bold">pas réversible</span> !
                     <ul class="list-group my-2">
-                        <li class="list-group-item"><strong class="fs-5">A</strong> - Exportez vos temps existants :
+                        <li class="list-group-item"><strong class="fs-5">A</strong> - Selectionnez une personne :
+                            <div class="autocompleteBS col-6" id="personnes">
+                                <div class="input-group">
+                                    <span for="input_personnes" class="input-group-text">Personne : </span>
+                                    <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
+                                    <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item"><strong class="fs-5">B</strong> - Exportez vos temps existants :
                             
                                 <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
                                 <!--<button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
@@ -79,7 +88,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="export_2025" type="button" class="btn btn-outline-primary shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
                             
                         </li>
-                        <li class="list-group-item"><strong class="fs-5">B</strong> - Téléchargez la liste des codes projets <--> codes actions <--> codes sites servant de référentiel :
+                        <li class="list-group-item"><strong class="fs-5">C</strong> - Téléchargez la liste des codes projets <--> codes actions <--> codes sites servant de référentiel :
                             
                                 <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
                                 <!--<button id="anal_2021" type="button" class="btn btn-outline-warning  shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
@@ -89,9 +98,12 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="anal_2025" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
                             
                         </li>
-                        <li class="list-group-item"><strong class="fs-5">C</strong> - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
-                        <li class="list-group-item"><strong class="fs-5">D</strong> - Importez vos temps optimisés :<p class="text-danger"> Attention à l'année !</p>
-                            <div class="d-flex flex-column col-sm-12 col-md-12 col-lg-6">
+                        <li class="list-group-item"><strong class="fs-5">D</strong> - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
+                        <li class="list-group-item"><strong class="fs-5">E</strong> - Importez vos temps optimisés :
+                            <div class="d-flex flex-column col-sm-6 col-md-6 col-lg-6">
+                                <div class=" " role="">
+                                    <span class="text-danger fs-6"> Attention à selectionner la bonne année et la bonne personne !</span>
+                                </div>
                                 <div class="input-group my-2">
                                     <label class="input-group-text" for="year_replace">Année : </label>
                                     <select class="form-select" id="year_replace" >
@@ -102,6 +114,10 @@ if (in_array($_SESSION['email'], $admins)) {
                                         <option value="2025" selected>2025</option>
                                     </select>
                                 </div>
+                                <div class="input-group my-2">
+                                    <input id="selected_personne" class="form-control" type="text" placeholder="..." aria-label="..." disabled></input>
+                                </div>
+
                                 <div class="input-group my-2">
                                     <input id="input_file" accept=".xls, .xlsx" type="file" class="form-control" placeholder="" aria-label="load_file" aria-describedby="" value="Ajouter un fichier">
                                     <button id="load_file" type="button" class="btn btn-success" ><i class="fas fa-file mx-2"></i>Importer le fichier </button>
@@ -134,12 +150,6 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="js/plugins/bs5-datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
 <!-- FONT AWESOME -->
 <script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
-<!-- LEAFLET -->
-<script type="text/javascript" src="js/leaflet/leaflet.js"></script>
-<script type="text/javascript" src="js/leaflet/plugins/leaflet_label/js/leaflet_label.js" ></script>
-<!-- HIGHCHARTS -->
-<script type="text/javascript" src="js/plugins/highcharts/code/highstock.js"></script>
-<script type="text/javascript" src="js/plugins/highcharts/code/modules/exporting.js"></script>  
 
 <!--Datatable bs5-->
 <script src="js/plugins/datatable/datatables.min.js"></script>
@@ -150,6 +160,9 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="js/plugins/datatable/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="js/plugins/datatable/Buttons-1.7.0/js/buttons.html5.min.js"></script>
 
+<!-- autocomplete -->
+<script type="text/javascript" src="js/autocompleteArray/autocomplete.personnes.js" ></script>
+
 <!-- general.js -->
 <script type="text/javascript" src="js/general/general.js" ></script>
 <!-- Empty.js -->
@@ -158,7 +171,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
 
 $(document).ready(function() {
-
+    load_personnes_ajax ();
 });
 
 

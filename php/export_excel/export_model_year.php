@@ -6,6 +6,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
+$_end_file = str_replace(' ', '_', $_POST["nom_personne"].'_'.strval($_POST["year"]));
+
 $_year = strval($_POST["year"]);
 
 
@@ -49,9 +51,9 @@ while($row = pg_fetch_array($result))
     $row_ = $row_ + 1;
 }
 $writer = new Xlsx($spreadsheet);
-$writer->save('../files/export_modele.xlsx');
+$writer->save('../files/export_modele_'.$_end_file.'.xlsx');
 
 //ferme la connexion a la BD
 pg_close($dbconn);
-echo 'export_modele.xlsx';
+echo 'export_modele_'.$_end_file.'.xlsx';
 ?>

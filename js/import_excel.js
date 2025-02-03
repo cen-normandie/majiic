@@ -1,3 +1,34 @@
+let personne_selected_warning = '';
+function load_personnes_ajax () {
+    $.ajax({
+        url      : "php/ajax/projets/personnes_liste.ajax.js.php",
+        data     : {},
+        method   : "POST",
+        dataType : "json",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        success  : function(data) {
+            personnes_liste = data ;
+            let personnes_liste_array = [];
+            for (const personne in personnes_liste) {
+                personnes_liste_array.push(personnes_liste[personne].id+' - '+personnes_liste[personne].name);
+            }
+            personnes_liste_array.sort();
+            autocompleteArray_personnes(document.getElementById("input_personnes"), personnes_liste_array);
+            }
+    });
+}
+
+
+document.getElementById("input_personnes").addEventListener("blur", function() {
+    setTimeout(function() { 
+        document.getElementById("selected_personne").value=`${document.getElementById("input_personnes").value}`;
+        personne_selected_warning = `${document.getElementById("input_personnes").value.split(' - ')[1]}`;
+        console.log(personne_selected_warning);
+      }, 100);
+    
+});
+
 //////////////////////////////////////////////////////
 //DOM FILES UPLOAD
 //////////////////////////////////////////////////////
@@ -39,43 +70,56 @@ document.getElementById("anal_2025").addEventListener("click", function() {
 
 
 function export_temps(year_replace) {
-    $.ajax({
-        url: "php/export_excel/export_temps_personne_year.php",
-        type: "POST",
-        dataType: "text",
-        async    : true,
-        data: {
-            'nom_personne': document.getElementById("c_user").innerText,
-            'year':year_replace
-        },
-        error    : function(request, error) { 
-            alert("Erreur : responseText: "+request.responseText);
+    if ( personne_selected_warning && (personne_selected_warning.length > 5)) {
+        console.log(document.getElementById("c_user").innerText);
+        $.ajax({
+            url: "php/export_excel/export_temps_personne_year.php",
+            type: "POST",
+            dataType: "text",
+            async    : true,
+            data: {
+                //UPDATE select personne
+                //'nom_personne': document.getElementById("c_user").innerText,
+                'nom_personne': personne_selected_warning,
+                'year':year_replace
             },
-        success  : function(data) {
-            console.log(data);
-            window.location = 'php/files/'+data;
-            }
-    });
+            error    : function(request, error) { 
+                alert("Erreur : responseText: "+request.responseText);
+                },
+            success  : function(data) {
+                console.log(data);
+                window.location = 'php/files/'+data;
+                }
+        });
+    } else {
+        alert('Selectionnez une personne');
+    }
 };
 
 function export_model(year_replace) {
-    $.ajax({
-        url: "php/export_excel/export_model_year.php",
-        type: "POST",
-        dataType: "text",
-        async    : true,
-        data: {
-            'nom_personne': document.getElementById("c_user").innerText,
-            'year':year_replace
-        },
-        error    : function(request, error) { 
-            alert("Erreur : responseText: "+request.responseText);
+    if ( personne_selected_warning && (personne_selected_warning.length > 5)) {
+        $.ajax({
+            url: "php/export_excel/export_model_year.php",
+            type: "POST",
+            dataType: "text",
+            async    : true,
+            data: {
+                //UPDATE select personne
+                //'nom_personne': document.getElementById("c_user").innerText,
+                'nom_personne': personne_selected_warning,
+                'year':year_replace
             },
-        success  : function(data) {
-            console.log(data);
-            window.location = 'php/files/'+data;
-            }
-    });
+            error    : function(request, error) { 
+                alert("Erreur : responseText: "+request.responseText);
+                },
+            success  : function(data) {
+                console.log(data);
+                window.location = 'php/files/'+data;
+                }
+        });
+    } else {
+        alert('Selectionnez une personne');
+    }
 };
 
 document.getElementById("load_file").addEventListener("click", function() {
