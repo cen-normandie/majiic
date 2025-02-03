@@ -99,12 +99,12 @@
         </a>
 
 <?php 
-if ($_SESSION['fdt_optimisation']) {
+/* if ($_SESSION['fdt_optimisation']) {
     echo '        <a class="nav-link"  href="import_temps_excel.php">
           <span data-feather=""></span>
           <i class="fas fa-edit"></i> Optimisation des temps
         </a>';
-  }
+  } */
 ?>
 
 

@@ -128,29 +128,32 @@ document.getElementById("load_file").addEventListener("click", function() {
     } else {
         change_load("Chargement du fichier ...");
         if ( validate_extension() ) {
-            let active_file = document.getElementById("input_file").files[0];
-            let fd = new FormData();
-                fd.append('file', active_file);
-                fd.append('nom_personne', document.getElementById("c_user").innerText );
-                fd.append('year', document.getElementById("year_replace").value);
-                $.ajax({
-                url      : "php/upload_excel.php",
-                type     : 'POST',
-                data     : fd ,
-                processData : false,
-                contentType : false,
-                async    : true,
-                error    : function(request, error) { 
-                    alert("Erreur : responseText: "+request.responseText);
-                    change_load();
-                },
-                success  : function(data) {
-                    change_load();
-                    if (data !== 'impossible de copier le fichier') {
-                        read_excel_file_by_line(data );
+            if ( personne_selected_warning && (personne_selected_warning.length > 5)) {
+                let active_file = document.getElementById("input_file").files[0];
+                let fd = new FormData();
+                    fd.append('file', active_file);
+                    //fd.append('nom_personne', document.getElementById("c_user").innerText );
+                    fd.append('nom_personne',personne_selected_warning );
+                    fd.append('year', document.getElementById("year_replace").value);
+                    $.ajax({
+                    url      : "php/upload_excel.php",
+                    type     : 'POST',
+                    data     : fd ,
+                    processData : false,
+                    contentType : false,
+                    async    : true,
+                    error    : function(request, error) { 
+                        alert("Erreur : responseText: "+request.responseText);
+                        change_load();
+                    },
+                    success  : function(data) {
+                        change_load();
+                        if (data !== 'impossible de copier le fichier') {
+                            read_excel_file_by_line(data );
+                        }
                     }
+                    });
                 }
-                });
         } else {
             alert("Extension de fichier non valide !");
         }
