@@ -71,6 +71,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         <button id="export_2022" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
                         <button id="export_2023" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
                         <button id="export_2024" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
+                        <button id="export_2025" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
                     </div>
                 </div>
                 <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded">
@@ -87,6 +88,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         <button id="export_p_2022" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
                         <button id="export_p_2023" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
                         <button id="export_p_2024" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
+                        <button id="export_p_2025" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
                     </div>
                 </div>
             </div>	
