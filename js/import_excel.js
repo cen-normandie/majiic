@@ -20,6 +20,9 @@ document.getElementById("export_2023").addEventListener("click", function() {
 document.getElementById("export_2024").addEventListener("click", function() {
     export_temps(2024);
 });
+document.getElementById("export_2025").addEventListener("click", function() {
+    export_temps(2025);
+});
 
 document.getElementById("anal_2022").addEventListener("click", function() {
     export_model(2022);
@@ -29,6 +32,9 @@ document.getElementById("anal_2023").addEventListener("click", function() {
 });
 document.getElementById("anal_2024").addEventListener("click", function() {
     export_model(2024);
+});
+document.getElementById("anal_2025").addEventListener("click", function() {
+    export_model(2025);
 });
 
 
