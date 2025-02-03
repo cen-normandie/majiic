@@ -20,8 +20,8 @@ $result = pg_prepare($dbconn, "sql",
 SELECT 
     e.e_id, 
     e.e_objet, 
-    $4 || to_char(e.e_start AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as start, 
-    $4 ||to_char(e.e_end AT TIME ZONE 'UTC' , 'YYYY-MM-DD HH24:MI:SS') as end, 
+    $4 || to_char(e.e_start::timestamp WITHOUT TIME ZONE , 'YYYY-MM-DD HH24:MI:SS') as start, 
+    $4 ||to_char(e.e_end::timestamp WITHOUT TIME ZONE , 'YYYY-MM-DD HH24:MI:SS') as end, 
     EXTRACT(epoch FROM e.e_end - e.e_start)/3600 as nb_heures,
     e.e_id_projet,
     p.nom_projet,
@@ -32,8 +32,8 @@ SELECT
     e.e_commentaire,
     e.e_salissure,
     e.e_panier,
-    $4 ||to_char(e.e_date_saisie AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie,
-    $4 ||to_char(e.e_date_saisie_salissure AT TIME ZONE 'UTC' , 'YYYY-MM-DD') as date_saisie_salissure,
+    $4 ||to_char(e.e_date_saisie::timestamp WITHOUT TIME ZONE , 'YYYY-MM-DD') as date_saisie,
+    $4 ||to_char(e.e_date_saisie_salissure::timestamp WITHOUT TIME ZONE , 'YYYY-MM-DD') as date_saisie_salissure,
     p.color,
     e.e_personne
 FROM $progecen_temps e 

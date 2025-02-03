@@ -39,11 +39,11 @@ if( isset($file_name))
                 e_id_site
             ) 
         VALUES ($1,
-            $2::timestamp AT TIME ZONE 'UTC',
-            $3::timestamp AT TIME ZONE 'UTC',
+            $2::timestamp WITHOUT TIME ZONE ,
+            $3::timestamp WITHOUT TIME ZONE ,
             $4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15);"
     );
-    
+
     echo (pg_execute($dbconn, "insert_",array(
         ($sheet->getActiveSheet()->getCellByColumnAndRow(2, $row)->getValue()??''),
         ($sheet->getActiveSheet()->getCellByColumnAndRow(3, $row)->getValue()??''),
