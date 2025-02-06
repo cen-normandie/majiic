@@ -64,9 +64,10 @@ if (in_array($_SESSION['email'], $admins)) {
             </div>
             
             <div class="d-flex flex-column bg-light p-2 w-100">
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-info fs-5" role="alert">
                     Cette section permets de charger un excel pour une optimisation des temps.
-                    Vos temps saisis existants seront supprimés. Seules les données du fichier Excel seront importées.
+                    Les temps saisis existants seront supprimés pour la personne et l'année selectionnée. 
+                    Les données du fichier Excel seront importées.
                     Attention toutefois cette opération n'est <span class="fw-bold">pas réversible</span> !
                     <ul class="list-group my-2">
                         <li class="list-group-item"><strong class="fs-5">A</strong> - Selectionnez une personne :
@@ -113,8 +114,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                         <!--<option value="2021">2021</option>-->
                                         <!--<option value="2022">2022</option>-->
                                         <option value="2023" >2023</option>
-                                        <option value="2024" >2024</option>
-                                        <option value="2025" selected>2025</option>
+                                        <option value="2024" selected>2024</option>
+                                        <option value="2025" >2025</option>
                                     </select>
                                 </div>
                                 <div class="input-group my-2">
