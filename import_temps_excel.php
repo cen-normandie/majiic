@@ -79,7 +79,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item"><strong class="fs-5">B</strong> - Exportez vos temps existants :
+                        <li class="list-group-item"><strong class="fs-5">B</strong> - Exportez les temps existants :
                             
                                 <!--<button id="export_excel_temps" type="button" class="btn btn-primary"><i class="fas fa-file-excel px-2"></i>Export de mes temps</button>-->
                                 <!--<button id="export_2021" type="button" class="btn btn-outline-primary shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
@@ -99,8 +99,8 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="anal_2025" type="button" class="btn btn-outline-warning  shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
                             
                         </li>
-                        <li class="list-group-item"><strong class="fs-5">D</strong> - Faites vos modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
-                        <li class="list-group-item"><strong class="fs-5">E</strong> - Importez vos temps optimisés :
+                        <li class="list-group-item"><strong class="fs-5">D</strong> - Faites les modifications sur le fichier excel en conservant la structure ainsi que les codes du projet et les codes des actions </li>
+                        <li class="list-group-item"><strong class="fs-5">E</strong> - Importez les temps optimisés :
                             <div class="d-flex flex-column col-sm-6 col-md-6 col-lg-6">
                                 <div class=" " role="">
                                     <span class="text-danger fs-6 fw-bold"> Attention à selectionner la bonne année et la bonne personne !</span>
