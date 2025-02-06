@@ -102,7 +102,10 @@ if (in_array($_SESSION['email'], $admins)) {
                         <li class="list-group-item"><strong class="fs-5">E</strong> - Importez vos temps optimisés :
                             <div class="d-flex flex-column col-sm-6 col-md-6 col-lg-6">
                                 <div class=" " role="">
-                                    <span class="text-danger fs-6"> Attention à selectionner la bonne année et la bonne personne !</span>
+                                    <span class="text-danger fs-6 fw-bold"> Attention à selectionner la bonne année et la bonne personne !</span>
+                                </div>
+                                <div class=" " role="">
+                                    <span class="text-danger fs-4 fw-bold"> Si vous modifier un analytique 2024 il faut sélectionner 2024</span>
                                 </div>
                                 <div class="input-group my-2">
                                     <label class="input-group-text" for="year_replace">Année : </label>
