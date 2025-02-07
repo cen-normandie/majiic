@@ -71,7 +71,7 @@
       </a>
   </li>
   <li class="nav-item">
-      <a class="nav-link"  href="http://wiki.cen-n.fr:3000" target="_blank">
+      <a class="nav-link"  href="http://wiki.cen-n.fr" target="_blank">
         <span data-feather=""></span>
         <i class="fab fa-wikipedia-w"></i> Wiki CEN (tutos)
       </a>
