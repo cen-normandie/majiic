@@ -19,7 +19,7 @@ f_ as (
   					round( (st_area( coalesce(g.geom_pp, g.geom) )/10000)::numeric,2) as surface
                           FROM $parcelles g
                           WHERE g.geom is not null
-                          AND g.categorie_site = $1
+                          AND g.categorie_site = $1 and date_fin is null 
                           ) As lp 
               ON lg.id_unique = lp.id_unique  
   ),
@@ -53,7 +53,7 @@ t as (
     			) As f )  As fc
       )
   FROM $parcelles p LEFT JOIN  $sites s ON p.id_group = s.id_site 
-  WHERE p.categorie_site = $1
+  WHERE p.categorie_site = $1 AND date_fin is null 
   order by 1
 )
 SELECT json_agg(t) FROM t
