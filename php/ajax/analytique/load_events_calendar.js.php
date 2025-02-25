@@ -30,7 +30,7 @@ SELECT
 FROM $progecen_temps e 
 LEFT JOIN $progecen_projets p on e.e_id_projet = p.id_projet::text 
 WHERE e.e_personne = $1
-AND e.e_start > (now()::date - (INTERVAL '1 year' + INTERVAL '1 month'))
+AND e.e_start > (now()::date - (INTERVAL '1 year' + INTERVAL '3 month'))
 "
 //LEFT JOIN $progecen_actions a on e.e_id_action = a.id::text
 );
