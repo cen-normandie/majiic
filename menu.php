@@ -16,24 +16,6 @@
     //foreach ($_SESSION as $key=>$val)
     //echo "<span  class='text-white'>".$key." ".$val."</span><br/>";
   $_SESSION['is_admin'] = false;
-/*   $admins = array(
-    "n.moreira@cen-normandie.fr", 
-    "m.seguin@cen-normandie.fr", 
-    "f.buissart@cen-normandie.fr", 
-    "b.perceval@cen-normandie.fr", 
-    "v.boucey@cen-normandie.fr",
-    "m.pellevilain@cen-normandie.fr"
-  ); */
-/*   $rh = array(
-    "b.perceval@cen-normandie.fr", 
-    "v.yver@cen-normandie.fr",
-    "h.bliard@cen-normandie.fr",
-    "n.peschard@cen-normandie.fr"
-  );  */
-  //if (in_array($_SESSION['email'], $admins)) {
-  //    $_SESSION['is_admin'] = true;
-  //}
-  //if ($_SESSION['is_admin']) {
   if ($_SESSION['is_equipe_si']) {
     $link_ = '
     <a class="nav-link ';

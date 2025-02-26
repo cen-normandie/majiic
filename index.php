@@ -18,10 +18,25 @@
 <body>
 <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
 	<div class="d-flex flex-column col-md-3 col-lg-2 h-100 bg-dark sticky-top " style="min-height:100vh;">
-		<div class="d-flex justify-content-center mt-2 align-items-center w-100">
-		<img src="img/CenNormandie.png" style="max-width:80px;max-height: 40px;opacity:0.8;"/>
-			<div class="text-light mx-2">
-				<h1 class="text-light mx-2 moonflower">CEN Normandie</h1>
+		<div class="d-flex flex-column justify-content-between align-items-between w-100" style="min-height:100vh;">
+			<div class="d-flex ">
+				<div class="d-flex justify-content-center mt-2 align-items-center w-100">
+				<img src="img/CenNormandie.png" style="max-width:80px;max-height: 40px;opacity:0.8;"/>
+					<div class="text-light mx-2">
+						<h1 class="text-light mx-2 moonflower">CEN Normandie</h1>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex flex-grow-1 ">
+				<div id="" class="d-flex flex-column justify-content-end w-100">
+					<div class="d-flex justify-content-around fs-6 my-2 text-secondary">
+							<div><i class="fas fa-otter"></i></div>
+							<div><i class="fas fa-spider"></i></div>
+							<div><i class="fas fa-kiwi-bird"></i></div>
+							<div><i class="fas fa-fish"></i></div>
+							<div><i class="fas fa-crow"></i></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -30,13 +45,13 @@
 			<p>.</p>
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
-			<div class="d-flex align-items-start flex-column" style="height:500px">
-				<div class="p-4 w-50"><h2>Connexion à l'application CEN Normandie</h2></div>
-				<div class="p-4 w-50">
+			<div class="d-flex align-items-start flex-column" style="">
+				<div class="p-4 w-100"><h2>Connexion à l'application CEN Normandie</h2></div>
+				<div class="p-4 col-6">
 					<form role="form">
 						<div class="input-group w-50">
 							<span class="input-group-text justify-content-center col-2" id="user"><i class="fas fa-user"></i></span>
-                            <input id="courriel" type="text" class="form-control col-10 " placeholder="Identifiant Progecen ex: ABC " aria-label="courriel@mail.com" aria-describedby="user" tabindex="1">
+                            <input id="courriel" type="text" class="form-control col-10 " placeholder="Identifiant de session " aria-label="courriel@mail.com" aria-describedby="user" tabindex="1">
                         </div>
 						<div class="input-group w-50 my-2">
 							<span class="input-group-text justify-content-center col-2" id="passwordLabel"><i class="fas fa-key"></i></span>
@@ -48,11 +63,7 @@
 					</form>
 				</div>
 				<div class="p-4 w-50">
-					<div class="alert alert-info d-flex justify-content-center">
-						<div>
-							<strong>Attention !</strong> Le système d'authentification été mis à jour.
-							</br>Il faut désormais saisir votre identifiant + mot de passe Progecen</br></br>
-						</div>
+					<div class="d-flex justify-content-arround">
 					</div>
 				</div>
 				<div class="mt-auto p-4">
