@@ -109,6 +109,7 @@ function load_personnes_ajax () {
             personnes_liste_array.push('999 - GE_CAEN');
             personnes_liste_array.push('888 - GE_ROUEN');
             personnes_liste_array.push('777 - ZOO');
+            personnes_liste_array.push('555 - SAF');
             personnes_liste_array.sort();
             autocompleteArray_personnes(document.getElementById("input_personnes"), personnes_liste_array);
             load_sites_ajax();

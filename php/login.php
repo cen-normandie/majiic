@@ -40,6 +40,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['password'] = $_POST['password'];
                     $_SESSION['u_nom_user_progecen'] = $entries[0]["name"][0];
                     $_SESSION['u_responsable'] = false;
+                    $_SESSION['u_saf'] = false;
                     $_SESSION['u_ge_caen'] = false;
                     $_SESSION['u_ge_rouen'] = false;
                     $_SESSION['u_zoot'] = false;
@@ -58,6 +59,9 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                         if( str_contains($group, 'ge_rouen')) {
                             $_SESSION['u_ge_rouen'] = true;
+                        }
+                        if( str_contains($group, 'saf_fdt')) {
+                            $_SESSION['u_saf'] = true;
                         }
                         if( str_contains($group, 'zoo')) {
                             $_SESSION['u_zoot'] = true;
