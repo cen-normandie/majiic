@@ -120,11 +120,11 @@ if (in_array($_SESSION['email'], $admins)) {
                     </div>
                     <div class="input-group input-group-sm py-2">
                         <span class="input-group-text" id="l_p_date_start">Date Début<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                        <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-2024" >
+                        <input class="form-control" id="p_date_start" placeholder="04-04-2004" aria-label="" aria-describedby="l_p_date_start" value="01-01-2025" >
                     </div>
                     <div class="input-group input-group-sm py-2">
                         <span class="input-group-text" id="l_p_date_end">Date Fin<i class="fas fa-calendar-alt mx-2"></i> : </span>
-                        <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="31-12-2024" >
+                        <input class="form-control" id="p_date_end" placeholder="08-08-2088" aria-label="" aria-describedby="l_p_date_end" value="31-12-2025" >
                     </div>
                     <div class="input-group input-group-sm py-2">
                         <span for="commentaire" class="input-group-text">Commentaire</span>
