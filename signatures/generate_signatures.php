@@ -122,7 +122,7 @@ if ($ldapconn) {
         </table border=0 cellspacing=0 cellpadding=0 width=600 style=''>
             <tr>
                 <td colspan=5>
-                    <img border=0 src='https://cen-n.fr/img/actu.jpg'>
+                    <a href='https://www.cen-normandie.fr' target='blank_'><img border=0 src='https://cen-n.fr/img/actu.jpg'></a>
                 </td>
             </tr>
         </table>
