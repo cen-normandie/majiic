@@ -45,12 +45,12 @@ if ($ldapconn) {
             $intitule = $result_salarie[$i]["title"][0];
 
             if ( isset( $result_salarie[$i]["mobile"] ) ) {
-                $tel_string = $result_salarie[$i]["mobile"][0].' - ';
+                $tel_string = $result_salarie[$i]["mobile"][0];
             } else {
                 $tel_string = '';
             }
             if ( isset( $result_salarie[$i]["othertelephone"] ) ) {
-                $tel_string = $tel_string.$result_salarie[$i]["othertelephone"][0];
+                $tel_string = $tel_string.' - '.$result_salarie[$i]["othertelephone"][0];
             }
             $bu = $result_salarie[$i]["description"][0];
 
