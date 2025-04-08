@@ -55,7 +55,7 @@ SELECT
  p.files,
  j.json_actions
  FROM $progecen_projets p left join json_actions j on p.id_projet = j.id_projet
-  WHERE p.etat <> 'Réalisé' AND 
+  WHERE p.etat <> 'Réalisé'  
   AND p.date_fin > to_date( '2025'::text||'0101', 'YYYYMMDD') 
    )
 SELECT json_agg(t) FROM t;
