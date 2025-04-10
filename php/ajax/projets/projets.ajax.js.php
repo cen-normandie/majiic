@@ -1,5 +1,6 @@
 <?php
 include '../../properties.php';
+$year_ = date("Y");
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
 or die ('Connexion impossible :'. pg_last_error());
@@ -56,7 +57,7 @@ SELECT
  j.json_actions
  FROM $progecen_projets p left join json_actions j on p.id_projet = j.id_projet
   WHERE p.etat <> 'Réalisé'  
-  AND p.date_fin > to_date( '2025'::text||'0101', 'YYYYMMDD') 
+  AND (date_fin > to_date( $1::text||'0101', 'YYYYMMDD') OR (date_fin > to_date( '2024'::text||'0101', 'YYYYMMDD') ) )
    )
 SELECT json_agg(t) FROM t;
 "
@@ -109,7 +110,7 @@ SELECT json_agg(t) FROM t
  */
 
 
-$result = pg_execute($dbconn, "sql", array());
+$result = pg_execute($dbconn, "sql", array($year_));
 while($row = pg_fetch_row($result))
 {
   echo trim($row[0]);
