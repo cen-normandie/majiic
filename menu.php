@@ -59,6 +59,12 @@
       </a>
   </li>
   <li class="nav-item">
+      <a class="nav-link"  href="https://nextcloud.cen-n.fr" target="_blank">
+        <span data-feather=""></span>
+        <i class="fas fa-cloud"></i> Nextcloud
+      </a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link <?php $t = ((($_POST['page']) == 'formation_vegetale.php') ? ' active' : '' ); echo $t; ?>" href="formation_vegetale.php">
       <span data-feather=""></span>
       <i class="fas fa-leaf"></i> Formation Végétale
