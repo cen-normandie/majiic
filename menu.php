@@ -41,7 +41,7 @@
   <hr class="bg-secondary mx-2 my-1">
   <span class="nav-link text-secondary">SIG :</span>
   <li class="nav-item">
-      <a class="nav-link"  href="https://geonature.cenwms.xyz/geonature" target="_blank">
+      <a class="nav-link"  href="https://geonature.cen-n.fr/geonature" target="_blank">
         <span data-feather=""></span>
         <i class="fas fa-frog"></i> Géonature
       </a>
