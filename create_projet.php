@@ -91,6 +91,7 @@ if (in_array($_SESSION['email'], $admins)) {
                             <option value="Programme de conservation" >Programme de conservation</option>
                             <option value="Animation site Natura 2000" >Animation site Natura 2000</option>
                             <option value="Contrat Natura 2000" >Contrat Natura 2000</option>
+                            <option value="Animation territorale" >Animation territorale</option>
                             <option value="Animation territoral SRCE/TVB" >Animation territoral SRCE/TVB</option>
                             <option value="Accompagnement à la gestion-suivi" >Accompagnement à la gestion-suivi</option>
                             <option value="Interne CEN" >Interne CEN</option>
