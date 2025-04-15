@@ -7,7 +7,7 @@
     
   <div class="ml-2">
       <span class="nav-link text-secondary">Sites :</span>
-      <a class="nav-link <?php $t = ((($_POST['page']) == 'sites.php') ? ' active' : '' ); echo $t; ?>" href="sites.php">
+      <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'sites.php') ? ' active' : '' ); echo $t; ?>" href="sites.php">
         <span data-feather=""></span><i class="fas fa-home ml-4"></i> Consulter un Site
       </a> 
 <?php 
