@@ -109,8 +109,8 @@ pg_close($dbconn);
                     <div class="d-flex flex-column w-100  p-0"> <!--border border-secondary rounded-2 -->
                         <!--<div class="d-flex w-100 justify-content-center bg-light text-secondary h_background_image m-2"><h3 class="bebas">Synthese du projet</h3></div>-->
                         <div class="d-flex flex-wrap w-100">
-                            <div class="d-flex flex-column col-md-4 col-lg-3 border rounded p-2 mt-2">
-                                <div class="d-flex justify-content-center text-secondary m-2" style="background-color:#e9ecef;"><h4 class="bebas">Synthese du projet</h4></div>
+                            <div class="d-flex flex-column col-md-4 col-lg-3 border rounded p-2 mt-2" style="background-color:#e9ecef;">
+                                <div class="d-flex justify-content-center text-secondary m-2"><h4 class="bebas">Synthese du projet</h4></div>
                                 <div class="input-group input-group-sm p-2 pt-0">
                                     <span class="input-group-text" id="basic-addon1">Nom du projet : </span>
                                     <input id="nom_projet" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="" disabled value="...">
