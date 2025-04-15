@@ -419,7 +419,7 @@ document.getElementById("delete_projet").addEventListener("click", function() {
     // MODAL Action
     let modal_action = new bootstrap.Modal(document.getElementById('ModalAddAction'), {
         keyboard: false
-      })
+      });
     document.getElementById("add_action").addEventListener("click", function() {
         modal_action.hide();
     });
@@ -429,6 +429,29 @@ document.getElementById("delete_projet").addEventListener("click", function() {
 
     //modal_action.addEventListener(
     //    modal_action
+    var remodal_action = document.getElementById('ModalAddAction');
+    remodal_action.addEventListener('shown.bs.modal', function (event) {
+        console.log(projets_f[0]);
+        if ((projets_f[0].financement != '') &&  (projets_f[0].financement != null)) {
+            if (projets_f[0].financement.includes('_'))  {
+                if (projets_f[0].financement.includes('|')) {
+                    let tmpf = projets_f[0].financement.split('|');
+                    console.log(tmpf);
+                    for (const financeur in tmpf) {
+                        document.getElementById("input_financeurs").value = '0 - '+tmpf[financeur].split('_')[0];
+                        document.getElementById("input_p_financeurs").value =  tmpf[financeur].split('_')[1];
+                        document.getElementById("plus_f").click(); 
+                    }
+                } else {
+                    console.log(projets_f[0].financement);
+                    document.getElementById("input_financeurs").value = '0 - '+projets_f[0].financement.split('_')[0];
+                    document.getElementById("input_p_financeurs").value =  projets_f[0].financement.split('_')[1];
+                    document.getElementById("plus_f").click(); 
+                }
+            }
+        }
+      })
+
     
     //FINANCEUR
     let nb_financeurs=0;
@@ -616,6 +639,7 @@ document.getElementById("delete_projet").addEventListener("click", function() {
         projet_.p_date_end = document.getElementById("p_date_end").value;
         projet_.p_commentaire = document.getElementById("p_commentaire").value;
         projet_.p_color = document.getElementById("p_color").value;
+        projet_.financement = document.getElementById("input_plan_financement").value;
         const ProjetJsonString= JSON.stringify(projet_);
         $.ajax({
             url: "php/ajax/projets/edit_projet/update_projet.js.php",
