@@ -23,12 +23,13 @@ json_actions as
          a.personnes as personne_action,
          sum(a.nb_h_previ) as previ,
          coalesce(sum(t.realise), 0) as realise,
-         p2.color
+         p2.color,
+         p2.financement_default as financement
      FROM $progecen_projets p2 left join 
          $progecen_actions a on p2.id_projet = a.id_projet left join 
          $progecen_vue_tps_a t on 
          (t.e_id_action = a.id_action::text AND t.e_id_projet::integer = p2.id_projet) WHERE 1 = 1
-   GROUP BY 1,2,3,4,5,6,9
+   GROUP BY 1,2,3,4,5,6,9,10
      ORDER BY 3
    ) acts on p.id_projet = acts.id_projet
  group by 2 order by 2
@@ -52,6 +53,7 @@ SELECT
  p.date_butoir_dossier, 
  p.tags,
  p.color,
+ p.financement_default as financement,
  p.sites,
  p.files,
  j.json_actions

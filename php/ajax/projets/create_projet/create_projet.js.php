@@ -15,6 +15,7 @@ $p_date_start  = $arr_param->{'p_date_start'};
 $p_date_end  = $arr_param->{'p_date_end'};
 $p_commentaire  = $arr_param->{'p_commentaire'};
 $p_color  = $arr_param->{'p_color'};
+$financements  = $arr_param->{'financements'};
 
 $result = pg_prepare($dbconn, "sql", 
     "
@@ -28,8 +29,9 @@ $result = pg_prepare($dbconn, "sql",
         etat, 
         responsable_projet, 
         commentaire_projet, 
-        color)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9);"
+        color,
+        financement_default)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);"
     );
 
 $result = pg_execute($dbconn, "sql", array(
@@ -41,7 +43,8 @@ $result = pg_execute($dbconn, "sql", array(
     $etat_projet,
     $responsable_projet,
     $p_commentaire,
-    $p_color
+    $p_color,
+    $financements
     )) or die ( pg_last_error());
 pg_close($dbconn);
 

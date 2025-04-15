@@ -45,6 +45,7 @@ function save_projet () {
     projet_.p_date_end = document.getElementById("p_date_end").value;
     projet_.p_commentaire = document.getElementById("p_commentaire").value;
     projet_.p_color = document.getElementById("p_color").value;
+    projet_.financements = document.getElementById("input_plan_financement").value;
     const ProjetJsonString= JSON.stringify(projet_);
     $.ajax({
         url: "php/ajax/projets/create_projet/create_projet.js.php",

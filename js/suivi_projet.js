@@ -334,6 +334,7 @@ document.getElementById("edit_projet").addEventListener("click", function() {
     document.getElementById("p_date_end").disabled = !edit;
     document.getElementById("p_commentaire").disabled = !edit;
     document.getElementById("p_color").disabled = !edit;
+    document.getElementById("input_plan_financement").disabled = !edit;
 
     if(edit) {
         document.getElementById("add_an_action").classList.remove("d-none");
@@ -425,7 +426,9 @@ document.getElementById("delete_projet").addEventListener("click", function() {
     document.getElementById("cancel_action_modal").addEventListener("click", function() {
         modal_action.hide();
     });
-    
+
+    //modal_action.addEventListener(
+    //    modal_action
     
     //FINANCEUR
     let nb_financeurs=0;
@@ -576,6 +579,7 @@ document.getElementById("delete_projet").addEventListener("click", function() {
         document.getElementById("p_commentaire").value=project[0].commentaire_projet;
         document.getElementById("p_color").value=project[0].color;
         document.getElementById("sites_string").value=project[0].sites;
+        document.getElementById("input_plan_financement").value=project[0].financement;
         if (typeof project[0].files !== 'undefined') {
             //console.log(typeof project[0].files);
             if ((project[0].files !== null) && (project[0].files !=='')) {

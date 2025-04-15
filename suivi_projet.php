@@ -185,6 +185,15 @@ pg_close($dbconn);
                                     <input type="color" class="form-control form-control-color" id="p_color" value="#563d7c" title="Choisissez une couleur" aria-describedby="helpColor" disabled>
                                     <span id="helpColor" class="form-text px-2">couleur utilisée pour le calendrier</span>
                                 </div>
+                                <div class="py-2">
+                                    <div class="input-group input-group-sm py-2">
+                                        <span for="input_plan_financement" class="input-group-text">modèle de financement : </span>
+                                        <input type="text" class="form-control" id="input_plan_financement" aria-describedby="basic-addon3" placeholder="f1_80|f2_20|..." disabled>
+                                    </div>
+                                    <div class="text-secondary my-1" style="font-size:12px;"><span>Exemple : AESN_80|Commune de Sotteville lès Rouen_20</span></div>
+                                    <div class="text-secondary my-1" style="font-size:12px;"><span>Ce financement sera déjà renseigné lors de la création d'action.</span></div>
+                                    <div class="text-secondary my-1" style="font-size:12px;"><span>Laissez vide si ce n'est pas utile pour votre projet</span></div>
+                                </div>
                                 <h6 class="mt-2 px-2">Documents liées :</h6>
                                 <div class="px-2" id="docs"></div>
                                 <div class="my-4" >
