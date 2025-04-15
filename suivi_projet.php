@@ -307,11 +307,18 @@ pg_close($dbconn);
                         </div>
                     </div>
                 </div>
-                <div class="w-75">
+                <div class="w-75 my-2">
                     <div class="input-group input-group-sm w-100">
                         <span for="input_up_heures" class="input-group-text">Heures : </span>
                         <input type="number" class="form-control" id="input_up_heures" aria-describedby="basic-addon3" placeholder="5">
                     </div>
+                </div>
+                <div class="w-100 my-2">
+                    <div class="input-group input-group-sm w-100">
+                        <span for="input_up_financeurs" class="input-group-text">Financements : </span>
+                        <input type="text" class="form-control" id="input_up_financeurs" aria-describedby="basic-addon3" placeholder="f1_80|f2_20|...">
+                    </div>
+                    <div class="text-secondary my-1" style="font-size:12px;"><span>Exemple : AESN_80|Commune de Sotteville lès Rouen_20</span></div>
                 </div>
                 <div class="d-flex justify-content-center" id="help">
                 </div>

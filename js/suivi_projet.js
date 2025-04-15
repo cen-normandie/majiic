@@ -651,6 +651,7 @@ document.getElementById("add_action_personne").addEventListener("click", functio
     let personne__ok = ( document.getElementById("input_personnes").value.includes(' - '))  ? document.getElementById("input_personnes").value.split(' - ')[1] : document.getElementById("input_personnes").value ;
     myUAction.personne = personne__ok;
     myUAction.nb_h_previ = document.getElementById("input_up_heures").value;
+    myUAction.financeurs = document.getElementById("input_up_financeurs").value;
     //add Ajax function to have valid id_action
     let  UActionJsonString= JSON.stringify(myUAction);
     //Sauvegarde de la personne en BDD
@@ -839,6 +840,7 @@ function add_events_actions () {
             document.getElementById("id_action_add_p").textContent=id_action__;
             document.getElementById("input_personnes").value= personne__;
             document.getElementById("input_up_heures").value=action__.previ;
+            document.getElementById("input_up_financeurs").value=action__.financements;
             ModalAddPersonne.show(element.getAttribute('id'));
         });
     });
