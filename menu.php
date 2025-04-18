@@ -31,13 +31,17 @@
       <i class="fas fa-tachometer-alt"></i> Tableau de bord
     </a>
   </div>
-  <hr class="bg-secondary mx-2 my-1">
-  <li class="nav-item">
-    <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'majiic.php') ? ' active' : '' ); echo $t; ?>" href="majiic.php">
+  <?php 
+ if ($_SESSION['cgu']) {
+    $a = ((($_POST['page']) == 'majiic.php') ? ' active' : '' );
+    echo '<hr class="bg-secondary mx-2 my-1"><li class="nav-item"><a class="nav-link py-1 ',$a,'" href="majiic.php">
       <span data-feather=""></span>
       <i class="fas fa-user-shield"></i> Majiic
     </a>
   </li>
+    ';
+  }
+?>
   <hr class="bg-secondary mx-2 my-1">
   <span class="nav-link text-secondary">SIG :</span>
   <li class="nav-item">

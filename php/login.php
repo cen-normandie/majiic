@@ -110,12 +110,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['responsables_html']=$responsables_html;
                     $_SESSION['responsables_html_wo_id']=$responsables_html_wo_id ; */
 
-                if($_SESSION['cgu']) {
-                    echo "Success";
-                } else {
-                    echo "CGU";
-                }
-                
+                echo "Success";
             } else {
                 echo "LDAP bind failed...";
             }
