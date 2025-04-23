@@ -62,8 +62,8 @@ if (in_array($_SESSION['email'], $admins)) {
             </div>
 
             
-            <div class="d-flex bg-light ">
-                <div class="d-flex flex-column col-md-12 col-lg-12 p-2 border rounded">
+            <div class="d-flex bg-light flex-column p-2">
+                <div class="d-flex flex-column col-md-12 col-lg-12 p-2 my-2 border rounded">
                     <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export horodate</h4>
                     <div class="fs-5 text-secondary">
                         <p>Il est possible d'exporter les heures de travail par projet. </p>
@@ -126,8 +126,10 @@ if (in_array($_SESSION['email'], $admins)) {
                         </tbody>
                     </table>
                     </div>
-                    <div class="d-flex w-100 my-5">
-                        <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded">
+                </div>
+                <div class="d-flex flex-column col-md-12 col-lg-12 my-2 p-2 border rounded bg-dark">
+                    <div class="d-flex w-100">
+                        <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded bg-light">
                             <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export par annee</h4>
                             <div class="d-flex flex-column w-100">
                                 <!--<button id="export_2021" type="button" class="btn btn-outline-success shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
@@ -137,7 +139,7 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <button id="export_2025" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
                             </div>
                         </div>
-                        <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded">
+                        <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded bg-light">
                             <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export par personne</h4>
                             <div class="d-flex flex-column w-100">
                                 <div class="autocompleteBS w-100" id="personnes">
@@ -156,7 +158,7 @@ if (in_array($_SESSION['email'], $admins)) {
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>
 		</div>
 
 		<div class="d-flex mt-auto justify-content-end align-items-center text-muted fixed-bottom">
