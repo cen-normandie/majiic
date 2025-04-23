@@ -171,6 +171,7 @@ function apply_filters() {
 };
 
 
+var ids_blocked = [];
 var dtTemps =    $('#temps').DataTable({
     "language": {
     "paginate": {
@@ -228,7 +229,7 @@ buttons: [
                             {
                                 alignment: 'right',
                                 fontSize: 14,
-                                text: 'Projet : '+projets_f[0].name
+                                text: ''
                             }
                         ],
                         margin: 20
@@ -257,12 +258,37 @@ buttons: [
                 objLayout['paddingLeft'] = function(i) { return 4; };
                 objLayout['paddingRight'] = function(i) { return 4; };
                 doc.content[0].layout = objLayout;
+
+                var lines = doc.content[0].table.body;
+                //lines.shift();
+                lines.forEach((element) => 
+                    //ids_blocked.push(element[0].text)
+                    bloc_event_ids(element[0].text)
+                
+                );
+                //bloc_event_ids(ids_blocked);
             }
     }
     ]
 ,paging: true
  });
  dtTemps.column(11).visible(false); // Hide the column with index 11 (0-based index)
+
+
+function bloc_event_ids(ids_blocked) {
+    $.ajax({
+        url      : "php/ajax/export/bloc_event_ids.ajax.js.php",
+        data     : { 'id_to_bloc' : ids_blocked},
+        method   : "POST",
+        dataType : "json",
+        async    : true,
+        error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+        success  : function(data) {
+            console.log(data);
+            }
+    });
+}
+
 
 
 
