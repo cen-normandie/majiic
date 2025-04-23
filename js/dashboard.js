@@ -339,9 +339,6 @@ function update_graphs (sites_json) {
 };
 
 
-
-
-
 //init datatable sites
 var dtSites =    $('#sites').DataTable({
     "language": {
