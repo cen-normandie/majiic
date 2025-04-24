@@ -149,7 +149,7 @@ pg_close($dbconn);
                                     <select class="form-select" id="etat_projet" disabled>
                                         <option value="Prévisionnel" >Prévisionnel</option>
                                         <option value="Validé" >Validé</option>
-                                        <option value="" >Réalisé</option>
+                                        <option value="Réalisé" >Réalisé</option>
                                     </select>
                                 </div>
                                 <div class="input-group input-group-sm p-2">
