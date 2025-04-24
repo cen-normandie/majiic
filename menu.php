@@ -11,21 +11,17 @@
         <span data-feather=""></span><i class="fas fa-home ml-4"></i> Consulter un Site
       </a> 
 <?php 
-    //WRITE ALL SESSIONS VARS
-    //echo "<h3> PHP List All Session Variables</h3>";
-    //foreach ($_SESSION as $key=>$val)
-    //echo "<span  class='text-white'>".$key." ".$val."</span><br/>";
-  $_SESSION['is_admin'] = false;
-  if ($_SESSION['is_equipe_si']) {
-    $link_ = '
-    <a class="nav-link py-1 ';
-    $t = ((($_POST["page"]) == "gestion-site.php") ? " active" : "" );
-    $link_ = $link_.$t;
-    $link_ = $link_.'" href="gestion-site.php"><span data-feather=""></span><i class="fas fa-wrench"></i> Gestion Sites
-    </a>';
-    echo $link_; 
+ if ($_SESSION['is_equipe_si']) {
+    $a = ((($_POST['page']) == 'gestion-site.php') ? ' active' : '' );
+    echo '<li class="nav-item"><a class="nav-link py-1 ',$a,'" href="gestion-site.php">
+      <span data-feather=""></span>
+      <i class="fas fa-wrench"></i> Gestion sites
+    </a>
+  </li>
+    ';
   }
-  ?>
+?>
+
     <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'dashboard.php') ? ' active' : '' ); echo $t; ?>" href="dashboard.php">
       <span data-feather=""></span>
       <i class="fas fa-tachometer-alt"></i> Tableau de bord
@@ -77,22 +73,24 @@
   <hr class="bg-secondary mx-2 my-1">
     <div class="ml-2">
       <span class="nav-link text-secondary">Projets :</span>
-        <a class="nav-link py-1"  href="analytique.php">
+        <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'analytique.php') ? ' active' : '' ); echo $t; ?>"  href="analytique.php">
             <span data-feather=""></span>
             <i class="far fa-calendar-alt"></i> Analytique
         </a>
-        <a class="nav-link py-1"  href="suivi_projet.php">
+        <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'suivi_projet.php') ? ' active' : '' ); echo $t; ?>"  href="suivi_projet.php">
             <span data-feather=""></span>
             <i class="fas fa-tasks"></i> Suivi Projet
         </a>
-          <a class="nav-link py-1"  href="create_projet.php">
+          <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'create_projet.php') ? ' active' : '' ); echo $t; ?>"  href="create_projet.php">
           <span data-feather=""></span>
           <i class="fas fa-plus"></i> Création de projet
         </a>
 
 <?php 
  if ($_SESSION['fdt_optimisation']) {
-    echo '        <a class="nav-link py-1"  href="import_temps_excel.php">
+    echo '        <a class="nav-link py-1';
+    $t = ((($_POST['page']) == 'optimisation.php') ? ' active' : '' ); echo $t;
+    echo '"  href="optimisation.php">
           <span data-feather=""></span>
           <i class="fas fa-edit"></i> Optimisation des temps
         </a>';
@@ -101,7 +99,9 @@
 
 <?php 
  if ($_SESSION['u_saf']) {
-    echo '<a class="nav-link py-1"  href="export.php">
+    echo '        <a class="nav-link py-1';
+    $t = ((($_POST['page']) == 'export.php') ? ' active' : '' ); echo $t;
+    echo '" href="export.php">
           <span data-feather=""></span>
           <i class="fas fa-file-excel"></i> Export des feuilles de temps
         </a>';
@@ -124,13 +124,12 @@
 
   <?php 
   if ($_SESSION['is_equipe_rh']) {
-    echo '<div class="ml-2">
-    <span class="nav-link text-secondary">RH :</span>
-        <a class="nav-link py-1"  href="rh.php">
-                <span data-feather=""></span>
-                <i class="fas fa-utensils"></i> Panier Repas / <i class="fas fa-socks"></i> Prime Salissure
-            </a>
-    </div>';
+    echo '        <a class="nav-link py-1';
+    $t = ((($_POST['page']) == 'rh.php') ? ' active' : '' ); echo $t;
+    echo '" href="rh.php">
+          <span data-feather=""></span>
+          <i class="fas fa-utensils"></i> Paniers Repas / <i class="fas fa-socks"></i> Primes Salissure
+        </a>';
   }
 ?>
 </ul>

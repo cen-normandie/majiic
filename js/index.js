@@ -97,7 +97,7 @@ $("#signin").click( function () {
                         error    : function(request, error) { console.log("not ajax success ");},
                         success  : function(data) {
                             console.log("success");
-                            window.location.href = 'sites.php';
+                            window.location.href = 'analytique.php';
                         }
                     });// End ajax
                 } else if (data == "CGU") {
