@@ -242,57 +242,61 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       calendar.refetchEvents();
   },
   eventClick: function(arg) {
-    modal_edit.show();
-    $("#update_id_e").html(arg.event._def.publicId);
-    $('#update_input_objet').val(arg.event._def.extendedProps.e_objet);
-    $('#update_input_projet').val(arg.event._def.extendedProps.e_nom_projet+' | '+arg.event._def.extendedProps.e_id_projet);
-    $('#input_projet').val(arg.event._def.extendedProps.e_nom_projet+' | '+arg.event._def.extendedProps.e_id_projet);
+    if (arg.event._def.extendedProps.e_blocked == "t") {
+        alert("Cet évènement est bloqué, car envoyé à un financeur pour solder un projet !");
+    } else {
+        modal_edit.show();
+        $("#update_id_e").html(arg.event._def.publicId);
+        $('#update_input_objet').val(arg.event._def.extendedProps.e_objet);
+        $('#update_input_projet').val(arg.event._def.extendedProps.e_nom_projet+' | '+arg.event._def.extendedProps.e_id_projet);
+        $('#input_projet').val(arg.event._def.extendedProps.e_nom_projet+' | '+arg.event._def.extendedProps.e_id_projet);
 
-    // Choisir l'option du select avec value = nom_action | id_action
-    //--> get the option by value
+        // Choisir l'option du select avec value = nom_action | id_action
+        //--> get the option by value
 
-    //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
+        //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
 
-        //Mets à jour les actions liées au projet
-        //Same like select input projet change
-        if ( ($('#update_input_projet').val() ) !== null) {
-            keys["id_projet"][0] = $('#update_input_projet').val().split(' | ')[1];
-            filters_active["id_projet"] = true;
-            //filtre les données
-            apply_filters();
-        }
-        console.log(arg.event._def.extendedProps.e_id_action);
-        $('#input_action option[id="'+arg.event._def.extendedProps.e_id_action+'"]').attr("selected", "selected");
-        $('#update_input_action option[id="'+arg.event._def.extendedProps.e_id_action+'"]').attr("selected", "selected");
-        //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action).attr("selected", "selected");
+            //Mets à jour les actions liées au projet
+            //Same like select input projet change
+            if ( ($('#update_input_projet').val() ) !== null) {
+                keys["id_projet"][0] = $('#update_input_projet').val().split(' | ')[1];
+                filters_active["id_projet"] = true;
+                //filtre les données
+                apply_filters();
+            }
+            console.log(arg.event._def.extendedProps.e_id_action);
+            $('#input_action option[id="'+arg.event._def.extendedProps.e_id_action+'"]').attr("selected", "selected");
+            $('#update_input_action option[id="'+arg.event._def.extendedProps.e_id_action+'"]').attr("selected", "selected");
+            //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action).attr("selected", "selected");
 
-    //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
-    document.getElementById("update_input_panier").checked = (arg.event._def.extendedProps.e_panier == "t") ? true : false;
-    document.getElementById("update_input_salissure").checked = (arg.event._def.extendedProps.e_salissure == "t") ? true : false;
-    $('#update_input_commentaire').val(arg.event._def.extendedProps.e_commentaire);
-    switch (arg.event._def.extendedProps.e_lieu) {
-        case "Bureau":
-            document.getElementById("update_lieu_bureau").checked = true;
-            break;
-        case "Réunion":
-            document.getElementById("update_lieu_reunion").checked = true;
-            break;
-        case "Terrain":
-            document.getElementById("update_lieu_terrain").checked = true;
-            break;
-        case "Télétravail":
-            document.getElementById("update_lieu_teletravail").checked = true;
-            break;
-        case "Grève":
-            document.getElementById("update_lieu_greve").checked = true;
-            break;
-        case "Modulation":
-            document.getElementById("update_lieu_modulation").checked = true;
-            break;
-        default:
-            document.getElementById("update_lieu_bureau").checked = true;
-            break;
-    };
+        //$('#update_input_action').val(arg.event._def.extendedProps.e_nom_action+' | '+arg.event._def.extendedProps.e_id_action);
+        document.getElementById("update_input_panier").checked = (arg.event._def.extendedProps.e_panier == "t") ? true : false;
+        document.getElementById("update_input_salissure").checked = (arg.event._def.extendedProps.e_salissure == "t") ? true : false;
+        $('#update_input_commentaire').val(arg.event._def.extendedProps.e_commentaire);
+        switch (arg.event._def.extendedProps.e_lieu) {
+            case "Bureau":
+                document.getElementById("update_lieu_bureau").checked = true;
+                break;
+            case "Réunion":
+                document.getElementById("update_lieu_reunion").checked = true;
+                break;
+            case "Terrain":
+                document.getElementById("update_lieu_terrain").checked = true;
+                break;
+            case "Télétravail":
+                document.getElementById("update_lieu_teletravail").checked = true;
+                break;
+            case "Grève":
+                document.getElementById("update_lieu_greve").checked = true;
+                break;
+            case "Modulation":
+                document.getElementById("update_lieu_modulation").checked = true;
+                break;
+            default:
+                document.getElementById("update_lieu_bureau").checked = true;
+                break;
+        };
+    }
     
     //calendar.render();
   },
@@ -389,6 +393,7 @@ function add_event_properties (event) {
     event.e_panier =  $("#input_panier:checked").is(':checked') ? true : false ;
     //date_saisie_salissure
     //pg --> now() event.e_date_saisie_salissure
+
 }
 function add_update_event_properties (event,uuid_) {
     //uuid
@@ -431,7 +436,7 @@ function add_update_event_properties (event,uuid_) {
     //panier
     event.e_panier =  $("#update_input_panier:checked").is(':checked') ? true : false ;
     //date_saisie_salissure
-    //pg --> now() event.e_date_saisie_salissure
+    //pg --> now() event.e_date_saisie_salissure    
 }
 
 function save_event (event) {
