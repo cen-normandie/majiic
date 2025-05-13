@@ -63,7 +63,7 @@ if (in_array($_SESSION['email'], $admins)) {
 
             
             <div class="d-flex bg-light flex-column p-2">
-                <div class="d-flex flex-column col-md-12 col-lg-12 p-2 my-2 border rounded">
+                <div class="d-flex flex-column col-md-12 col-lg-12 p-2 my-2 border rounded d-none">
                     <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export horodate</h4>
                     <div class="fs-5 text-secondary">
                         <p>Il est possible d'exporter les heures de travail par projet. </p>
