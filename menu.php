@@ -97,17 +97,21 @@
   } 
 ?>
 
-<?php 
- if ($_SESSION['u_saf']) {
+<!-- <?php 
+/*  if ($_SESSION['u_saf']) {
     echo '        <a class="nav-link py-1';
     $t = ((($_POST['page']) == 'export.php') ? ' active' : '' ); echo $t;
     echo '" href="export.php">
           <span data-feather=""></span>
           <i class="fas fa-file-excel"></i> Export des feuilles de temps
         </a>';
-  } 
-?>
-
+  }  */
+?> -->
+<!-- export pour tout le monde -->
+    <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'export.php') ? ' active' : '' ); echo $t; ?>"  href="export.php">
+            <span data-feather=""></span>
+            <i class="fas fa-file-excel"></i> Export des feuilles de temps
+        </a>
         
         <!--<a class="nav-link"  href="reservation_materiel.php">
           <span data-feather=""></span>
