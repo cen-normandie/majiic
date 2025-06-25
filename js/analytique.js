@@ -27,17 +27,27 @@ function load_projets_ajax () {
             //Ajoute les projets dans le select 1 fois
             let projets_array = [];
             for (const projet in projets) {
-                projets_array.push(projets[projet].name+' | '+projets[projet].id);
+                //projets_array.push(projets[projet].name+' | '+projets[projet].id);
+                projets_array.push({
+                    id: projets[projet].name+' | '+projets[projet].id, 
+                    color: projets[projet].color
+                });
             }
-            projets_array.sort();
+            //projets_array.sort()
+            projets_array.sort((a, b) => a.id.localeCompare(b.id));
             for (const projet_ in projets_array) {
                 $("#input_projet").append($('<option>', {
-                    value: projets_array[projet_],
-                    text: projets_array[projet_]
+                    //value: projets_array[projet_],
+                    //text: projets_array[projet_]
+                    value: projets_array[projet_].id,
+                    text: projets_array[projet_].id
+                    //,style: 'background-color:rgba('+hexToRgb(projets_array[projet_].color).z+', 0.1);'
                 }));
+                //'<option>'
                 $("#update_input_projet").append($('<option>', {
-                    value: projets_array[projet_],
-                    text: projets_array[projet_]
+                    value: projets_array[projet_].id,
+                    text: projets_array[projet_].id
+                    //,style: 'color:'+projets_array[projet_].color+';'
                 }));
             }
             //Chargement des actions
