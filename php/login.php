@@ -72,7 +72,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         if( str_contains($group, 'FILIERE_GEOMATIQUE')) {
                             $_SESSION['is_equipe_si'] = true;
                         }
-                        if( str_contains($group, 'FILIERE_RESSOURCES_HUMAINE')) {
+                        if( str_contains($group, 'rh')) {
                             $_SESSION['is_equipe_rh'] = true;
                         }
                         if( str_contains($group, 'fdt_optimisation')) {
