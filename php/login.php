@@ -46,7 +46,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['u_zoot'] = false;
                     $_SESSION['session'] = $entries[0]["mail"][0];
                     $_SESSION['cgu'] = false ;
-                    $_SESSION['is_equipe_si'] = false;
+                    $_SESSION['si_web'] = false;
                     $_SESSION['is_equipe_rh'] = false;
                     $_SESSION['fdt_optimisation'] = false;
         
@@ -62,6 +62,9 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         }
                         if( str_contains($group, 'saf_fdt')) {
                             $_SESSION['u_saf'] = true;
+                        }
+                        if( str_contains($group, 'all_cen')) {
+                            $_SESSION['all_cen'] = true;
                         }
                         if( str_contains($group, 'zoo')) {
                             $_SESSION['u_zoot'] = true;

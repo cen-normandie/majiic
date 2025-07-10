@@ -83,7 +83,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <div class="">
                     <p class="text-muted">Sources : </p>
                     <!--<p class="text-muted">PCI Vecteur <strong  class="fs-5">(10-2020)</strong></p>-->
-                    <p class="text-muted">Direction Générale des Finances <strong class="fs-5">2022</strong></p>
+                    <p class="text-muted">Direction Générale des Finances <strong class="fs-5">2024</strong></p>
                 </div>
             </div>
             <div class="d-flex flex-column bg-light w-75">

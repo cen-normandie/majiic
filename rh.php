@@ -80,7 +80,7 @@ if (in_array($_SESSION['email'], $admins)) {
                             </tbody>
                         </table>
                     </div>
-                    <div clas="d-flex col-md-6">
+                    <div class="d-flex col-md-6">
                         <!--<button id="export_paniers_m1" type="button" class="btn btn-sm btn-outline-primary shadow my-4 "><i class="fas fa-file-excel pr-2"></i> Paniers traités sur le mois</button>-->
                     </div>
                     

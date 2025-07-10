@@ -53,7 +53,7 @@ t as (
     			) As f )  As fc
       )
   FROM $parcelles p LEFT JOIN  $sites s ON p.id_group = s.id_site 
-  WHERE p.categorie_site = $1 AND date_fin is null 
+  WHERE p.categorie_site = $1 AND p.date_fin is null 
   order by 1
 )
 SELECT json_agg(t) FROM t
