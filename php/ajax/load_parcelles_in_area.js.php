@@ -40,7 +40,7 @@ FROM (SELECT 'Feature' As type
 					right(idpar, 4 ) as numero,
 					geompar as geom
        FROM $parcelles_cad
-        WHERE id_com = '".$_POST["id"]."' and idpar like '".$_POST["id"]."%' and st_isvalid(geompar) ) As lp 
+        WHERE idcom = '".$_POST["id"]."' and idpar like '".$_POST["id"]."%' and st_isvalid(geompar) ) As lp 
       ON lg.idpar = lp.id ) As f )  As fc;
       ";
 
