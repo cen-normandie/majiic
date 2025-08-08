@@ -28,8 +28,8 @@ where l_table_name = $2 and (l.l_id ~* $1 or l_nom ~* $1)
 order by 1
 ) t
 "
-
 );
+//8-8-2025 limit aux communes
 $result = pg_execute($dbconn, "sql", array($term, 'communes'));
 while($row = pg_fetch_row($result))
 {

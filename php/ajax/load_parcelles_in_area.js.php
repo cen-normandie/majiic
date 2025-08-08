@@ -23,6 +23,8 @@ FROM (SELECT 'Feature' As type
         WHERE id like '".$_POST["id"]."%' and st_isvalid(geom) ) As lp 
       ON lg.id = lp.id ) As f )  As fc;
 "; */
+
+//8-8-2025 limit aux communes l'index like ne semble pas fonctionner
 $sql = "
 SELECT row_to_json(fc)
 FROM ( SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
@@ -38,7 +40,7 @@ FROM (SELECT 'Feature' As type
 					right(idpar, 4 ) as numero,
 					geompar as geom
        FROM $parcelles_cad
-        WHERE idpar like '".$_POST["id"]."%' and st_isvalid(geompar) ) As lp 
+        WHERE id_com = '".$_POST["id"]."' and idpar like '".$_POST["id"]."%' and st_isvalid(geompar) ) As lp 
       ON lg.idpar = lp.id ) As f )  As fc;
       ";
 
