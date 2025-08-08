@@ -3,7 +3,7 @@ include '../../properties.php';
 
 
 $term = urldecode($_POST["term"]);
-
+$term = 'Basly';
 
 
 $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS")
