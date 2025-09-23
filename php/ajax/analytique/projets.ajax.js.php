@@ -30,7 +30,7 @@ WITH t as (
   color
   FROM $progecen_projets
   WHERE etat <> 'Réalisé'
-  AND (date_fin > to_date( $1::text||'0101', 'YYYYMMDD') OR (date_fin > to_date( '2024'::text||'0101', 'YYYYMMDD') ) )
+  AND (date_fin > to_date( $1::text||'0101', 'YYYYMMDD') OR (date_fin > to_date( '2025'::text||'0101', 'YYYYMMDD') ) )
 )
 SELECT json_agg(t) FROM t
 "
