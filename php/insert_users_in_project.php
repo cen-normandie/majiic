@@ -1,5 +1,5 @@
 <?php 
-include '../php/properties.php';
+/* include '../php/properties.php';
 
 $_id_projet = 2872;
 
@@ -74,6 +74,6 @@ if ($ldapconn) {
         echo "LDAP bind failed...";
     }
 }
-pg_close($dbconn);
+pg_close($dbconn); */
 
 ?>
