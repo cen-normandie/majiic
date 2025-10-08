@@ -47,7 +47,7 @@ SELECT
 	   SUM(CASE extract('month' from date_)::int WHEN 12 THEN som ELSE 0 END) AS decembre
 FROM  sums
 GROUP BY 1,2,3,4,5
-order by 1,3 
+order by 1,3,4
    )
 SELECT json_agg(t) FROM t;
 "
