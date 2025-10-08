@@ -10,7 +10,7 @@ $html = '
 $envRoot = getenv('MPDF_ROOT');
 $path = $envRoot ?: __DIR__;
 //echo $path;
-//require_once $path . '/vendor/autoload.php';
+require_once $path . '/vendor/autoload.php';
 
 $mpdf = new \Mpdf\Mpdf(['mode' => 'c']);
 
