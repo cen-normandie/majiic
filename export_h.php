@@ -182,7 +182,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript">
 
 $(document).ready(function() {
-    load_personnes_ajax ();
+    //load_personnes_ajax ();
     load_projets_ajax ();
 });
 
