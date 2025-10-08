@@ -15,7 +15,8 @@ with sums as (
 select 
 	t1.e_start::date as date_ , 
 	sum(t1.e_nb_h) as som, 
-	e_id_projet, 
+	e_id_projet,
+  e_nom_projet,  
 	e_personne ,
 	extract('month' from t1.e_start::date)::int as month_,
 	string_agg(e_id,'|') as e_ids
@@ -45,7 +46,7 @@ SELECT
 	   SUM(CASE extract('month' from date_)::int WHEN 11 THEN som ELSE 0 END) AS novembre,
 	   SUM(CASE extract('month' from date_)::int WHEN 12 THEN som ELSE 0 END) AS decembre
 FROM  sums
-GROUP BY 1,2,3,4
+GROUP BY 1,2,3,4,5
 order by 1,3 
    )
 SELECT json_agg(t) FROM t;
