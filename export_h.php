@@ -175,7 +175,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript" src="js/general/general.js" ></script>
 <!-- autocomplete -->
 <script type="text/javascript" src="js/autocompleteArray/autocomplete.projets.export.horodate.js" ></script>
-<script type="text/javascript" src="js/autocompleteArray/autocomplete.personnes.js" ></script>
+<!--<script type="text/javascript" src="js/autocompleteArray/autocomplete.personnes.js" ></script>-->
 <!-- Export.js -->
 <script type="text/javascript" src="js/b64_img.js" ></script>
 <script type="text/javascript" src="js/export_h.js" ></script>
