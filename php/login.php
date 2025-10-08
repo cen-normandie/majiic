@@ -49,6 +49,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                     $_SESSION['si_web'] = false;
                     $_SESSION['is_equipe_rh'] = false;
                     $_SESSION['fdt_optimisation'] = false;
+                    $_SESSION['is_equipe_si'] = false;
+                    $_SESSION['all_cen'] = false;
         
                     foreach($groups as $group) {
                         if( str_contains($group, 'progecen_resp_projet')) {
@@ -72,7 +74,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                         if( str_contains($group, 'CGU_Foncier')) {
                             $_SESSION['cgu'] = true;
                         }
-                        if( str_contains($group, 'FILIERE_GEOMATIQUE')) {
+                        if( str_contains($group, 'si_web')) {
                             $_SESSION['is_equipe_si'] = true;
                         }
                         if( str_contains($group, 'rh')) {
