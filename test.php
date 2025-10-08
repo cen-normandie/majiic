@@ -13,6 +13,7 @@ $path = $envRoot ?: __DIR__;
 //echo $path;
 require_once $path . '/vendor/autoload.php';
 
+$mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/download/pdf/']);
 $mpdf = new \Mpdf\Mpdf(['mode' => 'c']);
 
 $mpdf->mirrorMargins = true;
