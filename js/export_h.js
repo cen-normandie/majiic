@@ -16,11 +16,12 @@ function load_temps_ajax () {
             dtTemps.clear();
             //console.log(data);
             let temps_liste_array = [];
+            let str__ = '';
 
             $('#console').html('');
-            $('#console').append('<table class="bpmTopicC"><thead><tr class="headerrow"><th>Col and Row Header</th><td><p>Second column header</p></td><td>Third column header</td></tr></thead>');
-            $('#console').append('<tfoot><tr class="footerrow"><th>Col and Row Footer</th><td><p>Second column footer</p></td><td>Third column footer</td></tr></tfoot>');
-            $('#console').append('<tbody>');
+            $str__ = '<table class="bpmTopicC"><thead><tr class="headerrow"><th>Col and Row Header</th><td><p>Second column header</p></td><td>Third column header</td></tr></thead>';
+            $str__ += '<tfoot><tr class="footerrow"><th>Col and Row Footer</th><td><p>Second column footer</p></td><td>Third column footer</td></tr></tfoot>';
+            $str__ += '<tbody>';
             for (const temps_ in temps_liste) {
                 //temps_liste_array.push(temps_liste[temps_].id+' - '+actions_liste[action].name);
                 //DATATABLES
@@ -43,11 +44,12 @@ function load_temps_ajax () {
                     temps_liste[temps_].decembre,
                     temps_liste[temps_].e_ids
                 ] ).draw( true ).node();
-                $('#console').append('<tr><th>'+temps_liste[temps_].personne+'</th><td>'+temps_liste[temps_].id_projet+'</td><td>'+temps_liste[temps_].nom_projet+'</td></tr>');
+                $str__ += '<tr><th>'+temps_liste[temps_].personne+'</th><td>'+temps_liste[temps_].id_projet+'</td><td>'+temps_liste[temps_].nom_projet+'</td></tr>';
                 
             }
             //dtTemps.columns.adjust().draw();
-            $('#console').append('</tbody></table>');
+            $str__ += '</tbody></table>';
+            $('#console').html($str__);
             }
     });
 }
