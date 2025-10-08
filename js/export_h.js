@@ -49,7 +49,7 @@ function load_temps_ajax () {
             }
             //dtTemps.columns.adjust().draw();
             $str__ += '</tbody></table>';
-            $('#console').html($str__);
+            $('#console').text($str__);
             }
     });
 }
