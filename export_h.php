@@ -135,6 +135,9 @@ if (in_array($_SESSION['email'], $admins)) {
                         </tbody>
                     </table>
                     </div>
+                    <div class="d-flex flex-column w-100 my-2">
+                        <div id="console" class="d-flex m-2 bg-dark text-light" ></div>
+                    </div>
                 </div>
             </div>
 		</div>
