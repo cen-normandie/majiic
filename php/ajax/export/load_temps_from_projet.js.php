@@ -28,7 +28,8 @@ select
 )
 SELECT 
 	e_personne as personne,
-	e_id_projet as projet,
+	e_id_projet as id_projet,
+  e_nom_projet as nom_projet,
 	date_ as date,
 	e_ids as e_ids,
      SUM(CASE extract('month' from date_)::int WHEN 1 THEN som ELSE 0 END) AS janvier,  
