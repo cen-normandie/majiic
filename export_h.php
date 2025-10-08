@@ -92,19 +92,24 @@ if (in_array($_SESSION['email'], $admins)) {
                     <table id="temps" class="table table-striped" style="" >
                         <thead>
                             <tr>
-                            <th style="overflow:hidden;text-overflow: ellipsis;max-width:20px;" >ID</th>
+                            <th>personne</th>
                             <th>id_projet</th>
                             <th>nom_projet</th>
-                            <th>id_action</th>
-                            <th>nom_action</th>
-                            <th>id_site</th>
-                            <th>objet</th>
-                            <th>start</th>
-                            <th>end</th>
-                            <!-- <th>commentaire</th> -->
-                            <th>personne</th>
-                            <th>nb_h</th>
-                            <th>bloqué</th>
+                            <th>date</th>
+                            <th>janvier</th>
+                            <th>février</th>
+                            <th>mars</th>
+                            <th>avril</th>
+                            <th>mai</th>
+                            <th>juin</th>
+                            <th>juillet</th>
+                            <th>août</th>
+                            <th>septembre</th>
+                            <th>octobre</th>
+                            <th>novembre</th>
+                            <th>décembre</th>
+                            <th>e_ids</th>
+                            <!--<th>total</th>-->
                             </tr>
                         </thead>
                         <tbody>
@@ -118,44 +123,17 @@ if (in_array($_SESSION['email'], $admins)) {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <!-- <td></td> -->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    </div>
-                </div>
-                <div class="d-flex flex-column col-md-12 col-lg-12 my-2 p-2 border rounded bg-dark">
-                    <div class="d-flex w-100">
-                        <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded bg-light">
-                            <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export par annee</h4>
-                            <div class="d-flex flex-column w-100">
-                                <!--<button id="export_2021" type="button" class="btn btn-outline-success shadow my-2 mx-4 "><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
-                                <button id="export_2022" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
-                                <button id="export_2023" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
-                                <button id="export_2024" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
-                                <button id="export_2025" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-column col-md-4 col-lg-3 m-2 p-2 border rounded bg-light">
-                            <h4 class="h_background_image w-100 bebas d-flex justify-content-center">Export par personne</h4>
-                            <div class="d-flex flex-column w-100">
-                                <div class="autocompleteBS w-100" id="personnes">
-                                    <div class="input-group input-group-sm">
-                                        <span for="input_personnes" class="input-group-text">Personne : </span>
-                                        <input type="text" class="form-control" id="input_personnes" aria-describedby="basic-addon3" placeholder="...">
-                                        <span class="input-group-text justify-content-center" id="del_personne"><i class="far fa-trash-alt"></i></span>
-                                    </div>
-                                </div>
-                                <!--<button id="export_p_2021" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2021</button>-->
-                                <button id="export_p_2022" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2022</button>
-                                <button id="export_p_2023" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2023</button>
-                                <button id="export_p_2024" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2024</button>
-                                <button id="export_p_2025" type="button" class="btn btn-outline-success shadow my-2 mx-4"><i class="fas fa-file-excel pr-2"></i> 2025</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -200,7 +178,7 @@ if (in_array($_SESSION['email'], $admins)) {
 <script type="text/javascript" src="js/autocompleteArray/autocomplete.personnes.js" ></script>
 <!-- Export.js -->
 <script type="text/javascript" src="js/b64_img.js" ></script>
-<script type="text/javascript" src="js/export.js" ></script>
+<script type="text/javascript" src="js/export_h.js" ></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
