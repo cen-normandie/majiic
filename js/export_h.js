@@ -182,7 +182,9 @@ buttons: [
     ]
 ,paging: true
  });
- //dtTemps.column(11).visible(false); // Hide the column with index 11 (0-based index)
+
+dtTemps.column(1).visible(false);
+dtTemps.column(16).visible(false); // Hide the column with index 16 (0-based index)
 
 
 function bloc_event_ids(ids_blocked) {
