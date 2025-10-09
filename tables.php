@@ -44,7 +44,7 @@ $mpdf = new \Mpdf\Mpdf([
     'tempDir' => '/var/www/html/majiic/download/pdf'
 ]);
 
-
+$mpdf->SetDisplayMode('fullpage');
 echo "</br>file get contents";
 // Load a stylesheet
 $stylesheet = file_get_contents('/var/www/html/majiic/bootstrap-5.0.0/css/bootstrap.css');
