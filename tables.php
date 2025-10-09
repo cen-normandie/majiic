@@ -1,7 +1,7 @@
 <?php
 echo "test pdf";
 require_once '/var/www/html/majiic/vendor/autoload.php';
-echo "require done";
+echo "</br>require done";
 $html = '
 <h1>mPDF</h1>
 <h2>Tables</h2>
@@ -28,7 +28,7 @@ $html = '
 <p>&nbsp;</p>';
 
 //require_once __DIR__ . '/bootstrap.php';
-
+echo "</br>new pdf";
 $mpdf = new \Mpdf\Mpdf([
 	'mode' => 'utf-8',
 	'margin_left' => 32,
@@ -39,14 +39,13 @@ $mpdf = new \Mpdf\Mpdf([
 	'margin_footer' => 13
 ]);
 
-$mpdf->SetDisplayMode('fullpage');
 
-
+echo "</br>file get contents";
 // Load a stylesheet
 $stylesheet = file_get_contents('/var/www/html/majiic/bootstrap-5.0.0/css/bootstrap.css');
 
-echo "continue";
 
+echo "</br>write html";
 $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
 $mpdf->WriteHTML($html,2);
 
