@@ -15,10 +15,13 @@ $path = $envRoot ?: __DIR__;
 require_once $path . '/vendor/autoload.php';
 
 $mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/download/pdf/']);
-
 $mpdf->mirrorMargins = true;
+$mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
+$mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
 
-$mpdf->WriteHTML($html);
+
+
+//$mpdf->WriteHTML($html);
 
 $mpdf->Output($location . 'test.pdf', \Mpdf\Output\Destination::FILE);
 
