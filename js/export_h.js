@@ -19,8 +19,8 @@ function load_temps_ajax () {
             let str__ = '';
 
             $('#console').html('');
-            $str__ = '<table class="bpmTopicC"><thead><tr class="headerrow"><th>Col and Row Header</th><td><p>Second column header</p></td><td>Third column header</td></tr></thead>';
-            $str__ += '<tfoot><tr class="footerrow"><th>Col and Row Footer</th><td><p>Second column footer</p></td><td>Third column footer</td></tr></tfoot>';
+            $str__ = '<table>';
+            $str__ += '<thead><tr><th>Personne</th><th>ID Projet</th><th>Nom Projet</th><th>Date</th><th>Janvier</th><th>Février</th><th>Mars</th><th>Avril</th><th>Mai</th><th>Juin</th><th>Juillet</th><th>Août</th><th>Septembre</th><th>Octobre</th><th>Novembre</th><th>Décembre</th><th>e_ids</th></tr></thead>';
             $str__ += '<tbody>';
             for (const temps_ in temps_liste) {
                 //temps_liste_array.push(temps_liste[temps_].id+' - '+actions_liste[action].name);
