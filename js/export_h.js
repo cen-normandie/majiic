@@ -44,13 +44,48 @@ function load_temps_ajax () {
                     temps_liste[temps_].decembre,
                     temps_liste[temps_].e_ids
                 ] ).draw( true ).node();
-                $str__ += '<tr><th>'+temps_liste[temps_].personne+'</th><td>'+temps_liste[temps_].id_projet+'</td><td>'+temps_liste[temps_].nom_projet+'</td></tr>';
+                $str__ += '<tr>';
+                $str__ += '<td>'+temps_liste[temps_].personne+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].id_projet+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].nom_projet+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].date+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].janvier+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].fevrier+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].mars+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].avril+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].mai+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].juin+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].juillet+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].aout+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].septembre+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].octobre+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].novembre+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].decembre+'</td>';
+                $str__ += '<td>'+temps_liste[temps_].e_ids+'</td>';
+                $str__ += '</tr>';
+                //console.log( 'Row index: '+dtTemps.row(rowNode).index()+' data: '+dtTemps.row(rowNode).data() );
+                //ids_blocked.push(temps_liste[temps_].e_ids);
+
                 
             }
             //dtTemps.columns.adjust().draw();
             $str__ += '</tbody></table>';
             $('#console').text($str__);
+
+            $.ajax({
+                url      : "pdf.php",
+                data     : {tableau : $str__, name_ : 'export_horodate'},
+                method   : "POST",
+                dataType : "json",
+                async    : true,
+                error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
+                success  : function(data) {
+                    console.log('success pdf');
+                    }
+            });
+
             }
+
     });
 }
 
