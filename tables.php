@@ -1,7 +1,7 @@
 <?php
 echo "test pdf";
 require_once '/var/www/html/majiic/vendor/autoload.php';
-
+echo "require done";
 $html = '
 <h1>mPDF</h1>
 <h2>Tables</h2>
