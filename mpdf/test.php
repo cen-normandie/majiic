@@ -23,4 +23,4 @@ $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
 
 //$mpdf->WriteHTML($html);
 
-$mpdf->Output($location . 'test.pdf', \Mpdf\Output\Destination::FILE);
+$mpdf->Output('/var/www/html/majiic/download/pdf/test.pdf', \Mpdf\Output\Destination::FILE);
