@@ -475,7 +475,7 @@ Border conflict resolution in tables with border-collapse set to "collapse". mPD
 //==============================================================
 //==============================================================
 //==============================================================
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/mpdf/bootstrap.php';
 
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'en-GB-x',
