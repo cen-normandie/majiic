@@ -24,6 +24,7 @@ $mpdf = new \Mpdf\Mpdf([
 	'margin_bottom' => 25,
 	'margin_header' => 16,
 	'margin_footer' => 13,
+    'default_font_size' => 8,
     'tempDir' => '/var/www/html/majiic/download/pdf'
 ]);
 
