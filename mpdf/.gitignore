@@ -1,6 +1,0 @@
-examples???/
-vendor/
-composer.lock
-/*.pdf
-log/*
-!log/.gitkeep
