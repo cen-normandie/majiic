@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$location = __DIR__ .'/download/pdf/';
+$location = __DIR__ .'../download/pdf/';
 $stylesheet = file_get_contents('../bootstrap-5.0.0/css/bootstrap.min.css');
 
 $html = '
@@ -14,7 +14,7 @@ $path = $envRoot ?: __DIR__;
 //echo $path;
 require_once $path . '/../vendor/autoload.php';
 
-$mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/download/pdf/']);
+$mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '../download/pdf/']);
 $mpdf->mirrorMargins = true;
 $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
