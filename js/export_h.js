@@ -74,7 +74,7 @@ function load_temps_ajax () {
 
             $.ajax({
                 url      : "pdf.php",
-                data     : {tableau : $str__, name : 'export_horodate'},
+                data     : {tableau : $str__, name : 'export_horodate.pdf'},
                 method   : "POST",
                 dataType : "json",
                 async    : true,
