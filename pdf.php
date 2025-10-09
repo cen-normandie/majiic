@@ -50,5 +50,5 @@ $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/styl
 $mpdf->WriteHTML($html,2);
 
 //$mpdf->Output('/var/www/html/majiic/download/pdf/'.$name_, \Mpdf\Output\Destination::INLINE);
-$mpdf->Output('/var/www/html/majiic/download/pdf/'.$name_, 'F');
+$mpdf->Output('/var/www/html/majiic/download/pdf/export_pdf.pdf', 'F');
 
