@@ -76,7 +76,8 @@ function load_temps_ajax () {
                 url      : "pdf.php",
                 data     : {tableau : $str__, name : 'export_horodate.pdf'},
                 method   : "POST",
-                dataType : "json",
+                dataType : 'text',
+                contentType : 'application/pdf',
                 async    : false,
                 error    : function(request, error) { alert("Erreur : responseText: "+request.responseText);},
                 success  : function(data) {
