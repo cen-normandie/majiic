@@ -18,15 +18,24 @@ $html = '
 echo "</br>new pdf";
 $mpdf = new \Mpdf\Mpdf([
 	'mode' => 'utf-8',
-	'margin_left' => 32,
-	'margin_right' => 25,
-	'margin_top' => 27,
-	'margin_bottom' => 25,
-	'margin_header' => 16,
-	'margin_footer' => 13,
+	'margin_left' => 10,
+	'margin_right' => 10,
+	'margin_top' => 20,
+	'margin_bottom' => 20,
+	'margin_header' => 10,
+	'margin_footer' => 10,
     'default_font_size' => 8,
     'tempDir' => '/var/www/html/majiic/download/pdf'
 ]);
+
+$mpdf->SetHTMLFooter('
+<table width="100%">
+    <tr>
+        <td width="33%">{DATE j-m-Y}</td>
+        <td width="33%" align="center">{PAGENO}/{nbpg}</td>
+        <td width="33%" style="text-align: right;">My document</td>
+    </tr>
+</table>');
 
 $mpdf->SetDisplayMode('fullpage');
 echo "</br>file get contents";
