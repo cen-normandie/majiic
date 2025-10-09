@@ -40,7 +40,8 @@ $mpdf = new \Mpdf\Mpdf([
 	'margin_top' => 27,
 	'margin_bottom' => 25,
 	'margin_header' => 16,
-	'margin_footer' => 13
+	'margin_footer' => 13,
+    'tempDir' => '/var/www/html/majiic/download/pdf'
 ]);
 
 
