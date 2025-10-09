@@ -49,6 +49,6 @@ $stylesheet = file_get_contents('/var/www/html/majiic/bootstrap-5.0.0/css/bootst
 $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
 $mpdf->WriteHTML($html,2);
 
-$mpdf->Output('test.pdf', \Mpdf\Output\Destination::INLINE);
-
+//$mpdf->Output('/var/www/html/majiic/download/pdf/'.$name_, \Mpdf\Output\Destination::INLINE);
+$mpdf->Output('/var/www/html/majiic/download/pdf/'.$name_, 'F');
 
