@@ -1,6 +1,6 @@
 <?php
 echo "test pdf";
-require_once '/vendor/autoload.php';
+require_once '/var/www/html/majiic/vendor/autoload.php';
 
 $html = '
 <h1>mPDF</h1>
@@ -43,9 +43,9 @@ $mpdf->SetDisplayMode('fullpage');
 
 
 // Load a stylesheet
-$stylesheet = file_get_contents('bootstrap-5.0.0/css/bootstrap.css');
+$stylesheet = file_get_contents('/var/www/html/majiic/bootstrap-5.0.0/css/bootstrap.css');
 
 $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
 $mpdf->WriteHTML($html,2);
 
-$mpdf->Output('/download/pdf/test.pdf', \Mpdf\Output\Destination::INLINE);
+$mpdf->Output('/var/www/html/majiic/download/pdf/test.pdf', \Mpdf\Output\Destination::INLINE);
