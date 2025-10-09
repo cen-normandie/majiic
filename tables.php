@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 echo "test pdf";
 require_once '/var/www/html/majiic/vendor/autoload.php';
 echo "</br>require done";
