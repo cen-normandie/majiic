@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 include '../php/properties.php';
 
 //connexion a la BD
-$conn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN password=$PASS");
+$conn = pg_connect("hostaddr=$dbgeon port=$dbgeonport dbname=$dbgeonname user=$dbgeonlogin password=$dbgeonpass");
 
 // Récupération des paramètres
 $suivi = $_POST["suivi"] ?? "phyto";
