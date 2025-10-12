@@ -29,11 +29,7 @@ if (in_array($_SESSION['email'], $admins)) {
     <title>CEN Normandie</title>
     <link rel="shortcut icon" href="img/CenNormandie.ico" />
     <script>L_PREFER_CANVAS = true;</script>
-    
-    
     <!--LEAFLET-->
-    <!--<link href="css/leaflet.css" rel="stylesheet" type="text/css">-->
-    <link href="../js/leaflet1.7/leaflet.css" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core CSS -->
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 	<link href="../bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -153,15 +149,6 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="../js/plugins/bs5-datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
 <!-- FONT AWESOME -->
 <script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
-<!-- LEAFLET -->
-<script type="text/javascript" src="../js/leaflet1.7/leaflet.js"></script>
-<script type="text/javascript" src="../js/leaflet1.7/leaflet-src.js"></script>
-<!--<script type="text/javascript" src="../js/leaflet1.7/leaflet_label/js/leaflet_label.js" ></script>-->
-
-<!-- LEAFLET CUSTOM -->
-<script type="text/javascript" src="../js/init_leaflet_dashboard.js"></script>
-
-
 <!-- HIGHCHARTS -->
 <script type="text/javascript" src="../js/plugins/highcharts/code/highstock.js"></script>
 <script type="text/javascript" src="../js/plugins/highcharts/code/modules/exporting.js"></script>  
@@ -188,7 +175,6 @@ $(document).ready(function() {
 
 change_load("Chargement des données");
 //TEST TOAST ####################################################
-    $('.toast').toast('show');
 });
 
 
