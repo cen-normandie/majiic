@@ -13,7 +13,7 @@ if (!isset($_SESSION['session'])) {
     exit();
 };
 $_SESSION['is_admin'] = false;
-$admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
+$admins = array("b.perceval@cen-normandie.fr");
 if (in_array($_SESSION['email'], $admins)) {
     $_SESSION['is_admin'] = true;
 }
