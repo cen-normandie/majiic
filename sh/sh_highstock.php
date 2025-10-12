@@ -80,11 +80,11 @@ foreach ($fonctions as $key => $fonction) {
 
 <script src="../js/jquery.js" ></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="bootstrap-5.0.0/js/bootstrap.min.js"></script>
+<script src="../bootstrap-5.0.0/js/bootstrap.min.js"></script>
 <script src="../js/plugins/bs5-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="../js/plugins/bs5-datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
 <!-- FONT AWESOME -->
-<script src="fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
+<script src="../fontawesome-free-5.15.2-web/js/fontawesome.min.js" ></script>
 <!-- HIGHCHARTS -->
 <script type="text/javascript" src="../js/plugins/highcharts/code/highstock.js"></script>
 <script type="text/javascript" src="../js/plugins/highcharts/code/modules/exporting.js"></script>  
