@@ -27,7 +27,7 @@ if (in_array($_SESSION['email'], $admins)) {
     <meta name="description" content="">
     <meta name="author" content="">
     <title>CEN Normandie</title>
-    <link rel="shortcut icon" href="img/CenNormandie.ico" />
+    <link rel="shortcut icon" href="../img/CenNormandie.ico" />
     <script>L_PREFER_CANVAS = true;</script>
     <!--LEAFLET-->
     <!-- Bootstrap Core CSS -->
