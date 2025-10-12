@@ -25,6 +25,7 @@ $fonctions = [
 $data = [];
 foreach ($fonctions as $key => $fonction) {
     if ($suivi == "phyto") {
+        echo "Querying $fonction with site=$site, annee=$annee, plot=$plot, transect=$transect\n";
         $result = pg_query_params($conn, "SELECT * FROM $fonction($1, $2, $3, $4)", [$site, $annee, $plot, $transect]);
     } else {
         $result = pg_query_params($conn, "SELECT * FROM $fonction($1)", [$releve_id]);
