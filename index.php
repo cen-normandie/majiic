@@ -47,7 +47,7 @@
         <div class="d-flex flex-column justify-content-end" style="">
 			<div class="d-flex align-items-start flex-column" style="">
 				<div class="p-4 w-100"><h2>Connexion à l'application CEN Normandie</h2></div>
-				<div class="p-4 col-6">
+				<div class="p-4 col-sm-12 col-md-6 col-lg-4">
 					<form role="form">
 						<div class="input-group w-50">
 							<span class="input-group-text justify-content-center col-2" id="user"><i class="fas fa-user"></i></span>
