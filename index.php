@@ -46,14 +46,14 @@
 		</div>
         <div class="d-flex flex-column justify-content-end" style="">
 			<div class="d-flex align-items-start flex-column" style="">
-				<div class="p-4 w-100"><h2>Connexion à l'application CEN Normandie</h2></div>
-				<div class="p-4 col-sm-12 col-md-6 col-lg-4">
+				<div class="p-2 w-100"><h2>Connexion à l'application CEN Normandie</h2></div>
+				<div class="p-2 col-sm-12 col-md-6 col-lg-4">
 					<form role="form">
-						<div class="input-group w-50">
+						<div class="input-group w-100">
 							<span class="input-group-text justify-content-center col-2" id="user"><i class="fas fa-user"></i></span>
                             <input id="courriel" type="text" class="form-control col-10 " placeholder="Identifiant de session " aria-label="courriel@mail.com" aria-describedby="user" tabindex="1">
                         </div>
-						<div class="input-group w-50 my-2">
+						<div class="input-group w-100 my-2">
 							<span class="input-group-text justify-content-center col-2" id="passwordLabel"><i class="fas fa-key"></i></span>
                             <input id="pwd" type="password" class="form-control col-10 " placeholder="MoTDePassE" aria-label="MoTDePassE" aria-describedby="passwordLabel" tabindex="2" >
                         </div>
