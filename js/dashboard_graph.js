@@ -160,12 +160,6 @@ chart: {
 },
 legend: {
         enabled: false
-        // ,
-        // layout: 'vertical',
-        // floating: false,
-        // align: 'right',
-        // verticalAlign: 'top',
-        // y:30
     },
 title: {
     text: 'Typologie des sites'
@@ -208,23 +202,6 @@ series: [{
     {name: 'écosystèmes forestiers',y: 0},
     {name: 'écosystèmes lacustres',y: 0}
     ]
-
-    // {name: 'inconnu',y: data_[0]},
-    // {name: 'tourbières et marais',y: data_[1]},
-    // {name: 'milieux variés',y: data_[2]},
-    // {name: 'milieux rupestres ou rocheux',y: data_[3]},
-    // {name: 'milieux artificialisés (carrières,…)',y: data_[4]},
-    // {name: 'sites géologiques',y: data_[5]},
-    // {name: 'écosystèmes montagnards',y: data_[6]},
-    // {name: 'autres',y: data_[7]},
-    // {name: 'pelouses sèches',y: data_[8]},
-    // {name: 'landes, fruticées et prairies',y: data_[9]},
-    // {name: 'écosystèmes alluviaux',y: data_[10]},
-    // {name: 'gîtes à chiroptères',y: data_[11]},
-    // {name: 'écosystèmes littoraux et marins',y: data_[12]},
-    // {name: 'écosystèmes aquatiques',y: data_[13]},
-    // {name: 'écosystèmes forestiers',y: data_[14]},
-    // {name: 'écosystèmes lacustres',y: data_[15]}
 }]
 });
 
