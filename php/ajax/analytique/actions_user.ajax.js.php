@@ -28,7 +28,7 @@ WITH t as (
     LEFT JOIN $progecen_projets p on a.id_projet = p.id_projet 
     LEFT JOIN $progecen_group g on g.id_group = a.personnes
   WHERE (a.personnes ~* $1 or g.personnes  ~* $1)
-  AND (p.date_debut::text like '%2026%' OR p.date_debut::text like '%2025%') 
+  AND (p.date_debut::text like '%2025%' OR p.date_debut::text like '%2024%') 
 )
 SELECT json_agg(t) FROM t
 "
