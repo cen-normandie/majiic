@@ -2,7 +2,9 @@
 session_start();
 include '../../properties.php';
 //$year_ = date("Y")-1;
-$year_ = date("Y");
+
+//finir les saisies de fin d'années
+$year_ = date("Y")-1;
 
 
 $user = $_SESSION['u_nom_user_progecen'];//$_SESSION['u_id_progecen'];
