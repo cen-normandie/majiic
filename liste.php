@@ -112,7 +112,7 @@ ldap_close($ldap_conn);
     <!-- Bootstrap 5 JS -->
     <script src="./bootstrap-5.0.0/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
-    <script src="./js/plugins/datatable/dataTables.min.js"></script>
+    <script src="./js/plugins/datatable/d.min.js"></script>
     <script src="./js/plugins/datatable/dataTables.bootstrap5.min.js"></script>
     <!-- DataTables Buttons JS -->
     <script src="./js/plugins/datatable/Buttons-1.7.0/js/dataTables.buttons.min.js"></script>
