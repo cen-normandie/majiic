@@ -16,8 +16,11 @@ const dtUsers =$('#usersDT').DataTable({
         "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
         "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau"
     },
-    dom: '<"top"<"d-flex justify-content-between align-items-center"Bf>>t', // export excel -->B :<"top"<"d-flex justify-content-end align-items-center"fB>>t
-    buttons: [],
+    //dom: '<"top"<"d-flex justify-content-between align-items-center"Bf>>t',
+    dom: '' + 't' + '<"d-flex align-items-center gap-2 px-2"fB<"ms-auto"p>>',
+        buttons: [
+          { extend: 'excel', text: 'Excel', className: 'btn btn-sm btn-outline-success', init: function(api, node, config) {$(node).removeClass('btn-secondary')}},
+        ],
 
     scrollY: '400px',
     scrollCollapse: true,

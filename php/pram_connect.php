@@ -27,7 +27,7 @@
 <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
 
 
-<div class="d-flex flex-column text-secondary col-md-6 col-lg-6 px-4"> 
+<div class="d-flex flex-column text-secondary col-md-12 col-lg-12 px-4"> 
                     <div class="d-flex w-100 justify-content-center bg-light text-secondary m-2"><h4 class="bebas">Utilisateurs Géomare</h4></div>
                     <div class="d-flex flex-column w-100 bg-light mb-2">
                         <table id="usersDT" class="table table-hover table-sm" style="width:100%"> 
