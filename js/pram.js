@@ -22,7 +22,7 @@ const dtUsers =$('#usersDT').DataTable({
           { extend: 'excel', text: 'Excel', className: 'btn btn-sm btn-outline-success', init: function(api, node, config) {$(node).removeClass('btn-secondary')}},
         ],
 
-    scrollY: '400px',
+    scrollY: '600px',
     scrollCollapse: true,
     paging: false
 });
@@ -44,8 +44,9 @@ function load_users_ajax () {
                     users_geomares[user].nom_u, 
                     users_geomares[user].profil_u,
                     users_geomares[user].id_observateur_pram,
-                    users_geomares[user].id_structure_pram,
-                    users_geomares[user].nom_structure_pram
+                    users_geomares[user].nom_structure_pram,
+                    users_geomares[user].nb_car,
+                    users_geomares[user].nb_loc
                 ] ).node().id = users_geomares[user].mail_u;
             }
             dtUsers.draw();
