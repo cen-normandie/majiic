@@ -7,7 +7,7 @@ $result = pg_prepare($dbconn, "sql",
 "
 SELECT array_to_json(array_agg(row_to_json(t))) FROM 
 (
-select mail_u, nom_u, profil_u
+select mail_u, nom_u, profil_u, id_observateur_pram, id_structure_pram, nom_structure_pram
 from $spop_users
 ) t
 "

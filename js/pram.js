@@ -39,7 +39,10 @@ function load_users_ajax () {
                 let rowNode = dtUsers.row.add( [
                     users_geomares[user].mail_u,
                     users_geomares[user].nom_u, 
-                    users_geomares[user].profil_u
+                    users_geomares[user].profil_u,
+                    users_geomares[user].id_observateur_pram,
+                    users_geomares[user].id_structure_pram,
+                    users_geomares[user].nom_structure_pram
                 ] ).node().id = users_geomares[user].mail_u;
             }
             dtUsers.draw();

@@ -36,6 +36,9 @@
                                     <th>Mail</th>
                                     <th>Nom</th>
                                     <th>Profil</th>
+                                    <th>ID Observateur PRAM</th>
+                                    <th>ID Structure PRAM</th>
+                                    <th>Nom Structure PRAM</th>
                                 </tr>
                             </thead>
                             <tbody>
