@@ -40,11 +40,11 @@ if (pg_num_rows($res) > 0) {
         id_ore = $4,
         id_unique = $5
         WHERE SPLIT_PART(id_unique,'|',2) = $6";
-
+    echo "UPDATE AA";
     $prepared_update = pg_prepare($dbconn, "update_parcelle", $sql_update);
 
     $id_unique = $p_site . '|' . $p_insee . $p_prefixe . str_pad($p_section, 2, '0', STR_PAD_LEFT) . str_pad($p_num, 4, '0', STR_PAD_LEFT) . '|' . coalesce(nullif($p_acqu, 'ø'), nullif($p_conv, 'ø'), nullif($p_ore, 'ø'), '');
-
+    echo "UPDATE A";
     $result_update = pg_execute($dbconn, "update_parcelle", array(
         $p_conv,
         $p_acqu,
@@ -62,8 +62,8 @@ if (pg_num_rows($res) > 0) {
         id_doc_gestion = '" . $p_ddg . "',
         id_ore = '" . $p_ore . "',
         id_unique = '" . $id_unique . "'
-        WHERE SPLIT_PART(id_unique,'|',2) = '" . $p_insee.$p_prefixe.str_pad($p_section, 2, '0', STR_PAD_LEFT).str_pad($p_num, 4, '0', STR_PAD_LEFT) . "'";
-    echo "Update SQL: " . $sql_update_display . "\n";
+        WHERE SPLIT_PART(id_unique,'|',2) = '" . $id_parc . "'";
+    echo "Update SQL: " . $sql_update_display . "</br>";
 
     echo $result_update ? "Mise à jour réussie" : pg_last_error();
 } else {
@@ -81,11 +81,11 @@ if (pg_num_rows($res) > 0) {
         doc_reference
         )
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-
+    echo "INSERT AA";
     $prepared_insert = pg_prepare($dbconn, "insert_parcelle", $sql_insert);
 
     $id_unique = $p_site . '|' . $p_insee . $p_prefixe . str_pad($p_section, 2, '0', STR_PAD_LEFT) . str_pad($p_num, 4, '0', STR_PAD_LEFT) . '|' . coalesce(nullif($p_acqu, 'ø'), nullif($p_conv, 'ø'), nullif($p_ore, 'ø'), '');
-
+    echo "INSERT A";
     $result_insert = pg_execute($dbconn, "insert_parcelle", array(
         $id_unique,
         $p_site,
