@@ -69,7 +69,8 @@ if (pg_num_rows($res) > 0) {
 } else {
     $type = 'insert';
     echo "INSERT";
-    $sql_insert = "INSERT INTO $parcelles (
+    $prepared_insert = pg_prepare($dbconn, "insert_parcelle", 
+    "INSERT INTO $parcelles (
         id_unique,
         id_group,
         id_convention,
@@ -80,9 +81,8 @@ if (pg_num_rows($res) > 0) {
         id_ore,
         doc_reference
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-    echo "INSERT AA";
-    $prepared_insert = pg_prepare($dbconn, "insert_parcelle", $sql_insert);
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);"
+    );
 
     $id_unique = $p_site . '|' . $p_insee . $p_prefixe . str_pad($p_section, 2, '0', STR_PAD_LEFT) . str_pad($p_num, 4, '0', STR_PAD_LEFT) . '|' . coalesce(nullif($p_acqu, 'ø'), nullif($p_conv, 'ø'), nullif($p_ore, 'ø'), '');
     echo "INSERT A";
