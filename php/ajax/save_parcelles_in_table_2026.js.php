@@ -21,15 +21,17 @@ $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN pas
 // Requête de vérification
 $sql_check = "SELECT id_unique FROM $parcelles WHERE SPLIT_PART(id_unique,'|',2) = $1";
 $res = pg_prepare($dbconn, "check_parcelle", $sql_check);
-$res = pg_execute($dbconn, "check_parcelle", array($p_insee.$p_prefixe.$p_section.$p_num));
+$id_parc = $p_insee . $p_prefixe . str_pad($p_section, 2, '0', STR_PAD_LEFT) . str_pad($p_num, 4, '0', STR_PAD_LEFT);
+$res = pg_execute($dbconn, "check_parcelle", array($id_parc)) or die(pg_last_error());
 
 // Affichage de la requête de vérification
-$sql_check_display = "SELECT id_unique FROM $parcelles WHERE SPLIT_PART(id_unique,'|',2) = '" . $p_insee.$p_prefixe.$p_section.$p_num . "'";
-echo "Check SQL: " . $sql_check_display . "\n";
+$sql_check_display = "SELECT id_unique FROM $parcelles WHERE SPLIT_PART(id_unique,'|',2) = '" . $id_parc . "'";
+echo "Check SQL: " . $sql_check_display . " </br>";
 
 // Si la parcelle existe --> Mise à jour des données
 if (pg_num_rows($res) > 0) {
     $type = 'update';
+    echo "UPDATE";
     $sql_update = "UPDATE $parcelles
         SET
         id_convention = $1,
@@ -66,6 +68,7 @@ if (pg_num_rows($res) > 0) {
     echo $result_update ? "Mise à jour réussie" : pg_last_error();
 } else {
     $type = 'insert';
+    echo "INSERT";
     $sql_insert = "INSERT INTO $parcelles (
         id_unique,
         id_group,
