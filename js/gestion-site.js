@@ -305,7 +305,7 @@ $("#save_site").click(function(){
         fd.append('p_ore',                 $("#p_ore"+i_p).val());
         $.ajax({
         // chargement du fichier externe monfichier-ajax.php
-        url      : "php/ajax/save_parcelles_in_table.js.php",
+        url      : "php/ajax/save_parcelles_in_table_2026.js.php",
         type     : 'POST',
         data     : fd ,
         processData : false,
