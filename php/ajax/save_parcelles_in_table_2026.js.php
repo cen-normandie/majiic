@@ -18,9 +18,14 @@ $dbconn = pg_connect("hostaddr=$DBHOST port=$PORT dbname=$DBNAME user=$LOGIN pas
     $p_ddg                      = $_POST["p_ddg"];
     $p_ore                      = $_POST["p_ore"];
 
+// Requête de vérification
 $sql_check = "SELECT id_unique FROM $parcelles WHERE SPLIT_PART(id_unique,'|',2) = $1";
 $res = pg_prepare($dbconn, "check_parcelle", $sql_check);
 $res = pg_execute($dbconn, "check_parcelle", array($p_insee.$p_prefixe.$p_section.$p_num));
+
+// Affichage de la requête de vérification
+$sql_check_display = "SELECT id_unique FROM $parcelles WHERE SPLIT_PART(id_unique,'|',2) = '" . $p_insee.$p_prefixe.$p_section.$p_num . "'";
+echo "Check SQL: " . $sql_check_display . "\n";
 
 // Si la parcelle existe --> Mise à jour des données
 if (pg_num_rows($res) > 0) {
@@ -46,6 +51,17 @@ if (pg_num_rows($res) > 0) {
         $id_unique,
         $p_insee.$p_prefixe.str_pad($p_section, 2, '0', STR_PAD_LEFT).str_pad($p_num, 4, '0', STR_PAD_LEFT)
     ));
+
+    // Affichage de la requête de mise à jour
+    $sql_update_display = "UPDATE $parcelles
+        SET
+        id_convention = '" . $p_conv . "',
+        id_acquisition = '" . $p_acqu . "',
+        id_doc_gestion = '" . $p_ddg . "',
+        id_ore = '" . $p_ore . "',
+        id_unique = '" . $id_unique . "'
+        WHERE SPLIT_PART(id_unique,'|',2) = '" . $p_insee.$p_prefixe.str_pad($p_section, 2, '0', STR_PAD_LEFT).str_pad($p_num, 4, '0', STR_PAD_LEFT) . "'";
+    echo "Update SQL: " . $sql_update_display . "\n";
 
     echo $result_update ? "Mise à jour réussie" : pg_last_error();
 } else {
@@ -78,6 +94,30 @@ if (pg_num_rows($res) > 0) {
         $p_ore,
         coalesce(nullif($p_acqu, 'ø'), nullif($p_conv, 'ø'), nullif($p_ore, 'ø'), '')
     ));
+
+    // Affichage de la requête d'insertion
+    $sql_insert_display = "INSERT INTO $parcelles (
+        id_unique,
+        id_group,
+        id_convention,
+        id_acquisition,
+        pp,
+        type_group,
+        id_doc_gestion,
+        id_ore,
+        doc_reference
+        )
+        VALUES (
+        '" . $id_unique . "',
+        '" . $p_site . "',
+        '" . $p_conv . "',
+        '" . $p_acqu . "',
+        '" . $pp_ . "',
+        'site',
+        '" . $p_ddg . "',
+        '" . $p_ore . "',
+        '" . coalesce(nullif($p_acqu, 'ø'), nullif($p_conv, 'ø'), nullif($p_ore, 'ø'), '') . "')";
+    echo "Insert SQL: " . $sql_insert_display . "\n";
 
     echo $result_insert ? "Insertion réussie" : pg_last_error();
 }

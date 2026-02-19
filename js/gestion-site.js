@@ -284,7 +284,7 @@ function get_data_parcelle_for_update (id_site) {
 
 
 
-$("#save_site").click(function(){
+/* $("#save_site").click(function(){
     var i_p = 0;
     $('#site_parcelles_content > tr').each(function() {
         var fd = new FormData();
@@ -304,7 +304,6 @@ $("#save_site").click(function(){
         fd.append('p_ddg',                 $("#p_ddg"+i_p).val());
         fd.append('p_ore',                 $("#p_ore"+i_p).val());
         $.ajax({
-        // chargement du fichier externe monfichier-ajax.php
         url      : "php/ajax/save_parcelles_in_table_2026.js.php",
         type     : 'POST',
         data     : fd ,
@@ -323,10 +322,52 @@ $("#save_site").click(function(){
         });
         i_p++;
     });
-    //update mfu.sites
-    // lance la routine de mise à jour sql
-    refresh_page();
+}); */
+
+$("#save_site").click(function() {
+    var i_p = 0;
+    $('#site_parcelles_content > tr').each(function() {
+        var fd = new FormData();
+        fd.append('count_parcelle', i_p);
+        fd.append('p_insee', $("#p_insee" + i_p).val());
+        fd.append('p_prefixe', $("#p_prefixe" + i_p).val());
+        fd.append('p_section', $("#p_section" + i_p).val());
+        fd.append('p_num', $("#p_num" + i_p).val());
+        if ($("#pp_" + i_p).is(':checked')) {
+            fd.append('pp_', 'true');
+        } else {
+            fd.append('pp_', 'false');
+        }
+        fd.append('p_conv', $("#p_conv" + i_p).val());
+        fd.append('p_acqu', $("#p_acqu" + i_p).val());
+        fd.append('p_site', $("#p_site" + i_p).val());
+        fd.append('p_ddg', $("#p_ddg" + i_p).val());
+        fd.append('p_ore', $("#p_ore" + i_p).val());
+
+        $.ajax({
+            url: "php/ajax/save_parcelles_in_table_2026.js.php",
+            type: 'POST',
+            data: fd,
+            processData: false,
+            contentType: false,
+            async: false,
+            error: function(request, error) {
+                alert("Erreur : responseText: " + request.responseText);
+            },
+            success: function(data) {
+                console.log(data); // Affiche les requêtes SQL dans la console
+                if (data.includes("réussie")) {
+                    // Succès
+                } else if (!data.includes("Check SQL:") && !data.includes("Update SQL:") && !data.includes("Insert SQL:")) {
+                    alert(data);
+                }
+            }
+        });
+        i_p++;
+    });
 });
+
+
 
 $("#delete_site").click(function(){
     
