@@ -102,7 +102,6 @@ if ($ldapconn) {
                         <p  align=center style='text-align:center;line-height:18px;margin-bottom:0px;margin-top:0px;margin-left:4px;'>
                             <a href='https://www.facebook.com/CENNormandie/' target='blank_'><img border=0 width=16 height=16 src='https://cen-n.fr/img/fk.png'></a>&nbsp; 
                             <a href='https://www.instagram.com/cennormandie/' target='blank_'><img border=0 width=16 height=16 src='https://cen-n.fr/img/im.png'></a>&nbsp; 
-                            <a href='https://twitter.com/cen_normandie' target='blank_'><img border=0 width=16 height=16 src='https://cen-n.fr/img/tr.png'></a>&nbsp; 
                             <a href='https://www.youtube.com/channel/UC0eh_NNl-WEjZhoIuUGRA3g' target='blank_'><img border=0 width=16 height=16 src='https://cen-n.fr/img/ye.png'></a>&nbsp; 
                         <p>
                         <p  align=center style='text-align:center;margin-bottom:0px;margin-top:0px;'>
