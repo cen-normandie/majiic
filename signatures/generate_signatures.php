@@ -33,7 +33,8 @@ if ($ldapconn) {
         echo "LDAP bind successful... A USER";
 
         //POUR AVOIR UN TABLEAU AVEC LA LISTE DES SALARIES
-        $filter_salarie="(memberof=CN=enabled,OU=Groupes,DC=CSNHN,DC=LOCAL)";//CN=enabled,OU=Groupes,DC=CSNHN,DC=LOCAL
+        //$filter_salarie="(memberof=CN=enabled,OU=Groupes,DC=CSNHN,DC=LOCAL)";//CN=enabled,OU=Groupes,DC=CSNHN,DC=LOCAL
+        $filter_salarie="(&(memberof=CN=enabled,OU=Groupes,DC=CSNHN,DC=LOCAL)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
         $sr_salarie=ldap_search($ldapconn, "DC=CSNHN,DC=LOCAL", $filter_salarie);
         $result_salarie= ldap_get_entries($ldapconn, $sr_salarie);
 
