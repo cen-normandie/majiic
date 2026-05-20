@@ -32,6 +32,9 @@ document.getElementById("export_p_2024").addEventListener("click", function() {
 document.getElementById("export_p_2025").addEventListener("click", function() {
     export_(2025);
 });
+document.getElementById("export_p_2026").addEventListener("click", function() {
+    export_(2026);
+});
 
 //export excel temps des projets GLOBAL
 document.getElementById("export_2022").addEventListener("click", function() {
@@ -45,6 +48,9 @@ document.getElementById("export_2024").addEventListener("click", function() {
 });
 document.getElementById("export_2025").addEventListener("click", function() {
     export_global(2025);
+});
+document.getElementById("export_2026").addEventListener("click", function() {
+    export_global(2026);
 });
 
 function export_(year) {
