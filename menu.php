@@ -46,12 +46,12 @@
         <i class="fas fa-frog"></i> Géonature
       </a>
   </li>
-  <li class="nav-item">
+ <!--  <li class="nav-item">
       <a class="nav-link py-1"  href="https://gestparc.csnhn.local/glpi/" target="_blank">
         <span data-feather=""></span>
         <i class="fas fa-ticket-alt"></i> Ouvrir un ticket
       </a>
-  </li>
+  </li> -->
   <li class="nav-item">
       <a class="nav-link py-1"  href="https://wiki.cen-n.fr" target="_blank">
         <span data-feather=""></span>
@@ -73,18 +73,18 @@
   <hr class="bg-secondary mx-2 my-1">
     <div class="ml-2">
       <span class="nav-link text-secondary">Projets :</span>
-        <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'analytique.php') ? ' active' : '' ); echo $t; ?>"  href="analytique.php">
+<!--         <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'analytique.php') ? ' active' : '' ); echo $t; ?>"  href="analytique.php">
             <span data-feather=""></span>
             <i class="far fa-calendar-alt"></i> Analytique
-        </a>
+        </a> -->
         <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'suivi_projet.php') ? ' active' : '' ); echo $t; ?>"  href="suivi_projet.php">
             <span data-feather=""></span>
             <i class="fas fa-tasks"></i> Suivi Projet
         </a>
-          <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'create_projet.php') ? ' active' : '' ); echo $t; ?>"  href="create_projet.php">
+<!--           <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'create_projet.php') ? ' active' : '' ); echo $t; ?>"  href="create_projet.php">
           <span data-feather=""></span>
           <i class="fas fa-plus"></i> Création de projet
-        </a>
+        </a> -->
 
 <?php 
  if ($_SESSION['fdt_optimisation']) {
