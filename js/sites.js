@@ -113,12 +113,14 @@ function apply_filters() {
             parcelles_f = filtre_obj(parcelles_f, property);
         }
     }
+    //$("#categorie").text(sites_f[0].categorie);
     update_chiffres_sites(sites_f);
     update_chiffres_parcelles(parcelles_f);
     if ( !(Object.keys(sites_f).length === 0) ) {
         update_map(sites_f, "sites");
         
     }
+    
 };
 function update_map(json_, layers_) {
     //ClearLayer
@@ -197,6 +199,7 @@ function update_chiffres_sites (sites_json) {
         sum_surf += sites_json[site].surface;
     }
     $("#sum_surface").text(Math.round(sum_surf));
+    $("#categorie").text(sites_json[0].categorie);
 }
 
 // LOAD DATA 

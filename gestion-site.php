@@ -524,6 +524,29 @@ if (in_array($_SESSION['email'], $admins)) {
           </div>
         </div>
       </div>
+      <div class="mx-2 mt-2 mb-5 shadow">
+        <div class="d-flex justify-content-center border">
+          <div class="w-50">
+            <div class="d-flex justify-content-center border">
+              <h2 class="text-uppercase text-secondary">Catégorie du site</h2>
+            </div>
+            <div class="d-flex flex-column m-2">
+            <span class="m-2">Changer la catégorie d'un site</span>
+              <div class="input-group p-2">
+                <span class="input-group-text" id="site_cat_autocomplete">Site</span>
+                <input id="id_site_cat" type="text" class="form-control" placeholder="Chicheboville" aria-label="" aria-describedby="site_cat_autocomplete">
+              </div>
+              <div class="input-group p-2 mb-4">
+                <select class="form-control" id="cat_site">
+                  <option value="1">Catégorie 1</option>
+                  <option value="2">Catégorie 2</option>
+                </select>
+                <button id="save_cat_site" type="input-group-btn" class="btn btn-outline-success">Sauvegarder la catégorie</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 		</div>
 
 

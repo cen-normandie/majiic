@@ -166,6 +166,80 @@ $( "#ddg_autocomplete" ).autocomplete({
             $('#out_ddg').removeClass("d-none");
         }
     });
+$('#id_site_cat').on('input',function(e){
+  document.getElementById("site_cat_autocomplete").classList.remove('is-valid');
+});
+$( "#id_site_cat" ).autocomplete({
+      //source: availableTags,
+      source: function( request, response ) {
+        $.ajax( {
+          method   : "POST",
+          url: "php/ajax/search_autocomplete_site.js.php",
+          dataType : "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+            var JSON_values_completed = [];
+            $.each(data, function (index, value) {
+                var id_site= value.split(' - ')[0];
+                var nom_site= value.split(' - ')[1];
+                var geom_site_centroid= value.split(' - ')[2];
+                //values_completed.items.push({label: nom_site, value: id_site, geometry: geom_site_centroid});
+                 JSON_values_completed.push({
+                    label: id_site + ' - '+nom_site,
+                    value: id_site + ' - '+nom_site
+                });
+            })
+            response(JSON_values_completed);
+            $('#id_site_cat').addClass("is-valid");
+          }
+        } );
+      },
+      minLength : 3,
+      select: function AutoCompleteSelectHandler(event, ui)
+        {               
+            var name = ui.item.value;
+            //console.log(ui.item);
+            var id_site = name.split(' - ')[0];
+            p_id_site_ = ui.item.value.split(' - ')[0];
+            $("#site_actif_cat").text(p_id_site_);
+            $('#out_site_cat').removeClass("d-none");
+        }
+    });
+
+$("#save_cat_site").click(function() {
+        console.log("Click");
+
+        var fd = new FormData();
+        fd.append('id_site', $("#id_site_cat").val().split(' - ')[0]);
+        fd.append('categorie', $("#cat_site").val());
+        console.log("id_site: " + $("#id_site_cat").val().split(' - ')[0]);
+        console.log("categorie: " + $("#cat_site").val());
+
+        $.ajax({
+            url: "php/ajax/gestion/save_cat.js.php",
+            type: 'POST',
+            data: fd,
+            processData: false,
+            contentType: false,
+            async: false,
+            error: function(request, error) {
+                alert("Erreur : responseText: " + request.responseText);
+            },
+            success: function(data) {
+                console.log(data); // Affiche les requêtes SQL dans la console
+                if (data.includes("réussie")) {
+                    // Succès
+                } else if (!data.includes("Check SQL:") && !data.includes("Update SQL:") && !data.includes("Insert SQL:")) {
+                    alert(data);
+                }
+            }
+        });
+
+});
+
+
 
 $( "#id_site_autre_doc" ).autocomplete({
       //source: availableTags,

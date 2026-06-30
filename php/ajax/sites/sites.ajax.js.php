@@ -37,6 +37,7 @@ WITH t as (
   s.bassin,
   s.ucg,
   s.id_doc_gestion,
+  s.categorie_site as categorie,
   round( (st_area( coalesce(s.geom_pp, s.geom) )/10000)::numeric,2) as surface,
   coalesce(d.autres_docs, '') as autres_docs,
   (

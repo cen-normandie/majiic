@@ -67,7 +67,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <div class="mb-3 autocompleteBS">
                     <label for="input_site" class="form-label">Sélectionnez un site du Conservatoire : </label>
                     <div class="input-group" disabled>
-                        <input class="form-control" id="input_site" type="text" size="60" placeholder="ex: Lande Mouton">
+                        <input class="form-control" id="input_site" type="text" size="60" placeholder="ex: Chicheboville">
                         <span class="input-group-text justify-content-center col-2" id="del"><i class="far fa-trash-alt"></i></span>
                     </div>
                 </div>
@@ -79,6 +79,9 @@ if (in_array($_SESSION['email'], $admins)) {
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center bg-light" >
                             Surface :<span  id="sum_surface" class="badge bg-success">...</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-light" >
+                            Catégorie :<span  id="categorie" class="badge bg-success">...</span>
                         </li>
                     </ul>
                 </div>
