@@ -43,6 +43,8 @@ if (in_array($_SESSION['email'], $admins)) {
     <!--LEAFLET-->
     <link href="js/leaflet1.7/leaflet.css" rel="stylesheet" type="text/css">
     <link href="css/custom_leaflet.css" rel="stylesheet" type="text/css">
+    <!-- pluginleaflet -->
+    <link href="js/leaflet/ign/GpPluginLeaflet.css" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core CSS -->
     <link href="bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
     <!--Datatable-->
@@ -151,6 +153,8 @@ if (in_array($_SESSION['email'], $admins)) {
 <script src="js/plugins/datatable/dataTables.bootstrap5.min.js"></script>
 <!--Leaflet-->
 <script src="js/leaflet1.7/leaflet.js" ></script>
+<!-- pluginleaflet -->
+<script src="js/leaflet/ign/GpPluginLeaflet.js" ></script>
 <script src="js/init_leaflet.js" ></script>
 
 <!--Custom-->

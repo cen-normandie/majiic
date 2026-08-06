@@ -40,25 +40,19 @@ function initmap() {
     //var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
     var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.7});
 
-    //Plan proxy
-    // URL originale de la couche Plan IGN
-    // var ignPlan = 'https://data.geopf.fr/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=PLAN.IGNK&format=image/png&style=normal';
-
-    // URL via le proxy PHP
-    var ignPlan = 'https://cen-n.fr/proxy.php?url=' + encodeURIComponent('https://data.geopf.fr/wmts?service=WMTS&request=GetTile&version=1.0.0&tilematrixset=PM&tilematrix={z}&tilecol={x}&tilerow={y}&layer=PLAN.IGNK&format=image/png&style=normal');
-
+    // PLAN
+    var ignPlan = 'https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}';
+    // Ajoute la couche Plan IGN à ta carte
     var ignP = new L.TileLayer(ignPlan, {
         minZoom: 4,
         maxZoom: 22,
-        attribution: '© IGN',
+        attribution: ignAttrib,
         opacity: 0.7
     });
-
-    //map.addLayer(ignP);
+    map.addLayer(ignP);
 
     map.setView(new L.LatLng(49.3,0.52),8);
     //map.addLayer(ignO);
-    map.addLayer(ignO);
     
     
     

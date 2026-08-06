@@ -49,8 +49,18 @@ function initmap() {
     //var osm=new L.TileLayer(osmUrl,{minZoom:4,maxZoom:22,attribution:osmAttrib,opacity: 0.6});
     var ignO = new L.TileLayer(ignOrtho,{minZoom:4,maxZoom:22,attribution:ignAttrib,opacity: 0.7});
 
+    // PLAN
+    var ignPlan = 'https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}';
+    // Ajoute la couche Plan IGN à ta carte
+    var ignP = new L.TileLayer(ignPlan, {
+        minZoom: 4,
+        maxZoom: 22,
+        attribution: ignAttrib,
+        opacity: 0.7
+    });
+    map.addLayer(ignP);
     map.setView(new L.LatLng(49.3,0.52),8);
-    map.addLayer(ignO);
+    //map.addLayer(ignO);
     
     // Créer une couche geojson vide pour les parcelles
     sites_parcelles_geojson_feature = L.geoJson(false, {
@@ -84,7 +94,7 @@ function initmap() {
     
     
     overlaysMaps={"Parcelles":sites_parcelles_geojson_feature,"Sites":sites_geojson_feature};
-    baseMaps={"Ortho (IGN)":ignO};//,"OSM":osm,"OSM (Noir & Blanc)":osmbg
+    baseMaps={"Ortho (IGN)":ignO, "Plan (IGN)":ignP};//,"OSM":osm,"OSM (Noir & Blanc)":osmbg
     ControlLayer=L.control.layers(baseMaps,overlaysMaps).addTo(map);
 
     
