@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Référentiel Pédologique Normand</title>
+    <style>
+      :root {
+        --primary-color: #2e8b57;
+        --secondary-color: #3a5f4d;
+        --background-color: #f5f9f7;
+        --text-color: #333;
+        --light-text: #666;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        text-align: center;
+        padding: 2rem 1rem;
+        box-shadow: var(--box-shadow);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+
+      header p {
+        margin: 0.5rem 0 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      .section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--box-shadow);
+      }
+
+      .section h2 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+      }
+
+      .description {
+        margin-bottom: 1.5rem;
+      }
+
+      .download-section {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .download-button {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        padding: 1rem 2rem;
+        border-radius: var(--border-radius);
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        box-shadow: var(--box-shadow);
+      }
+
+      .download-button:hover {
+        background-color: var(--secondary-color);
+      }
+
+      .file-info {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--light-text);
+      }
+
+      .file-info p {
+        margin: 0.5rem 0;
+      }
+
+      .file-list {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        background-color: #f9f9f9;
+        margin-top: 1rem;
+      }
+
+      .file-list h3 {
+        color: var(--secondary-color);
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
+
+      .file-list ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .file-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-list li:last-child {
+        border-bottom: none;
+      }
+
+      .category {
+        margin-bottom: 1.5rem;
+      }
+
+      .category h4 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1.5rem;
+        background-color: var(--secondary-color);
+        color: white;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+        .container {
+          padding: 0 0.5rem;
+        }
+        .section {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Référentiel Pédologique Normand</h1>
+      <p>Données pédologiques de Normandie</p>
+    </header>
+
+    <div class="container">
+      <section class="section">
+        <h2>À propos du Référentiel Pédologique Normand</h2>
+        <div class="description">
+          <p>
+            Le <strong>Référentiel Pédologique Normand</strong> est une base de données géoréférencées qui recense et caractérise les sols de la région Normandie. 
+            Ce référentiel est un outil essentiel pour les professionnels de l'agriculture, de l'environnement et de l'aménagement du territoire.
+          </p>
+          <p>
+            Il permet de mieux comprendre la répartition des types de sols, leurs propriétés physiques et chimiques, ainsi que leur aptitude à différentes utilisations (cultures, forêt, urbanisme, etc.).
+          </p>
+          <p>
+            Les données sont collectées et mises à jour régulièrement par des organismes spécialisés, comme le <strong>CEN Normandie</strong> (Conservatoire d'Espaces Naturels de Normandie).
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Contenu des données</h2>
+        <div class="description">
+          <p>
+            Le fichier disponible contient des données structurées sous forme de tables et d'une base de données <strong>Microsoft Access (.mdb)</strong>. 
+            Voici la liste complète des fichiers inclus dans l'archive ZIP :
+          </p>
+          
+          <div class="file-list">
+            <h3>📁 Liste des fichiers</h3>
+            <ul>
+              <li><strong>donesol3_530_20200526_1543_WCCJ.mdb</strong> (Base de données principale)</li>
+            </ul>
+            
+            <div class="category">
+              <h4>📊 Tables de données</h4>
+              <ul>
+                <li>donesol3_530_20200526_1543_WCCJ_table_analyse.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_attribut.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_codage.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_codage_strate_qual.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_code.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_collaborateur.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_ens_resultat_analyse_granulo.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_etude.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_etude_departement.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_horizon.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_l_collaborateur_profil.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_l_etude_organisme_moa.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_l_etude_organisme_moe.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_l_profil_etude.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_l_ucs_uts.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_l_uts.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_methode_analyse.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_methode_analyse_granulo.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_methode_analyse_physique.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_organisme.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_poi.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_prelevement.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_preparation_echantillon.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_preparation_granulo.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_profil.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_ref_bibliographique.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_resultat_analyse.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_resultat_analyse_granulo.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_resultat_densite_apparente.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_resultat_eg.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_strate.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_strate_qual.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_strate_quant.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_ucs.csv</li>
+                <li>donesol3_530_20200526_1543_WCCJ_table_uts.csv</li>
+              </ul>
+            </div>
+          </div>
+          
+          <p>
+            Ces tables contiennent des informations détaillées sur les <strong>analyses pédologiques</strong>, les <strong>échantillons</strong>, les <strong>méthodes d'analyse</strong>, les <strong>collaborateurs</strong>, les <strong>études</strong>, et bien plus encore.
+          </p>
+          <p>
+            La base de données <strong>.mdb</strong> permet d'exploiter ces données de manière intégrée, tandis que les fichiers CSV offrent une compatibilité avec des outils comme Excel, R, Python, ou des logiciels SIG (QGIS, ArcGIS).
+          </p>
+        </div>
+      </section>
+
+      <section class="section download-section">
+        <h2>Téléchargement</h2>
+        <p>
+          Téléchargez l'intégralité du référentiel pédologique au format ZIP :
+        </p>
+        <a href="https://cen-n.fr/download/donesol3_530_20200526_1543_WCCJ.zip" class="download-button">
+          Télécharger le fichier ZIP
+        </a>
+        <div class="file-info">
+          <p><strong>Nom du fichier :</strong> donesol3_530_20200526_1543_WCCJ.zip</p>
+          <p><strong>Source :</strong> Conservatoire d'Espaces Naturels de Normandie (CEN Normandie)</p>
+          <p><strong>Date de mise à jour :</strong> 26 mai 2020</p>
+          <p><strong>Taille :</strong> ~15 Mo (environ 30 fichiers CSV + 1 base .mdb)</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Utilisation des données</h2>
+        <div class="description">
+          <p>
+            Les données du référentiel pédologique peuvent être exploitées dans différents contextes :
+          </p>
+          <ul>
+            <li><strong>Agriculture</strong> : Optimisation des pratiques culturales en fonction des types de sols.</li>
+            <li><strong>Environnement</strong> : Étude de la qualité des sols et de leur impact sur les écosystèmes.</li>
+            <li><strong>Aménagement du territoire</strong> : Planification urbaine et rurale en tenant compte des contraintes pédologiques.</li>
+            <li><strong>Recherche</strong> : Analyse scientifique des sols pour des projets de recherche.</li>
+          </ul>
+          <p>
+            Pour toute question ou besoin d'assistance, n'hésitez pas à contacter le <strong>CEN Normandie</strong>.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 - Référentiel Pédologique Normand | Données fournies par le CEN Normandie</p>
+    </footer>
+  </body>
+</html>
