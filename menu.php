@@ -18,6 +18,12 @@
       <i class="fas fa-wrench"></i> Gestion sites
     </a>
   </li>
+
+<li class="nav-item">
+    <a class="nav-link py-1" href="./extraction/index.php">
+        <i class="fas fa-download"></i> Extraction Géoplateforme
+    </a>
+</li>
     ';
   }
 ?>
