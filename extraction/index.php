@@ -2,25 +2,38 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 
-// Vérifier que l'utilisateur est connecté à l'application principale
-if (!isset($_SESSION['email']) || !isset($_SESSION['password'])) {
-    header('Location: /index.php');
-    exit;
+// Générer un token CSRF si inexistant
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 // Récupérer la liste des données disponibles
 $stored_data_list = [];
+$error = $_SESSION['error'] ?? null;
+unset($_SESSION['error']);
+
 $token = getValidToken();
 if ($token) {
     $ch = curl_init();
     curl_setopt_array($ch, [
-        CURLOPT_URL => GEOPLATEFORME_API_URL . '/api/users/me/stored_data?type=VECTOR-DB&limit=50',
+        CURLOPT_URL => GEOPLATEFORME_API_URL . '/api/me/stored_data?type=VECTOR-DB&limit=50',
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . $token, 'Referer: ' . GEOPLATEFORME_REFERER]
+        CURLOPT_TIMEOUT => CURL_TIMEOUT,
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . $token,
+            'Referer: ' . GEOPLATEFORME_REFERER
+        ]
     ]);
     $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
-    $stored_data_list = json_decode($response, true)['data'] ?? [];
+
+    if ($http_code === 200) {
+        $data = json_decode($response, true);
+        $stored_data_list = $data['data'] ?? [];
+    } else {
+        $error = "Erreur lors de la récupération des données (HTTP $http_code).";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -29,33 +42,31 @@ if ($token) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extraction Géoplateforme - CEN Normandie</title>
-    <!-- Utilisation des ressources existantes -->
-    <link href="../bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet">
-    <link href="../css/cennormandie.css" rel="stylesheet">
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="../js/leaflet1.7/leaflet.css" />
-    <link rel="stylesheet" href="./assets/style.css" />
+    <link href="/bootstrap-5.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet">
+    <link href="/css/cennormandie.css" rel="stylesheet">
+    <link rel="stylesheet" href="/js/leaflet1.7/leaflet.css" />
+    <link rel="stylesheet" href="/extraction/assets/style.css" />
 </head>
 <body>
-    <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
     <?php
     $_POST["page"] = basename(__FILE__);
     include __DIR__ . '/../menu.php';
     ?>
-	<div class="d-flex flex-column col-md-9 col-lg-10 bg-light " >
-		<div class="d-flex justify-content-end  bg-dark sticky-top">
-			<div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?php echo $_SESSION['email']; ?></span></div>
-			<div class="m-2"><a class="logout text-light" href="php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
-		</div>
-        <div class="d-flex flex-column justify-content-end" style="">
-            <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <h3 class="">Extraction de données Géoplateforme</h3>
-                <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
-            </div>
+    <div class="d-flex flex-column col-md-9 col-lg-10 h-100 bg-light" style="overflow-y:auto;overflow-x:hidden;min-height:100vh;">
+        <div class="d-flex justify-content-end w-100 bg-dark">
+            <div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['email']) ?></span></div>
+            <div class="m-2"><a class="logout text-light" href="/php/logout.php"><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
+        </div>
+        <div class="d-flex justify-content-between w-100 bg-light m-2 border-bottom">
+            <h3>Extraction de données Géoplateforme</h3>
+        </div>
 
-        <!-- Contenu principal -->
         <div class="container py-4">
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
+
             <div class="card mb-4">
                 <div class="card-header"><h5>1. Sélectionner une zone géographique (WGS84)</h5></div>
                 <div class="card-body">
@@ -77,7 +88,9 @@ if ($token) {
                 <div class="card-header"><h5>2. Sélectionner les données à extraire</h5></div>
                 <div class="card-body">
                     <form id="extractionForm" method="post" action="/extraction/extract.php">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
                         <input type="hidden" name="geometry_wgs84" id="hidden_geometry_wgs84">
+
                         <div class="mb-3">
                             <label for="stored_data" class="form-label">Donnée source</label>
                             <select class="form-select" id="stored_data" name="stored_data_id" required>
@@ -149,16 +162,16 @@ if ($token) {
                                     <tr>
                                         <td><?= date('d/m/Y H:i:s', $job['timestamp']) ?></td>
                                         <td>
-                                            <span class="badge bg-<?= $job['status'] === 'successful' ? 'success' : ($job['status'] === 'running' ? 'primary' : 'danger') ?>">
-                                                <?= ucfirst($job['status']) ?>
+                                            <span class="badge bg-<?= htmlspecialchars($job['status'] === 'successful' ? 'success' : ($job['status'] === 'running' ? 'primary' : 'danger')) ?>">
+                                                <?= htmlspecialchars(ucfirst($job['status'])) ?>
                                             </span>
                                         </td>
-                                        <td class="text-muted"><?= substr($job['jobID'], 0, 8) . '...' ?></td>
+                                        <td class="text-muted"><?= htmlspecialchars(substr($job['jobID'], 0, 8) . '...') ?></td>
                                         <td>
                                             <?php if ($job['status'] === 'successful'): ?>
-                                                <a href="/extraction/download.php?jobID=<?= $job['jobID'] ?>" class="btn btn-sm btn-outline-success">Télécharger</a>
+                                                <a href="/extraction/download.php?jobID=<?= htmlspecialchars($job['jobID']) ?>" class="btn btn-sm btn-outline-success">Télécharger</a>
                                             <?php elseif ($job['status'] === 'running'): ?>
-                                                <a href="/extraction/check_job.php?jobID=<?= $job['jobID'] ?>" class="btn btn-sm btn-outline-primary">Vérifier</a>
+                                                <a href="/extraction/check_job.php?jobID=<?= htmlspecialchars($job['jobID']) ?>" class="btn btn-sm btn-outline-primary">Vérifier</a>
                                             <?php else: ?>
                                                 <span class="text-muted">Échec</span>
                                             <?php endif; ?>
@@ -173,12 +186,10 @@ if ($token) {
         </div>
     </div>
 
-    <!-- Scripts existants -->
-    <script src="../js/jquery.js"></script>
-    <script src="../bootstrap-5.0.0/js/bootstrap.min.js"></script>
-    <script src="../fontawesome-free-5.15.2-web/js/fontawesome.min.js"></script>
-    <!-- Leaflet -->
-    <script src="../js/leaflet1.7/leaflet.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/bootstrap-5.0.0/js/bootstrap.min.js"></script>
+    <script src="/fontawesome-free-5.15.2-web/js/fontawesome.min.js"></script>
+    <script src="/js/leaflet1.7/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
     <script>
         // Initialiser la carte centrée sur la Normandie (Caen)

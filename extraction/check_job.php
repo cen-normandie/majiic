@@ -2,12 +2,6 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 
-// Vérifier que l'utilisateur est connecté
-if (!isset($_SESSION['email']) || !isset($_SESSION['password'])) {
-    header('Location: /index.php');
-    exit;
-}
-
 $job_id = $_GET['jobID'] ?? '';
 if (empty($job_id)) {
     header('Location: /extraction/index.php');
@@ -21,6 +15,10 @@ if (isset($job_status['error'])) {
     exit;
 }
 
+// Mettre à jour le statut dans l'historique
+if (!isset($_SESSION['extraction_jobs'])) {
+    $_SESSION['extraction_jobs'] = [];
+}
 foreach ($_SESSION['extraction_jobs'] as &$job) {
     if ($job['jobID'] === $job_id) {
         $job['status'] = $job_status['status'];
@@ -28,6 +26,7 @@ foreach ($_SESSION['extraction_jobs'] as &$job) {
     }
 }
 
+// Si le job est terminé, rediriger vers le téléchargement
 if ($job_status['status'] === 'successful') {
     header('Location: /extraction/download.php?jobID=' . $job_id);
     exit;
@@ -50,7 +49,7 @@ if ($job_status['status'] === 'successful') {
     ?>
     <div class="d-flex flex-column col-md-9 col-lg-10 h-100 bg-light" style="overflow-y:auto;overflow-x:hidden;min-height:100vh;">
         <div class="d-flex justify-content-end w-100 bg-dark">
-            <div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?php echo $_SESSION['email']; ?></span></div>
+            <div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['email']) ?></span></div>
             <div class="m-2"><a class="logout text-light" href="/php/logout.php"><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
         </div>
         <div class="container py-5">
@@ -62,7 +61,7 @@ if ($job_status['status'] === 'successful') {
                             <div class="spinner-border text-primary mb-3" role="status"></div>
                             <h4>Extraction en cours...</h4>
                             <p class="text-muted">Job ID: <?= htmlspecialchars($job_id) ?></p>
-                            <p>Statut: <strong><?= ucfirst($job_status['status'] ?? 'inconnu') ?></strong></p>
+                            <p>Statut: <strong><?= htmlspecialchars(ucfirst($job_status['status'] ?? 'inconnu')) ?></strong></p>
                             <div class="progress mt-4">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
                             </div>
@@ -75,6 +74,7 @@ if ($job_status['status'] === 'successful') {
         </div>
     </div>
     <script>
+        // Rafraîchir automatiquement toutes les 5 secondes
         setTimeout(function() { window.location.reload(); }, 5000);
     </script>
 </body>

@@ -3,13 +3,13 @@
 define('GEOPLATEFORME_API_URL', 'https://data.geopf.fr');
 define('GEOPLATEFORME_AUTH_URL', GEOPLATEFORME_API_URL . '/auth/realms/geoplateforme/protocol/openid-connect/token');
 define('GEOPLATEFORME_EXTRACTION_URL', GEOPLATEFORME_API_URL . '/extraction');
-define('GEOPLATEFORME_API_KEY', 'a9DKShWGUMWtshiuXbz4h21ze7PAOoIw'); // Laisser vide si OAuth2
-define('GEOPLATEFORME_REFERER', 'http://' . $_SERVER['HTTP_HOST'] . '/'); // Domaine dynamique
+define('GEOPLATEFORME_REFERER', 'http://' . $_SERVER['HTTP_HOST'] . '/');
 
 // === Configuration locale ===
-define('ROOT_PATH', dirname(__DIR__, 1) . '/extraction/'); // Chemin racine pour l'extraction
+define('ROOT_PATH', dirname(__DIR__, 1) . '/extraction/');
 define('UPLOAD_DIR', ROOT_PATH . 'uploads/');
 define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10 Mo
+define('CURL_TIMEOUT', 30); // Timeout pour les requêtes cURL (secondes)
 
 // === Couches disponibles ===
 $available_layers = [
@@ -42,8 +42,8 @@ define('DEFAULT_LIFETIME', 24);
 session_start();
 
 // === Vérification de l'accès ===
-// Si l'utilisateur n'est pas connecté à l'application principale, rediriger vers index.php
-if (!isset($_SESSION['email']) || !isset($_SESSION['password'])) {
+// Avec OAuth2, on vérifie simplement que l'utilisateur est connecté (email en session)
+if (!isset($_SESSION['email'])) {
     header('Location: /index.php');
     exit;
 }
