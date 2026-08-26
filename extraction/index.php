@@ -49,15 +49,13 @@ if ($token) {
     <link rel="stylesheet" href="/extraction/assets/style.css" />
 </head>
 <body>
-    <?php
-    $_POST["page"] = basename(__FILE__);
-    include __DIR__ . '/../menu.php';
-    ?>
-    <div class="d-flex flex-column col-md-9 col-lg-10 h-100 bg-light" style="overflow-y:auto;overflow-x:hidden;min-height:100vh;">
-        <div class="d-flex justify-content-end w-100 bg-dark">
-            <div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['email']) ?></span></div>
-            <div class="m-2"><a class="logout text-light" href="/php/logout.php"><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
-        </div>
+   <div class="d-flex w-100 h-100 bg-light" style="min-height:100vh;">
+    <?php $_POST["page"] = basename(__FILE__);include("menu.php"); ?>
+	<div class="d-flex flex-column col-md-9 col-lg-10 bg-light " >
+		<div class="d-flex justify-content-end  bg-dark sticky-top">
+			<div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?php echo $_SESSION['email']; ?></span></div>
+			<div class="m-2"><a class="logout text-light" href="php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
+		</div>
         <div class="d-flex justify-content-between w-100 bg-light m-2 border-bottom">
             <h3>Extraction de données Géoplateforme</h3>
         </div>
