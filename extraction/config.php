@@ -3,7 +3,7 @@
 define('GEOPLATEFORME_API_URL', 'https://data.geopf.fr');
 define('GEOPLATEFORME_AUTH_URL', GEOPLATEFORME_API_URL . '/auth/realms/geoplateforme/protocol/openid-connect/token');
 define('GEOPLATEFORME_EXTRACTION_URL', GEOPLATEFORME_API_URL . '/extraction');
-define('GEOPLATEFORME_API_KEY', ''); // Laisser vide si OAuth2
+define('GEOPLATEFORME_API_KEY', 'a9DKShWGUMWtshiuXbz4h21ze7PAOoIw'); // Laisser vide si OAuth2
 define('GEOPLATEFORME_REFERER', 'http://' . $_SERVER['HTTP_HOST'] . '/'); // Domaine dynamique
 
 // === Configuration locale ===
