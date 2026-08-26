@@ -9,9 +9,6 @@ if (empty($_SESSION['csrf_token'])) {
 
 // Récupérer la liste des données disponibles
 $stored_data_list = [];
-$error = $_SESSION['error'] ?? null;
-unset($_SESSION['error']);
-
 $token = getValidToken();
 if ($token) {
     $ch = curl_init();
@@ -26,13 +23,22 @@ if ($token) {
     ]);
     $response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
     curl_close($ch);
+
+    // Débogage : afficher la réponse brute
+    error_log("Réponse API stored_data: HTTP $http_code - Réponse: $response - Erreur: $error");
 
     if ($http_code === 200) {
         $data = json_decode($response, true);
-        $stored_data_list = $data['data'] ?? [];
+        if (isset($data['data'])) {
+            $stored_data_list = $data['data'];
+        } else {
+            error_log("Réponse API invalide: " . print_r($data, true));
+            $error = "Aucune donnée disponible pour votre compte.";
+        }
     } else {
-        $error = "Erreur lors de la récupération des données (HTTP $http_code).";
+        $error = "Erreur lors de la récupération des données (HTTP $http_code). Vérifiez vos identifiants ou vos droits.";
     }
 }
 ?>
