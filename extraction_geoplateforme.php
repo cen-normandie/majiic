@@ -217,7 +217,7 @@ $stored_data_list = [
         map.addLayer(drawnItems);
         const drawControl = new L.Control.Draw({
             edit: { featureGroup: drawnItems },
-            draw: { polygon: true, rectangle: true, polyline: false, circle: false, marker: false }
+            draw: { polygon: true, rectangle: true, polyline: false, circle: false, circlemarker : false, marker: false }
         });
         map.addControl(drawControl);
 
@@ -238,8 +238,6 @@ $stored_data_list = [
             document.getElementById('hidden_geometry_wgs84').value = document.getElementById('geometry_wgs84').value;
         });
 
-        drawControl.options.draw.circle = false;
-        drawControl.options.draw.circlemarker = false;
     </script>
 </body>
 </html>
