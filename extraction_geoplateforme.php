@@ -176,7 +176,7 @@ $stored_data_list = [
     <script src="/fontawesome-free-5.15.2-web/js/fontawesome.min.js"></script>
     <script src="/js/leaflet1.7/leaflet.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>-->
-    <script src="/js/Leaflet.draw/src/leaflet.draw.js"></script>
+    <script src="/js/Leaflet.draw/src/Leaflet.draw.js"></script>
     <script>
         // Initialiser la carte centrée sur la Normandie (Caen)
         const map = L.map('map').setView([49.1828, -0.3708], 10);
