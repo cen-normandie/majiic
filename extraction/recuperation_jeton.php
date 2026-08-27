@@ -1,7 +1,7 @@
 <?php
 
 // Configuration des identifiants (à récupérer sur votre espace cartes.gouv.fr)
-$tokenUrl    = "https://geopf.fr";
+$tokenUrl    = "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/token";
 $clientId    = "bp@cen-normandie.fr"; // Exemple par défaut : 'qgis' ou votre ID dédié
 $clientSecret = "FDJ762Ksghsz&!!"; 
 
