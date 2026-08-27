@@ -1,16 +1,18 @@
 <?php
 
-// Configuration des identifiants (à récupérer sur votre espace cartes.gouv.fr)
-$tokenUrl    = "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/token";
-$clientId    = "bp@cen-normandie.fr"; // Exemple par défaut : 'qgis' ou votre ID dédié
-$clientSecret = "FDJ762Ksghsz&!!"; 
+// 1. Configuration des identifiants corrigée
+$tokenUrl     = "https://sso.geopf.fr/realms/geoplateforme/protocol/openid-connect/token";
+$username     = "bp@cen-normandie.fr"; // Votre email cartes.gouv.fr
+$password     = "FDJ762Ksghsz&!!";   // Votre mot de passe associé
+$clientId     = "gpf-warehouse";       // Le Client ID public valide pour l'IGN
 
-// Préparation des données de la requête
+// 2. Préparation des données pour le flux "password"
 $postData = [
-    'grant_type'    => 'client_credentials', // Dépend du type de clé configuré
-    'client_id'     => $clientId,
-    'client_secret' => $clientSecret,
-    'scope'         => 'openid'
+    'grant_type' => 'password',
+    'client_id'  => $clientId,
+    'username'   => $username,
+    'password'   => $password,
+    'scope'      => 'openid'
 ];
 
 // Initialisation de cURL pour l'obtention du token
