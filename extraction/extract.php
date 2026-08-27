@@ -2,71 +2,59 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 
-// Vérifier le token CSRF
-if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
-    $_SESSION['error'] = "Token CSRF invalide.";
-    header('Location: /extraction/index.php');
-    exit;
+// Sécurité : Vérification du jeton CSRF
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("Erreur de sécurité : Jeton CSRF invalide.");
 }
 
-// Vérifier les données du formulaire
-$geometry_wgs84 = trim($_POST['geometry_wgs84'] ?? '');
-$stored_data_id = trim($_POST['stored_data_id'] ?? '');
-$layers = $_POST['layers'] ?? [];
-$format = $_POST['format'] ?? DEFAULT_FORMAT;
-$srs = $_POST['srs'] ?? DEFAULT_SRS;
+// Récupération et nettoyage des données du formulaire
+$stored_data_id = $_POST['stored_data_id'] ?? null;
+$geometry_wgs84 = $_POST['geometry_wgs84'] ?? null;
+$format         = $_POST['format'] ?? DEFAULT_FORMAT;
+$srs            = $_POST['srs'] ?? DEFAULT_SRS;
+$layers         = $_POST['layers'] ?? [];
 
-if (empty($geometry_wgs84)) {
-    $_SESSION['error'] = "Veuillez sélectionner une géométrie.";
-    header('Location: /extraction/index.php');
-    exit;
+// Validation basique
+if (!$stored_data_id || !$geometry_wgs84) {
+    die("Erreur : La zone géographique ou la donnée source est manquante.");
 }
 
-if (empty($stored_data_id)) {
-    $_SESSION['error'] = "Veuillez sélectionner une donnée source.";
-    header('Location: /extraction/index.php');
-    exit;
-}
+// Lancement de l'extraction via la fonction modifiée (clé HASH)
+$result = startExtraction($stored_data_id, $layers, $geometry_wgs84, $format, $srs);
 
-// Construire la liste des couches sélectionnées
-$selected_layers = [];
-foreach ($layers as $key => $layer_data) {
-    if (is_array($layer_data) && isset($layer_data['selected']) && $layer_data['selected'] == '1') {
-        $selected_layers[] = [
-            'table' => $layer_data['table'],
-            'attributes' => explode(',', $layer_data['attributes'])
-        ];
-    }
-}
-
-if (empty($selected_layers)) {
-    $_SESSION['error'] = "Veuillez sélectionner au moins une couche.";
-    header('Location: /extraction/index.php');
-    exit;
-}
-
-// Lancer l'extraction
-$result = startExtraction($stored_data_id, $selected_layers, $geometry_wgs84, $format, $srs);
-
+// Traitement du résultat de l'IGN
 if (isset($result['error'])) {
-    $_SESSION['error'] = $result['error'];
-    header('Location: /extraction/index.php');
+    // Si l'API renvoie une erreur, on l'affiche proprement pour comprendre le problème
+    echo "<h3>Une erreur est survenue lors du lancement de l'extraction :</h3>";
+    echo "<div style='color:red; background:#f8d7da; padding:15px; border-radius:5px; border:1px solid #f5c6cb;'>";
+    echo htmlspecialchars($result['error']);
+    echo "</div>";
+    echo "<br><a href='/extraction/index.php'>Retourner au formulaire</a>";
     exit;
-} else {
-    // Initialiser l'historique si inexistant
+}
+
+// Si l'IGN a accepté la demande, un "job_id" (ID de traitement) est retourné
+if (isset($result['jobID']) || isset($result['id'])) {
+    $job_id = $result['jobID'] ?? $result['id'];
+
+    // Enregistrement du job en session pour l'historique
     if (!isset($_SESSION['extraction_jobs'])) {
         $_SESSION['extraction_jobs'] = [];
     }
 
-    // Ajouter le job à l'historique
     $_SESSION['extraction_jobs'][] = [
-        'jobID' => $result['jobID'],
-        'status' => $result['status'],
-        'timestamp' => time()
+        'job_id'    => $job_id,
+        'date'      => date('Y-m-d H:i:s'),
+        'status'    => 'running', // Statut initial
+        'format'    => $format
     ];
 
-    // Rediriger vers la page de vérification
-    header('Location: /extraction/check_job.php?jobID=' . $result['jobID']);
+    // Redirection immédiate vers la page de suivi du statut
+    header("Location: /extraction/check_job.php?job_id=" . urlencode($job_id));
     exit;
 }
-?>
+
+// Cas imprévu : l'IGN renvoie un format inconnu
+echo "<h3>Réponse inattendue du serveur IGN :</h3>";
+echo "<pre>" . print_r($result, true) . "</pre>";
+echo "<a href='/extraction/index.php'>Retourner au formulaire</a>";
