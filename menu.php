@@ -18,14 +18,17 @@
       <i class="fas fa-wrench"></i> Gestion sites
     </a>
   </li>
-
-<li class="nav-item">
-    <a class="nav-link py-1" href="./extraction/index.php">
-        <i class="fas fa-download"></i> Extraction Géoplateforme
+    ';
+    $b = ((($_POST['page']) == 'extraction_geoplateforme.php') ? ' active' : '' );
+    echo '<li class="nav-item"><a class="nav-link py-1 ',$b,'" href="extraction_geoplateforme.php">
+      <span data-feather=""></span>
+      <i class="fas fa-download"></i> Extraction Géoplateforme
     </a>
-</li>
+  </li>
     ';
   }
+
+  
 ?>
 
     <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'dashboard.php') ? ' active' : '' ); echo $t; ?>" href="dashboard.php">
