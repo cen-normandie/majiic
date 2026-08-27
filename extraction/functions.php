@@ -5,18 +5,25 @@ require_once __DIR__ . '/config.php';
 function startExtraction($stored_data_id, $layers, $geometry_wgs84, $format = DEFAULT_FORMAT, $srs = DEFAULT_SRS) {
     if (empty(GEOPLATEFORME_API_KEY)) return ['error' => 'La clé API HASH n\'est pas configurée.'];
 
-    $process_id = '8ab6236b-21d8-471a-a07b-f84a5921f9f5_' . $stored_data_id;
+    $process_id = '8ab6236b-21d8-471a-a07b-f84a5921f9f5'; // On garde l'ID de processus propre
     $relations = [];
+    
     foreach ($layers as $key => $layer) {
-        if (isset($layer['selected']) && $layer['selected']) {
+        // Vérifie si la ligne est cochée (vaut "1" ou existe)
+        if (isset($layer['selected']) && $layer['selected'] == 1) {
+            
+            // Sécurité : Si les attributs arrivent sous forme de chaîne de texte depuis le HTML, on les transforme en tableau
+            $attributesArray = is_string($layer['attributes']) ? explode(',', $layer['attributes']) : $layer['attributes'];
+
             $relations[$layer['table']] = [
-                'attributes' => $layer['attributes'],
-                'filters' => "ST_Intersects(geom, ST_Transform(ST_SetSRID('$geometry_wgs84'::geometry, 4326), " . str_replace('EPSG:', '', $srs) . "))"
+                'attributes' => $attributesArray,
+                'filters' => "ST_Intersects(geom, ST_Transform(ST_SetSRID(ST_GeomFromText('$geometry_wgs84'), 4326), " . str_replace('EPSG:', '', $srs) . "))"
             ];
         }
     }
-    if (empty($relations)) return ['error' => 'Aucune couche sélectionnée.'];
-
+    
+    if (empty($relations)) return ['error' => 'Aucune couche sélectionnée. Veuillez cocher au moins une case.'];
+    
     $body = [
         'inputs' => [
             'relations' => $relations,
