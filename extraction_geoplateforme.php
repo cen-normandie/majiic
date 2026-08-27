@@ -174,9 +174,38 @@ $stored_data_list = [
     <script src="/js/jquery.js"></script>
     <script src="/bootstrap-5.0.0/js/bootstrap.min.js"></script>
     <script src="/fontawesome-free-5.15.2-web/js/fontawesome.min.js"></script>
-    <script src="/js/leaflet1.7/leaflet.js"></script>
-    <!--<script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>-->
-    <script src="/js/Leaflet.draw/src/Leaflet.draw.js"></script>
+    <!-- LEAFLET -->
+    <script src="js/leaflet-1.9.4/leaflet.js"></script>
+    <!-- LEAFLET DRAW -->
+    <script src="js/Leaflet.draw/src/Leaflet.draw.js"></script>
+    <script src="js/Leaflet.draw/src/Leaflet.Draw.Event.js"></script>
+    <script src="js/Leaflet.draw/src/Toolbar.js"></script>
+    <script src="js/Leaflet.draw/src/Tooltip.js"></script>
+    <script src="js/Leaflet.draw/src/ext/GeometryUtil.js"></script>
+    <script src="js/Leaflet.draw/src/ext/LatLngUtil.js"></script>
+    <script src="js/Leaflet.draw/src/ext/LineUtil.Intersect.js"></script>
+    <script src="js/Leaflet.draw/src/ext/Polygon.Intersect.js"></script>
+    <script src="js/Leaflet.draw/src/ext/Polyline.Intersect.js"></script>
+    <script src="js/Leaflet.draw/src/ext/TouchEvents.js"></script>
+    <script src="js/Leaflet.draw/src/draw/DrawToolbar.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.Feature.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.SimpleShape.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.Polyline.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.Marker.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.Circle.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.CircleMarker.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.Polygon.js"></script>
+    <script src="js/Leaflet.draw/src/draw/handler/Draw.Rectangle.js"></script>
+    <script src="js/Leaflet.draw/src/edit/EditToolbar.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/EditToolbar.Edit.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/EditToolbar.Delete.js"></script>
+    <script src="js/Leaflet.draw/src/Control.Draw.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/Edit.Poly.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/Edit.SimpleShape.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/Edit.Rectangle.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/Edit.Marker.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/Edit.CircleMarker.js"></script>
+    <script src="js/Leaflet.draw/src/edit/handler/Edit.Circle.js"></script>
     <script>
         // Initialiser la carte centrée sur la Normandie (Caen)
         const map = L.map('map').setView([49.1828, -0.3708], 10);
