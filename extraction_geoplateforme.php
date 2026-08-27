@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/extraction/config.php';
+require_once __DIR__ . '/extraction/functions.php';
 
 // Générer un token CSRF si inexistant
 if (empty($_SESSION['csrf_token'])) {
@@ -32,6 +32,7 @@ $stored_data_list = [
     <link href="/fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet">
     <link href="/css/cennormandie.css" rel="stylesheet">
     <link rel="stylesheet" href="/js/leaflet1.7/leaflet.css" />
+    <link rel="stylesheet" href="/js/Leaflet.draw/src/leaflet.draw.css" />
     <link rel="stylesheet" href="/extraction/assets/style.css" />
 </head>
 <body>
@@ -40,7 +41,7 @@ $stored_data_list = [
 	<div class="d-flex flex-column col-md-9 col-lg-10 bg-light " >
 		<div class="d-flex justify-content-end  bg-dark sticky-top">
 			<div class="m-2"><span class="text-light"><i class="fas fa-user"></i> <?php echo $_SESSION['email']; ?></span></div>
-			<div class="m-2"><a class="logout text-light" href="php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
+			<div class="m-2"><a class="logout text-light" href="/php/logout.php" ><i class="fa fa-fw fa-power-off"></i> Déconnexion</a></div>
 		</div>
         <div class="d-flex justify-content-between w-100 bg-light m-2 border-bottom">
             <h3>Extraction de données Géoplateforme</h3>
@@ -174,7 +175,8 @@ $stored_data_list = [
     <script src="/bootstrap-5.0.0/js/bootstrap.min.js"></script>
     <script src="/fontawesome-free-5.15.2-web/js/fontawesome.min.js"></script>
     <script src="/js/leaflet1.7/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>-->
+    <script src="/js/Leaflet.draw/src/leaflet.draw.js"></script>
     <script>
         // Initialiser la carte centrée sur la Normandie (Caen)
         const map = L.map('map').setView([49.1828, -0.3708], 10);
