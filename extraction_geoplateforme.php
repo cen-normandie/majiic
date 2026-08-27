@@ -192,8 +192,6 @@ $stored_data_list = [
     <script src="js/Leaflet.draw/src/draw/handler/Draw.SimpleShape.js"></script>
     <script src="js/Leaflet.draw/src/draw/handler/Draw.Polyline.js"></script>
     <script src="js/Leaflet.draw/src/draw/handler/Draw.Marker.js"></script>
-    <script src="js/Leaflet.draw/src/draw/handler/Draw.Circle.js"></script>
-    <script src="js/Leaflet.draw/src/draw/handler/Draw.CircleMarker.js"></script>
     <script src="js/Leaflet.draw/src/draw/handler/Draw.Polygon.js"></script>
     <script src="js/Leaflet.draw/src/draw/handler/Draw.Rectangle.js"></script>
     <script src="js/Leaflet.draw/src/edit/EditToolbar.js"></script>
@@ -204,8 +202,6 @@ $stored_data_list = [
     <script src="js/Leaflet.draw/src/edit/handler/Edit.SimpleShape.js"></script>
     <script src="js/Leaflet.draw/src/edit/handler/Edit.Rectangle.js"></script>
     <script src="js/Leaflet.draw/src/edit/handler/Edit.Marker.js"></script>
-    <script src="js/Leaflet.draw/src/edit/handler/Edit.CircleMarker.js"></script>
-    <script src="js/Leaflet.draw/src/edit/handler/Edit.Circle.js"></script>
     <script>
         // Initialiser la carte centrée sur la Normandie (Caen)
         const map = L.map('map').setView([49.1828, -0.3708], 10);
