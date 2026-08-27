@@ -1,3 +1,5 @@
+
+<link rel="icon" href="img/CenNormandie.ico" type="image/x-icon"/>
 <div class="d-flex flex-column col-md-3 col-lg-2 h-100 bg-dark sticky-top " style="min-height:100vh;">
 <div class="d-flex justify-content-center mt-2 align-iems-center w-100">
 <div class="text-light mx-2"><img id='cen_n_img' src="img/CenNormandie.png" style="max-width:80px;max-height: 40px;opacity:0.8;"/></div>
