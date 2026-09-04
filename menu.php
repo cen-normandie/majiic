@@ -25,7 +25,6 @@
     echo '<li class="nav-item"><a class="nav-link py-1 ',$b,'" href="extraction_geoplateforme.php">
       <span data-feather=""></span>
       <i class="fas fa-download"></i> Extraction Géoplateforme
-    </a>
   </li>
     ';
   }
