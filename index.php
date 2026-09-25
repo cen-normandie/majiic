@@ -62,10 +62,13 @@
 						</div>
 					</form>
 				</div>
-				<div class="p-4 w-50">
-					<div class="d-flex justify-content-arround">
-					</div>
-				</div>
+<!-- 					<div class="d-flex justify-content-around col-sm-6 fs-6 my-2 text-secondary">
+							<div id="otter"><i class="fas fa-otter"></i></div>
+							<div id="spider"><i class="fas fa-spider"></i></div>
+							<div id="kiwi"><i class="fas fa-kiwi-bird"></i></div>
+							<div id="fish"><i class="fas fa-fish text-primary"></i></div>
+							<div id="crow"><i class="fas fa-crow"></i></div>
+					</div> -->
 				<div class="mt-auto p-4">
 <!-- 						<div class="my-2">
 							<button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#CreateAccount">Création de compte</button>
@@ -199,6 +202,9 @@
 
 $(document).ready(function(){
 });
+
+
+
     </script>
 </body>
 </html>

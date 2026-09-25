@@ -162,3 +162,44 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 .fc .fc-sw15-button {
   font-size:12px;
 }
+
+/* Animations for icons */
+#otter i {
+    animation: bounce 1.8s ease-in-out infinite;
+}
+
+#spider i {
+    animation: spider 3s ease-in-out infinite;
+}
+
+#kiwi i {
+    animation: fly 2.5s ease-in-out infinite;
+}
+
+#fish i {
+    animation: swim 4s linear infinite;
+}
+
+#crow i {
+    animation: fly 3s ease-in-out infinite reverse;
+}
+
+@keyframes bounce {
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes spider {
+    50% { transform: translateY(15px); }
+}
+
+@keyframes fly {
+    25% { transform: translate(-5px,-8px) rotate(-10deg); }
+    75% { transform: translate(5px,-8px) rotate(10deg); }
+}
+
+@keyframes swim {
+    0%   { transform: translateX(-20px); }
+    50%  { transform: translateX(20px); }
+    100% { transform: translateX(-20px); }
+}
+
