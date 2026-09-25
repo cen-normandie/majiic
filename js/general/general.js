@@ -1,4 +1,4 @@
-function change_load (txt_what) {
+/* function change_load (txt_what) {
     //$("#loader").toggleClass("visible_s");
     //$("#loader").html('<img style="" src="./img/spin.png" class="rotate_ mx-4"> '+txt_what);
     if (txt_what != undefined) {
@@ -9,7 +9,19 @@ function change_load (txt_what) {
         $("#loader").html('');
     }
 
-};
+}; */
+function change_load(txt_what) {
+
+    const loader = document.getElementById("loader");
+
+    if (txt_what) {
+        loader.classList.remove("visible_s");
+        loader.innerHTML = `<img src="./img/spin.png" class="rotate_ mx-4"> ${txt_what}`;
+    } else {
+        loader.classList.add("visible_s");
+        loader.innerHTML = '';
+    } 
+  }
 
 function hexToRgb(hex) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")

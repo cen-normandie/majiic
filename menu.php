@@ -36,6 +36,12 @@
       <span data-feather=""></span>
       <i class="fas fa-tachometer-alt"></i> Tableau de bord
     </a>
+
+    <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'search_taxon.php') ? ' active' : '' ); echo $t; ?>" href="search_taxon.php">
+      <span data-feather=""></span>
+      <i class="fas fa-search"></i> Recherche deTaxon
+    </a>
+
   </div>
   <?php 
  if ($_SESSION['cgu']) {
