@@ -13,7 +13,7 @@ if (!isset($_SESSION['session'])) {
     exit();
 };
 $_SESSION['is_admin'] = false;
-$admins = array("n.moreira@cen-normandie.fr", "c.bouteiller@cen-normandie.fr", "f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
+$admins = array("f.buissart@cen-normandie.fr", "b.perceval@cen-normandie.fr");
 if (in_array($_SESSION['email'], $admins)) {
     $_SESSION['is_admin'] = true;
 }
@@ -54,7 +54,7 @@ if (in_array($_SESSION['email'], $admins)) {
                 <div id="loader" class=" bg-success loader mx-4 d-flex flex-wrap align-content-center flex-grow-1 visible_s" style="margin-bottom: .5rem"></div>
             </div>
             <div class="d-flex justify-content-start bg-light m-2 border-bottom ">
-                <p class="text-muted">Trouver ici le cd_nom et le nom valide d'une espèce à partir d'un extrait de texte. exemple : "Rougegorge"</p>
+                <p class="text-muted">Trouver ici le <span class="text-warning"><strong>cd_nom</strong></span> et le <span class="text-danger"><strong>nom valide</strong></span> d'une espèce à partir d'un extrait de texte. exemples : <span class="text-success"><strong>Rougegorge</strong></span> , <span class="text-success"><strong>Homo-sapiens</strong></span></p>
             </div>
             <div class="sm m-3">
                 <div class="">

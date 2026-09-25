@@ -5,9 +5,9 @@ include '../properties.php';
 try {
 
     $pdo = new PDO(
-        "pgsql:host=$DBHOST_GEONATURE;dbname=$DBNAME_GEONATURE",
-        "$LOGIN_GEONATURE",
-        "$PASS_GEONATURE",
+        "pgsql:host=$DBHOST;dbname=$DBNAME",
+        "$LOGIN",
+        "$PASS",
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
@@ -46,7 +46,7 @@ try {
                     similarity(t.nom_complet_norm, p.recherche),
                     similarity(t.nom_vern_norm, p.recherche)
                 ) AS score
-            FROM taxonomie.taxref_search t
+            FROM $TAXREF_SEARCH t
             CROSS JOIN p
             WHERE
                 (
