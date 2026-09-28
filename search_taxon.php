@@ -129,7 +129,7 @@ change_load("Calcul en cours");
     let resultat = "";
 
     data.forEach(r => {
-        resultat += `${r.recherche}\t${r.cd_nom}\t${r.cd_ref}\t${r.nom_complet}\t${r.nom_valide}\n`;
+        resultat += `${r.recherche}\t${r.cd_nom}\t${r.cd_ref}\t${r.nom_complet}\t${r.nom_valide}\t${r.score}\n`;
     });
 
     document.getElementById("txtResultat").value = resultat;
