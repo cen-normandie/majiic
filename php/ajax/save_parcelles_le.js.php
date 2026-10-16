@@ -9,7 +9,7 @@ $result = pg_prepare($dbconn, "sql",
 "
 INSERT INTO $parcelles_le ( geom, utilisateur )
 values (
-    st_setsrid( $1::geometry ,2154), $2
+    st_transform(st_setsrid( $1::geometry ,4326),2154), $2
 );
 "
 );
