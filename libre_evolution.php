@@ -119,6 +119,16 @@ if (in_array($_SESSION['email'], $admins)) {
                 <input type="text" class="form-control" id="input_observateur" aria-describedby="basic-addon3">
             </div>
             </div>
+            <div class="m-2">
+            <div class="input-group w-100">
+
+  <div class="input-group-text">
+    <input class="form-check-input mt-0" id="input_ddg" type="checkbox" value="" aria-label="Périmètre inclus dans un Plan de Gestion ?">
+  </div>
+  <label class="input-group-text " for="input_ddg">Périmètre inclus dans un Plan de Gestion ?</label>
+
+            </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

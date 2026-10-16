@@ -199,7 +199,8 @@ $("#save_hab").click(function(){
         url      : "php/ajax/save_parcelles_le.js.php",
         data     : {
             geom: shape_for_db_,
-            numerisateur: $("#input_observateur").val()
+            numerisateur: $("#input_observateur").val(),
+            is_ddg: $("#input_ddg").is(":checked")
         },
         method   : "POST",
         dataType : "text",
