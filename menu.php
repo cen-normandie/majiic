@@ -25,22 +25,34 @@
     echo '<li class="nav-item"><a class="nav-link py-1 ',$b,'" href="extraction_geoplateforme.php">
       <span data-feather=""></span>
       <i class="fas fa-download"></i> Extraction Géoplateforme
-  </li>
-    ';
+    </a>
+  </li>';
   }
 
   
 ?>
 
+
+  <li class="nav-item">
+    <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'libre_evolution.php') ? ' active' : '' ); echo $t; ?>" href="libre_evolution.php">
+      <span data-feather=""></span>
+      <i class="fab fa-pagelines"></i> Libre Évolution
+    </a>
+  </li>
+
+
+  <li class="nav-item">
     <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'dashboard.php') ? ' active' : '' ); echo $t; ?>" href="dashboard.php">
       <span data-feather=""></span>
       <i class="fas fa-tachometer-alt"></i> Tableau de bord
     </a>
-
+  </li>
+  <li class="nav-item">
     <a class="nav-link py-1 <?php $t = ((($_POST['page']) == 'search_taxon.php') ? ' active' : '' ); echo $t; ?>" href="search_taxon.php">
       <span data-feather=""></span>
       <i class="fas fa-search"></i> Recherche deTaxon
     </a>
+  </li>
 
   </div>
   <?php 
