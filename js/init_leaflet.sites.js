@@ -98,7 +98,7 @@ function initmap() {
             //layer.bindLabel(feature.properties.nom_site);
             //console.log(feature.properties.id_site);
             }
-    }).addTo(map);
+    });
     
     
     overlaysMaps={"Parcelles":sites_parcelles_geojson_feature,"Sites":sites_geojson_feature};
