@@ -67,8 +67,16 @@ function initmap() {
         style:style_parcelles,
         onEachFeature: function(feature,layer)
             {
-                layer.on("click",function(e){
-                    });
+                layer.on("click", function(e) {
+                    var id_unique = feature.properties.id_unique;
+                    var section = id_unique.substring(17, 19);
+                    var numero = id_unique.substring(19, 23);
+                    layer.bindPopup(
+                        '<b>Parcelle</b><br>' +
+                        'Section : ' + section + '<br>' +
+                        'Numéro : ' + numero
+                    ).openPopup();
+                });
                 layer.on("mouseover",function(e){
                     layer.setStyle(highlightStyle_Yellow);
                 });
