@@ -80,13 +80,15 @@ function initmap() {
                 });
                 layer.on("mouseover",function(e){
                     layer.setStyle(highlightStyle_Yellow);
+                    layer.openPopup();
                 });
                 layer.on("mouseout",function(e){
                     sites_parcelles_geojson_feature.resetStyle(e.target);
+                    layer.closePopup();
                 });
             //console.log(feature.properties.id_site);
             //layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
-                layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
+                //layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
                 layer.bindPopup('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
             }
     }).addTo(map);
