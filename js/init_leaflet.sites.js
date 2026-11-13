@@ -86,7 +86,8 @@ function initmap() {
                 });
             //console.log(feature.properties.id_site);
             //layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
-                layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
+                //layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
+                layer.bindPopup('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
             }
     }).addTo(map);
     // Créer une couche geojson vide pour les sites
