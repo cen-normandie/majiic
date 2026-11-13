@@ -68,14 +68,15 @@ function initmap() {
         onEachFeature: function(feature,layer)
             {
                 layer.on("click", function(e) {
-                    var id_unique = feature.properties.id_unique;
+/*                     var id_unique = feature.properties.id_unique;
                     var section = id_unique.substring(17, 19);
                     var numero = id_unique.substring(19, 23);
                     layer.bindPopup(
                         '<b>Parcelle</b><br>' +
                         'Section : ' + section + '<br>' +
                         'Numéro : ' + numero
-                    ).openPopup();
+                    ).openPopup(); */
+                    layer.openPopup();
                 });
                 layer.on("mouseover",function(e){
                     layer.setStyle(highlightStyle_Yellow);
@@ -85,6 +86,7 @@ function initmap() {
                 });
             //console.log(feature.properties.id_site);
             //layer.bindLabel('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23));
+                layer.bindTooltip('Section : '+feature.properties.id_unique.substring(17, 19)+', Num : '+ feature.properties.id_unique.substring(19, 23), {permanent: false, direction: 'top'});
             }
     }).addTo(map);
     // Créer une couche geojson vide pour les sites
